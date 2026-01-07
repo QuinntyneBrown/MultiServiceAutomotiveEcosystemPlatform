@@ -10,7 +10,7 @@
 
 ## 1. Purpose
 
-This document establishes the mandatory requirements and acceptance criteria for all UI/UX development within the Multi-Service Automotive Ecosystem Platform. All new components, features, and modifications MUST strictly adhere to the [CarMax Style Guide](./CARMAX_STYLE_GUIDE.md) to ensure brand consistency, accessibility compliance, and maintainable code.
+This document establishes the mandatory requirements and acceptance criteria for all UI/UX development within the Multi-Service Automotive Ecosystem Platform. All new components, features, and modifications MUST strictly adhere to the [Platform Style Guide](./style-guide.md) to ensure brand consistency, accessibility compliance, and maintainable code.
 
 ---
 
@@ -35,7 +35,7 @@ These requirements apply to:
 
 #### REQ-COLOR-001: Primary Brand Colors
 **Priority:** CRITICAL
-**Description:** All primary actions and brand elements MUST use the official CarMax color palette.
+**Description:** All primary actions and brand elements MUST use the official platform color palette.
 
 **Acceptance Criteria:**
 - [ ] Primary blue (`#00529F`) is used for main CTAs, links, and primary brand elements
@@ -491,7 +491,5 @@ This document has been reviewed and approved by:
 
 ## 10. References
 
-- [CarMax Style Guide](./CARMAX_STYLE_GUIDE.md)
+- [Platform Style Guide](./style-guide.md)
 - [WCAG 2.1 Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)
-- [CarMax Design System](https://design.carmax.com)
-- [CarMax Brand Guidelines](https://brand.carmax.com)

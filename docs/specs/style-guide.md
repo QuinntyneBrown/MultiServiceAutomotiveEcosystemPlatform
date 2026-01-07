@@ -1,9 +1,8 @@
-# CarMax Style Guide
+# Platform Style Guide
 
 ## Multi-Service Automotive Ecosystem Platform
 
 **Version:** 1.0.0
-**Based on:** CarMax Horizon Design System
 **Last Updated:** January 2026
 
 ---
@@ -27,7 +26,7 @@
 
 ## Design Philosophy
 
-The CarMax design philosophy centers on **trust**, **transparency**, and **ease of use**. Every design decision should:
+The platform design philosophy centers on **trust**, **transparency**, and **ease of use**. Every design decision should:
 
 - **Build Trust**: Use the signature blue color palette to convey reliability and professionalism
 - **Ensure Clarity**: Present information in a clear, organized hierarchy
@@ -41,11 +40,11 @@ The CarMax design philosophy centers on **trust**, **transparency**, and **ease 
 
 ### Primary Brand Colors
 
-| Color Name | Hex | RGB | CMYK | Pantone | Usage |
-|------------|-----|-----|------|---------|-------|
-| **CarMax Blue** | `#00529F` | rgb(0, 82, 159) | 100, 48, 0, 38 | PMS 2145 C | Primary brand color, headers, primary buttons, links |
-| **CarMax Yellow** | `#FFD520` | rgb(255, 213, 32) | 0, 16, 87, 0 | PMS 115 C | Accents, highlights, promotional elements, CTAs |
-| **White** | `#FFFFFF` | rgb(255, 255, 255) | 0, 0, 0, 0 | - | Backgrounds, text on dark surfaces |
+| Color Name | Hex | RGB | CMYK | Usage |
+|------------|-----|-----|------|-------|
+| **Primary Blue** | `#00529F` | rgb(0, 82, 159) | 100, 48, 0, 38 | Primary brand color, headers, primary buttons, links |
+| **Accent Yellow** | `#FFD520` | rgb(255, 213, 32) | 0, 16, 87, 0 | Accents, highlights, promotional elements, CTAs |
+| **White** | `#FFFFFF` | rgb(255, 255, 255) | 0, 0, 0, 0 | Backgrounds, text on dark surfaces |
 
 ### Extended Blue Palette
 
@@ -445,15 +444,15 @@ The spacing system uses an 8px base unit with a modular scale for consistent rhy
 
 #### Text Fields
 
-Text fields use Material Design Component (MDC) patterns with CarMax customizations.
+Text fields use Material Design Component (MDC) patterns with custom styling.
 
 ```css
-.kmx-text-field {
+.text-field {
   position: relative;
   margin-bottom: var(--spacing-6);
 }
 
-.kmx-text-field__input {
+.text-field__input {
   width: 100%;
   height: 56px;
   padding: 16px;
@@ -465,24 +464,24 @@ Text fields use Material Design Component (MDC) patterns with CarMax customizati
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.kmx-text-field__input:focus {
+.text-field__input:focus {
   outline: none;
   border-color: var(--color-blue-700);
   box-shadow: var(--shadow-focus);
 }
 
-.kmx-text-field__input:invalid,
-.kmx-text-field__input--error {
+.text-field__input:invalid,
+.text-field__input--error {
   border-color: var(--color-error);
 }
 
-.kmx-text-field__input:disabled {
+.text-field__input:disabled {
   background-color: var(--color-gray-100);
   color: var(--color-gray-500);
   cursor: not-allowed;
 }
 
-.kmx-text-field__label {
+.text-field__label {
   position: absolute;
   top: 16px;
   left: 16px;
@@ -492,19 +491,19 @@ Text fields use Material Design Component (MDC) patterns with CarMax customizati
   pointer-events: none;
 }
 
-.kmx-text-field__label--float-above {
+.text-field__label--float-above {
   top: 8px;
   font-size: var(--text-caption);
   color: var(--color-blue-700);
 }
 
-.kmx-text-field__helper-text {
+.text-field__helper-text {
   margin-top: var(--spacing-1);
   font-size: var(--text-caption);
   color: var(--color-gray-600);
 }
 
-.kmx-text-field__helper-text--error {
+.text-field__helper-text--error {
   color: var(--color-error);
 }
 ```
@@ -512,12 +511,12 @@ Text fields use Material Design Component (MDC) patterns with CarMax customizati
 #### Select/Dropdown
 
 ```css
-.kmx-select {
+.select {
   position: relative;
   width: 100%;
 }
 
-.kmx-select__input {
+.select__input {
   appearance: none;
   width: 100%;
   height: 56px;
@@ -533,16 +532,16 @@ Text fields use Material Design Component (MDC) patterns with CarMax customizati
 #### Checkbox & Radio
 
 ```css
-.kmx-checkbox,
-.kmx-radio {
+.checkbox,
+.radio {
   display: flex;
   align-items: center;
   gap: var(--spacing-3);
   cursor: pointer;
 }
 
-.kmx-checkbox__input,
-.kmx-radio__input {
+.checkbox__input,
+.radio__input {
   width: 20px;
   height: 20px;
   border: 2px solid var(--color-gray-400);
@@ -550,8 +549,8 @@ Text fields use Material Design Component (MDC) patterns with CarMax customizati
   /* border-radius: 50%; for radio */
 }
 
-.kmx-checkbox__input:checked,
-.kmx-radio__input:checked {
+.checkbox__input:checked,
+.radio__input:checked {
   background-color: var(--color-blue-700);
   border-color: var(--color-blue-700);
 }
@@ -560,7 +559,7 @@ Text fields use Material Design Component (MDC) patterns with CarMax customizati
 ### Cards
 
 ```css
-.kmx-card {
+.card {
   background-color: var(--color-white);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
@@ -568,22 +567,22 @@ Text fields use Material Design Component (MDC) patterns with CarMax customizati
   transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
-.kmx-card:hover {
+.card:hover {
   box-shadow: var(--shadow-md);
   transform: translateY(-2px);
 }
 
-.kmx-card__image {
+.card__image {
   width: 100%;
   aspect-ratio: 16 / 10;
   object-fit: cover;
 }
 
-.kmx-card__content {
+.card__content {
   padding: var(--spacing-6);
 }
 
-.kmx-card__title {
+.card__title {
   font-family: var(--font-family-primary);
   font-size: var(--text-h4);
   font-weight: var(--font-weight-semibold);
@@ -591,14 +590,14 @@ Text fields use Material Design Component (MDC) patterns with CarMax customizati
   margin-bottom: var(--spacing-2);
 }
 
-.kmx-card__description {
+.card__description {
   font-family: var(--font-family-secondary);
   font-size: var(--text-body-sm);
   color: var(--color-gray-700);
   margin-bottom: var(--spacing-4);
 }
 
-.kmx-card__actions {
+.card__actions {
   display: flex;
   gap: var(--spacing-3);
   padding: var(--spacing-4) var(--spacing-6);
@@ -609,7 +608,7 @@ Text fields use Material Design Component (MDC) patterns with CarMax customizati
 ### Navigation
 
 ```css
-.kmx-navbar {
+.navbar {
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -617,7 +616,7 @@ Text fields use Material Design Component (MDC) patterns with CarMax customizati
   box-shadow: var(--shadow-sm);
 }
 
-.kmx-navbar__container {
+.navbar__container {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -626,16 +625,16 @@ Text fields use Material Design Component (MDC) patterns with CarMax customizati
   padding: var(--spacing-4) var(--spacing-6);
 }
 
-.kmx-navbar__logo {
+.navbar__logo {
   height: 32px;
 }
 
-.kmx-navbar__nav {
+.navbar__nav {
   display: flex;
   gap: var(--spacing-8);
 }
 
-.kmx-navbar__link {
+.navbar__link {
   font-family: var(--font-family-secondary);
   font-size: var(--text-body-md);
   font-weight: var(--font-weight-medium);
@@ -644,11 +643,11 @@ Text fields use Material Design Component (MDC) patterns with CarMax customizati
   transition: color 0.2s;
 }
 
-.kmx-navbar__link:hover {
+.navbar__link:hover {
   color: var(--color-blue-700);
 }
 
-.kmx-navbar__link--active {
+.navbar__link--active {
   color: var(--color-blue-700);
   border-bottom: 2px solid var(--color-blue-700);
 }
@@ -657,7 +656,7 @@ Text fields use Material Design Component (MDC) patterns with CarMax customizati
 ### Modals
 
 ```css
-.kmx-modal-overlay {
+.modal-overlay {
   position: fixed;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.5);
@@ -667,7 +666,7 @@ Text fields use Material Design Component (MDC) patterns with CarMax customizati
   z-index: 2000;
 }
 
-.kmx-modal {
+.modal {
   background-color: var(--color-white);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-xl);
@@ -677,7 +676,7 @@ Text fields use Material Design Component (MDC) patterns with CarMax customizati
   overflow-y: auto;
 }
 
-.kmx-modal__header {
+.modal__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -685,18 +684,18 @@ Text fields use Material Design Component (MDC) patterns with CarMax customizati
   border-bottom: 1px solid var(--color-gray-200);
 }
 
-.kmx-modal__title {
+.modal__title {
   font-family: var(--font-family-primary);
   font-size: var(--text-h4);
   font-weight: var(--font-weight-semibold);
   color: var(--color-gray-900);
 }
 
-.kmx-modal__body {
+.modal__body {
   padding: var(--spacing-6);
 }
 
-.kmx-modal__footer {
+.modal__footer {
   display: flex;
   justify-content: flex-end;
   gap: var(--spacing-3);
@@ -708,7 +707,7 @@ Text fields use Material Design Component (MDC) patterns with CarMax customizati
 ### Alerts & Notifications
 
 ```css
-.kmx-alert {
+.alert {
   display: flex;
   gap: var(--spacing-3);
   padding: var(--spacing-4);
@@ -717,23 +716,23 @@ Text fields use Material Design Component (MDC) patterns with CarMax customizati
   font-size: var(--text-body-sm);
 }
 
-.kmx-alert--info {
+.alert--info {
   background-color: var(--color-info-light);
   border-left: 4px solid var(--color-info);
   color: var(--color-gray-800);
 }
 
-.kmx-alert--success {
+.alert--success {
   background-color: var(--color-success-light);
   border-left: 4px solid var(--color-success);
 }
 
-.kmx-alert--warning {
+.alert--warning {
   background-color: var(--color-warning-light);
   border-left: 4px solid var(--color-warning);
 }
 
-.kmx-alert--error {
+.alert--error {
   background-color: var(--color-error-light);
   border-left: 4px solid var(--color-error);
 }
@@ -742,7 +741,7 @@ Text fields use Material Design Component (MDC) patterns with CarMax customizati
 ### Badges & Chips
 
 ```css
-.kmx-badge {
+.badge {
   display: inline-flex;
   align-items: center;
   padding: var(--spacing-1) var(--spacing-3);
@@ -751,22 +750,22 @@ Text fields use Material Design Component (MDC) patterns with CarMax customizati
   border-radius: var(--radius-full);
 }
 
-.kmx-badge--primary {
+.badge--primary {
   background-color: var(--color-blue-700);
   color: white;
 }
 
-.kmx-badge--secondary {
+.badge--secondary {
   background-color: var(--color-gray-200);
   color: var(--color-gray-800);
 }
 
-.kmx-badge--accent {
+.badge--accent {
   background-color: var(--color-yellow-700);
   color: var(--color-gray-900);
 }
 
-.kmx-chip {
+.chip {
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-2);
@@ -777,7 +776,7 @@ Text fields use Material Design Component (MDC) patterns with CarMax customizati
   cursor: pointer;
 }
 
-.kmx-chip--selected {
+.chip--selected {
   background-color: var(--color-blue-100);
   border: 1px solid var(--color-blue-700);
   color: var(--color-blue-700);
@@ -812,12 +811,12 @@ Text fields use Material Design Component (MDC) patterns with CarMax customizati
 
 ### WCAG 2.1 AA Compliance
 
-The CarMax design system is built to meet WCAG 2.1 AA standards:
+The platform design system is built to meet WCAG 2.1 AA standards:
 
 #### Color Contrast
 
-| Text Type | Minimum Ratio | CarMax Implementation |
-|-----------|---------------|----------------------|
+| Text Type | Minimum Ratio | Implementation |
+|-----------|---------------|----------------|
 | Normal text (< 18px) | 4.5:1 | All text colors meet this requirement |
 | Large text (≥ 18px bold or ≥ 24px) | 3:1 | Headlines and display text compliant |
 | UI components | 3:1 | All interactive elements compliant |
@@ -1100,15 +1099,4 @@ var(--transition-normal)      /* 200ms ease */
 
 | Version | Date | Changes |
 |---------|------|---------|
-| 1.0.0 | January 2026 | Initial release based on CarMax Horizon Design System |
-
----
-
-## Sources
-
-This style guide is based on analysis of the following resources:
-- [CarMax Design System](https://design.carmax.com)
-- [CarMax Brand Guidelines](https://brand.carmax.com)
-- [CarMax Logo Colors - SchemeColor](https://www.schemecolor.com/carmax-logo-colors.php)
-- [CarMax Brand Colors - BrandColorCode](https://www.brandcolorcode.com/carmax)
-- [CarMax Accessible Design System - Level Access](https://www.levelaccess.com/resources/slowing-down-to-speed-up-how-carmaxs-accessible-design-system-accelerated-inclusivity-and-innovation/)
+| 1.0.0 | January 2026 | Initial release |
