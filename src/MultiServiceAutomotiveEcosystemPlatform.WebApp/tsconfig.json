@@ -7,6 +7,11 @@
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
+    "paths": {
+      "multi-service-automotive-ecosystem-components": [
+        "./dist/multi-service-automotive-ecosystem-components"
+      ]
+    },
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
     "isolatedModules": true,
@@ -21,5 +26,25 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true
   },
-  "files": []
+  "files": [],
+  "references": [
+    {
+      "path": "./projects/multi-service-automotive-ecosystem-components/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/multi-service-automotive-ecosystem-components/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/multi-service-automotive-ecosystem/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/multi-service-automotive-ecosystem/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/multi-service-automotive-ecosystem-admin/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/multi-service-automotive-ecosystem-admin/tsconfig.spec.json"
+    }
+  ]
 }

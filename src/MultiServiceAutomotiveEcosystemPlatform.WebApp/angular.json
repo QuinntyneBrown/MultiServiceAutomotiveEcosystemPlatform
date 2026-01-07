@@ -6,5 +6,167 @@
   },
   "newProjectRoot": "projects",
   "projects": {
+    "multi-service-automotive-ecosystem-components": {
+      "projectType": "library",
+      "root": "projects/multi-service-automotive-ecosystem-components",
+      "sourceRoot": "projects/multi-service-automotive-ecosystem-components/src",
+      "prefix": "ms",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/multi-service-automotive-ecosystem-components/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/multi-service-automotive-ecosystem-components/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/multi-service-automotive-ecosystem-components/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "multi-service-automotive-ecosystem": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/multi-service-automotive-ecosystem",
+      "sourceRoot": "projects/multi-service-automotive-ecosystem/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "projects/multi-service-automotive-ecosystem/src/main.ts",
+            "tsConfig": "projects/multi-service-automotive-ecosystem/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/multi-service-automotive-ecosystem/public"
+              }
+            ],
+            "styles": [
+              "projects/multi-service-automotive-ecosystem/src/styles.scss"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "multi-service-automotive-ecosystem:build:production"
+            },
+            "development": {
+              "buildTarget": "multi-service-automotive-ecosystem:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test"
+        }
+      }
+    },
+    "multi-service-automotive-ecosystem-admin": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/multi-service-automotive-ecosystem-admin",
+      "sourceRoot": "projects/multi-service-automotive-ecosystem-admin/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "projects/multi-service-automotive-ecosystem-admin/src/main.ts",
+            "tsConfig": "projects/multi-service-automotive-ecosystem-admin/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/multi-service-automotive-ecosystem-admin/public"
+              }
+            ],
+            "styles": [
+              "projects/multi-service-automotive-ecosystem-admin/src/styles.scss"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "multi-service-automotive-ecosystem-admin:build:production"
+            },
+            "development": {
+              "buildTarget": "multi-service-automotive-ecosystem-admin:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test"
+        }
+      }
+    }
   }
 }
