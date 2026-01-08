@@ -1,0 +1,179 @@
+<div class="customer-form">
+  <div class="customer-form__header">
+    <h1 class="customer-form__title">
+      {{ isEditMode ? 'Edit Customer' : 'Add New Customer' }}
+    </h1>
+  </div>
+
+  <div class="customer-form__container">
+    <form [formGroup]="customerForm" (ngSubmit)="onSubmit()" class="customer-form__form">
+      <!-- Contact Information Section -->
+      <div class="customer-form__section">
+        <h2 class="customer-form__section-title">Contact Information</h2>
+        
+        <div class="customer-form__grid">
+          <div class="customer-form__field">
+            <label for="firstName" class="customer-form__label">
+              First Name <span class="customer-form__required">*</span>
+            </label>
+            <input
+              id="firstName"
+              type="text"
+              formControlName="firstName"
+              class="customer-form__input"
+              [class.customer-form__input--error]="isFieldInvalid('firstName')"
+            />
+            <span 
+              *ngIf="isFieldInvalid('firstName')"
+              class="customer-form__error"
+            >
+              {{ getFieldError('firstName') }}
+            </span>
+          </div>
+
+          <div class="customer-form__field">
+            <label for="lastName" class="customer-form__label">
+              Last Name <span class="customer-form__required">*</span>
+            </label>
+            <input
+              id="lastName"
+              type="text"
+              formControlName="lastName"
+              class="customer-form__input"
+              [class.customer-form__input--error]="isFieldInvalid('lastName')"
+            />
+            <span 
+              *ngIf="isFieldInvalid('lastName')"
+              class="customer-form__error"
+            >
+              {{ getFieldError('lastName') }}
+            </span>
+          </div>
+
+          <div class="customer-form__field">
+            <label for="email" class="customer-form__label">
+              Email <span class="customer-form__required">*</span>
+            </label>
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              class="customer-form__input"
+              [class.customer-form__input--error]="isFieldInvalid('email')"
+            />
+            <span 
+              *ngIf="isFieldInvalid('email')"
+              class="customer-form__error"
+            >
+              {{ getFieldError('email') }}
+            </span>
+          </div>
+
+          <div class="customer-form__field">
+            <label for="phone" class="customer-form__label">
+              Phone <span class="customer-form__required">*</span>
+            </label>
+            <input
+              id="phone"
+              type="tel"
+              formControlName="phone"
+              class="customer-form__input"
+              [class.customer-form__input--error]="isFieldInvalid('phone')"
+              placeholder="(555) 123-4567"
+            />
+            <span 
+              *ngIf="isFieldInvalid('phone')"
+              class="customer-form__error"
+            >
+              {{ getFieldError('phone') }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Address Section -->
+      <div class="customer-form__section">
+        <h2 class="customer-form__section-title">Address</h2>
+        
+        <div class="customer-form__grid">
+          <div class="customer-form__field customer-form__field--full">
+            <label for="address" class="customer-form__label">Street Address</label>
+            <input
+              id="address"
+              type="text"
+              formControlName="address"
+              class="customer-form__input"
+            />
+          </div>
+
+          <div class="customer-form__field">
+            <label for="city" class="customer-form__label">City</label>
+            <input
+              id="city"
+              type="text"
+              formControlName="city"
+              class="customer-form__input"
+            />
+          </div>
+
+          <div class="customer-form__field">
+            <label for="state" class="customer-form__label">State</label>
+            <input
+              id="state"
+              type="text"
+              formControlName="state"
+              class="customer-form__input"
+              placeholder="IL"
+            />
+          </div>
+
+          <div class="customer-form__field">
+            <label for="zip" class="customer-form__label">ZIP Code</label>
+            <input
+              id="zip"
+              type="text"
+              formControlName="zip"
+              class="customer-form__input"
+              placeholder="62701"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Notes Section -->
+      <div class="customer-form__section">
+        <h2 class="customer-form__section-title">Notes</h2>
+        
+        <div class="customer-form__field">
+          <label for="notes" class="customer-form__label">Internal Notes</label>
+          <textarea
+            id="notes"
+            formControlName="notes"
+            class="customer-form__textarea"
+            rows="4"
+            placeholder="Add any notes about this customer..."
+          ></textarea>
+        </div>
+      </div>
+
+      <!-- Form Actions -->
+      <div class="customer-form__actions">
+        <button
+          type="button"
+          (click)="onCancel()"
+          class="customer-form__btn customer-form__btn--secondary"
+          [disabled]="isSubmitting"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="customer-form__btn customer-form__btn--primary"
+          [disabled]="isSubmitting"
+        >
+          {{ isSubmitting ? 'Saving...' : (isEditMode ? 'Save Changes' : 'Add Customer') }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

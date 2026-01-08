@@ -1,0 +1,235 @@
+<div class="profile-management">
+  <div class="profile-management__header">
+    <h1 class="profile-management__title">Manage Your Profile</h1>
+  </div>
+
+  <div class="profile-management__container">
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="profile-management__form">
+      <!-- Basic Information Section -->
+      <div class="profile-management__section">
+        <h2 class="profile-management__section-title">Basic Information</h2>
+        
+        <div class="profile-management__grid">
+          <div class="profile-management__field">
+            <label for="businessName" class="profile-management__label">
+              Business Name <span class="profile-management__required">*</span>
+            </label>
+            <input
+              id="businessName"
+              type="text"
+              formControlName="businessName"
+              class="profile-management__input"
+              [class.profile-management__input--error]="isFieldInvalid('businessName')"
+            />
+            <span 
+              *ngIf="isFieldInvalid('businessName')"
+              class="profile-management__error"
+            >
+              {{ getFieldError('businessName') }}
+            </span>
+          </div>
+
+          <div class="profile-management__field">
+            <label for="personalName" class="profile-management__label">
+              Your Name <span class="profile-management__required">*</span>
+            </label>
+            <input
+              id="personalName"
+              type="text"
+              formControlName="personalName"
+              class="profile-management__input"
+              [class.profile-management__input--error]="isFieldInvalid('personalName')"
+            />
+            <span 
+              *ngIf="isFieldInvalid('personalName')"
+              class="profile-management__error"
+            >
+              {{ getFieldError('personalName') }}
+            </span>
+          </div>
+
+          <div class="profile-management__field">
+            <label for="title" class="profile-management__label">Title</label>
+            <input
+              id="title"
+              type="text"
+              formControlName="title"
+              class="profile-management__input"
+              placeholder="e.g., Owner, Master Technician"
+            />
+          </div>
+
+          <div class="profile-management__field">
+            <label for="businessType" class="profile-management__label">
+              Business Type <span class="profile-management__required">*</span>
+            </label>
+            <select
+              id="businessType"
+              formControlName="businessType"
+              class="profile-management__select"
+              [class.profile-management__input--error]="isFieldInvalid('businessType')"
+            >
+              <option value="">Select a type</option>
+              <option value="Auto Repair">Auto Repair</option>
+              <option value="Body Shop">Body Shop</option>
+              <option value="Detailing">Detailing</option>
+              <option value="Tires">Tires</option>
+              <option value="Glass Repair">Glass Repair</option>
+              <option value="Other">Other</option>
+            </select>
+            <span 
+              *ngIf="isFieldInvalid('businessType')"
+              class="profile-management__error"
+            >
+              {{ getFieldError('businessType') }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- About/Bio Section -->
+      <div class="profile-management__section">
+        <h2 class="profile-management__section-title">About Your Business</h2>
+        
+        <div class="profile-management__field">
+          <label for="bio" class="profile-management__label">
+            Bio/Description
+          </label>
+          <textarea
+            id="bio"
+            formControlName="bio"
+            class="profile-management__textarea"
+            rows="5"
+            placeholder="Tell customers about your business, experience, and services..."
+          ></textarea>
+          <div class="profile-management__field-hint">
+            {{ getBioCharacterCount() }} characters
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Information Section -->
+      <div class="profile-management__section">
+        <h2 class="profile-management__section-title">Contact Information</h2>
+        
+        <div class="profile-management__grid">
+          <div class="profile-management__field">
+            <label for="phone" class="profile-management__label">
+              Phone <span class="profile-management__required">*</span>
+            </label>
+            <input
+              id="phone"
+              type="tel"
+              formControlName="phone"
+              class="profile-management__input"
+              [class.profile-management__input--error]="isFieldInvalid('phone')"
+              placeholder="(555) 123-4567"
+            />
+            <span 
+              *ngIf="isFieldInvalid('phone')"
+              class="profile-management__error"
+            >
+              {{ getFieldError('phone') }}
+            </span>
+          </div>
+
+          <div class="profile-management__field">
+            <label for="email" class="profile-management__label">
+              Email <span class="profile-management__required">*</span>
+            </label>
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              class="profile-management__input"
+              [class.profile-management__input--error]="isFieldInvalid('email')"
+            />
+            <span 
+              *ngIf="isFieldInvalid('email')"
+              class="profile-management__error"
+            >
+              {{ getFieldError('email') }}
+            </span>
+          </div>
+
+          <div class="profile-management__field profile-management__field--full">
+            <label for="website" class="profile-management__label">Website</label>
+            <input
+              id="website"
+              type="url"
+              formControlName="website"
+              class="profile-management__input"
+              placeholder="https://yourwebsite.com"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Location Section -->
+      <div class="profile-management__section">
+        <h2 class="profile-management__section-title">Location</h2>
+        
+        <div class="profile-management__grid">
+          <div class="profile-management__field profile-management__field--full">
+            <label for="address" class="profile-management__label">Street Address</label>
+            <input
+              id="address"
+              type="text"
+              formControlName="address"
+              class="profile-management__input"
+            />
+          </div>
+
+          <div class="profile-management__field">
+            <label for="city" class="profile-management__label">City</label>
+            <input
+              id="city"
+              type="text"
+              formControlName="city"
+              class="profile-management__input"
+            />
+          </div>
+
+          <div class="profile-management__field">
+            <label for="state" class="profile-management__label">State</label>
+            <input
+              id="state"
+              type="text"
+              formControlName="state"
+              class="profile-management__input"
+              placeholder="IL"
+            />
+          </div>
+
+          <div class="profile-management__field">
+            <label for="zip" class="profile-management__label">ZIP Code</label>
+            <input
+              id="zip"
+              type="text"
+              formControlName="zip"
+              class="profile-management__input"
+              placeholder="62701"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Actions -->
+      <div class="profile-management__actions">
+        <a
+          routerLink="/professional/dashboard"
+          class="profile-management__btn profile-management__btn--secondary"
+        >
+          Cancel
+        </a>
+        <button
+          type="submit"
+          class="profile-management__btn profile-management__btn--primary"
+          [disabled]="isSubmitting"
+        >
+          {{ isSubmitting ? 'Saving...' : 'Save Changes' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

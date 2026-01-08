@@ -1,0 +1,148 @@
+<div class="specialty-management">
+  <div class="specialty-management__header">
+    <h1 class="specialty-management__title">Manage Specialties</h1>
+  </div>
+
+  <div class="specialty-management__container">
+    <div class="specialty-management__content">
+      <!-- Current Specialties Section -->
+      <div class="specialty-management__section">
+        <div class="specialty-management__section-header">
+          <h2 class="specialty-management__section-title">Your Specialties</h2>
+          <button 
+            type="button"
+            (click)="openAddModal()"
+            class="specialty-management__add-btn"
+          >
+            + Add Specialty
+          </button>
+        </div>
+
+        <div class="specialty-management__specialties-list">
+          <ng-container *ngIf="mySpecialties$ | async as specialties">
+            <div 
+              *ngFor="let item of specialties"
+              class="specialty-management__specialty-item"
+            >
+              <div class="specialty-management__specialty-info">
+                <h3 class="specialty-management__specialty-name">{{ item.specialty.name }}</h3>
+                <span class="specialty-management__specialty-category">{{ item.specialty.category }}</span>
+              </div>
+              <div class="specialty-management__specialty-meta">
+                <div class="specialty-management__experience">
+                  <label class="specialty-management__experience-label">Years of experience:</label>
+                  <input
+                    type="number"
+                    [value]="item.experienceYears"
+                    (change)="updateExperienceYears(item.id, $any($event.target).value)"
+                    class="specialty-management__experience-input"
+                    min="0"
+                    max="50"
+                  />
+                </div>
+                <button
+                  type="button"
+                  (click)="removeSpecialty(item.id)"
+                  class="specialty-management__remove-btn"
+                >
+                  Remove
+                </button>
+              </div>
+            </div>
+
+            <div *ngIf="specialties.length === 0" class="specialty-management__empty">
+              <p>You haven't added any specialties yet.</p>
+              <p>Click "Add Specialty" to get started.</p>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <!-- Back Button -->
+      <div class="specialty-management__actions">
+        <a
+          routerLink="/professional/dashboard"
+          class="specialty-management__back-btn"
+        >
+          ← Back to Dashboard
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Specialty Modal -->
+  <div 
+    *ngIf="showAddModal"
+    class="specialty-management__modal-overlay"
+    (click)="closeAddModal()"
+  >
+    <div 
+      class="specialty-management__modal"
+      (click)="$event.stopPropagation()"
+    >
+      <div class="specialty-management__modal-header">
+        <h2 class="specialty-management__modal-title">Add Specialty</h2>
+        <button
+          type="button"
+          (click)="closeAddModal()"
+          class="specialty-management__modal-close"
+        >
+          ×
+        </button>
+      </div>
+
+      <div class="specialty-management__modal-body">
+        <!-- Search and Filter -->
+        <div class="specialty-management__modal-filters">
+          <input
+            type="text"
+            [(ngModel)]="searchQuery"
+            placeholder="Search specialties..."
+            class="specialty-management__modal-search"
+          />
+          <select
+            [(ngModel)]="selectedCategory"
+            class="specialty-management__modal-select"
+          >
+            <option value="all">All Categories</option>
+            <option value="General Repair">General Repair</option>
+            <option value="Maintenance">Maintenance</option>
+            <option value="Specialized">Specialized</option>
+            <option value="Climate Control">Climate Control</option>
+          </select>
+        </div>
+
+        <!-- Available Specialties List -->
+        <div class="specialty-management__modal-list">
+          <ng-container *ngIf="availableSpecialties$ | async as specialties">
+            <button
+              type="button"
+              *ngFor="let specialty of specialties"
+              (click)="addSpecialty(specialty)"
+              class="specialty-management__modal-item"
+            >
+              <div class="specialty-management__modal-item-info">
+                <span class="specialty-management__modal-item-name">{{ specialty.name }}</span>
+                <span class="specialty-management__modal-item-category">{{ specialty.category }}</span>
+              </div>
+              <span class="specialty-management__modal-item-action">Add →</span>
+            </button>
+          </ng-container>
+        </div>
+
+        <!-- Add Custom Specialty Option -->
+        <div class="specialty-management__modal-footer">
+          <p class="specialty-management__modal-hint">
+            Don't see what you're looking for?
+          </p>
+          <button
+            type="button"
+            class="specialty-management__custom-btn"
+          >
+            Add Custom Specialty
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,180 @@
+.profile-management {
+  min-height: 100vh;
+  background-color: var(--color-bg-secondary, #FAFAFA);
+
+  &__header {
+    background: linear-gradient(135deg, var(--color-blue-700, #00529F) 0%, var(--color-blue-900, #001F3F) 100%);
+    color: white;
+    padding: var(--spacing-8, 2rem) var(--spacing-6, 1.5rem);
+  }
+
+  &__title {
+    font-size: var(--text-h1, 2rem);
+    font-weight: var(--font-weight-bold, 700);
+    margin: 0;
+    max-width: var(--container-max-width, 1200px);
+    margin: 0 auto;
+  }
+
+  &__container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: var(--spacing-8, 2rem) var(--spacing-6, 1.5rem);
+  }
+
+  &__form {
+    background: white;
+    border-radius: var(--radius-lg, 0.75rem);
+    box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.1));
+    padding: var(--spacing-8, 2rem);
+  }
+
+  &__section {
+    margin-bottom: var(--spacing-8, 2rem);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__section-title {
+    font-size: var(--text-h3, 1.5rem);
+    font-weight: var(--font-weight-semibold, 600);
+    color: var(--color-gray-900, #1A1A1A);
+    margin: 0 0 var(--spacing-6, 1.5rem) 0;
+    padding-bottom: var(--spacing-3, 0.75rem);
+    border-bottom: 2px solid var(--color-gray-200, #E5E7EB);
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-4, 1rem) var(--spacing-6, 1.5rem);
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2, 0.5rem);
+
+    &--full {
+      grid-column: 1 / -1;
+    }
+  }
+
+  &__label {
+    font-size: var(--text-sm, 0.875rem);
+    font-weight: var(--font-weight-medium, 500);
+    color: var(--color-gray-700, #4B5563);
+  }
+
+  &__required {
+    color: var(--color-red-600, #DC2626);
+  }
+
+  &__input,
+  &__select {
+    padding: var(--spacing-3, 0.75rem);
+    border: 1px solid var(--color-gray-300, #D1D5DB);
+    border-radius: var(--radius-md, 0.5rem);
+    font-size: var(--text-body, 1rem);
+    transition: all 0.2s ease;
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-blue-700, #00529F);
+      box-shadow: 0 0 0 3px rgba(0, 82, 159, 0.1);
+    }
+
+    &--error {
+      border-color: var(--color-red-600, #DC2626);
+
+      &:focus {
+        border-color: var(--color-red-600, #DC2626);
+        box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+      }
+    }
+  }
+
+  &__select {
+    background-color: white;
+    cursor: pointer;
+  }
+
+  &__textarea {
+    padding: var(--spacing-3, 0.75rem);
+    border: 1px solid var(--color-gray-300, #D1D5DB);
+    border-radius: var(--radius-md, 0.5rem);
+    font-size: var(--text-body, 1rem);
+    font-family: inherit;
+    resize: vertical;
+    transition: all 0.2s ease;
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-blue-700, #00529F);
+      box-shadow: 0 0 0 3px rgba(0, 82, 159, 0.1);
+    }
+  }
+
+  &__field-hint {
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-gray-600, #6B7280);
+  }
+
+  &__error {
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-red-600, #DC2626);
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-4, 1rem);
+    margin-top: var(--spacing-8, 2rem);
+    padding-top: var(--spacing-6, 1.5rem);
+    border-top: 1px solid var(--color-gray-200, #E5E7EB);
+  }
+
+  &__btn {
+    padding: var(--spacing-3, 0.75rem) var(--spacing-8, 2rem);
+    border: none;
+    border-radius: var(--radius-md, 0.5rem);
+    font-size: var(--text-body, 1rem);
+    font-weight: var(--font-weight-semibold, 600);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    &--primary {
+      background-color: var(--color-blue-700, #00529F);
+      color: white;
+
+      &:hover:not(:disabled) {
+        background-color: var(--color-blue-800, #003D7A);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md, 0 4px 6px rgba(0, 0, 0, 0.1));
+      }
+    }
+
+    &--secondary {
+      background-color: white;
+      color: var(--color-gray-700, #4B5563);
+      border: 1px solid var(--color-gray-300, #D1D5DB);
+
+      &:hover:not(:disabled) {
+        background-color: var(--color-gray-50, #F9FAFB);
+      }
+    }
+  }
+}
