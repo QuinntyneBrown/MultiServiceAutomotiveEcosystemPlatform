@@ -22,9 +22,9 @@ public class ProfessionalTests
             "john@example.com",
             "1234567890",
             "123 Main St",
-            "Boston",
-            "MA",
-            "02101");
+            "Toronto",
+            "ON",
+            "M5H 2N2");
 
         // Assert
         Assert.NotEqual(Guid.Empty, professional.ProfessionalId);
@@ -59,9 +59,9 @@ public class ProfessionalTests
             "john@example.com",
             "1234567890",
             "123 Main St",
-            "Boston",
-            "MA",
-            "02101");
+            "Toronto",
+            "ON",
+            "M5H 2N2");
 
         // Assert
         Assert.Equal("john-s-auto-shop", professional.Slug);
@@ -76,7 +76,7 @@ public class ProfessionalTests
         Assert.Throws<ArgumentException>(() => new Professional(
             _tenantId, _userId, businessName, BusinessType.MechanicDomestic,
             "John", "Smith", "john@example.com", "1234567890",
-            "123 Main St", "Boston", "MA", "02101"));
+            "123 Main St", "Toronto", "ON", "M5H 2N2"));
     }
 
     [Theory]
@@ -87,7 +87,7 @@ public class ProfessionalTests
         Assert.Throws<ArgumentException>(() => new Professional(
             _tenantId, _userId, "Business", BusinessType.MechanicDomestic,
             "John", "Smith", email, "1234567890",
-            "123 Main St", "Boston", "MA", "02101"));
+            "123 Main St", "Toronto", "ON", "M5H 2N2"));
     }
 
     [Theory]
@@ -98,7 +98,7 @@ public class ProfessionalTests
         Assert.Throws<ArgumentException>(() => new Professional(
             _tenantId, _userId, "Business", BusinessType.MechanicDomestic,
             "John", "Smith", "john@example.com", phone,
-            "123 Main St", "Boston", "MA", "02101"));
+            "123 Main St", "Toronto", "ON", "M5H 2N2"));
     }
 
     [Fact]
@@ -156,14 +156,14 @@ public class ProfessionalTests
         var professional = CreateProfessional();
 
         // Act
-        professional.UpdateAddress("456 Oak St", "Suite 100", "New York", "NY", "10001");
+        professional.UpdateAddress("456 Oak St", "Suite 100", "Vancouver", "BC", "V5K 0A1");
 
         // Assert
         Assert.Equal("456 Oak St", professional.AddressLine1);
         Assert.Equal("Suite 100", professional.AddressLine2);
-        Assert.Equal("New York", professional.City);
-        Assert.Equal("NY", professional.State);
-        Assert.Equal("10001", professional.PostalCode);
+        Assert.Equal("Vancouver", professional.City);
+        Assert.Equal("BC", professional.Province);
+        Assert.Equal("V5K 0A1", professional.PostalCode);
     }
 
     [Fact]
@@ -324,8 +324,8 @@ public class ProfessionalTests
             "john@example.com",
             "1234567890",
             "123 Main St",
-            "Boston",
-            "MA",
-            "02101");
+            "Toronto",
+            "ON",
+            "M5H 2N2");
     }
 }

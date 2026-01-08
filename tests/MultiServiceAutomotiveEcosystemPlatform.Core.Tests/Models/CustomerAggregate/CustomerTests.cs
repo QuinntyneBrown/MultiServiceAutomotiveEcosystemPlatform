@@ -134,15 +134,15 @@ public class CustomerTests
         var customer = new Customer(_tenantId, "test@example.com", "1234567890", "John", "Doe");
 
         // Act
-        customer.UpdateAddress("123 Main St", "Apt 4", "Boston", "MA", "02101", "US");
+        customer.UpdateAddress("123 Main St", "Apt 4", "Toronto", "ON", "M5H 2N2", "CA");
 
         // Assert
         Assert.Equal("123 Main St", customer.AddressLine1);
         Assert.Equal("Apt 4", customer.AddressLine2);
-        Assert.Equal("Boston", customer.City);
-        Assert.Equal("MA", customer.State);
-        Assert.Equal("02101", customer.PostalCode);
-        Assert.Equal("US", customer.Country);
+        Assert.Equal("Toronto", customer.City);
+        Assert.Equal("ON", customer.Province);
+        Assert.Equal("M5H 2N2", customer.PostalCode);
+        Assert.Equal("CA", customer.Country);
     }
 
     [Fact]

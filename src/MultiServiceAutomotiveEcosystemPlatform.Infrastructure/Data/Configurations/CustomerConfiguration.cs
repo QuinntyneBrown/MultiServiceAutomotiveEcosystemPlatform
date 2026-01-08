@@ -54,7 +54,7 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
         builder.Property(c => c.City)
             .HasMaxLength(100);
 
-        builder.Property(c => c.State)
+        builder.Property(c => c.Province)
             .HasMaxLength(50);
 
         builder.Property(c => c.PostalCode)

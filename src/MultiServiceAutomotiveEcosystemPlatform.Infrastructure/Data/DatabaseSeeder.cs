@@ -84,7 +84,7 @@ public class DatabaseSeeder
             // Maintenance
             new SpecialtyCatalog("Oil Change & Lubrication", "Maintenance", null, "Routine oil changes and fluid services", "oil-can"),
             new SpecialtyCatalog("Preventive Maintenance", "Maintenance", null, "Scheduled maintenance services", "calendar-check"),
-            new SpecialtyCatalog("State Inspections", "Inspection", null, "Vehicle safety and emissions inspections", "clipboard-list"),
+            new SpecialtyCatalog("Provincial Inspections", "Inspection", null, "Vehicle safety and emissions inspections", "clipboard-list"),
         };
 
         _context.SpecialtyCatalogs.AddRange(specialties);
