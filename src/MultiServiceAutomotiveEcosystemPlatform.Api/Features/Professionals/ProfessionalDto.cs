@@ -19,7 +19,7 @@ public class ProfessionalDto
     public string? PhoneBusiness { get; set; }
     public string? Website { get; set; }
     public string City { get; set; } = string.Empty;
-    public string State { get; set; } = string.Empty;
+    public string Province { get; set; } = string.Empty;
     public string PostalCode { get; set; } = string.Empty;
     public string? ProfilePhotoUrl { get; set; }
     public string? CoverPhotoUrl { get; set; }

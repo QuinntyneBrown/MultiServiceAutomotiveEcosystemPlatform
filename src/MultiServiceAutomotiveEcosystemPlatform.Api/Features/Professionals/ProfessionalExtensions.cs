@@ -25,7 +25,7 @@ public static class ProfessionalExtensions
             PhoneBusiness = professional.PhoneBusiness,
             Website = professional.Website,
             City = professional.City,
-            State = professional.State,
+            Province = professional.Province,
             PostalCode = professional.PostalCode,
             ProfilePhotoUrl = professional.ProfilePhotoUrl,
             CoverPhotoUrl = professional.CoverPhotoUrl,
