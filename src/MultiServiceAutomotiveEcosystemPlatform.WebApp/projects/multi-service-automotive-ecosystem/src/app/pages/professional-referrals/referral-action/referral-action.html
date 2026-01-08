@@ -1,0 +1,303 @@
+<div class="referral-action">
+  <ng-container *ngIf="referral$ | async as referral">
+    <div class="referral-action__header">
+      <h1 class="referral-action__title">Referral Details</h1>
+      <div class="referral-action__priority" [ngClass]="getPriorityClass(referral.priority)">
+        {{ getPriorityLabel(referral.priority) }}
+      </div>
+    </div>
+
+    <div class="referral-action__container">
+      <!-- Customer Information -->
+      <div class="referral-action__card">
+        <h2 class="referral-action__card-title">Customer Information</h2>
+        <div class="referral-action__info-grid">
+          <div class="referral-action__info-item">
+            <span class="referral-action__info-label">Name:</span>
+            <span class="referral-action__info-value">{{ referral.customerName }}</span>
+          </div>
+          <div class="referral-action__info-item">
+            <span class="referral-action__info-label">Email:</span>
+            <span class="referral-action__info-value">{{ referral.customerEmail }}</span>
+          </div>
+          <div class="referral-action__info-item">
+            <span class="referral-action__info-label">Phone:</span>
+            <span class="referral-action__info-value">{{ referral.customerPhone }}</span>
+          </div>
+          <div class="referral-action__info-item">
+            <span class="referral-action__info-label">Vehicle:</span>
+            <span class="referral-action__info-value">{{ referral.vehicles[0] }}</span>
+          </div>
+        </div>
+        <div class="referral-action__contact-actions">
+          <button
+            type="button"
+            class="referral-action__contact-btn"
+            (click)="contactCustomer('phone', referral)"
+          >
+            📞 Call Customer
+          </button>
+          <button
+            type="button"
+            class="referral-action__contact-btn"
+            (click)="contactCustomer('email', referral)"
+          >
+            ✉️ Email Customer
+          </button>
+        </div>
+      </div>
+
+      <!-- Referral Information -->
+      <div class="referral-action__card">
+        <h2 class="referral-action__card-title">Referral Information</h2>
+        <div class="referral-action__info-item">
+          <span class="referral-action__info-label">Referred by:</span>
+          <span class="referral-action__info-value">{{ referral.sourceProfessionalName }}</span>
+        </div>
+        <div class="referral-action__info-item">
+          <span class="referral-action__info-label">Service Needed:</span>
+          <span class="referral-action__info-value">{{ referral.serviceNeeded }}</span>
+        </div>
+        <div class="referral-action__info-item">
+          <span class="referral-action__info-label">Reason:</span>
+          <p class="referral-action__info-text">{{ referral.reasonForReferral }}</p>
+        </div>
+        @if (referral.internalNotes) {
+          <div class="referral-action__info-item">
+            <span class="referral-action__info-label">Notes:</span>
+            <p class="referral-action__info-text">{{ referral.internalNotes }}</p>
+          </div>
+        }
+        <div class="referral-action__info-item">
+          <span class="referral-action__info-label">Received:</span>
+          <span class="referral-action__info-value">{{ referral.receivedDate | date: 'MMM d, y' }}</span>
+        </div>
+      </div>
+
+      <!-- Discount Information -->
+      @if (referral.hasDiscount) {
+        <div class="referral-action__card referral-action__card--discount">
+          <h2 class="referral-action__card-title">Discount Offer</h2>
+          <div class="referral-action__discount-info">
+            <div class="referral-action__discount-value">
+              {{ referral.discountValue }}{{ referral.discountType === 'percentage' ? '%' : '$' }} OFF
+            </div>
+            <div class="referral-action__discount-detail">
+              Expires: {{ referral.discountExpiration | date: 'MMM d, y' }}
+            </div>
+          </div>
+        </div>
+      }
+
+      <!-- Action Buttons -->
+      <div class="referral-action__actions">
+        <button
+          type="button"
+          class="referral-action__btn referral-action__btn--decline"
+          (click)="openDeclineModal()"
+        >
+          Decline
+        </button>
+        <button
+          type="button"
+          class="referral-action__btn referral-action__btn--accept"
+          (click)="openAcceptModal()"
+        >
+          Accept Referral
+        </button>
+      </div>
+    </div>
+
+    <!-- Accept Modal -->
+    @if (showAcceptModal()) {
+      <div class="referral-action__modal-overlay" (click)="closeAcceptModal()">
+        <div class="referral-action__modal" (click)="$event.stopPropagation()">
+          <div class="referral-action__modal-header">
+            <h2 class="referral-action__modal-title">Accept Referral</h2>
+            <button
+              type="button"
+              class="referral-action__modal-close"
+              (click)="closeAcceptModal()"
+            >
+              &times;
+            </button>
+          </div>
+          
+          <form [formGroup]="acceptForm" (ngSubmit)="acceptReferral()" class="referral-action__modal-form">
+            <div class="referral-action__modal-summary">
+              <p>You're about to accept a referral for <strong>{{ referral.customerName }}</strong></p>
+              <p>Service: <strong>{{ referral.serviceNeeded }}</strong></p>
+            </div>
+
+            @if (referral.hasDiscount) {
+              <div class="referral-action__modal-field">
+                <label class="referral-action__checkbox-label">
+                  <input
+                    type="checkbox"
+                    formControlName="honorDiscount"
+                    class="referral-action__checkbox"
+                  />
+                  <span>Honor {{ referral.discountValue }}{{ referral.discountType === 'percentage' ? '%' : '$' }} discount</span>
+                </label>
+              </div>
+            }
+
+            <div class="referral-action__modal-field">
+              <label for="messageToSender" class="referral-action__modal-label">
+                Message to {{ referral.sourceProfessionalName }} (Optional)
+              </label>
+              <textarea
+                id="messageToSender"
+                formControlName="messageToSender"
+                class="referral-action__modal-textarea"
+                placeholder="Thank you for the referral..."
+                rows="3"
+              ></textarea>
+            </div>
+
+            <div class="referral-action__modal-field">
+              <label for="expectedFollowUpDate" class="referral-action__modal-label">
+                Expected Follow-up Date (Optional)
+              </label>
+              <input
+                id="expectedFollowUpDate"
+                type="date"
+                formControlName="expectedFollowUpDate"
+                class="referral-action__modal-input"
+              />
+            </div>
+
+            <div class="referral-action__modal-actions">
+              <button
+                type="button"
+                class="referral-action__btn referral-action__btn--secondary"
+                (click)="closeAcceptModal()"
+                [disabled]="isSubmitting"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="referral-action__btn referral-action__btn--accept"
+                [disabled]="isSubmitting"
+              >
+                @if (isSubmitting) {
+                  <span>Accepting...</span>
+                } @else {
+                  <span>Confirm Accept</span>
+                }
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    }
+
+    <!-- Decline Modal -->
+    @if (showDeclineModal()) {
+      <div class="referral-action__modal-overlay" (click)="closeDeclineModal()">
+        <div class="referral-action__modal" (click)="$event.stopPropagation()">
+          <div class="referral-action__modal-header">
+            <h2 class="referral-action__modal-title">Decline Referral</h2>
+            <button
+              type="button"
+              class="referral-action__modal-close"
+              (click)="closeDeclineModal()"
+            >
+              &times;
+            </button>
+          </div>
+          
+          <form [formGroup]="declineForm" (ngSubmit)="declineReferral()" class="referral-action__modal-form">
+            <div class="referral-action__modal-field">
+              <label for="reason" class="referral-action__modal-label">
+                Reason for Declining <span class="referral-action__required">*</span>
+              </label>
+              <select
+                id="reason"
+                formControlName="reason"
+                class="referral-action__modal-select"
+                [class.referral-action__modal-select--error]="getFieldError(declineForm, 'reason')"
+              >
+                <option value="">-- Select a reason --</option>
+                <option *ngFor="let reason of declineReasons" [value]="reason">
+                  {{ reason }}
+                </option>
+              </select>
+              @if (getFieldError(declineForm, 'reason')) {
+                <span class="referral-action__error">{{ getFieldError(declineForm, 'reason') }}</span>
+              }
+            </div>
+
+            @if (declineForm.get('reason')?.value === 'Other') {
+              <div class="referral-action__modal-field">
+                <label for="otherReason" class="referral-action__modal-label">
+                  Please specify <span class="referral-action__required">*</span>
+                </label>
+                <input
+                  id="otherReason"
+                  type="text"
+                  formControlName="otherReason"
+                  class="referral-action__modal-input"
+                  [class.referral-action__modal-input--error]="getFieldError(declineForm, 'otherReason')"
+                  placeholder="Specify reason..."
+                />
+                @if (getFieldError(declineForm, 'otherReason')) {
+                  <span class="referral-action__error">{{ getFieldError(declineForm, 'otherReason') }}</span>
+                }
+              </div>
+            }
+
+            <div class="referral-action__modal-field">
+              <label for="suggestAlternative" class="referral-action__modal-label">
+                Suggest Alternative Professional (Optional)
+              </label>
+              <input
+                id="suggestAlternative"
+                type="text"
+                formControlName="suggestAlternative"
+                class="referral-action__modal-input"
+                placeholder="Recommend another professional..."
+              />
+            </div>
+
+            <div class="referral-action__modal-field">
+              <label for="declineMessage" class="referral-action__modal-label">
+                Message to {{ referral.sourceProfessionalName }} (Optional)
+              </label>
+              <textarea
+                id="declineMessage"
+                formControlName="messageToSender"
+                class="referral-action__modal-textarea"
+                placeholder="Add a message..."
+                rows="3"
+              ></textarea>
+            </div>
+
+            <div class="referral-action__modal-actions">
+              <button
+                type="button"
+                class="referral-action__btn referral-action__btn--secondary"
+                (click)="closeDeclineModal()"
+                [disabled]="isSubmitting"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="referral-action__btn referral-action__btn--decline"
+                [disabled]="declineForm.invalid || isSubmitting"
+              >
+                @if (isSubmitting) {
+                  <span>Declining...</span>
+                } @else {
+                  <span>Confirm Decline</span>
+                }
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    }
+  </ng-container>
+</div>

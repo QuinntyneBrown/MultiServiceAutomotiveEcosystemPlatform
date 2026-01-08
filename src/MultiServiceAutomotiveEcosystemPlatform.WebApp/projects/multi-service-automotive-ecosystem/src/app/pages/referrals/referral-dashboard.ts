@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable, of } from 'rxjs';
+import { ShareReferral, UserInfo } from 'multi-service-automotive-ecosystem-components';
 
 interface ReferralStats {
   totalReferrals: number;
@@ -20,7 +21,7 @@ interface Referral {
 
 @Component({
   selector: 'app-referral-dashboard',
-  imports: [CommonModule],
+  imports: [CommonModule, ShareReferral],
   templateUrl: './referral-dashboard.html',
   styleUrl: './referral-dashboard.scss',
 })
@@ -29,6 +30,15 @@ export class ReferralDashboard {
   stats$: Observable<ReferralStats> = this.loadStats();
   referrals$: Observable<Referral[]> = this.loadReferrals();
   referralCode = 'WELCOME2024';
+  showShareModal = signal(false);
+  
+  // Mock user info for share modal
+  currentUser: UserInfo = {
+    id: '1',
+    firstName: 'John',
+    lastName: 'Doe',
+    email: 'john.doe@example.com'
+  };
 
   private loadStats(): Observable<ReferralStats> {
     // Mock data - replace with actual API call
@@ -76,6 +86,24 @@ export class ReferralDashboard {
     navigator.clipboard.writeText(this.referralCode);
     // Show toast notification - implement later
     console.log('Referral code copied to clipboard');
+  }
+
+  openShareModal(): void {
+    this.showShareModal.set(true);
+  }
+
+  closeShareModal(): void {
+    this.showShareModal.set(false);
+  }
+
+  onShareSuccess(event: any): void {
+    console.log('Share success:', event);
+    // Handle success - could show toast notification
+  }
+
+  onShareError(event: any): void {
+    console.error('Share error:', event);
+    // Handle error - could show error notification
   }
 
   getStatusClass(status: string): string {

@@ -1,0 +1,123 @@
+<div class="referral-invitation">
+  <div class="referral-invitation__header">
+    <h2 class="referral-invitation__title">Send Referral Invitation</h2>
+    <p class="referral-invitation__subtitle">Invite a friend to join our platform</p>
+  </div>
+
+  <form [formGroup]="invitationForm" (ngSubmit)="sendInvitation()" class="referral-invitation__form">
+    <!-- Friend's Name -->
+    <div class="referral-invitation__field">
+      <label for="friendName" class="referral-invitation__label">
+        Friend's Name <span class="referral-invitation__required">*</span>
+      </label>
+      <input
+        id="friendName"
+        type="text"
+        formControlName="friendName"
+        class="referral-invitation__input"
+        [class.referral-invitation__input--error]="getFieldError('friendName')"
+        placeholder="Enter your friend's name"
+      />
+      @if (getFieldError('friendName')) {
+        <span class="referral-invitation__error">{{ getFieldError('friendName') }}</span>
+      }
+    </div>
+
+    <!-- Friend's Email -->
+    <div class="referral-invitation__field">
+      <label for="friendEmail" class="referral-invitation__label">
+        Friend's Email <span class="referral-invitation__required">*</span>
+      </label>
+      <input
+        id="friendEmail"
+        type="email"
+        formControlName="friendEmail"
+        class="referral-invitation__input"
+        [class.referral-invitation__input--error]="getFieldError('friendEmail')"
+        placeholder="friend@example.com"
+      />
+      @if (getFieldError('friendEmail')) {
+        <span class="referral-invitation__error">{{ getFieldError('friendEmail') }}</span>
+      }
+    </div>
+
+    <!-- Friend's Phone (Optional) -->
+    <div class="referral-invitation__field">
+      <label for="friendPhone" class="referral-invitation__label">
+        Friend's Phone (Optional)
+      </label>
+      <input
+        id="friendPhone"
+        type="tel"
+        formControlName="friendPhone"
+        class="referral-invitation__input"
+        placeholder="(555) 123-4567"
+      />
+    </div>
+
+    <!-- Select Professional (Optional) -->
+    @if (professionals.length > 0) {
+      <div class="referral-invitation__field">
+        <label for="professionalId" class="referral-invitation__label">
+          Recommend a Professional (Optional)
+        </label>
+        <select
+          id="professionalId"
+          formControlName="professionalId"
+          class="referral-invitation__select"
+        >
+          <option value="">-- Select a professional --</option>
+          @for (professional of professionals; track professional.id) {
+            <option [value]="professional.id">
+              {{ professional.name }} - {{ professional.businessType }}
+            </option>
+          }
+        </select>
+      </div>
+    }
+
+    <!-- Personal Message -->
+    <div class="referral-invitation__field">
+      <label for="message" class="referral-invitation__label">
+        Personal Message (Optional)
+      </label>
+      <textarea
+        id="message"
+        formControlName="message"
+        class="referral-invitation__textarea"
+        [class.referral-invitation__textarea--error]="getFieldError('message')"
+        placeholder="Add a personal note to your invitation..."
+        rows="4"
+      ></textarea>
+      <div class="referral-invitation__char-count">
+        {{ messageCharCount }} / 500
+      </div>
+      @if (getFieldError('message')) {
+        <span class="referral-invitation__error">{{ getFieldError('message') }}</span>
+      }
+    </div>
+
+    <!-- Actions -->
+    <div class="referral-invitation__actions">
+      <button
+        type="button"
+        class="referral-invitation__btn referral-invitation__btn--cancel"
+        (click)="onCancel()"
+        [disabled]="isSubmitting"
+      >
+        Cancel
+      </button>
+      <button
+        type="submit"
+        class="referral-invitation__btn referral-invitation__btn--submit"
+        [disabled]="invitationForm.invalid || isSubmitting"
+      >
+        @if (isSubmitting) {
+          <span>Sending...</span>
+        } @else {
+          <span>Send Invitation</span>
+        }
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,124 @@
+<div class="referral-landing">
+  <ng-container *ngIf="referrerInfo$ | async as referrerInfo">
+    <!-- Hero Section -->
+    <section class="referral-landing__hero">
+      <div class="referral-landing__hero-content">
+        <h1 class="referral-landing__hero-title">
+          {{ referrerInfo.name }} invited you!
+        </h1>
+        <div class="referral-landing__discount-badge">
+          <span class="referral-landing__discount-value">{{ referrerInfo.discountPercent }}% OFF</span>
+          <span class="referral-landing__discount-text">Your First Service</span>
+        </div>
+        <p class="referral-landing__hero-subtitle">
+          Join thousands of satisfied customers on our automotive service platform
+        </p>
+        <button
+          type="button"
+          class="referral-landing__cta-btn"
+          (click)="signUp()"
+        >
+          Sign Up Now
+        </button>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="referral-landing__section">
+      <div class="referral-landing__container">
+        <h2 class="referral-landing__section-title">Why Join Our Platform?</h2>
+        <div class="referral-landing__features">
+          <div class="referral-landing__feature">
+            <div class="referral-landing__feature-icon">🔧</div>
+            <h3 class="referral-landing__feature-title">Trusted Professionals</h3>
+            <p class="referral-landing__feature-text">
+              Connect with verified automotive service professionals in your area
+            </p>
+          </div>
+          <div class="referral-landing__feature">
+            <div class="referral-landing__feature-icon">💰</div>
+            <h3 class="referral-landing__feature-title">Best Prices</h3>
+            <p class="referral-landing__feature-text">
+              Get competitive pricing and exclusive discounts on quality service
+            </p>
+          </div>
+          <div class="referral-landing__feature">
+            <div class="referral-landing__feature-icon">⭐</div>
+            <h3 class="referral-landing__feature-title">Quality Guaranteed</h3>
+            <p class="referral-landing__feature-text">
+              All professionals are rated and reviewed by real customers
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Professional Spotlight -->
+    @if (referrerInfo.professionalName) {
+      <section class="referral-landing__section referral-landing__section--highlight">
+        <div class="referral-landing__container">
+          <h2 class="referral-landing__section-title">Featured Professional</h2>
+          <div class="referral-landing__professional-card">
+            <div class="referral-landing__professional-info">
+              <h3 class="referral-landing__professional-name">{{ referrerInfo.professionalName }}</h3>
+              <p class="referral-landing__professional-type">{{ referrerInfo.professionalType }}</p>
+              <p class="referral-landing__professional-description">
+                Recommended by {{ referrerInfo.name }} for quality service and customer satisfaction
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    }
+
+    <!-- How It Works -->
+    <section class="referral-landing__section">
+      <div class="referral-landing__container">
+        <h2 class="referral-landing__section-title">How It Works</h2>
+        <div class="referral-landing__steps">
+          <div class="referral-landing__step">
+            <div class="referral-landing__step-number">1</div>
+            <h3 class="referral-landing__step-title">Sign Up</h3>
+            <p class="referral-landing__step-text">
+              Create your free account with the referral code
+            </p>
+          </div>
+          <div class="referral-landing__step">
+            <div class="referral-landing__step-number">2</div>
+            <h3 class="referral-landing__step-title">Get Service</h3>
+            <p class="referral-landing__step-text">
+              Book and receive your first service with {{ referrerInfo.discountPercent }}% off
+            </p>
+          </div>
+          <div class="referral-landing__step">
+            <div class="referral-landing__step-number">3</div>
+            <h3 class="referral-landing__step-title">Earn Rewards</h3>
+            <p class="referral-landing__step-text">
+              Both you and {{ referrerInfo.name }} earn rewards!
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sign Up Section -->
+    <section class="referral-landing__cta-section">
+      <div class="referral-landing__container">
+        <h2 class="referral-landing__cta-title">Ready to Get Started?</h2>
+        <p class="referral-landing__cta-subtitle">
+          Your referral code: <strong>{{ referralCode }}</strong>
+        </p>
+        <button
+          type="button"
+          class="referral-landing__cta-btn referral-landing__cta-btn--large"
+          (click)="signUp()"
+        >
+          Create Your Account
+        </button>
+        <p class="referral-landing__cta-note">
+          Already have an account? <a routerLink="/customer/login" class="referral-landing__link">Sign in here</a>
+        </p>
+      </div>
+    </section>
+  </ng-container>
+</div>

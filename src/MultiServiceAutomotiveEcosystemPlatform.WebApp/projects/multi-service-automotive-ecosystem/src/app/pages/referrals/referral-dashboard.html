@@ -19,6 +19,13 @@
         </button>
       </div>
       <p class="referral-dashboard__code-hint">Share this code with friends to earn rewards</p>
+      <button 
+        class="referral-dashboard__share-btn"
+        (click)="openShareModal()"
+        type="button"
+      >
+        Share Referral
+      </button>
     </div>
 
     <!-- Statistics Cards -->
@@ -78,4 +85,15 @@
       </ng-container>
     </div>
   </div>
+
+  <!-- Share Referral Modal -->
+  @if (showShareModal()) {
+    <ms-share-referral
+      [referralCode]="referralCode"
+      [user]="currentUser"
+      (closeModal)="closeShareModal()"
+      (shareSuccess)="onShareSuccess($event)"
+      (shareError)="onShareError($event)"
+    ></ms-share-referral>
+  }
 </div>

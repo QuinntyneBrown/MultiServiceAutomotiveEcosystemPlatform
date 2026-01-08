@@ -1,0 +1,92 @@
+<div class="referral-code-entry">
+  <div class="referral-code-entry__header">
+    <label for="referralCode" class="referral-code-entry__label">
+      Have a referral code?
+      @if (required) {
+        <span class="referral-code-entry__required">*</span>
+      }
+    </label>
+    @if (!required && !showOptional()) {
+      <button
+        type="button"
+        class="referral-code-entry__toggle"
+        (click)="toggleOptional()"
+      >
+        Enter Code
+      </button>
+    }
+  </div>
+
+  @if (required || showOptional()) {
+    <div class="referral-code-entry__input-wrapper">
+      <input
+        id="referralCode"
+        type="text"
+        [(ngModel)]="referralCode"
+        (blur)="validateCode()"
+        class="referral-code-entry__input"
+        [class.referral-code-entry__input--valid]="validation()?.isValid"
+        [class.referral-code-entry__input--invalid]="validation() && !validation()?.isValid"
+        placeholder="Enter referral code"
+        [attr.aria-describedby]="validation() ? 'validation-message' : null"
+      />
+      @if (referralCode && !isValidating()) {
+        <button
+          type="button"
+          class="referral-code-entry__clear"
+          (click)="removeCode()"
+          aria-label="Clear referral code"
+        >
+          &times;
+        </button>
+      }
+      @if (isValidating()) {
+        <div class="referral-code-entry__spinner"></div>
+      }
+    </div>
+
+    <!-- Validation Message -->
+    @if (validation()) {
+      <div
+        id="validation-message"
+        class="referral-code-entry__message"
+        [class.referral-code-entry__message--success]="validation()?.isValid"
+        [class.referral-code-entry__message--error]="!validation()?.isValid"
+      >
+        @if (validation()?.isValid) {
+          <div class="referral-code-entry__success">
+            <span class="referral-code-entry__success-icon">✓</span>
+            <div class="referral-code-entry__success-content">
+              <strong>{{ validation()?.message }}</strong>
+              @if (validation()?.referrerName) {
+                <p class="referral-code-entry__referrer">
+                  Referred by: {{ validation()?.referrerName }}
+                </p>
+              }
+              @if (validation()?.discount) {
+                <p class="referral-code-entry__discount">
+                  You'll get {{ validation()?.discount }} your first service!
+                </p>
+              }
+            </div>
+          </div>
+        } @else {
+          <div class="referral-code-entry__error">
+            <span class="referral-code-entry__error-icon">✗</span>
+            <span>{{ validation()?.message }}</span>
+          </div>
+        }
+      </div>
+    }
+
+    @if (!required) {
+      <button
+        type="button"
+        class="referral-code-entry__skip"
+        (click)="skipCode()"
+      >
+        I don't have a code
+      </button>
+    }
+  }
+</div>

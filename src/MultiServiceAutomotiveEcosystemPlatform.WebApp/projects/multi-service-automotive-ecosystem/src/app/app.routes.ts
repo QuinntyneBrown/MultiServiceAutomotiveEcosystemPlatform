@@ -54,8 +54,20 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/professional-referrals/professional-referral-dashboard').then(m => m.ProfessionalReferralDashboard)
   },
   {
+    path: 'professional/referrals/send',
+    loadComponent: () => import('./pages/professional-referrals/send-referral/send-professional-referral').then(m => m.SendProfessionalReferral)
+  },
+  {
+    path: 'professional/referrals/received/:id',
+    loadComponent: () => import('./pages/professional-referrals/referral-action/referral-action').then(m => m.ReferralAction)
+  },
+  {
     path: 'referrals',
     loadComponent: () => import('./pages/referrals/referral-dashboard').then(m => m.ReferralDashboard)
+  },
+  {
+    path: 'r/:code',
+    loadComponent: () => import('./pages/referral-landing/referral-landing').then(m => m.ReferralLanding)
   },
   {
     path: '**',

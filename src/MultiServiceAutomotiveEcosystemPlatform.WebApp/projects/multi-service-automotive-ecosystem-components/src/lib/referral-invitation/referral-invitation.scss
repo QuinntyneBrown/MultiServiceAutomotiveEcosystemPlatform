@@ -1,0 +1,140 @@
+.referral-invitation {
+  background: white;
+  border-radius: var(--radius-lg, 0.75rem);
+  box-shadow: var(--shadow-md, 0 4px 6px rgba(0, 0, 0, 0.1));
+  padding: var(--spacing-8, 2rem);
+  max-width: 600px;
+  margin: 0 auto;
+
+  &__header {
+    text-align: center;
+    margin-bottom: var(--spacing-8, 2rem);
+  }
+
+  &__title {
+    font-size: var(--text-h2, 1.75rem);
+    font-weight: var(--font-weight-bold, 700);
+    color: var(--color-gray-900, #1A1A1A);
+    margin-bottom: var(--spacing-2, 0.5rem);
+  }
+
+  &__subtitle {
+    font-size: var(--text-body-md, 1rem);
+    color: var(--color-gray-600, #666666);
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-6, 1.5rem);
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2, 0.5rem);
+  }
+
+  &__label {
+    font-size: var(--text-body-md, 1rem);
+    font-weight: var(--font-weight-semibold, 600);
+    color: var(--color-gray-900, #1A1A1A);
+  }
+
+  &__required {
+    color: var(--color-error, #E53E3E);
+  }
+
+  &__input,
+  &__select,
+  &__textarea {
+    padding: var(--spacing-3, 0.75rem);
+    border: 1px solid var(--color-gray-300, #D1D5DB);
+    border-radius: var(--radius-md, 0.5rem);
+    font-size: var(--text-body-md, 1rem);
+    transition: border-color 0.2s ease;
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-blue-700, #00529F);
+      box-shadow: 0 0 0 3px rgba(0, 82, 159, 0.1);
+    }
+
+    &--error {
+      border-color: var(--color-error, #E53E3E);
+
+      &:focus {
+        box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.1);
+      }
+    }
+  }
+
+  &__textarea {
+    resize: vertical;
+    font-family: inherit;
+  }
+
+  &__char-count {
+    font-size: var(--text-body-sm, 0.875rem);
+    color: var(--color-gray-500, #808080);
+    text-align: right;
+  }
+
+  &__error {
+    font-size: var(--text-body-sm, 0.875rem);
+    color: var(--color-error, #E53E3E);
+  }
+
+  &__actions {
+    display: flex;
+    gap: var(--spacing-4, 1rem);
+    justify-content: flex-end;
+    margin-top: var(--spacing-4, 1rem);
+  }
+
+  &__btn {
+    padding: var(--spacing-3, 0.75rem) var(--spacing-6, 1.5rem);
+    border-radius: var(--radius-md, 0.5rem);
+    font-size: var(--text-body-md, 1rem);
+    font-weight: var(--font-weight-semibold, 600);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    &--cancel {
+      background-color: white;
+      color: var(--color-gray-700, #4A4A4A);
+      border: 1px solid var(--color-gray-300, #D1D5DB);
+
+      &:hover:not(:disabled) {
+        background-color: var(--color-gray-50, #F9FAFB);
+      }
+    }
+
+    &--submit {
+      background-color: var(--color-blue-700, #00529F);
+      color: white;
+
+      &:hover:not(:disabled) {
+        background-color: var(--color-blue-900, #001F3F);
+      }
+    }
+  }
+
+  @media (max-width: 640px) {
+    padding: var(--spacing-6, 1.5rem);
+
+    &__actions {
+      flex-direction: column-reverse;
+
+      .referral-invitation__btn {
+        width: 100%;
+      }
+    }
+  }
+}
