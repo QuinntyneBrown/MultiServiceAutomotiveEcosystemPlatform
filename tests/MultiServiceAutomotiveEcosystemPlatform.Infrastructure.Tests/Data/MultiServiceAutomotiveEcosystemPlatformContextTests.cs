@@ -82,9 +82,9 @@ public class MultiServiceAutomotiveEcosystemPlatformContextTests
             email: "jane@testautoshop.com",
             phone: "9876543210",
             addressLine1: "123 Main St",
-            city: "TestCity",
-            state: "TS",
-            postalCode: "12345");
+            city: "Toronto",
+            province: "ON",
+            postalCode: "M5H 2N2");
 
         // Act
         context.Professionals.Add(professional);

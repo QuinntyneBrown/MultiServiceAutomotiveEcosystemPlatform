@@ -40,9 +40,9 @@ Customer {
   address_line1: string (nullable)
   address_line2: string (nullable)
   city: string (nullable)
-  state: string (nullable)
+  province: string (nullable)
   postal_code: string (nullable)
-  country: string (default: 'US')
+  country: string (default: 'CA')
 
   // Preferences
   preferred_contact_method: enum (email, phone, sms)

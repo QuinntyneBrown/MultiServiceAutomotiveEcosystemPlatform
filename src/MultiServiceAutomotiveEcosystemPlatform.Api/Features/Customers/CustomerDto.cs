@@ -20,9 +20,9 @@ public class CustomerDto
     public string? AddressLine1 { get; set; }
     public string? AddressLine2 { get; set; }
     public string? City { get; set; }
-    public string? State { get; set; }
+    public string? Province { get; set; }
     public string? PostalCode { get; set; }
-    public string Country { get; set; } = "US";
+    public string Country { get; set; } = "CA";
     public PreferredContactMethod PreferredContactMethod { get; set; }
     public bool MarketingConsent { get; set; }
     public bool NewsletterSubscribed { get; set; }

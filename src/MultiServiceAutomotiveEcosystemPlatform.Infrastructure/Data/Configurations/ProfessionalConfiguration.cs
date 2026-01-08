@@ -76,7 +76,7 @@ public class ProfessionalConfiguration : IEntityTypeConfiguration<Professional>
             .IsRequired()
             .HasMaxLength(100);
 
-        builder.Property(p => p.State)
+        builder.Property(p => p.Province)
             .IsRequired()
             .HasMaxLength(50);
 

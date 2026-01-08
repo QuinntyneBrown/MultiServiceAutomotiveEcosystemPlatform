@@ -47,9 +47,9 @@ Professional {
   address_line1: string
   address_line2: string (nullable)
   city: string
-  state: string
+  province: string
   postal_code: string
-  country: string (default: 'US')
+  country: string (default: 'CA')
 
   // Location
   latitude: decimal (nullable)
@@ -493,7 +493,7 @@ professional.review.responded
 - Business name, type
 - First/last name, title, bio
 - Business phone, website
-- City, state (not full address)
+- City, province (not full address)
 - Profile/cover photos
 - Specialties
 - Rating and reviews

@@ -31,9 +31,9 @@ public partial class Professional
     public string AddressLine1 { get; private set; } = string.Empty;
     public string? AddressLine2 { get; private set; }
     public string City { get; private set; } = string.Empty;
-    public string State { get; private set; } = string.Empty;
+    public string Province { get; private set; } = string.Empty;
     public string PostalCode { get; private set; } = string.Empty;
-    public string Country { get; private set; } = "US";
+    public string Country { get; private set; } = "CA";
 
     // Location
     public decimal? Latitude { get; private set; }
@@ -79,10 +79,10 @@ public partial class Professional
         string phone,
         string addressLine1,
         string city,
-        string state,
+        string province,
         string postalCode)
     {
-        ValidateRequiredFields(businessName, firstName, lastName, email, phone, addressLine1, city, state, postalCode);
+        ValidateRequiredFields(businessName, firstName, lastName, email, phone, addressLine1, city, province, postalCode);
 
         ProfessionalId = Guid.NewGuid();
         TenantId = tenantId;
@@ -95,7 +95,7 @@ public partial class Professional
         Phone = NormalizePhone(phone);
         AddressLine1 = addressLine1.Trim();
         City = city.Trim();
-        State = state.Trim();
+        Province = province.Trim();
         PostalCode = postalCode.Trim();
         Status = ProfessionalStatus.Pending;
         AcceptsReferrals = true;
@@ -150,7 +150,7 @@ public partial class Professional
         string addressLine1,
         string? addressLine2,
         string city,
-        string state,
+        string province,
         string postalCode,
         string? country = null)
     {
@@ -158,15 +158,15 @@ public partial class Professional
             throw new ArgumentException("Address line 1 cannot be empty.", nameof(addressLine1));
         if (string.IsNullOrWhiteSpace(city))
             throw new ArgumentException("City cannot be empty.", nameof(city));
-        if (string.IsNullOrWhiteSpace(state))
-            throw new ArgumentException("State cannot be empty.", nameof(state));
+        if (string.IsNullOrWhiteSpace(province))
+            throw new ArgumentException("Province cannot be empty.", nameof(province));
         if (string.IsNullOrWhiteSpace(postalCode))
             throw new ArgumentException("Postal code cannot be empty.", nameof(postalCode));
 
         AddressLine1 = addressLine1.Trim();
         AddressLine2 = addressLine2?.Trim();
         City = city.Trim();
-        State = state.Trim();
+        Province = province.Trim();
         PostalCode = postalCode.Trim();
         if (!string.IsNullOrWhiteSpace(country))
             Country = country.Trim();
@@ -252,7 +252,7 @@ public partial class Professional
         string phone,
         string addressLine1,
         string city,
-        string state,
+        string province,
         string postalCode)
     {
         if (string.IsNullOrWhiteSpace(businessName))
@@ -267,8 +267,8 @@ public partial class Professional
             throw new ArgumentException("Address line 1 cannot be empty.", nameof(addressLine1));
         if (string.IsNullOrWhiteSpace(city))
             throw new ArgumentException("City cannot be empty.", nameof(city));
-        if (string.IsNullOrWhiteSpace(state))
-            throw new ArgumentException("State cannot be empty.", nameof(state));
+        if (string.IsNullOrWhiteSpace(province))
+            throw new ArgumentException("Province cannot be empty.", nameof(province));
         if (string.IsNullOrWhiteSpace(postalCode))
             throw new ArgumentException("Postal code cannot be empty.", nameof(postalCode));
     }

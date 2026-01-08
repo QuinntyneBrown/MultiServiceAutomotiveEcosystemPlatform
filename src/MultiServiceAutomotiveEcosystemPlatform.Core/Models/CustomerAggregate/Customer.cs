@@ -22,9 +22,9 @@ public class Customer
     public string? AddressLine1 { get; private set; }
     public string? AddressLine2 { get; private set; }
     public string? City { get; private set; }
-    public string? State { get; private set; }
+    public string? Province { get; private set; }
     public string? PostalCode { get; private set; }
-    public string Country { get; private set; } = "US";
+    public string Country { get; private set; } = "CA";
 
     // Preferences
     public PreferredContactMethod PreferredContactMethod { get; private set; }
@@ -106,14 +106,14 @@ public class Customer
         string? addressLine1,
         string? addressLine2,
         string? city,
-        string? state,
+        string? province,
         string? postalCode,
         string? country = null)
     {
         AddressLine1 = addressLine1?.Trim();
         AddressLine2 = addressLine2?.Trim();
         City = city?.Trim();
-        State = state?.Trim();
+        Province = province?.Trim();
         PostalCode = postalCode?.Trim();
         if (!string.IsNullOrWhiteSpace(country))
             Country = country.Trim();

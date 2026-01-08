@@ -24,7 +24,7 @@ public static class CustomerExtensions
             AddressLine1 = customer.AddressLine1,
             AddressLine2 = customer.AddressLine2,
             City = customer.City,
-            State = customer.State,
+            Province = customer.Province,
             PostalCode = customer.PostalCode,
             Country = customer.Country,
             PreferredContactMethod = customer.PreferredContactMethod,

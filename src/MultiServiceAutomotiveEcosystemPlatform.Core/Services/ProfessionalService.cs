@@ -28,7 +28,7 @@ public class ProfessionalService : IProfessionalService
         string phone,
         string addressLine1,
         string city,
-        string state,
+        string province,
         string postalCode,
         CancellationToken cancellationToken = default)
     {
@@ -43,7 +43,7 @@ public class ProfessionalService : IProfessionalService
             phone,
             addressLine1,
             city,
-            state,
+            province,
             postalCode);
 
         // Ensure slug is unique
