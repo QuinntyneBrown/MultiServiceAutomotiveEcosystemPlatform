@@ -1,11 +1,17 @@
 // Copyright (c) Quinntyne Brown. All Rights Reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Microsoft.EntityFrameworkCore;
+using MultiServiceAutomotiveEcosystemPlatform.Core.Data;
+using MultiServiceAutomotiveEcosystemPlatform.Core.Services;
+using MultiServiceAutomotiveEcosystemPlatform.Infrastructure.Data;
+using MultiServiceAutomotiveEcosystemPlatform.Infrastructure.Services;
+
 namespace Microsoft.Extensions.DependencyInjection;
 
 public static class ConfigureServices
 {
-    public static void AddApiServices(this IServiceCollection services)
+    public static void AddApiServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddCors(options => options.AddPolicy("CorsPolicy",
             builder => builder
@@ -14,6 +20,17 @@ public static class ConfigureServices
             .AllowAnyHeader()
             .SetIsOriginAllowed(isOriginAllowed: _ => true)
             .AllowCredentials()));
+
+        services.AddDbContext<MultiServiceAutomotiveEcosystemPlatformContext>(options =>
+            options.UseSqlServer(
+                configuration.GetConnectionString("DefaultConnection"),
+                b => b.MigrationsAssembly("MultiServiceAutomotiveEcosystemPlatform.Infrastructure")));
+
+        services.AddScoped<IMultiServiceAutomotiveEcosystemPlatformContext>(provider =>
+            provider.GetRequiredService<MultiServiceAutomotiveEcosystemPlatformContext>());
+
+        services.AddScoped<ITenantContext, TenantContext>();
+
         services.AddControllers();
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
