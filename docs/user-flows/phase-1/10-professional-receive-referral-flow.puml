@@ -1,0 +1,146 @@
+@startuml professional-receive-referral-flow
+title Professional Receive Referral Flow - Phase 1
+
+skinparam activityBackgroundColor #E3F2FD
+skinparam activityBorderColor #1976D2
+skinparam activityDiamondBackgroundColor #FFF3E0
+skinparam activityDiamondBorderColor #F57C00
+
+start
+
+:Professional receives referral notification;
+note right
+  Notification via:
+  * In-app notification
+  * Email
+  * Push notification
+end note
+
+:Professional navigates to Received Referrals;
+
+:System displays Received Referrals list;
+note right
+  List shows:
+  * Priority badge
+  * Customer name
+  * Referring professional
+  * Service needed
+  * Discount offer (if any)
+  * Date received
+end note
+
+:Professional selects a referral;
+
+:System displays Referral Detail;
+note right
+  Detail shows:
+  * Full customer information
+  * Referrer notes
+  * Service requested
+  * Discount details
+  * Customer vehicle info
+end note
+
+:Professional reviews referral details;
+
+switch (Decision?)
+case (Accept)
+  :Professional clicks Accept;
+
+  :System opens Acceptance Confirmation modal;
+
+  :Display referral summary;
+
+  :Enter message to sender (optional);
+  note right
+    Optional thank you or
+    follow-up message
+  end note
+
+  if (Discount offered?) then (yes)
+    :Show discount details;
+    :Professional confirms honor discount;
+  else (no)
+  endif
+
+  :Enter expected follow-up date (optional);
+
+  :Professional clicks Confirm Accept;
+
+  :System updates referral status to Accepted;
+  :System creates customer record (if new);
+  :System assigns customer ownership;
+  :System sends notification to source professional;
+  :System sends notification to customer;
+
+  :Display "Referral Accepted" success;
+
+  :Navigate to Customer Detail page;
+
+  :Professional can now contact customer;
+  note right
+    Contact options:
+    * Call customer
+    * Email customer
+    * Add to calendar
+  end note
+
+case (Decline)
+  :Professional clicks Decline;
+
+  :System opens Decline Confirmation modal;
+
+  :Select decline reason;
+  note right
+    Reasons:
+    * Too busy / No capacity
+    * Outside service area
+    * Not my specialty
+    * Customer already known
+    * Other
+  end note
+
+  if (Other selected?) then (yes)
+    :Enter custom reason;
+  else (no)
+  endif
+
+  :Enter alternative suggestion (optional);
+  note right
+    Can suggest another
+    professional colleague
+  end note
+
+  :Professional clicks Confirm Decline;
+
+  :System updates referral status to Declined;
+  :System sends notification to source professional;
+  note right
+    Source sees decline reason
+    and any alternative suggestion
+  end note
+
+  :Display "Referral Declined" confirmation;
+
+  :Return to Received Referrals list;
+
+case (Request More Info)
+  :Professional clicks "Request Info";
+
+  :Enter questions for source professional;
+
+  :System sends message to source;
+
+  :Display "Request Sent" confirmation;
+
+  :Referral remains pending;
+
+case (View Later)
+  :Professional returns to list;
+  :Referral remains in pending state;
+
+endswitch
+
+stop
+
+@enduml
