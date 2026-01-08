@@ -43,9 +43,9 @@ test.describe('Referral Dashboard', () => {
   });
 
   test('should copy referral code to clipboard when clicking copy button', async ({ page, context, browserName }) => {
-    // Skip clipboard permissions for WebKit/Safari as it doesn't support clipboard-write
-    if (browserName !== 'webkit') {
-      // Grant clipboard permissions for Chromium and Firefox
+    // Skip clipboard permissions for WebKit/Safari and Firefox as they don't support clipboard permissions
+    if (browserName === 'chromium') {
+      // Grant clipboard permissions for Chromium only
       await context.grantPermissions(['clipboard-read', 'clipboard-write']);
     }
     

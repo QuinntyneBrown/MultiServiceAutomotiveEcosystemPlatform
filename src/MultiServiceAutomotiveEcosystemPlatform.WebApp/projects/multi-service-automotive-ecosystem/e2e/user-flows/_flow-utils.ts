@@ -20,8 +20,9 @@ export async function grantClipboardPermissions(
   browserName: string,
   origin = 'http://localhost:4200'
 ) {
-  // WebKit (Safari) doesn't support clipboard-write permission
-  if (browserName !== 'webkit') {
+  // Only Chromium supports clipboard permissions in Playwright
+  // WebKit (Safari) and Firefox don't support clipboard-write/clipboard-read permissions
+  if (browserName === 'chromium') {
     await context.grantPermissions(['clipboard-read', 'clipboard-write'], { origin });
   }
 }
