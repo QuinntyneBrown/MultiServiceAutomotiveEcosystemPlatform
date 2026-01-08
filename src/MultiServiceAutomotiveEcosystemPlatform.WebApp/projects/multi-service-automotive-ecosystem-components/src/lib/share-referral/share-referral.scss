@@ -1,0 +1,514 @@
+.share-referral-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.share-referral-modal {
+  background: #fff;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  border-bottom: 1px solid #E0E0E0;
+}
+
+.modal-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+}
+
+.close-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: none;
+  font-size: 28px;
+  color: #666;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s;
+
+  &:hover {
+    background: #F5F5F5;
+    color: #333;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 82, 159, 0.2);
+  }
+}
+
+.tab-bar {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid #E0E0E0;
+  overflow-x: auto;
+}
+
+.tab-button {
+  flex: 1;
+  min-width: 80px;
+  padding: 16px 12px;
+  border: none;
+  background: none;
+  font-family: 'Lato', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s;
+  white-space: nowrap;
+
+  &:hover {
+    color: #333;
+  }
+
+  &.active {
+    color: #00529F;
+    font-weight: 600;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: #00529F;
+      border-radius: 3px 3px 0 0;
+    }
+  }
+
+  &:focus {
+    outline: none;
+    background: #F5F5F5;
+  }
+}
+
+.modal-content {
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.tab-panel {
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.tab-description {
+  font-family: 'Lato', sans-serif;
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 20px 0;
+}
+
+// Copy Link Tab
+.url-container {
+  display: flex;
+  gap: 12px;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+  }
+}
+
+.url-input {
+  flex: 1;
+  height: 48px;
+  padding: 0 16px;
+  font-family: 'Lato', sans-serif;
+  font-size: 14px;
+  color: #333;
+  background: #F5F5F5;
+  border: 1px solid #CCC;
+  border-radius: 8px;
+  cursor: text;
+
+  &:focus {
+    outline: none;
+    border-color: #00529F;
+  }
+}
+
+.copy-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 24px;
+  font-family: 'Lato', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  background: #00529F;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+
+  &:hover {
+    background: #003366;
+  }
+
+  &.copied {
+    background: #2E7D32;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 82, 159, 0.4);
+  }
+}
+
+.copy-icon {
+  font-size: 16px;
+}
+
+.success-toast {
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: #E8F5E9;
+  border: 1px solid #2E7D32;
+  border-radius: 8px;
+  color: #1B5E20;
+  font-family: 'Lato', sans-serif;
+  font-size: 14px;
+  text-align: center;
+}
+
+// Form Styles
+.share-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Lato', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.required {
+  color: #D32F2F;
+}
+
+.character-count {
+  font-weight: 400;
+  color: #666;
+
+  &.warning {
+    color: #FF9800;
+  }
+
+  &.error {
+    color: #D32F2F;
+  }
+}
+
+.form-input {
+  height: 48px;
+  padding: 0 16px;
+  font-family: 'Lato', sans-serif;
+  font-size: 14px;
+  color: #333;
+  background: #fff;
+  border: 1px solid #CCC;
+  border-radius: 8px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+
+  &:focus {
+    outline: none;
+    border-color: #00529F;
+    box-shadow: 0 0 0 3px rgba(0, 82, 159, 0.2);
+  }
+
+  &.error {
+    border-color: #D32F2F;
+  }
+}
+
+.form-textarea {
+  height: auto;
+  padding: 16px;
+  resize: vertical;
+  min-height: 80px;
+}
+
+.form-error {
+  font-family: 'Lato', sans-serif;
+  font-size: 12px;
+  color: #D32F2F;
+  margin-top: 4px;
+}
+
+.form-warning {
+  font-family: 'Lato', sans-serif;
+  font-size: 12px;
+  color: #FF9800;
+  margin-top: 4px;
+}
+
+.form-hint {
+  font-family: 'Lato', sans-serif;
+  font-size: 12px;
+  color: #666;
+  margin-top: 4px;
+}
+
+.preview-box {
+  padding: 16px;
+  background: #FAFAFA;
+  border-radius: 8px;
+  border: 1px solid #E0E0E0;
+}
+
+.preview-label {
+  display: block;
+  font-family: 'Lato', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.preview-content {
+  font-family: 'Lato', sans-serif;
+  font-size: 14px;
+  color: #333;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.preview-link {
+  color: #00529F;
+  word-break: break-all;
+}
+
+// Social Buttons
+.social-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.social-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: 56px;
+  padding: 0 24px;
+  font-family: 'Lato', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.2s;
+
+  &:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.2);
+  }
+
+  &.facebook {
+    background: #1877F2;
+  }
+
+  &.twitter {
+    background: #000;
+  }
+
+  &.whatsapp {
+    background: #25D366;
+  }
+
+  &.linkedin {
+    background: #0A66C2;
+  }
+}
+
+.social-icon {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+// QR Code
+.qr-container {
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+  background: #F5F5F5;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.qr-code-image {
+  width: 240px;
+  height: 240px;
+  border-radius: 8px;
+}
+
+.qr-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: #666;
+  font-family: 'Lato', sans-serif;
+  font-size: 14px;
+}
+
+.download-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+  }
+}
+
+// Buttons
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 24px;
+  font-family: 'Lato', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.btn-primary {
+  background: #00529F;
+  color: #fff;
+
+  &:hover:not(:disabled) {
+    background: #003366;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 82, 159, 0.4);
+  }
+}
+
+.btn-secondary {
+  background: #fff;
+  color: #333;
+  border: 1px solid #CCC;
+
+  &:hover:not(:disabled) {
+    background: #F5F5F5;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.btn-full {
+  width: 100%;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Mobile Styles
+@media (max-width: 576px) {
+  .share-referral-modal {
+    max-height: 100vh;
+    border-radius: 0;
+  }
+
+  .modal-content {
+    padding: 16px;
+  }
+
+  .tab-button {
+    font-size: 12px;
+    padding: 12px 8px;
+  }
+}

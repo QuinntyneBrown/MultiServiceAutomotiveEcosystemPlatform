@@ -1,0 +1,586 @@
+<section class="profile-management-container">
+  <header class="profile-header">
+    <h1 class="profile-title">
+      {{ mode === 'create' ? 'Create Your Profile' : 'Edit Profile' }}
+    </h1>
+    <p class="profile-subtitle">
+      Complete your business profile to start connecting with customers
+    </p>
+  </header>
+
+  <!-- Tab Navigation -->
+  <nav class="tab-navigation" role="tablist" aria-label="Profile sections">
+    <button
+      role="tab"
+      class="tab-button"
+      [class.active]="activeTab() === 'basic'"
+      [attr.aria-selected]="activeTab() === 'basic'"
+      (click)="switchTab('basic')"
+    >
+      Basic Info
+    </button>
+    <button
+      role="tab"
+      class="tab-button"
+      [class.active]="activeTab() === 'about'"
+      [attr.aria-selected]="activeTab() === 'about'"
+      (click)="switchTab('about')"
+    >
+      About & Bio
+    </button>
+    <button
+      role="tab"
+      class="tab-button"
+      [class.active]="activeTab() === 'contact'"
+      [attr.aria-selected]="activeTab() === 'contact'"
+      (click)="switchTab('contact')"
+    >
+      Contact
+    </button>
+    <button
+      role="tab"
+      class="tab-button"
+      [class.active]="activeTab() === 'location'"
+      [attr.aria-selected]="activeTab() === 'location'"
+      (click)="switchTab('location')"
+    >
+      Location
+    </button>
+    <button
+      role="tab"
+      class="tab-button"
+      [class.active]="activeTab() === 'media'"
+      [attr.aria-selected]="activeTab() === 'media'"
+      (click)="switchTab('media')"
+    >
+      Media
+    </button>
+  </nav>
+
+  <form [formGroup]="profileForm" (ngSubmit)="publish()" class="profile-form">
+    <!-- Basic Info Tab -->
+    @if (activeTab() === 'basic') {
+      <div role="tabpanel" class="tab-panel">
+        <h2 class="section-title">Basic Information</h2>
+        <p class="section-subtitle">Tell us about your business</p>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="businessName" class="form-label">
+              Business Name <span class="required">*</span>
+            </label>
+            <input
+              type="text"
+              id="businessName"
+              formControlName="businessName"
+              class="form-input"
+              [class.error]="getError('businessName')"
+              aria-required="true"
+            />
+            @if (getError('businessName')) {
+              <span class="form-error">{{ getError('businessName') }}</span>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="businessType" class="form-label">
+              Business Type <span class="required">*</span>
+            </label>
+            <select
+              id="businessType"
+              formControlName="businessType"
+              class="form-input form-select"
+              [class.error]="getError('businessType')"
+              aria-required="true"
+            >
+              <option value="">Select type...</option>
+              @for (type of businessTypes; track type.value) {
+                <option [value]="type.value">{{ type.label }}</option>
+              }
+            </select>
+            @if (getError('businessType')) {
+              <span class="form-error">{{ getError('businessType') }}</span>
+            }
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="personalName" class="form-label">
+              Your Full Name <span class="required">*</span>
+            </label>
+            <input
+              type="text"
+              id="personalName"
+              formControlName="personalName"
+              class="form-input"
+              [class.error]="getError('personalName')"
+              aria-required="true"
+            />
+            @if (getError('personalName')) {
+              <span class="form-error">{{ getError('personalName') }}</span>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="professionalTitle" class="form-label">
+              Professional Title
+            </label>
+            <input
+              type="text"
+              id="professionalTitle"
+              formControlName="professionalTitle"
+              class="form-input"
+              placeholder="e.g., Owner, Lead Technician"
+            />
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- About Tab -->
+    @if (activeTab() === 'about') {
+      <div role="tabpanel" class="tab-panel">
+        <h2 class="section-title">About & Bio</h2>
+        <p class="section-subtitle">Share your story with customers</p>
+
+        <div class="form-group full-width">
+          <label for="bio" class="form-label">
+            Business Description <span class="required">*</span>
+            <span class="character-count" [class.warning]="bioCharCount > 1800" [class.error]="bioCharCount > 2000">
+              {{ bioCharCount }}/2000
+            </span>
+          </label>
+          <textarea
+            id="bio"
+            formControlName="bio"
+            class="form-input form-textarea"
+            rows="6"
+            [class.error]="getError('bio')"
+            placeholder="Describe your business, experience, and what makes you unique..."
+          ></textarea>
+          @if (getError('bio')) {
+            <span class="form-error">{{ getError('bio') }}</span>
+          }
+          <span class="form-hint">Minimum 50 characters required</span>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="yearsInBusiness" class="form-label">
+              Years in Business
+            </label>
+            <input
+              type="number"
+              id="yearsInBusiness"
+              formControlName="yearsInBusiness"
+              class="form-input"
+              min="0"
+              max="200"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="numberOfEmployees" class="form-label">
+              Number of Employees
+            </label>
+            <input
+              type="number"
+              id="numberOfEmployees"
+              formControlName="numberOfEmployees"
+              class="form-input"
+              min="1"
+              max="10000"
+            />
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- Contact Tab -->
+    @if (activeTab() === 'contact') {
+      <div role="tabpanel" class="tab-panel">
+        <h2 class="section-title">Contact Information</h2>
+        <p class="section-subtitle">How customers can reach you</p>
+
+        <!-- Phone Numbers -->
+        <div class="form-group full-width">
+          <label class="form-label">
+            Phone Numbers <span class="required">*</span>
+          </label>
+          <div class="multi-input-list" formArrayName="phoneNumbers">
+            @for (phone of phoneNumbers.controls; track $index) {
+              <div class="multi-input-row" [formGroupName]="$index">
+                <select formControlName="type" class="form-input form-select type-select">
+                  <option value="mobile">Mobile</option>
+                  <option value="business">Business</option>
+                  <option value="fax">Fax</option>
+                </select>
+                <input
+                  type="tel"
+                  formControlName="number"
+                  class="form-input phone-input"
+                  [class.error]="getError('phoneNumbers.' + $index + '.number')"
+                  placeholder="(555) 123-4567"
+                  (input)="formatPhoneNumber($event, $index)"
+                />
+                @if (phoneNumbers.length > 1) {
+                  <button
+                    type="button"
+                    class="remove-btn"
+                    (click)="removePhone($index)"
+                    aria-label="Remove phone number"
+                  >
+                    &times;
+                  </button>
+                }
+              </div>
+            }
+          </div>
+          @if (phoneNumbers.length < 5) {
+            <button type="button" class="add-btn" (click)="addPhone()">
+              + Add Phone Number
+            </button>
+          }
+        </div>
+
+        <!-- Emails -->
+        <div class="form-group full-width">
+          <label class="form-label">
+            Email Addresses <span class="required">*</span>
+          </label>
+          <div class="multi-input-list" formArrayName="emails">
+            @for (email of emails.controls; track $index) {
+              <div class="multi-input-row" [formGroupName]="$index">
+                <select formControlName="type" class="form-input form-select type-select">
+                  <option value="primary">Primary</option>
+                  <option value="billing">Billing</option>
+                  <option value="support">Support</option>
+                </select>
+                <input
+                  type="email"
+                  formControlName="email"
+                  class="form-input email-input"
+                  [class.error]="getError('emails.' + $index + '.email')"
+                  placeholder="email@example.com"
+                />
+                @if (emails.length > 1) {
+                  <button
+                    type="button"
+                    class="remove-btn"
+                    (click)="removeEmail($index)"
+                    aria-label="Remove email"
+                  >
+                    &times;
+                  </button>
+                }
+              </div>
+            }
+          </div>
+          @if (emails.length < 5) {
+            <button type="button" class="add-btn" (click)="addEmail()">
+              + Add Email Address
+            </button>
+          }
+        </div>
+
+        <!-- Website -->
+        <div class="form-group full-width">
+          <label for="website" class="form-label">Website</label>
+          <input
+            type="url"
+            id="website"
+            formControlName="website"
+            class="form-input"
+            [class.error]="getError('website')"
+            placeholder="https://www.yourwebsite.com"
+          />
+          @if (getError('website')) {
+            <span class="form-error">{{ getError('website') }}</span>
+          }
+        </div>
+      </div>
+    }
+
+    <!-- Location Tab -->
+    @if (activeTab() === 'location') {
+      <div role="tabpanel" class="tab-panel" formGroupName="address">
+        <h2 class="section-title">Location</h2>
+        <p class="section-subtitle">Your business address</p>
+
+        <div class="form-group full-width">
+          <label for="street" class="form-label">
+            Street Address <span class="required">*</span>
+          </label>
+          <input
+            type="text"
+            id="street"
+            formControlName="street"
+            class="form-input"
+            [class.error]="getError('address.street')"
+          />
+          @if (getError('address.street')) {
+            <span class="form-error">{{ getError('address.street') }}</span>
+          }
+        </div>
+
+        <div class="form-group full-width">
+          <label for="addressLine2" class="form-label">Address Line 2</label>
+          <input
+            type="text"
+            id="addressLine2"
+            formControlName="addressLine2"
+            class="form-input"
+            placeholder="Suite, Unit, Building, etc."
+          />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="city" class="form-label">
+              City <span class="required">*</span>
+            </label>
+            <input
+              type="text"
+              id="city"
+              formControlName="city"
+              class="form-input"
+              [class.error]="getError('address.city')"
+            />
+            @if (getError('address.city')) {
+              <span class="form-error">{{ getError('address.city') }}</span>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="state" class="form-label">
+              State <span class="required">*</span>
+            </label>
+            <select
+              id="state"
+              formControlName="state"
+              class="form-input form-select"
+              [class.error]="getError('address.state')"
+            >
+              <option value="">Select state...</option>
+              @for (state of states; track state.code) {
+                <option [value]="state.code">{{ state.name }}</option>
+              }
+            </select>
+            @if (getError('address.state')) {
+              <span class="form-error">{{ getError('address.state') }}</span>
+            }
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="zipCode" class="form-label">
+              ZIP Code <span class="required">*</span>
+            </label>
+            <input
+              type="text"
+              id="zipCode"
+              formControlName="zipCode"
+              class="form-input"
+              [class.error]="getError('address.zipCode')"
+              maxlength="10"
+            />
+            @if (getError('address.zipCode')) {
+              <span class="form-error">{{ getError('address.zipCode') }}</span>
+            }
+          </div>
+
+          <div class="form-group" formGroupName="serviceRadius">
+            <label class="form-label">Service Radius</label>
+            <div class="service-radius-row">
+              <input
+                type="number"
+                formControlName="value"
+                class="form-input radius-input"
+                placeholder="25"
+                min="0"
+                max="500"
+              />
+              <select formControlName="unit" class="form-input form-select unit-select">
+                <option value="miles">Miles</option>
+                <option value="km">Kilometers</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- Media Tab -->
+    @if (activeTab() === 'media') {
+      <div role="tabpanel" class="tab-panel">
+        <h2 class="section-title">Media</h2>
+        <p class="section-subtitle">Upload photos to make your profile stand out</p>
+
+        <div class="media-grid">
+          <!-- Profile Photo -->
+          <div class="media-upload-card">
+            <label class="media-label">Profile Photo</label>
+            <div class="upload-area" [class.has-file]="profileForm.get('profilePhoto')?.value">
+              @if (profileForm.get('profilePhoto')?.value) {
+                <img
+                  [src]="profileForm.get('profilePhoto')?.value?.url"
+                  alt="Profile photo preview"
+                  class="preview-image"
+                />
+                <button
+                  type="button"
+                  class="remove-file-btn"
+                  (click)="removeFile('profilePhoto')"
+                  aria-label="Remove profile photo"
+                >
+                  &times;
+                </button>
+              } @else {
+                <div class="upload-placeholder">
+                  <span class="upload-icon">+</span>
+                  <span class="upload-text">Upload Photo</span>
+                  <span class="upload-hint">Square, min 400x400px</span>
+                </div>
+                <input
+                  type="file"
+                  class="file-input"
+                  accept="image/jpeg,image/png,image/webp"
+                  (change)="onFileSelected($event, 'profilePhoto')"
+                />
+              }
+            </div>
+          </div>
+
+          <!-- Cover Photo -->
+          <div class="media-upload-card cover">
+            <label class="media-label">Cover Photo</label>
+            <div class="upload-area" [class.has-file]="profileForm.get('coverPhoto')?.value">
+              @if (profileForm.get('coverPhoto')?.value) {
+                <img
+                  [src]="profileForm.get('coverPhoto')?.value?.url"
+                  alt="Cover photo preview"
+                  class="preview-image cover-preview"
+                />
+                <button
+                  type="button"
+                  class="remove-file-btn"
+                  (click)="removeFile('coverPhoto')"
+                  aria-label="Remove cover photo"
+                >
+                  &times;
+                </button>
+              } @else {
+                <div class="upload-placeholder">
+                  <span class="upload-icon">+</span>
+                  <span class="upload-text">Upload Cover</span>
+                  <span class="upload-hint">1200x400px (3:1 ratio)</span>
+                </div>
+                <input
+                  type="file"
+                  class="file-input"
+                  accept="image/jpeg,image/png,image/webp"
+                  (change)="onFileSelected($event, 'coverPhoto')"
+                />
+              }
+            </div>
+          </div>
+
+          <!-- Logo -->
+          <div class="media-upload-card">
+            <label class="media-label">Business Logo</label>
+            <div class="upload-area" [class.has-file]="profileForm.get('logo')?.value">
+              @if (profileForm.get('logo')?.value) {
+                <img
+                  [src]="profileForm.get('logo')?.value?.url"
+                  alt="Logo preview"
+                  class="preview-image"
+                />
+                <button
+                  type="button"
+                  class="remove-file-btn"
+                  (click)="removeFile('logo')"
+                  aria-label="Remove logo"
+                >
+                  &times;
+                </button>
+              } @else {
+                <div class="upload-placeholder">
+                  <span class="upload-icon">+</span>
+                  <span class="upload-text">Upload Logo</span>
+                  <span class="upload-hint">Square, min 200x200px</span>
+                </div>
+                <input
+                  type="file"
+                  class="file-input"
+                  accept="image/jpeg,image/png,image/svg+xml,image/webp"
+                  (change)="onFileSelected($event, 'logo')"
+                />
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- Form Actions -->
+    <footer class="form-actions">
+      <div class="save-status">
+        @if (autoSaveStatus() === 'saved' && lastSaved()) {
+          <span class="autosave-status saved">
+            Draft saved {{ lastSaved() | date:'shortTime' }}
+          </span>
+        }
+        @if (autoSaveStatus() === 'saving') {
+          <span class="autosave-status saving">Saving...</span>
+        }
+        @if (autoSaveStatus() === 'error') {
+          <span class="autosave-status error">Save failed</span>
+        }
+      </div>
+
+      <div class="action-buttons">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="onCancel()"
+          [disabled]="isSubmitting() || isSavingDraft()"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="saveDraft()"
+          [disabled]="isSubmitting() || isSavingDraft()"
+        >
+          @if (isSavingDraft()) {
+            <span class="spinner"></span> Saving...
+          } @else {
+            Save Draft
+          }
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="onPreview()"
+          [disabled]="isSubmitting()"
+        >
+          Preview
+        </button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="isSubmitting() || isSavingDraft()"
+        >
+          @if (isSubmitting()) {
+            <span class="spinner"></span> Publishing...
+          } @else {
+            Publish Profile
+          }
+        </button>
+      </div>
+    </footer>
+  </form>
+</section>

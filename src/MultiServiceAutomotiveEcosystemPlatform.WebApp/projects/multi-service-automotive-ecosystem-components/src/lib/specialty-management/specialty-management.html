@@ -1,0 +1,361 @@
+<div class="specialty-management">
+  <!-- Success/Error Messages -->
+  @if (successMessage()) {
+    <div class="toast toast--success" role="status" aria-live="polite">
+      {{ successMessage() }}
+    </div>
+  }
+  @if (errorMessage() || error) {
+    <div class="toast toast--error" role="alert" aria-live="assertive">
+      {{ errorMessage() || error }}
+    </div>
+  }
+
+  <!-- Header -->
+  <div class="section-header">
+    <h2 class="section-title">Specialties</h2>
+    <button
+      type="button"
+      class="btn btn--primary"
+      (click)="openModal()"
+      [disabled]="!canAddMore() || isLoading"
+      aria-label="Add specialty"
+    >
+      <span class="btn-icon">+</span>
+      Add Specialty
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  @if (isLoading) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading specialties...</p>
+    </div>
+  } @else {
+    <!-- Specialties List -->
+    @if (currentSpecialties.length === 0) {
+      <div class="empty-state">
+        <span class="empty-state__icon">🎯</span>
+        <h3 class="empty-state__title">No Specialties Added Yet</h3>
+        <p class="empty-state__description">Add specialties to showcase your expertise to potential customers</p>
+        <button
+          type="button"
+          class="btn btn--primary"
+          (click)="openModal()"
+          [disabled]="isLoading"
+        >
+          Add Your First Specialty
+        </button>
+      </div>
+    } @else {
+      <div
+        class="specialty-list"
+        cdkDropList
+        (cdkDropListDropped)="onDrop($event)"
+      >
+        @for (specialty of currentSpecialties; track specialty.id; let i = $index) {
+          <div
+            class="specialty-item"
+            cdkDrag
+            [attr.aria-label]="specialty.name + ', ' + specialty.yearsOfExperience + ' years of experience, position ' + (i + 1) + ' of ' + currentSpecialties.length"
+          >
+            <button
+              type="button"
+              class="drag-handle"
+              cdkDragHandle
+              aria-label="Drag to reorder {{ specialty.name }}"
+            >
+              ☰
+            </button>
+            <span class="specialty-icon">{{ specialty.icon || '🔧' }}</span>
+            <div class="specialty-info">
+              <span class="specialty-name">{{ specialty.name }}</span>
+              @if (specialty.yearsOfExperience > 0) {
+                <span class="specialty-experience">{{ specialty.yearsOfExperience }} years experience</span>
+              }
+              @if (specialty.isCustom) {
+                <span class="specialty-badge">Custom</span>
+              }
+            </div>
+            @if (confirmRemoveId() === specialty.id) {
+              <div class="confirm-remove">
+                <span>Remove?</span>
+                <button
+                  type="button"
+                  class="btn btn--sm btn--danger"
+                  (click)="onRemoveSpecialty(specialty.id)"
+                  aria-label="Confirm remove {{ specialty.name }}"
+                >
+                  Yes
+                </button>
+                <button
+                  type="button"
+                  class="btn btn--sm btn--secondary"
+                  (click)="cancelRemove()"
+                  aria-label="Cancel remove"
+                >
+                  No
+                </button>
+              </div>
+            } @else {
+              <button
+                type="button"
+                class="remove-btn"
+                (click)="confirmRemove(specialty.id)"
+                aria-label="Remove {{ specialty.name }} specialty"
+              >
+                ✕
+              </button>
+            }
+          </div>
+        }
+      </div>
+    }
+
+    <!-- Limit indicator -->
+    <p class="limit-indicator">
+      {{ currentSpecialties.length }} of {{ maxSpecialties }} specialties
+    </p>
+  }
+
+  <!-- Certifications Section -->
+  <div class="section-header section-header--certifications">
+    <h2 class="section-title">Certifications</h2>
+  </div>
+
+  <!-- Upload Area -->
+  <div
+    class="upload-area"
+    [class.upload-area--dragover]="isDragOver()"
+    [class.upload-area--disabled]="!canUploadMore() || uploadingFile()"
+    role="button"
+    tabindex="0"
+    (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave($event)"
+    (drop)="onFileDrop($event)"
+    (click)="fileInput.click()"
+    (keydown.enter)="fileInput.click()"
+    (keydown.space)="fileInput.click(); $event.preventDefault()"
+    aria-label="Upload certification documents. Supported formats: PDF, JPG, PNG. Maximum size: 5MB"
+  >
+    <input
+      #fileInput
+      type="file"
+      class="file-input"
+      accept=".pdf,.jpg,.jpeg,.png"
+      (change)="onFileSelect($event)"
+      aria-hidden="true"
+    />
+    @if (uploadingFile()) {
+      <div class="upload-progress">
+        <span class="upload-progress__filename">{{ uploadingFile() }}</span>
+        <div class="progress-bar">
+          <div class="progress-bar__fill" [style.width.%]="uploadProgress()"></div>
+        </div>
+        <span class="upload-progress__percent">{{ uploadProgress() }}%</span>
+      </div>
+    } @else {
+      <span class="upload-area__icon">📄</span>
+      <span class="upload-area__text">Upload Certification Documents</span>
+      <span class="upload-area__hint">PDF, JPG, or PNG (max 5MB)</span>
+    }
+  </div>
+
+  <!-- Certifications List -->
+  @if (certifications.length > 0) {
+    <div class="certification-list">
+      @for (cert of certifications; track cert.id) {
+        <div class="certification-card">
+          <span class="certification-card__icon">✓</span>
+          <div class="certification-card__info">
+            <span class="certification-card__name">{{ cert.name }}</span>
+            <span class="certification-card__file">{{ cert.fileName }} ({{ formatFileSize(cert.fileSize) }})</span>
+            @if (cert.isVerified) {
+              <span class="certification-card__verified">Verified</span>
+            }
+          </div>
+          <button
+            type="button"
+            class="remove-btn"
+            (click)="confirmRemoveCertification(cert.id)"
+            aria-label="Remove {{ cert.name }} certification"
+          >
+            ✕
+          </button>
+        </div>
+      }
+    </div>
+  }
+
+  <!-- Certifications limit indicator -->
+  <p class="limit-indicator">
+    {{ certifications.length }} of {{ maxCertifications }} certifications
+  </p>
+
+  <!-- Add Specialty Modal -->
+  @if (isModalOpen()) {
+    <div
+      class="modal-overlay"
+      (click)="closeModal()"
+      (keydown.escape)="closeModal()"
+    >
+      <div
+        class="modal specialty-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+        (click)="$event.stopPropagation()"
+      >
+        <div class="modal-header">
+          <h2 id="modal-title" class="modal-title">Add Specialties</h2>
+          <button
+            type="button"
+            class="modal-close"
+            (click)="closeModal()"
+            aria-label="Close modal"
+          >
+            ✕
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <!-- Search -->
+          <div class="search-box">
+            <input
+              type="search"
+              class="search-input"
+              placeholder="Search specialties..."
+              [value]="searchQuery()"
+              (input)="onSearchChange($event)"
+              aria-label="Search specialties"
+              role="searchbox"
+            />
+            @if (searchQuery()) {
+              <button
+                type="button"
+                class="search-clear"
+                (click)="clearSearch()"
+                aria-label="Clear search"
+              >
+                ✕
+              </button>
+            }
+          </div>
+
+          <!-- Catalog Grid -->
+          <div class="catalog-grid">
+            @if (filteredSpecialties().length === 0) {
+              <div class="no-results">
+                <p>No specialties found matching "{{ searchQuery() }}"</p>
+                <p class="no-results__hint">Try a different search term or add a custom specialty below</p>
+              </div>
+            } @else {
+              @for (item of filteredSpecialties(); track item.id) {
+                <div
+                  class="catalog-item"
+                  [class.catalog-item--selected]="isSelected(item.id)"
+                  [class.catalog-item--disabled]="isAlreadyAdded(item.id)"
+                  (click)="toggleSpecialtySelection(item.id)"
+                  role="checkbox"
+                  [attr.aria-checked]="isSelected(item.id)"
+                  tabindex="0"
+                  (keydown.enter)="toggleSpecialtySelection(item.id)"
+                  (keydown.space)="toggleSpecialtySelection(item.id); $event.preventDefault()"
+                >
+                  <span class="catalog-item__icon">{{ item.icon }}</span>
+                  <div class="catalog-item__content">
+                    <span class="catalog-item__name">{{ item.name }}</span>
+                    <span class="catalog-item__description">{{ item.description }}</span>
+                  </div>
+                  <span class="catalog-item__checkbox">
+                    @if (isSelected(item.id)) {
+                      ✓
+                    } @else if (isAlreadyAdded(item.id)) {
+                      Added
+                    }
+                  </span>
+                </div>
+              }
+            }
+          </div>
+
+          <!-- Custom Specialty Form -->
+          @if (allowCustomSpecialties) {
+            <div class="custom-specialty-section">
+              <div class="section-divider">
+                <span>Or add a custom specialty</span>
+              </div>
+              <form [formGroup]="customSpecialtyForm" class="custom-specialty-form">
+                <div class="form-group">
+                  <label for="customName" class="form-label">Specialty Name</label>
+                  <input
+                    id="customName"
+                    type="text"
+                    class="form-input"
+                    formControlName="name"
+                    placeholder="e.g., Classic Car Restoration"
+                    maxlength="100"
+                    [attr.aria-invalid]="customSpecialtyForm.get('name')?.invalid && customSpecialtyForm.get('name')?.touched"
+                    aria-describedby="nameError"
+                  />
+                  @if (customSpecialtyForm.get('name')?.invalid && customSpecialtyForm.get('name')?.touched) {
+                    <span id="nameError" class="form-error">
+                      @if (customSpecialtyForm.get('name')?.errors?.['required']) {
+                        Specialty name is required
+                      } @else if (customSpecialtyForm.get('name')?.errors?.['maxlength']) {
+                        Maximum 100 characters allowed
+                      }
+                    </span>
+                  }
+                </div>
+                <div class="form-group form-group--small">
+                  <label for="customYears" class="form-label">Years of Experience</label>
+                  <input
+                    id="customYears"
+                    type="number"
+                    class="form-input"
+                    formControlName="yearsOfExperience"
+                    min="0"
+                    max="99"
+                    [attr.aria-invalid]="customSpecialtyForm.get('yearsOfExperience')?.invalid && customSpecialtyForm.get('yearsOfExperience')?.touched"
+                    aria-describedby="yearsError"
+                  />
+                  @if (customSpecialtyForm.get('yearsOfExperience')?.invalid && customSpecialtyForm.get('yearsOfExperience')?.touched) {
+                    <span id="yearsError" class="form-error">
+                      @if (customSpecialtyForm.get('yearsOfExperience')?.errors?.['required']) {
+                        Years of experience is required
+                      } @else if (customSpecialtyForm.get('yearsOfExperience')?.errors?.['min']) {
+                        Must be 0 or greater
+                      } @else if (customSpecialtyForm.get('yearsOfExperience')?.errors?.['max']) {
+                        Must be 99 or less
+                      }
+                    </span>
+                  }
+                </div>
+              </form>
+            </div>
+          }
+        </div>
+
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn--secondary"
+            (click)="closeModal()"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            class="btn btn--primary"
+            (click)="addSelectedSpecialties()"
+            [disabled]="selectedSpecialtyIds().size === 0 && (!customSpecialtyForm.get('name')?.value?.trim() || customSpecialtyForm.invalid)"
+          >
+            Add Selected ({{ selectedSpecialtyIds().size + (customSpecialtyForm.get('name')?.value?.trim() && customSpecialtyForm.valid ? 1 : 0) }})
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>
