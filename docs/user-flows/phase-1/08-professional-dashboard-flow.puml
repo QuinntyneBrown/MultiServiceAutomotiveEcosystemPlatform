@@ -1,0 +1,116 @@
+@startuml professional-dashboard-flow
+title Professional Dashboard Flow - Phase 1
+
+skinparam activityBackgroundColor #E3F2FD
+skinparam activityBorderColor #1976D2
+skinparam activityDiamondBackgroundColor #FFF3E0
+skinparam activityDiamondBorderColor #F57C00
+
+start
+
+:Professional logs in;
+
+:System loads Dashboard Home;
+
+:Display Welcome Banner;
+note right
+  * Greeting with name
+  * Profile completion prompt
+  * Quick stats summary
+end note
+
+:Display Statistics Cards;
+note right
+  Cards show:
+  * Total customers
+  * New inquiries
+  * Pending referrals
+  * This month referrals
+end note
+
+:Display Activity Feed;
+note right
+  Recent activities:
+  * Customer activities
+  * New inquiries
+  * Referral updates
+  * Messages
+end note
+
+:Display Quick Actions Panel;
+note right
+  Actions:
+  * Add customer
+  * Send referral
+  * View inquiries
+  * Update profile
+end note
+
+:Professional selects action;
+
+switch (Dashboard Action?)
+case (View Customers)
+  :Navigate to Customer List;
+  :Display customer management interface;
+  note right
+    See: Customer Management Flow
+  end note
+
+case (Add Customer)
+  :Open Add Customer form;
+  :Professional enters customer details;
+  :System validates and saves;
+  :Return to dashboard with success;
+
+case (Send Referral)
+  :Open Send Referral form;
+  note right
+    See: Professional Send Referral Flow
+  end note
+
+case (View Referrals Received)
+  :Navigate to Referrals Received list;
+  note right
+    See: Professional Receive Referral Flow
+  end note
+
+case (View Referrals Sent)
+  :Navigate to Sent Referrals list;
+  :Display referrals sent to colleagues;
+  :Show status of each referral;
+
+case (Update Profile)
+  :Navigate to Profile Management;
+  note right
+    See: Professional Profile Setup Flow
+  end note
+
+case (View Activity Details)
+  :Click activity in feed;
+  :Navigate to related item;
+  note right
+    * Click customer - go to customer detail
+    * Click referral - go to referral detail
+    * Click inquiry - go to inquiry detail
+  end note
+
+case (View All Statistics)
+  :Navigate to Statistics page;
+  :Display detailed metrics;
+  note right
+    * Customer growth chart
+    * Referral trends
+    * Conversion rates
+  end note
+
+endswitch
+
+:Professional returns to Dashboard;
+
+:System refreshes dashboard data;
+
+:Display updated statistics and feed;
+
+stop
+
+@enduml
