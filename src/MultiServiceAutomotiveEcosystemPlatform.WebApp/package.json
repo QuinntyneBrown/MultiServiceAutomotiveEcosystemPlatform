@@ -8,8 +8,9 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "test:coverage": "ng test --coverage",
-    "storybook": "ng run multi-service-automotive-ecosystem-components:storybook",
-    "build-storybook": "ng run multi-service-automotive-ecosystem-components:build-storybook"
+    "storybook": "npx ng run multi-service-automotive-ecosystem-components:storybook",
+    "build-storybook": "npx ng run multi-service-automotive-ecosystem-components:build-storybook",
+    "build:lib": "npx ng build multi-service-automotive-ecosystem-components"
   },
   "prettier": {
     "printWidth": 100,

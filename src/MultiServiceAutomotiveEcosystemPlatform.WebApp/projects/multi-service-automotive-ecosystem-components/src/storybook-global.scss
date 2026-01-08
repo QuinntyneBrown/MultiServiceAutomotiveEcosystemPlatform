@@ -1,0 +1,19 @@
+/* Global styles for Storybook */
+@import '../lib/styles/design-tokens.css';
+
+/* Apply global styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family-secondary);
+  font-size: var(--text-body-md);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-primary);
+}
+
+/* Ensure components use border-box */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
