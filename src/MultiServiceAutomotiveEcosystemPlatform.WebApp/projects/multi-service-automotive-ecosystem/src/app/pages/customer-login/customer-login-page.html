@@ -5,8 +5,8 @@
       <p class="customer-login-page__subtitle">Sign in to access your account</p>
     </div>
     <ms-customer-login
-      (onLogin)="onLogin($event)"
-      (onError)="onError($event)"
+      (loginSuccess)="onLogin($event)"
+      (loginError)="onError($event)"
     ></ms-customer-login>
   </div>
 </div>

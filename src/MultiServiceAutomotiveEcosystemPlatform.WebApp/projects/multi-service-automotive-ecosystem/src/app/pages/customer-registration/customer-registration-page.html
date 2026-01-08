@@ -5,8 +5,8 @@
       <p class="customer-registration-page__subtitle">Join our automotive community today</p>
     </div>
     <ms-customer-registration
-      (onRegister)="onRegister($event)"
-      (onError)="onError($event)"
+      (registrationSuccess)="onRegister($event)"
+      (registrationError)="onError($event)"
     ></ms-customer-registration>
   </div>
 </div>

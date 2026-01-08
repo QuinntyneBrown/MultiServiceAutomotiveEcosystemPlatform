@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
-interface ProfessionalProfile {
+export interface ProfessionalProfileData {
   id: string;
   slug: string;
   businessName: string;
@@ -31,7 +31,7 @@ interface ProfessionalProfile {
 })
 export class ProfessionalProfile {
   // Observable pattern as per requirements
-  profile$: Observable<ProfessionalProfile>;
+  profile$: Observable<ProfessionalProfileData>;
 
   constructor(private route: ActivatedRoute) {
     this.profile$ = this.route.params.pipe(
@@ -39,9 +39,9 @@ export class ProfessionalProfile {
     );
   }
 
-  private loadProfile(slug: string): Observable<ProfessionalProfile> {
+  private loadProfile(slug: string): Observable<ProfessionalProfileData> {
     // Mock data - replace with actual API call
-    const mockProfile: ProfessionalProfile = {
+    const mockProfile: ProfessionalProfileData = {
       id: '1',
       slug,
       businessName: 'Acme Auto Repair',
