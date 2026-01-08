@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find Automotive Professionals - AutoPro Network</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../shared-styles.css">
+  <style>
+    /* ==================== PUBLIC NAVBAR ==================== */
+    .public-navbar {
+      position: sticky;
+      top: 0;
+      z-index: var(--z-sticky);
+      background-color: var(--color-bg-primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .public-navbar__container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: var(--container-max-width);
+      margin: 0 auto;
+      padding: var(--spacing-4) var(--spacing-6);
+    }
+
+    .public-navbar__logo {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+      text-decoration: none;
+    }
+
+    .public-navbar__logo-icon {
+      width: 40px;
+      height: 40px;
+      background-color: var(--color-blue-700);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .public-navbar__logo-text {
+      font-family: var(--font-family-primary);
+      font-weight: var(--font-weight-bold);
+      font-size: var(--text-h5);
+      color: var(--color-blue-700);
+    }
+
+    .public-navbar__nav {
+      display: none;
+      gap: var(--spacing-8);
+    }
+
+    @media (min-width: 768px) {
+      .public-navbar__nav {
+        display: flex;
+      }
+    }
+
+    .public-navbar__link {
+      font-family: var(--font-family-secondary);
+      font-size: var(--text-body-md);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-gray-800);
+      text-decoration: none;
+      transition: color var(--transition-normal);
+    }
+
+    .public-navbar__link:hover {
+      color: var(--color-blue-700);
+    }
+
+    .public-navbar__link--active {
+      color: var(--color-blue-700);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    .public-navbar__actions {
+      display: flex;
+      gap: var(--spacing-3);
+      align-items: center;
+    }
+
+    .menu-toggle {
+      display: flex;
+      background: none;
+      border: none;
+      color: var(--color-gray-700);
+      padding: var(--spacing-2);
+      cursor: pointer;
+    }
+
+    @media (min-width: 768px) {
+      .menu-toggle {
+        display: none;
+      }
+    }
+
+    /* ==================== HERO SECTION ==================== */
+    .hero {
+      background: linear-gradient(135deg, var(--color-blue-700) 0%, var(--color-blue-900) 100%);
+      color: var(--color-text-inverse);
+      padding: var(--spacing-12) 0;
+    }
+
+    .hero__container {
+      max-width: var(--container-max-width);
+      margin: 0 auto;
+      padding: 0 var(--spacing-6);
+      text-align: center;
+    }
+
+    .hero__title {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-display-md);
+      font-weight: var(--font-weight-bold);
+      line-height: 1.2;
+      margin-bottom: var(--spacing-4);
+      color: var(--color-text-inverse);
+    }
+
+    @media (max-width: 767px) {
+      .hero__title {
+        font-size: var(--text-display-sm);
+      }
+    }
+
+    .hero__subtitle {
+      font-size: var(--text-body-lg);
+      opacity: 0.9;
+      margin-bottom: var(--spacing-8);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero__search {
+      background-color: var(--color-bg-primary);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-6);
+      max-width: 800px;
+      margin: 0 auto;
+      box-shadow: var(--shadow-xl);
+    }
+
+    .search-form {
+      display: flex;
+      gap: var(--spacing-3);
+      flex-wrap: wrap;
+    }
+
+    .search-form__input {
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .search-form__input input {
+      width: 100%;
+      height: 56px;
+      padding: var(--spacing-4);
+      font-size: var(--text-body-md);
+      border: 1px solid var(--color-gray-300);
+      border-radius: var(--radius-md);
+      transition: border-color var(--transition-normal);
+    }
+
+    .search-form__input input:focus {
+      outline: none;
+      border-color: var(--color-blue-700);
+      box-shadow: var(--shadow-focus);
+    }
+
+    .search-form__button {
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 575px) {
+      .search-form {
+        flex-direction: column;
+      }
+
+      .search-form__button {
+        width: 100%;
+      }
+    }
+
+    /* ==================== MAIN CONTENT ==================== */
+    .main-content {
+      background-color: var(--color-bg-secondary);
+      min-height: calc(100vh - 500px);
+    }
+
+    .content-wrapper {
+      max-width: var(--container-max-width);
+      margin: 0 auto;
+      padding: var(--spacing-8) var(--spacing-6);
+      display: flex;
+      gap: var(--spacing-8);
+    }
+
+    @media (max-width: 991px) {
+      .content-wrapper {
+        flex-direction: column;
+      }
+    }
+
+    /* ==================== FILTER SIDEBAR ==================== */
+    .filters {
+      width: 280px;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 991px) {
+      .filters {
+        width: 100%;
+      }
+    }
+
+    .filters__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-4);
+    }
+
+    .filters__title {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-h4);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-900);
+    }
+
+    .filters__clear {
+      font-size: var(--text-body-sm);
+      color: var(--color-blue-700);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-weight: var(--font-weight-medium);
+      text-decoration: underline;
+    }
+
+    .filter-group {
+      background-color: var(--color-bg-primary);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-6);
+      margin-bottom: var(--spacing-4);
+    }
+
+    .filter-group__title {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-body-md);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-900);
+      margin-bottom: var(--spacing-4);
+    }
+
+    .filter-option {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+      padding: var(--spacing-2) 0;
+      cursor: pointer;
+    }
+
+    .filter-option input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--color-blue-700);
+      cursor: pointer;
+    }
+
+    .filter-option label {
+      flex: 1;
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-700);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .filter-option__count {
+      font-size: var(--text-caption);
+      color: var(--color-gray-500);
+    }
+
+    /* ==================== RESULTS SECTION ==================== */
+    .results {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .results__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-6);
+      flex-wrap: wrap;
+      gap: var(--spacing-4);
+    }
+
+    .results__info {
+      font-size: var(--text-body-md);
+      color: var(--color-gray-700);
+    }
+
+    .results__info strong {
+      color: var(--color-gray-900);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    .results__controls {
+      display: flex;
+      gap: var(--spacing-4);
+      align-items: center;
+    }
+
+    .view-toggle {
+      display: flex;
+      gap: var(--spacing-1);
+      background-color: var(--color-bg-primary);
+      border-radius: var(--radius-md);
+      padding: var(--spacing-1);
+    }
+
+    .view-toggle__button {
+      background: none;
+      border: none;
+      padding: var(--spacing-2);
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+      color: var(--color-gray-600);
+      transition: all var(--transition-normal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .view-toggle__button--active {
+      background-color: var(--color-blue-700);
+      color: var(--color-text-inverse);
+    }
+
+    .view-toggle__button:hover:not(.view-toggle__button--active) {
+      background-color: var(--color-gray-100);
+      color: var(--color-gray-900);
+    }
+
+    .sort-select {
+      position: relative;
+    }
+
+    .sort-select select {
+      appearance: none;
+      padding: var(--spacing-2) var(--spacing-10) var(--spacing-2) var(--spacing-4);
+      font-size: var(--text-body-sm);
+      font-weight: var(--font-weight-medium);
+      border: 1px solid var(--color-gray-300);
+      border-radius: var(--radius-md);
+      background-color: var(--color-bg-primary);
+      cursor: pointer;
+      color: var(--color-gray-800);
+    }
+
+    .sort-select::after {
+      content: '';
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid var(--color-gray-600);
+      pointer-events: none;
+    }
+
+    /* ==================== PROFESSIONAL CARDS ==================== */
+    .professionals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: var(--spacing-6);
+      margin-bottom: var(--spacing-8);
+    }
+
+    @media (max-width: 575px) {
+      .professionals-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .pro-card {
+      background-color: var(--color-bg-primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      transition: box-shadow var(--transition-normal), transform var(--transition-normal);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pro-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .pro-card__header {
+      position: relative;
+      padding: var(--spacing-6);
+      display: flex;
+      gap: var(--spacing-4);
+    }
+
+    .pro-card__avatar {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .pro-card__avatar img {
+      width: 80px;
+      height: 80px;
+      border-radius: var(--radius-full);
+      object-fit: cover;
+      border: 3px solid var(--color-bg-primary);
+    }
+
+    .pro-card__verified {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 24px;
+      height: 24px;
+      background-color: var(--color-blue-700);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--color-bg-primary);
+    }
+
+    .pro-card__info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .pro-card__business-name {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-h5);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-900);
+      margin-bottom: var(--spacing-1);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .pro-card__pro-name {
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-600);
+      margin-bottom: var(--spacing-3);
+    }
+
+    .pro-card__type-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: var(--spacing-1) var(--spacing-3);
+      font-size: var(--text-caption);
+      font-weight: var(--font-weight-semibold);
+      border-radius: var(--radius-full);
+      background-color: var(--color-blue-100);
+      color: var(--color-blue-700);
+    }
+
+    .pro-card__rating {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-2);
+      margin-top: var(--spacing-3);
+    }
+
+    .rating-stars {
+      display: flex;
+      gap: 2px;
+    }
+
+    .rating-stars svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .rating-count {
+      font-size: var(--text-caption);
+      color: var(--color-gray-600);
+    }
+
+    .pro-card__body {
+      padding: 0 var(--spacing-6) var(--spacing-6);
+      flex: 1;
+    }
+
+    .pro-card__specialties {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-2);
+      margin-bottom: var(--spacing-4);
+    }
+
+    .specialty-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: var(--spacing-1) var(--spacing-3);
+      font-size: var(--text-caption);
+      background-color: var(--color-gray-100);
+      color: var(--color-gray-700);
+      border-radius: var(--radius-full);
+    }
+
+    .pro-card__footer {
+      padding: var(--spacing-4) var(--spacing-6);
+      border-top: 1px solid var(--color-gray-200);
+    }
+
+    .pro-card__footer .btn {
+      width: 100%;
+    }
+
+    /* ==================== PAGINATION ==================== */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: var(--spacing-2);
+      margin-top: var(--spacing-8);
+    }
+
+    .pagination__button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: var(--color-bg-primary);
+      border: 1px solid var(--color-gray-300);
+      border-radius: var(--radius-md);
+      color: var(--color-gray-700);
+      cursor: pointer;
+      transition: all var(--transition-normal);
+      font-size: var(--text-body-sm);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .pagination__button:hover:not(:disabled) {
+      background-color: var(--color-blue-50);
+      border-color: var(--color-blue-700);
+      color: var(--color-blue-700);
+    }
+
+    .pagination__button--active {
+      background-color: var(--color-blue-700);
+      border-color: var(--color-blue-700);
+      color: var(--color-text-inverse);
+    }
+
+    .pagination__button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .pagination__ellipsis {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-gray-500);
+    }
+
+    /* ==================== FOOTER ==================== */
+    .footer {
+      background-color: var(--color-blue-900);
+      color: var(--color-text-inverse);
+      padding: var(--spacing-12) 0 var(--spacing-6);
+    }
+
+    .footer__container {
+      max-width: var(--container-max-width);
+      margin: 0 auto;
+      padding: 0 var(--spacing-6);
+    }
+
+    .footer__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--spacing-8);
+      margin-bottom: var(--spacing-8);
+    }
+
+    .footer__section-title {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-body-lg);
+      font-weight: var(--font-weight-semibold);
+      margin-bottom: var(--spacing-4);
+      color: var(--color-text-inverse);
+    }
+
+    .footer__links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer__links li {
+      margin-bottom: var(--spacing-3);
+    }
+
+    .footer__link {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      font-size: var(--text-body-sm);
+      transition: color var(--transition-normal);
+    }
+
+    .footer__link:hover {
+      color: var(--color-accent);
+    }
+
+    .footer__bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: var(--spacing-6);
+      text-align: center;
+      font-size: var(--text-body-sm);
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* ==================== FEATURED BADGE ==================== */
+    .pro-card--featured {
+      border: 2px solid var(--color-accent);
+    }
+
+    .featured-badge {
+      position: absolute;
+      top: var(--spacing-4);
+      right: var(--spacing-4);
+      background-color: var(--color-accent);
+      color: var(--color-gray-900);
+      padding: var(--spacing-1) var(--spacing-3);
+      border-radius: var(--radius-full);
+      font-size: var(--text-caption);
+      font-weight: var(--font-weight-bold);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-1);
+    }
+
+    /* ==================== EMPTY STATE ==================== */
+    .empty-state {
+      text-align: center;
+      padding: var(--spacing-16) var(--spacing-6);
+      background-color: var(--color-bg-primary);
+      border-radius: var(--radius-lg);
+    }
+
+    .empty-state__icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto var(--spacing-6);
+      color: var(--color-gray-400);
+    }
+
+    .empty-state__title {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-h3);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-900);
+      margin-bottom: var(--spacing-3);
+    }
+
+    .empty-state__text {
+      font-size: var(--text-body-md);
+      color: var(--color-gray-600);
+      margin-bottom: var(--spacing-6);
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
+</head>
+<body>
+  <!-- Public Navigation -->
+  <nav class="public-navbar">
+    <div class="public-navbar__container">
+      <a href="#" class="public-navbar__logo">
+        <div class="public-navbar__logo-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <span class="public-navbar__logo-text">AutoPro Network</span>
+      </a>
+
+      <div class="public-navbar__nav">
+        <a href="#" class="public-navbar__link public-navbar__link--active">Find Professionals</a>
+        <a href="#" class="public-navbar__link">How It Works</a>
+        <a href="#" class="public-navbar__link">About</a>
+        <a href="#" class="public-navbar__link">Contact</a>
+      </div>
+
+      <div class="public-navbar__actions">
+        <a href="#" class="btn btn--tertiary btn--sm show-desktop-only">Sign In</a>
+        <a href="#" class="btn btn--primary btn--sm">Join Network</a>
+        <button class="menu-toggle" aria-label="Toggle menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section with Search -->
+  <section class="hero">
+    <div class="hero__container">
+      <h1 class="hero__title">Find Trusted Automotive Professionals</h1>
+      <p class="hero__subtitle">
+        Connect with verified mechanics, body shops, detailers, and more in your area
+      </p>
+
+      <div class="hero__search">
+        <form class="search-form">
+          <div class="search-form__input">
+            <input type="text" placeholder="Search by name or specialty..." aria-label="Search professionals">
+          </div>
+          <div class="search-form__input">
+            <input type="text" placeholder="Enter location or zip code" aria-label="Location">
+          </div>
+          <button type="submit" class="btn btn--primary btn--lg search-form__button">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="m21 21-4.35-4.35"/>
+            </svg>
+            Search
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-wrapper">
+      <!-- Filter Sidebar -->
+      <aside class="filters">
+        <div class="filters__header">
+          <h2 class="filters__title">Filters</h2>
+          <button class="filters__clear">Clear All</button>
+        </div>
+
+        <!-- Business Type Filter -->
+        <div class="filter-group">
+          <h3 class="filter-group__title">Business Type</h3>
+          <div class="filter-option">
+            <input type="checkbox" id="type-mechanic" checked>
+            <label for="type-mechanic">
+              <span>Mechanic/Repair Shop</span>
+              <span class="filter-option__count">42</span>
+            </label>
+          </div>
+          <div class="filter-option">
+            <input type="checkbox" id="type-body-shop">
+            <label for="type-body-shop">
+              <span>Body Shop</span>
+              <span class="filter-option__count">28</span>
+            </label>
+          </div>
+          <div class="filter-option">
+            <input type="checkbox" id="type-detailing">
+            <label for="type-detailing">
+              <span>Detailing Service</span>
+              <span class="filter-option__count">15</span>
+            </label>
+          </div>
+          <div class="filter-option">
+            <input type="checkbox" id="type-tire">
+            <label for="type-tire">
+              <span>Tire Shop</span>
+              <span class="filter-option__count">12</span>
+            </label>
+          </div>
+          <div class="filter-option">
+            <input type="checkbox" id="type-glass">
+            <label for="type-glass">
+              <span>Glass Repair</span>
+              <span class="filter-option__count">8</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Specialty Filter -->
+        <div class="filter-group">
+          <h3 class="filter-group__title">Specialty</h3>
+          <div class="filter-option">
+            <input type="checkbox" id="specialty-engine">
+            <label for="specialty-engine">
+              <span>Engine Repair</span>
+              <span class="filter-option__count">38</span>
+            </label>
+          </div>
+          <div class="filter-option">
+            <input type="checkbox" id="specialty-brakes">
+            <label for="specialty-brakes">
+              <span>Brakes</span>
+              <span class="filter-option__count">45</span>
+            </label>
+          </div>
+          <div class="filter-option">
+            <input type="checkbox" id="specialty-transmission">
+            <label for="specialty-transmission">
+              <span>Transmission</span>
+              <span class="filter-option__count">22</span>
+            </label>
+          </div>
+          <div class="filter-option">
+            <input type="checkbox" id="specialty-electrical">
+            <label for="specialty-electrical">
+              <span>Electrical Systems</span>
+              <span class="filter-option__count">31</span>
+            </label>
+          </div>
+          <div class="filter-option">
+            <input type="checkbox" id="specialty-ac">
+            <label for="specialty-ac">
+              <span>A/C & Heating</span>
+              <span class="filter-option__count">27</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Additional Filters -->
+        <div class="filter-group">
+          <h3 class="filter-group__title">Additional Filters</h3>
+          <div class="filter-option">
+            <input type="checkbox" id="filter-verified">
+            <label for="filter-verified">
+              <span>Verified Only</span>
+            </label>
+          </div>
+          <div class="filter-option">
+            <input type="checkbox" id="filter-featured">
+            <label for="filter-featured">
+              <span>Featured</span>
+            </label>
+          </div>
+          <div class="filter-option">
+            <input type="checkbox" id="filter-open-now">
+            <label for="filter-open-now">
+              <span>Open Now</span>
+            </label>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Results Section -->
+      <section class="results">
+        <div class="results__header">
+          <div class="results__info">
+            Showing <strong>42 professionals</strong>
+          </div>
+
+          <div class="results__controls">
+            <div class="view-toggle">
+              <button class="view-toggle__button view-toggle__button--active" aria-label="Grid view">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="7" height="7"/>
+                  <rect x="14" y="3" width="7" height="7"/>
+                  <rect x="14" y="14" width="7" height="7"/>
+                  <rect x="3" y="14" width="7" height="7"/>
+                </svg>
+              </button>
+              <button class="view-toggle__button" aria-label="List view">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="8" y1="6" x2="21" y2="6"/>
+                  <line x1="8" y1="12" x2="21" y2="12"/>
+                  <line x1="8" y1="18" x2="21" y2="18"/>
+                  <line x1="3" y1="6" x2="3.01" y2="6"/>
+                  <line x1="3" y1="12" x2="3.01" y2="12"/>
+                  <line x1="3" y1="18" x2="3.01" y2="18"/>
+                </svg>
+              </button>
+            </div>
+
+            <div class="sort-select">
+              <select aria-label="Sort by">
+                <option>Featured</option>
+                <option>A-Z</option>
+                <option>Highest Rated</option>
+                <option>Most Reviews</option>
+                <option>Nearest</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Professional Cards Grid -->
+        <div class="professionals-grid">
+          <!-- Featured Professional Card -->
+          <article class="pro-card pro-card--featured">
+            <div class="pro-card__header">
+              <span class="featured-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+                Featured
+              </span>
+              <div class="pro-card__avatar">
+                <img src="https://placehold.co/160x160/00529F/FFFFFF?text=AP" alt="AutoPro Mechanics">
+                <div class="pro-card__verified">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="pro-card__info">
+                <h3 class="pro-card__business-name">AutoPro Mechanics</h3>
+                <p class="pro-card__pro-name">John Smith, ASE Certified</p>
+                <span class="pro-card__type-badge">Mechanic/Repair Shop</span>
+                <div class="pro-card__rating">
+                  <div class="rating-stars">
+                    <svg viewBox="0 0 24 24" fill="#FFD520">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="#FFD520">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="#FFD520">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="#FFD520">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="#FFD520">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                  </div>
+                  <span class="rating-count">5.0 (127)</span>
+                </div>
+              </div>
+            </div>
+            <div class="pro-card__body">
+              <div class="pro-card__specialties">
+                <span class="specialty-chip">Engine Repair</span>
+                <span class="specialty-chip">Transmission</span>
+                <span class="specialty-chip">Brakes</span>
+              </div>
+            </div>
+            <div class="pro-card__footer">
+              <a href="#" class="btn btn--primary btn--md">View Profile</a>
+            </div>
+          </article>
+
+          <!-- Regular Professional Card -->
+          <article class="pro-card">
+            <div class="pro-card__header">
+              <div class="pro-card__avatar">
+                <img src="https://placehold.co/160x160/003366/FFFFFF?text=PB" alt="Precision Body Shop">
+                <div class="pro-card__verified">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="pro-card__info">
+                <h3 class="pro-card__business-name">Precision Body Shop</h3>
+                <p class="pro-card__pro-name">Maria Garcia, I-CAR Certified</p>
+                <span class="pro-card__type-badge">Body Shop</span>
+                <div class="pro-card__rating">
+                  <div class="rating-stars">
+                    <svg viewBox="0 0 24 24" fill="#FFD520">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="#FFD520">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="#FFD520">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="#FFD520">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="#E5E5E5">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                  </div>
+                  <span class="rating-count">4.8 (94)</span>
+                </div>
+              </div>
+            </div>
+            <div class="pro-card__body">
+              <div class="pro-card__specialties">
+                <span class="specialty-chip">Collision Repair</span>
+                <span class="specialty-chip">Paint & Refinish</span>
+                <span class="specialty-chip">Dent Removal</span>
+              </div>
+            </div>
+            <div class="pro-card__footer">
+              <a href="#" class="btn btn--secondary btn--md">View Profile</a>
+            </div>
+          </article>
+
+          <!-- Another Professional Card -->
+          <article class="pro-card">
+            <div class="pro-card__header">
+              <div class="pro-card__avatar">
+                <img src="https://placehold.co/160x160/0066CC/FFFFFF?text=ED" alt="Elite Detail">
+                <div class="pro-card__verified">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="pro-card__info">
+                <h3 class="pro-card__business-name">Elite Detail Studio</h3>
+                <p class="pro-card__pro-name">Michael Chen, IDA Certified</p>
+                <span class="pro-card__type-badge">Detailing Service</span>
+                <div class="pro-card__rating">
+                  <div class="rating-stars">
+                    <svg viewBox="0 0 24 24" fill="#FFD520">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="#FFD520">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="#FFD520">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="#FFD520">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="#FFD520">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                  </div>
+                  <span class="rating-count">4.9 (156)</span>
+                </div>
+              </div>
+            </div>
+            <div class="pro-card__body">
+              <div class="pro-card__specialties">
+                <span class="specialty-chip">Paint Correction</span>
+                <span class="specialty-chip">Ceramic Coating</span>
+                <span class="specialty-chip">Interior Detail</span>
+              </div>
+            </div>
+            <div class="pro-card__footer">
+              <a href="#" class="btn btn--secondary btn--md">View Profile</a>
+            </div>
+          </article>
+
+          <!-- Card 4 -->
+          <article class="pro-card">
+            <div class="pro-card__header">
+              <div class="pro-card__avatar">
+                <img src="https://placehold.co/160x160/1976D2/FFFFFF?text=QT" alt="Quick Tire">
+              </div>
+              <div class="pro-card__info">
+                <h3 class="pro-card__business-name">Quick Tire & Auto</h3>
+                <p class="pro-card__pro-name">David Wilson</p>
+                <span class="pro-card__type-badge">Tire Shop</span>
+                <div class="pro-card__rating">
+                  <div class="rating-stars">
+                    <svg viewBox="0 0 24 24" fill="#FFD520">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="#FFD520">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="#FFD520">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="#FFD520">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="#E5E5E5">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                  </div>
+                  <span class="rating-count">4.6 (78)</span>
+                </div>
+              </div>
+            </div>
+            <div class="pro-card__body">
+              <div class="pro-card__specialties">
+                <span class="specialty-chip">Tire Installation</span>
+                <span class="specialty-chip">Wheel Alignment</span>
+                <span class="specialty-chip">Balancing</span>
+              </div>
+            </div>
+            <div class="pro-card__footer">
+              <a href="#" class="btn btn--secondary btn--md">View Profile</a>
+            </div>
+          </article>
+
+          <!-- Card 5 -->
+          <article class="pro-card">
+            <div class="pro-card__header">
+              <div class="pro-card__avatar">
+                <img src="https://placehold.co/160x160/42A5F5/FFFFFF?text=CG" alt="Clear Glass">
+                <div class="pro-card__verified">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="pro-card__info">
+                <h3 class="pro-card__business-name">Clear Glass Experts</h3>
+                <p class="pro-card__pro-name">Sarah Johnson, AGRSS Certified</p>
+                <span class="pro-card__type-badge">Glass Repair</span>
+                <div class="pro-card__rating">
+                  <div class="rating-stars">
+                    <svg viewBox="0 0 24 24" fill="#FFD520">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="#FFD520">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="#FFD520">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="#FFD520">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="#FFD520">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                  </div>
+                  <span class="rating-count">5.0 (63)</span>
+                </div>
+              </div>
+            </div>
+            <div class="pro-card__body">
+              <div class="pro-card__specialties">
+                <span class="specialty-chip">Windshield Repair</span>
+                <span class="specialty-chip">Window Tinting</span>
+                <span class="specialty-chip">Mobile Service</span>
+              </div>
+            </div>
+            <div class="pro-card__footer">
+              <a href="#" class="btn btn--secondary btn--md">View Profile</a>
+            </div>
+          </article>
+
+          <!-- Card 6 -->
+          <article class="pro-card">
+            <div class="pro-card__header">
+              <div class="pro-card__avatar">
+                <img src="https://placehold.co/160x160/90CAF9/333333?text=SM" alt="Street Motors">
+                <div class="pro-card__verified">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="pro-card__info">
+                <h3 class="pro-card__business-name">Street Motors LLC</h3>
+                <p class="pro-card__pro-name">James Rodriguez, ASE Master Tech</p>
+                <span class="pro-card__type-badge">Mechanic/Repair Shop</span>
+                <div class="pro-card__rating">
+                  <div class="rating-stars">
+                    <svg viewBox="0 0 24 24" fill="#FFD520">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="#FFD520">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="#FFD520">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9 27 8.91 8.26 12 2"/>
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="#FFD520">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="#E5E5E5">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                  </div>
+                  <span class="rating-count">4.7 (112)</span>
+                </div>
+              </div>
+            </div>
+            <div class="pro-card__body">
+              <div class="pro-card__specialties">
+                <span class="specialty-chip">Diagnostics</span>
+                <span class="specialty-chip">Engine Tune-up</span>
+                <span class="specialty-chip">Oil Change</span>
+              </div>
+            </div>
+            <div class="pro-card__footer">
+              <a href="#" class="btn btn--secondary btn--md">View Profile</a>
+            </div>
+          </article>
+        </div>
+
+        <!-- Pagination -->
+        <nav class="pagination" aria-label="Pagination">
+          <button class="pagination__button" disabled aria-label="Previous page">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="15 18 9 12 15 6"/>
+            </svg>
+          </button>
+          <button class="pagination__button pagination__button--active" aria-label="Page 1" aria-current="page">1</button>
+          <button class="pagination__button" aria-label="Page 2">2</button>
+          <button class="pagination__button" aria-label="Page 3">3</button>
+          <button class="pagination__button" aria-label="Page 4">4</button>
+          <span class="pagination__ellipsis">...</span>
+          <button class="pagination__button" aria-label="Page 10">10</button>
+          <button class="pagination__button" aria-label="Next page">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </button>
+        </nav>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer__container">
+      <div class="footer__grid">
+        <div>
+          <h3 class="footer__section-title">AutoPro Network</h3>
+          <p style="color: rgba(255, 255, 255, 0.8); font-size: var(--text-body-sm); line-height: 1.6;">
+            Connecting automotive professionals with customers who need their services.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="footer__section-title">For Professionals</h3>
+          <ul class="footer__links">
+            <li><a href="#" class="footer__link">Join Network</a></li>
+            <li><a href="#" class="footer__link">Professional Dashboard</a></li>
+            <li><a href="#" class="footer__link">Pricing</a></li>
+            <li><a href="#" class="footer__link">Resources</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="footer__section-title">For Customers</h3>
+          <ul class="footer__links">
+            <li><a href="#" class="footer__link">Find Professionals</a></li>
+            <li><a href="#" class="footer__link">How It Works</a></li>
+            <li><a href="#" class="footer__link">Referral Program</a></li>
+            <li><a href="#" class="footer__link">FAQs</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="footer__section-title">Company</h3>
+          <ul class="footer__links">
+            <li><a href="#" class="footer__link">About Us</a></li>
+            <li><a href="#" class="footer__link">Contact</a></li>
+            <li><a href="#" class="footer__link">Privacy Policy</a></li>
+            <li><a href="#" class="footer__link">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        &copy; 2026 AutoPro Network. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Simple interactivity for demonstration
+    document.addEventListener('DOMContentLoaded', function() {
+      // Filter clear functionality
+      const clearButton = document.querySelector('.filters__clear');
+      if (clearButton) {
+        clearButton.addEventListener('click', function() {
+          document.querySelectorAll('.filter-option input[type="checkbox"]').forEach(checkbox => {
+            checkbox.checked = false;
+          });
+        });
+      }
+
+      // View toggle
+      const viewButtons = document.querySelectorAll('.view-toggle__button');
+      viewButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          viewButtons.forEach(btn => btn.classList.remove('view-toggle__button--active'));
+          this.classList.add('view-toggle__button--active');
+        });
+      });
+
+      // Pagination
+      const paginationButtons = document.querySelectorAll('.pagination__button:not([disabled])');
+      paginationButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          if (!this.querySelector('svg')) {
+            paginationButtons.forEach(btn => {
+              if (!btn.querySelector('svg')) {
+                btn.classList.remove('pagination__button--active');
+                btn.removeAttribute('aria-current');
+              }
+            });
+            this.classList.add('pagination__button--active');
+            this.setAttribute('aria-current', 'page');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

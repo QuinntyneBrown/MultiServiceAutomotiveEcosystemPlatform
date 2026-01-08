@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Michael Johnson - Customer Details</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../shared-styles.css">
+  <style>
+    .dashboard {
+      min-height: 100vh;
+      display: flex;
+      background-color: var(--color-bg-secondary);
+    }
+
+    /* Sidebar Navigation */
+    .sidebar {
+      width: 280px;
+      background-color: var(--color-blue-900);
+      color: var(--color-text-inverse);
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @media (max-width: 991px) {
+      .sidebar {
+        display: none;
+      }
+    }
+
+    .sidebar__header {
+      padding: var(--spacing-6);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar__logo {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+    }
+
+    .sidebar__logo-icon {
+      width: 40px;
+      height: 40px;
+      background-color: var(--color-accent);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sidebar__logo-text {
+      font-family: var(--font-family-primary);
+      font-weight: var(--font-weight-bold);
+      font-size: var(--text-body-lg);
+    }
+
+    .sidebar__nav {
+      flex: 1;
+      padding: var(--spacing-4);
+    }
+
+    .nav-section {
+      margin-bottom: var(--spacing-6);
+    }
+
+    .nav-section__title {
+      font-size: var(--text-caption);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(255, 255, 255, 0.5);
+      padding: var(--spacing-2) var(--spacing-3);
+      margin-bottom: var(--spacing-2);
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+      padding: var(--spacing-3);
+      border-radius: var(--radius-md);
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      font-size: var(--text-body-sm);
+      transition: all var(--transition-normal);
+    }
+
+    .nav-link:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: var(--color-text-inverse);
+    }
+
+    .nav-link--active {
+      background-color: var(--color-blue-700);
+      color: var(--color-text-inverse);
+    }
+
+    .nav-link__icon {
+      width: 20px;
+      height: 20px;
+      opacity: 0.8;
+    }
+
+    .nav-link--active .nav-link__icon {
+      opacity: 1;
+    }
+
+    .nav-link__badge {
+      margin-left: auto;
+      background-color: var(--color-accent);
+      color: var(--color-blue-900);
+      font-size: var(--text-micro);
+      font-weight: var(--font-weight-bold);
+      padding: 2px 6px;
+      border-radius: var(--radius-full);
+    }
+
+    .sidebar__footer {
+      padding: var(--spacing-4);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+      padding: var(--spacing-3);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: background-color var(--transition-normal);
+    }
+
+    .user-menu:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .user-menu__avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-full);
+      background-color: var(--color-blue-500);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: var(--font-weight-semibold);
+    }
+
+    .user-menu__info {
+      flex: 1;
+    }
+
+    .user-menu__name {
+      font-size: var(--text-body-sm);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .user-menu__role {
+      font-size: var(--text-caption);
+      opacity: 0.7;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--spacing-4) var(--spacing-6);
+      background-color: var(--color-bg-primary);
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      padding: var(--spacing-2);
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    @media (max-width: 991px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+    }
+
+    .mobile-menu-btn svg {
+      width: 24px;
+      height: 24px;
+      color: var(--color-gray-700);
+    }
+
+    .top-bar__search {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-2);
+      flex: 1;
+      max-width: 400px;
+      margin: 0 var(--spacing-4);
+    }
+
+    @media (max-width: 767px) {
+      .top-bar__search {
+        display: none;
+      }
+    }
+
+    .search-input {
+      flex: 1;
+      height: 40px;
+      padding: 0 var(--spacing-4);
+      padding-left: var(--spacing-10);
+      border: 1px solid var(--color-gray-300);
+      border-radius: var(--radius-full);
+      font-size: var(--text-body-sm);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: 12px center;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--color-blue-700);
+    }
+
+    .top-bar__actions {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-4);
+    }
+
+    .notification-btn {
+      position: relative;
+      padding: var(--spacing-2);
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .notification-btn svg {
+      width: 24px;
+      height: 24px;
+      color: var(--color-gray-600);
+    }
+
+    .notification-btn__badge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 18px;
+      height: 18px;
+      background-color: var(--color-error);
+      color: white;
+      font-size: 10px;
+      font-weight: var(--font-weight-bold);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Page Content */
+    .page-content {
+      flex: 1;
+      padding: var(--spacing-6);
+      overflow-y: auto;
+    }
+
+    @media (max-width: 575px) {
+      .page-content {
+        padding: var(--spacing-4);
+      }
+    }
+
+    /* Breadcrumb */
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-2);
+      margin-bottom: var(--spacing-4);
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-600);
+    }
+
+    .breadcrumb a {
+      color: var(--color-blue-700);
+      text-decoration: none;
+    }
+
+    .breadcrumb a:hover {
+      text-decoration: underline;
+    }
+
+    .breadcrumb__separator {
+      color: var(--color-gray-400);
+    }
+
+    /* Customer Header */
+    .customer-header {
+      background-color: var(--color-bg-primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      padding: var(--spacing-6);
+      margin-bottom: var(--spacing-6);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--spacing-6);
+      flex-wrap: wrap;
+    }
+
+    .customer-header__main {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-4);
+      flex: 1;
+      min-width: 0;
+    }
+
+    .customer-header__avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: var(--radius-full);
+      background: linear-gradient(135deg, var(--color-blue-500) 0%, var(--color-blue-700) 100%);
+      color: var(--color-text-inverse);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-h2);
+      font-weight: var(--font-weight-bold);
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 575px) {
+      .customer-header__avatar {
+        width: 64px;
+        height: 64px;
+        font-size: var(--text-h3);
+      }
+    }
+
+    .customer-header__info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .customer-header__name {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-h2);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-gray-900);
+      margin-bottom: var(--spacing-1);
+    }
+
+    @media (max-width: 575px) {
+      .customer-header__name {
+        font-size: var(--text-h3);
+      }
+    }
+
+    .customer-header__meta {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+      flex-wrap: wrap;
+    }
+
+    .customer-header__id {
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-600);
+    }
+
+    .customer-header__actions {
+      display: flex;
+      gap: var(--spacing-3);
+    }
+
+    @media (max-width: 575px) {
+      .customer-header__actions {
+        width: 100%;
+      }
+
+      .customer-header__actions .btn {
+        flex: 1;
+      }
+    }
+
+    /* Status Badge */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: var(--spacing-1) var(--spacing-3);
+      font-size: var(--text-caption);
+      font-weight: var(--font-weight-medium);
+      border-radius: var(--radius-full);
+    }
+
+    .status-badge--active {
+      background-color: var(--color-success-light);
+      color: var(--color-success);
+    }
+
+    .status-badge--referred {
+      background-color: var(--color-info-light);
+      color: var(--color-info);
+    }
+
+    .status-badge--pending {
+      background-color: var(--color-warning-light);
+      color: var(--color-warning);
+    }
+
+    .status-badge--inactive {
+      background-color: var(--color-gray-200);
+      color: var(--color-gray-600);
+    }
+
+    /* Grid Layout */
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: var(--spacing-6);
+    }
+
+    @media (max-width: 991px) {
+      .detail-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .detail-grid__main {
+      grid-column: span 8;
+    }
+
+    .detail-grid__sidebar {
+      grid-column: span 4;
+    }
+
+    @media (max-width: 991px) {
+      .detail-grid__main,
+      .detail-grid__sidebar {
+        grid-column: span 1;
+      }
+    }
+
+    /* Info Card */
+    .info-card {
+      background-color: var(--color-bg-primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      margin-bottom: var(--spacing-6);
+    }
+
+    .info-card__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--spacing-5);
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .info-card__title {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-h4);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-900);
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-2);
+    }
+
+    .info-card__title svg {
+      width: 20px;
+      height: 20px;
+      color: var(--color-blue-700);
+    }
+
+    .info-card__action {
+      color: var(--color-blue-700);
+      text-decoration: none;
+      font-size: var(--text-body-sm);
+      font-weight: var(--font-weight-medium);
+      transition: color var(--transition-normal);
+    }
+
+    .info-card__action:hover {
+      color: var(--color-blue-800);
+    }
+
+    .info-card__body {
+      padding: var(--spacing-5);
+    }
+
+    .info-card__body--no-padding {
+      padding: 0;
+    }
+
+    /* Info Row */
+    .info-row {
+      display: flex;
+      align-items: flex-start;
+      padding: var(--spacing-3) 0;
+      gap: var(--spacing-4);
+    }
+
+    .info-row:not(:last-child) {
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .info-row__icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      background-color: var(--color-blue-50);
+      color: var(--color-blue-700);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .info-row__icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .info-row__content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .info-row__label {
+      font-size: var(--text-caption);
+      color: var(--color-gray-600);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--spacing-1);
+    }
+
+    .info-row__value {
+      font-size: var(--text-body-md);
+      color: var(--color-gray-900);
+      font-weight: var(--font-weight-medium);
+      word-break: break-word;
+    }
+
+    .info-row__value--link {
+      color: var(--color-blue-700);
+      text-decoration: none;
+      transition: color var(--transition-normal);
+    }
+
+    .info-row__value--link:hover {
+      color: var(--color-blue-800);
+      text-decoration: underline;
+    }
+
+    /* Ownership Badge */
+    .ownership-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--spacing-2);
+      padding: var(--spacing-2) var(--spacing-4);
+      background-color: var(--color-success-light);
+      color: var(--color-success);
+      border-radius: var(--radius-md);
+      font-size: var(--text-body-sm);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .ownership-badge svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .ownership-badge--referred {
+      background-color: var(--color-info-light);
+      color: var(--color-info);
+    }
+
+    /* Referral Chain */
+    .referral-chain {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-4);
+    }
+
+    .referral-item {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+      padding: var(--spacing-4);
+      background-color: var(--color-blue-50);
+      border-radius: var(--radius-md);
+      border-left: 3px solid var(--color-blue-700);
+    }
+
+    .referral-item__avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-full);
+      background-color: var(--color-blue-300);
+      color: var(--color-blue-900);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: var(--font-weight-semibold);
+      font-size: var(--text-body-sm);
+      flex-shrink: 0;
+    }
+
+    .referral-item__info {
+      flex: 1;
+    }
+
+    .referral-item__name {
+      font-weight: var(--font-weight-medium);
+      color: var(--color-gray-900);
+    }
+
+    .referral-item__role {
+      font-size: var(--text-caption);
+      color: var(--color-gray-600);
+    }
+
+    .referral-item__arrow {
+      color: var(--color-gray-400);
+    }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 20px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background-color: var(--color-border-light);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: var(--spacing-12);
+      padding-bottom: var(--spacing-6);
+    }
+
+    .timeline-item:last-child {
+      padding-bottom: 0;
+    }
+
+    .timeline-item__icon {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid var(--color-bg-primary);
+      z-index: 1;
+    }
+
+    .timeline-item__icon--inquiry {
+      background-color: var(--color-info-light);
+      color: var(--color-info);
+    }
+
+    .timeline-item__icon--referral {
+      background-color: var(--color-blue-100);
+      color: var(--color-blue-700);
+    }
+
+    .timeline-item__icon--note {
+      background-color: var(--color-warning-light);
+      color: var(--color-warning);
+    }
+
+    .timeline-item__icon--status {
+      background-color: var(--color-success-light);
+      color: var(--color-success);
+    }
+
+    .timeline-item__icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .timeline-item__content {
+      background-color: var(--color-bg-primary);
+      border-radius: var(--radius-md);
+      padding: var(--spacing-4);
+      box-shadow: var(--shadow-xs);
+    }
+
+    .timeline-item__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--spacing-2);
+    }
+
+    .timeline-item__title {
+      font-weight: var(--font-weight-medium);
+      color: var(--color-gray-900);
+      font-size: var(--text-body-sm);
+    }
+
+    .timeline-item__time {
+      font-size: var(--text-caption);
+      color: var(--color-gray-500);
+    }
+
+    .timeline-item__description {
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-700);
+      line-height: 1.5;
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: var(--spacing-12) var(--spacing-6);
+    }
+
+    .empty-state__icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto var(--spacing-4);
+      color: var(--color-gray-300);
+    }
+
+    .empty-state__title {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-h4);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-700);
+      margin-bottom: var(--spacing-2);
+    }
+
+    .empty-state__description {
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-600);
+      max-width: 400px;
+      margin: 0 auto var(--spacing-6);
+    }
+
+    /* Quick Action Buttons */
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: var(--spacing-3);
+      padding: var(--spacing-5);
+    }
+
+    .quick-action-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--spacing-2);
+      padding: var(--spacing-4);
+      background-color: var(--color-bg-secondary);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--transition-normal);
+      text-decoration: none;
+      color: var(--color-gray-900);
+    }
+
+    .quick-action-btn:hover {
+      background-color: var(--color-blue-50);
+      border-color: var(--color-blue-700);
+    }
+
+    .quick-action-btn__icon {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-md);
+      background-color: var(--color-blue-700);
+      color: var(--color-text-inverse);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .quick-action-btn__icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .quick-action-btn__label {
+      font-size: var(--text-caption);
+      font-weight: var(--font-weight-medium);
+      text-align: center;
+    }
+
+    /* Vehicle Placeholder */
+    .vehicle-placeholder {
+      padding: var(--spacing-8) var(--spacing-6);
+      text-align: center;
+      background-color: var(--color-gray-50);
+      border-radius: var(--radius-md);
+    }
+
+    .vehicle-placeholder__icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto var(--spacing-3);
+      color: var(--color-gray-400);
+    }
+
+    .vehicle-placeholder__text {
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-600);
+      margin-bottom: var(--spacing-1);
+    }
+
+    .vehicle-placeholder__note {
+      font-size: var(--text-caption);
+      color: var(--color-gray-500);
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar__header">
+        <div class="sidebar__logo">
+          <div class="sidebar__logo-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+            </svg>
+          </div>
+          <span class="sidebar__logo-text">AutoPro</span>
+        </div>
+      </div>
+
+      <nav class="sidebar__nav">
+        <div class="nav-section">
+          <div class="nav-section__title">Main</div>
+          <a href="#" class="nav-link">
+            <svg class="nav-link__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+            Dashboard
+          </a>
+          <a href="#" class="nav-link nav-link--active">
+            <svg class="nav-link__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+            Customers
+            <span class="nav-link__badge">127</span>
+          </a>
+          <a href="#" class="nav-link">
+            <svg class="nav-link__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+            Services
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section__title">Referrals</div>
+          <a href="#" class="nav-link">
+            <svg class="nav-link__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="18" cy="5" r="3"/>
+              <circle cx="6" cy="12" r="3"/>
+              <circle cx="18" cy="19" r="3"/>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+            </svg>
+            Send Referrals
+          </a>
+          <a href="#" class="nav-link">
+            <svg class="nav-link__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Received
+            <span class="nav-link__badge">3</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section__title">Account</div>
+          <a href="#" class="nav-link">
+            <svg class="nav-link__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+            My Profile
+          </a>
+        </div>
+      </nav>
+
+      <div class="sidebar__footer">
+        <div class="user-menu">
+          <div class="user-menu__avatar">JS</div>
+          <div class="user-menu__info">
+            <div class="user-menu__name">John Smith</div>
+            <div class="user-menu__role">Mechanic</div>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Top Bar -->
+      <header class="top-bar">
+        <button class="mobile-menu-btn" aria-label="Open menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+
+        <div class="top-bar__search">
+          <input type="search" class="search-input" placeholder="Search customers...">
+        </div>
+
+        <div class="top-bar__actions">
+          <button class="notification-btn" aria-label="Notifications">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+            <span class="notification-btn__badge">3</span>
+          </button>
+          <div class="avatar avatar--md show-mobile-only">JS</div>
+        </div>
+      </header>
+
+      <!-- Page Content -->
+      <div class="page-content">
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="#">Customers</a>
+          <span class="breadcrumb__separator">/</span>
+          <span>Michael Johnson</span>
+        </nav>
+
+        <!-- Customer Header -->
+        <div class="customer-header">
+          <div class="customer-header__main">
+            <div class="customer-header__avatar">MJ</div>
+            <div class="customer-header__info">
+              <h1 class="customer-header__name">Michael Johnson</h1>
+              <div class="customer-header__meta">
+                <span class="customer-header__id">ID: #CUS-2024-0157</span>
+                <span class="status-badge status-badge--active">Active</span>
+              </div>
+            </div>
+          </div>
+          <div class="customer-header__actions">
+            <button class="btn btn--secondary btn--md">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+              </svg>
+              Edit
+            </button>
+            <button class="btn btn--primary btn--md">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="18" cy="5" r="3"/>
+                <circle cx="6" cy="12" r="3"/>
+                <circle cx="18" cy="19" r="3"/>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+              </svg>
+              Refer
+            </button>
+          </div>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="detail-grid">
+          <!-- Main Content -->
+          <div class="detail-grid__main">
+            <!-- Contact Information -->
+            <div class="info-card">
+              <div class="info-card__header">
+                <h2 class="info-card__title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                  </svg>
+                  Contact Information
+                </h2>
+                <a href="#" class="info-card__action">Edit</a>
+              </div>
+              <div class="info-card__body">
+                <div class="info-row">
+                  <div class="info-row__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                      <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                  </div>
+                  <div class="info-row__content">
+                    <div class="info-row__label">Email Address</div>
+                    <a href="mailto:michael.j@email.com" class="info-row__value info-row__value--link">michael.j@email.com</a>
+                  </div>
+                </div>
+
+                <div class="info-row">
+                  <div class="info-row__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                    </svg>
+                  </div>
+                  <div class="info-row__content">
+                    <div class="info-row__label">Phone Number</div>
+                    <a href="tel:+15551234567" class="info-row__value info-row__value--link">(555) 123-4567</a>
+                  </div>
+                </div>
+
+                <div class="info-row">
+                  <div class="info-row__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                      <circle cx="12" cy="10" r="3"/>
+                    </svg>
+                  </div>
+                  <div class="info-row__content">
+                    <div class="info-row__label">Address</div>
+                    <div class="info-row__value">
+                      1234 Main Street<br>
+                      Apartment 5B<br>
+                      Springfield, IL 62701
+                    </div>
+                  </div>
+                </div>
+
+                <div class="info-row">
+                  <div class="info-row__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                      <line x1="16" y1="2" x2="16" y2="6"/>
+                      <line x1="8" y1="2" x2="8" y2="6"/>
+                      <line x1="3" y1="10" x2="21" y2="10"/>
+                    </svg>
+                  </div>
+                  <div class="info-row__content">
+                    <div class="info-row__label">Customer Since</div>
+                    <div class="info-row__value">January 15, 2026</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Vehicle Information -->
+            <div class="info-card">
+              <div class="info-card__header">
+                <h2 class="info-card__title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 10h4l-6-6H6L0 10h4"/>
+                    <rect x="4" y="10" width="16" height="8" rx="2"/>
+                    <circle cx="8" cy="18" r="2"/>
+                    <circle cx="16" cy="18" r="2"/>
+                  </svg>
+                  Vehicles
+                </h2>
+                <a href="#" class="info-card__action">Add Vehicle</a>
+              </div>
+              <div class="info-card__body">
+                <div class="vehicle-placeholder">
+                  <svg class="vehicle-placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 10h4l-6-6H6L0 10h4"/>
+                    <rect x="4" y="10" width="16" height="8" rx="2"/>
+                    <circle cx="8" cy="18" r="2"/>
+                    <circle cx="16" cy="18" r="2"/>
+                  </svg>
+                  <div class="vehicle-placeholder__text">No vehicles added yet</div>
+                  <div class="vehicle-placeholder__note">Vehicle management available in Phase 2</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Activity Timeline -->
+            <div class="info-card">
+              <div class="info-card__header">
+                <h2 class="info-card__title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                  </svg>
+                  Activity Timeline
+                </h2>
+                <a href="#" class="info-card__action">Add Note</a>
+              </div>
+              <div class="info-card__body">
+                <div class="timeline">
+                  <div class="timeline-item">
+                    <div class="timeline-item__icon timeline-item__icon--status">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20 6 9 17 4 12"/>
+                      </svg>
+                    </div>
+                    <div class="timeline-item__content">
+                      <div class="timeline-item__header">
+                        <div class="timeline-item__title">Status changed to Active</div>
+                        <div class="timeline-item__time">2 hours ago</div>
+                      </div>
+                      <div class="timeline-item__description">
+                        Customer profile activated after email verification.
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="timeline-item">
+                    <div class="timeline-item__icon timeline-item__icon--note">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                        <polyline points="10 9 9 9 8 9"/>
+                      </svg>
+                    </div>
+                    <div class="timeline-item__content">
+                      <div class="timeline-item__header">
+                        <div class="timeline-item__title">Note added by John Smith</div>
+                        <div class="timeline-item__time">3 days ago</div>
+                      </div>
+                      <div class="timeline-item__description">
+                        Customer interested in brake service. Mentioned unusual noise when braking. Schedule follow-up call next week.
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="timeline-item">
+                    <div class="timeline-item__icon timeline-item__icon--referral">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="18" cy="5" r="3"/>
+                        <circle cx="6" cy="12" r="3"/>
+                        <circle cx="18" cy="19" r="3"/>
+                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                      </svg>
+                    </div>
+                    <div class="timeline-item__content">
+                      <div class="timeline-item__header">
+                        <div class="timeline-item__title">Referred by Mike's Auto Body</div>
+                        <div class="timeline-item__time">1 week ago</div>
+                      </div>
+                      <div class="timeline-item__description">
+                        Customer was referred for mechanical services after body work completion.
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="timeline-item">
+                    <div class="timeline-item__icon timeline-item__icon--inquiry">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                        <line x1="12" y1="17" x2="12.01" y2="17"/>
+                      </svg>
+                    </div>
+                    <div class="timeline-item__content">
+                      <div class="timeline-item__header">
+                        <div class="timeline-item__title">Customer registered</div>
+                        <div class="timeline-item__time">2 weeks ago</div>
+                      </div>
+                      <div class="timeline-item__description">
+                        New customer account created and verification email sent.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sidebar -->
+          <div class="detail-grid__sidebar">
+            <!-- Quick Actions -->
+            <div class="info-card">
+              <div class="info-card__header">
+                <h2 class="info-card__title">Quick Actions</h2>
+              </div>
+              <div class="info-card__body info-card__body--no-padding">
+                <div class="quick-actions">
+                  <a href="#" class="quick-action-btn">
+                    <div class="quick-action-btn__icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                      </svg>
+                    </div>
+                    <span class="quick-action-btn__label">Send Email</span>
+                  </a>
+
+                  <a href="#" class="quick-action-btn">
+                    <div class="quick-action-btn__icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                      </svg>
+                    </div>
+                    <span class="quick-action-btn__label">Message</span>
+                  </a>
+
+                  <a href="#" class="quick-action-btn">
+                    <div class="quick-action-btn__icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                      </svg>
+                    </div>
+                    <span class="quick-action-btn__label">Call</span>
+                  </a>
+
+                  <a href="#" class="quick-action-btn">
+                    <div class="quick-action-btn__icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                        <polyline points="10 9 9 9 8 9"/>
+                      </svg>
+                    </div>
+                    <span class="quick-action-btn__label">Add Note</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Ownership Information -->
+            <div class="info-card">
+              <div class="info-card__header">
+                <h2 class="info-card__title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                  </svg>
+                  Ownership
+                </h2>
+              </div>
+              <div class="info-card__body">
+                <div class="ownership-badge ownership-badge--referred">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="18" cy="5" r="3"/>
+                    <circle cx="6" cy="12" r="3"/>
+                    <circle cx="18" cy="19" r="3"/>
+                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                  </svg>
+                  Referred Customer
+                </div>
+
+                <div class="info-row">
+                  <div class="info-row__content">
+                    <div class="info-row__label">Current Owner</div>
+                    <div class="info-row__value">John Smith (You)</div>
+                  </div>
+                </div>
+
+                <div class="info-row">
+                  <div class="info-row__content">
+                    <div class="info-row__label">Owned Since</div>
+                    <div class="info-row__value">January 22, 2026</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Referral Information -->
+            <div class="info-card">
+              <div class="info-card__header">
+                <h2 class="info-card__title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="18" cy="5" r="3"/>
+                    <circle cx="6" cy="12" r="3"/>
+                    <circle cx="18" cy="19" r="3"/>
+                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                  </svg>
+                  Referral Chain
+                </h2>
+              </div>
+              <div class="info-card__body">
+                <div class="referral-chain">
+                  <div class="referral-item">
+                    <div class="referral-item__avatar">MJ</div>
+                    <div class="referral-item__info">
+                      <div class="referral-item__name">Michael Johnson</div>
+                      <div class="referral-item__role">Customer</div>
+                    </div>
+                  </div>
+
+                  <div style="text-align: center; color: var(--color-gray-400);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                  </div>
+
+                  <div class="referral-item">
+                    <div class="referral-item__avatar">MA</div>
+                    <div class="referral-item__info">
+                      <div class="referral-item__name">Mike's Auto Body</div>
+                      <div class="referral-item__role">Auto Body Shop</div>
+                    </div>
+                  </div>
+
+                  <div style="text-align: center; color: var(--color-gray-400);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                  </div>
+
+                  <div class="referral-item">
+                    <div class="referral-item__avatar">JS</div>
+                    <div class="referral-item__info">
+                      <div class="referral-item__name">John Smith</div>
+                      <div class="referral-item__role">Mechanic (You)</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
