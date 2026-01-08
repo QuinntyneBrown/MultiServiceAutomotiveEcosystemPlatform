@@ -1,0 +1,106 @@
+@startuml referral-status-tracking-flow
+title Referral Status Tracking Flow - Phase 1
+
+skinparam activityBackgroundColor #E3F2FD
+skinparam activityBorderColor #1976D2
+skinparam activityDiamondBackgroundColor #FFF3E0
+skinparam activityDiamondBorderColor #F57C00
+
+start
+
+:Customer navigates to Referral Dashboard;
+
+:Customer views Referral List section;
+note right
+  List displays all referrals with:
+  * Friend name
+  * Status badge
+  * Date sent
+  * Reward amount
+  * Actions
+end note
+
+:Customer selects a referral to view;
+
+:System displays Referral Detail view;
+
+:Show Status Timeline;
+note right
+  Timeline stages:
+  1. Sent
+  2. Opened
+  3. Signed Up
+  4. First Service
+  5. Reward Paid
+end note
+
+switch (Current Status?)
+case (Pending)
+  :Display "Waiting for friend to sign up";
+  :Show days until expiration;
+
+  if (Near expiration?) then (yes)
+    :Display expiration warning;
+    :Show "Resend Invitation" option;
+
+    if (Resend?) then (yes)
+      :System resends invitation;
+      :Reset expiration timer;
+      :Display "Reminder Sent" success;
+    else (no)
+    endif
+  else (no)
+  endif
+
+case (Opened)
+  :Display "Friend opened invitation";
+  :Show date opened;
+  :Display encouragement message;
+
+case (Signed Up)
+  :Display "Friend signed up!";
+  :Show signup date;
+  :Display "Pending first service" message;
+  :Show estimated reward amount;
+
+case (First Service)
+  :Display "Friend completed first service!";
+  :Show service date;
+  :Display "Reward processing" message;
+  :Show pending reward amount;
+
+case (Reward Paid)
+  :Display "Reward earned!";
+  :Show reward amount;
+  :Show payment date;
+  :Show payment method;
+  :Display celebration animation;
+
+case (Expired)
+  :Display "Referral expired";
+  :Show expiration date;
+  :Display "No reward earned" message;
+  note right
+    Referrals expire after
+    30 days without signup
+  end note
+
+case (Declined)
+  :Display "Friend declined invitation";
+  :Show decline date;
+
+endswitch
+
+:Display Reward Summary;
+note right
+  * Reward per successful referral
+  * Total rewards earned
+  * Pending rewards
+  * Rewards redeemed
+end note
+
+:Customer returns to Referral List;
+
+stop
+
+@enduml
