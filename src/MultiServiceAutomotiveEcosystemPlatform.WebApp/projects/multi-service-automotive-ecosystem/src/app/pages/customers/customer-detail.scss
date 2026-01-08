@@ -76,7 +76,7 @@
     grid-template-columns: 2fr 1fr;
     gap: var(--spacing-6, 1.5rem);
 
-    @media (max-width: 968px) {
+    @media (max-width: 768px) {
       grid-template-columns: 1fr;
     }
   }

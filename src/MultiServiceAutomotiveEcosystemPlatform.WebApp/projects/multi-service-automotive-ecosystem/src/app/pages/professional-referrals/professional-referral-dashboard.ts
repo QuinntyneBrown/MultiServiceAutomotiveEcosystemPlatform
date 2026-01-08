@@ -66,7 +66,7 @@ export class ProfessionalReferralDashboard {
   }
 
   private loadReceivedReferrals(): Observable<ProfessionalReferral[]> {
-    const mockReferrals: ProfessionalReferral[]  = [
+    const mockReferrals: ProfessionalReferral[] = [
       {
         id: '3',
         customerName: 'Alice Williams',
