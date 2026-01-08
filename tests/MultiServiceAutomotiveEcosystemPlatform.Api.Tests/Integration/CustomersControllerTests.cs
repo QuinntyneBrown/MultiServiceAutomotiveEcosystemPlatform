@@ -162,12 +162,15 @@ public class TestWebApplicationFactory : WebApplicationFactory<Program>, IDispos
         context.SaveChanges();
     }
 
-    public new void Dispose()
+    protected override void Dispose(bool disposing)
     {
-        // Clean up test database
-        using var scope = Services.CreateScope();
-        var context = scope.ServiceProvider.GetRequiredService<MultiServiceAutomotiveEcosystemPlatformContext>();
-        context.Database.EnsureDeleted();
-        base.Dispose();
+        if (disposing)
+        {
+            // Clean up test database
+            using var scope = Services.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<MultiServiceAutomotiveEcosystemPlatformContext>();
+            context.Database.EnsureDeleted();
+        }
+        base.Dispose(disposing);
     }
 }

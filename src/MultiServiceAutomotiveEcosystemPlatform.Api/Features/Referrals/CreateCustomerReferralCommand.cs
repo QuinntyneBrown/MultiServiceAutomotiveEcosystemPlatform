@@ -57,10 +57,18 @@ public class CreateCustomerReferralCommandHandler : IRequestHandler<CreateCustom
         {
             var code = _referralCodeGenerator.GenerateCode(referrer.FirstName);
             
-            // Check if code already exists, if so generate a new one
-            while (await _context.ReferralCodes.AnyAsync(rc => rc.TenantId == tenantId && rc.Code == code, cancellationToken))
+            // Check if code already exists, if so generate a new one (max 10 attempts)
+            int attempts = 0;
+            const int maxAttempts = 10;
+            while (await _context.ReferralCodes.AnyAsync(rc => rc.TenantId == tenantId && rc.Code == code, cancellationToken) && attempts < maxAttempts)
             {
                 code = _referralCodeGenerator.GenerateCode(referrer.FirstName);
+                attempts++;
+            }
+
+            if (attempts >= maxAttempts)
+            {
+                throw new InvalidOperationException("Unable to generate unique referral code after maximum attempts.");
             }
             
             referralCode = new ReferralCode(

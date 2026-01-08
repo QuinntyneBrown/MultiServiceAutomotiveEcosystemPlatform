@@ -29,7 +29,7 @@ public class ReferralsController : ControllerBase
         try
         {
             var result = await _mediator.Send(command);
-            return CreatedAtAction(nameof(GetCustomerReferrals), new { customerId = result.ReferrerCustomerId }, result);
+            return Created($"/api/referrals/customer/{result.ReferrerCustomerId}", result);
         }
         catch (InvalidOperationException ex)
         {
@@ -67,7 +67,7 @@ public class ReferralsController : ControllerBase
         try
         {
             var result = await _mediator.Send(command);
-            return CreatedAtAction(nameof(GetProfessionalReferrals), new { professionalId = result.SourceProfessionalId, direction = "sent" }, result);
+            return Created($"/api/referrals/professional/{result.SourceProfessionalId}", result);
         }
         catch (InvalidOperationException ex)
         {
