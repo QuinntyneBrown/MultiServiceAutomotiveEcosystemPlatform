@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Received Referrals - AutoService Pro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Lato:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-primary: #00529F;
+      --color-primary-light: #E3F2FD;
+      --color-accent: #FFD520;
+      --color-success: #2E7D32;
+      --color-success-light: #E8F5E9;
+      --color-info: #0288D1;
+      --color-info-light: #E1F5FE;
+      --color-warning: #ED6C02;
+      --color-warning-light: #FFF3E0;
+      --color-error: #D32F2F;
+      --color-error-light: #FFEBEE;
+      --color-gray-50: #FAFAFA;
+      --color-gray-100: #F5F5F5;
+      --color-gray-200: #EEEEEE;
+      --color-gray-300: #E0E0E0;
+      --color-gray-400: #BDBDBD;
+      --color-gray-500: #9E9E9E;
+      --color-gray-600: #757575;
+      --color-gray-700: #616161;
+      --color-gray-800: #424242;
+      --color-gray-900: #212121;
+      --color-text-primary: #1A1A1A;
+      --color-text-secondary: #666666;
+      --color-text-muted: #999999;
+      --color-background: #FAFAFA;
+      --color-surface: #FFFFFF;
+      --color-border: #E5E5E5;
+      --font-primary: 'Montserrat', sans-serif;
+      --font-secondary: 'Lato', sans-serif;
+      --spacing-xs: 4px;
+      --spacing-sm: 8px;
+      --spacing-md: 16px;
+      --spacing-lg: 24px;
+      --spacing-xl: 32px;
+      --spacing-2xl: 48px;
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
+      --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-secondary);
+      background-color: var(--color-background);
+      color: var(--color-text-primary);
+      line-height: 1.5;
+    }
+
+    .layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 260px;
+      background: var(--color-surface);
+      border-right: 1px solid var(--color-border);
+      padding: var(--spacing-lg);
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--color-primary);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .logo-text {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      color: var(--color-primary);
+      font-size: 14px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+      padding: var(--spacing-sm) var(--spacing-md);
+      border-radius: var(--radius-md);
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      margin-bottom: var(--spacing-xs);
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    .nav-item:hover {
+      background: var(--color-gray-100);
+    }
+
+    .nav-item.active {
+      background: var(--color-primary-light);
+      color: var(--color-primary);
+      font-weight: 500;
+    }
+
+    /* Main Content */
+    .main {
+      flex: 1;
+      margin-left: 260px;
+    }
+
+    /* Header */
+    .header {
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      padding: var(--spacing-md) var(--spacing-xl);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .page-title {
+      font-family: var(--font-primary);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: var(--spacing-sm);
+    }
+
+    .btn {
+      padding: var(--spacing-sm) var(--spacing-md);
+      border-radius: var(--radius-md);
+      font-family: var(--font-secondary);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+    }
+
+    .btn-secondary {
+      background: var(--color-surface);
+      border: 1px solid var(--color-gray-300);
+      color: var(--color-text-primary);
+    }
+
+    .btn-secondary:hover {
+      background: var(--color-gray-50);
+    }
+
+    /* Content */
+    .content {
+      padding: var(--spacing-xl);
+    }
+
+    /* Stats Row */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .stat-card {
+      background: var(--color-surface);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-lg);
+      box-shadow: var(--shadow-md);
+    }
+
+    .stat-card.highlight {
+      border: 2px solid var(--color-warning);
+      background: var(--color-warning-light);
+    }
+
+    .stat-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .stat-value {
+      font-family: var(--font-primary);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+    }
+
+    .stat-card.highlight .stat-value {
+      color: var(--color-warning);
+    }
+
+    .stat-change {
+      font-size: 12px;
+      color: var(--color-success);
+      margin-top: var(--spacing-xs);
+    }
+
+    /* Filter Tabs */
+    .filter-section {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: var(--spacing-xs);
+    }
+
+    .filter-tab {
+      padding: var(--spacing-sm) var(--spacing-md);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 20px;
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-tab:hover {
+      border-color: var(--color-gray-400);
+    }
+
+    .filter-tab.active {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+      color: white;
+    }
+
+    .filter-tab .count {
+      background: rgba(0,0,0,0.1);
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-left: var(--spacing-xs);
+      font-size: 11px;
+    }
+
+    .filter-tab.active .count {
+      background: rgba(255,255,255,0.2);
+    }
+
+    .search-sort {
+      display: flex;
+      gap: var(--spacing-sm);
+    }
+
+    .search-input {
+      padding: var(--spacing-sm) var(--spacing-md);
+      border: 1px solid var(--color-gray-300);
+      border-radius: var(--radius-md);
+      width: 280px;
+      font-size: 13px;
+    }
+
+    .sort-select {
+      padding: var(--spacing-sm) var(--spacing-md);
+      border: 1px solid var(--color-gray-300);
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      background: var(--color-surface);
+    }
+
+    /* Referral Cards */
+    .referrals-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-md);
+    }
+
+    .referral-card {
+      background: var(--color-surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+    }
+
+    .referral-card.pending {
+      border-left: 4px solid var(--color-warning);
+    }
+
+    .referral-card.accepted {
+      border-left: 4px solid var(--color-info);
+    }
+
+    .referral-card.completed {
+      border-left: 4px solid var(--color-success);
+    }
+
+    .referral-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--spacing-md) var(--spacing-lg);
+      background: var(--color-gray-50);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .referral-from {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+    }
+
+    .professional-avatar {
+      width: 44px;
+      height: 44px;
+      background: var(--color-primary-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-primary);
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .from-info h4 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+    }
+
+    .from-info p {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+    }
+
+    .referral-meta {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-lg);
+    }
+
+    .badge {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .badge-pending {
+      background: var(--color-warning-light);
+      color: var(--color-warning);
+    }
+
+    .badge-accepted {
+      background: var(--color-info-light);
+      color: var(--color-info);
+    }
+
+    .badge-completed {
+      background: var(--color-success-light);
+      color: var(--color-success);
+    }
+
+    .badge-urgent {
+      background: var(--color-error-light);
+      color: var(--color-error);
+    }
+
+    .referral-date {
+      font-size: 12px;
+      color: var(--color-text-muted);
+    }
+
+    .referral-body {
+      padding: var(--spacing-lg);
+    }
+
+    .referral-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: var(--spacing-lg);
+      margin-bottom: var(--spacing-md);
+    }
+
+    .detail-item {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-xs);
+    }
+
+    .detail-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .detail-value {
+      font-size: 14px;
+      color: var(--color-text-primary);
+    }
+
+    .detail-value.highlight {
+      font-weight: 600;
+      color: var(--color-primary);
+    }
+
+    .customer-card {
+      background: var(--color-gray-50);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: var(--spacing-md);
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+    }
+
+    .customer-avatar {
+      width: 40px;
+      height: 40px;
+      background: var(--color-info-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-info);
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .customer-info h4 {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+    }
+
+    .customer-info p {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+    }
+
+    .referral-reason {
+      margin-top: var(--spacing-md);
+      padding-top: var(--spacing-md);
+      border-top: 1px solid var(--color-border);
+    }
+
+    .reason-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .reason-text {
+      font-size: 14px;
+      color: var(--color-text-primary);
+      line-height: 1.6;
+    }
+
+    .referral-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--spacing-md) var(--spacing-lg);
+      background: var(--color-gray-50);
+      border-top: 1px solid var(--color-border);
+    }
+
+    .footer-info {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+    }
+
+    .footer-actions {
+      display: flex;
+      gap: var(--spacing-sm);
+    }
+
+    .btn-accept {
+      background: var(--color-success);
+      border: 1px solid var(--color-success);
+      color: white;
+    }
+
+    .btn-accept:hover {
+      background: #1b5e20;
+    }
+
+    .btn-decline {
+      background: var(--color-surface);
+      border: 1px solid var(--color-error);
+      color: var(--color-error);
+    }
+
+    .btn-decline:hover {
+      background: var(--color-error-light);
+    }
+
+    .btn-primary {
+      background: var(--color-primary);
+      border: 1px solid var(--color-primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #003d7a;
+    }
+
+    /* Notes section */
+    .notes-section {
+      margin-top: var(--spacing-md);
+      padding: var(--spacing-md);
+      background: var(--color-info-light);
+      border: 1px solid var(--color-info);
+      border-radius: var(--radius-md);
+    }
+
+    .notes-section h5 {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-info);
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .notes-section p {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+    }
+
+    /* Timeline progress */
+    .timeline-progress {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+      margin-top: var(--spacing-md);
+    }
+
+    .timeline-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+    }
+
+    .step-circle {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--color-gray-200);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: var(--color-text-muted);
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .step-circle.completed {
+      background: var(--color-success);
+      color: white;
+    }
+
+    .step-circle.current {
+      background: var(--color-info);
+      color: white;
+    }
+
+    .step-label {
+      font-size: 10px;
+      color: var(--color-text-muted);
+      text-align: center;
+    }
+
+    .step-label.active {
+      color: var(--color-text-primary);
+      font-weight: 600;
+    }
+
+    .timeline-line {
+      height: 2px;
+      flex: 1;
+      background: var(--color-gray-200);
+      margin-bottom: 20px;
+    }
+
+    .timeline-line.completed {
+      background: var(--color-success);
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <div class="logo-icon">A</div>
+        <span class="logo-text">AutoService</span>
+      </div>
+      <nav>
+        <a href="#" class="nav-item">Dashboard</a>
+        <a href="#" class="nav-item">Customers</a>
+        <a href="#" class="nav-item active">Referrals</a>
+        <a href="#" class="nav-item">Inquiries</a>
+        <a href="#" class="nav-item">Network</a>
+        <a href="#" class="nav-item">Settings</a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+      <!-- Header -->
+      <header class="header">
+        <h1 class="page-title">Received Referrals</h1>
+        <div class="header-actions">
+          <button class="btn btn-secondary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7,10 12,15 17,10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Export
+          </button>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div class="content">
+        <!-- Stats Row -->
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-label">Total Received</div>
+            <div class="stat-value">67</div>
+            <div class="stat-change">+8 this month</div>
+          </div>
+          <div class="stat-card highlight">
+            <div class="stat-label">Pending Response</div>
+            <div class="stat-value">5</div>
+            <div class="stat-change" style="color: var(--color-warning);">Requires attention</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">In Progress</div>
+            <div class="stat-value">12</div>
+            <div class="stat-change">3 near completion</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Completed</div>
+            <div class="stat-value">50</div>
+            <div class="stat-change">$127,500 total value</div>
+          </div>
+        </div>
+
+        <!-- Filter Section -->
+        <div class="filter-section">
+          <div class="filter-tabs">
+            <button class="filter-tab active">All <span class="count">67</span></button>
+            <button class="filter-tab">Pending <span class="count">5</span></button>
+            <button class="filter-tab">In Progress <span class="count">12</span></button>
+            <button class="filter-tab">Completed <span class="count">50</span></button>
+          </div>
+          <div class="search-sort">
+            <input type="text" class="search-input" placeholder="Search referrals...">
+            <select class="sort-select">
+              <option>Newest First</option>
+              <option>Oldest First</option>
+              <option>Highest Value</option>
+              <option>Priority</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Referrals List -->
+        <div class="referrals-list">
+          <!-- Pending Referral Card -->
+          <div class="referral-card pending">
+            <div class="referral-header">
+              <div class="referral-from">
+                <div class="professional-avatar">MA</div>
+                <div class="from-info">
+                  <h4>Mike's Auto Repair</h4>
+                  <p>Springfield, IL</p>
+                </div>
+              </div>
+              <div class="referral-meta">
+                <span class="badge badge-urgent">Urgent</span>
+                <span class="badge badge-pending">Pending</span>
+                <span class="referral-date">Today, 10:30 AM</span>
+              </div>
+            </div>
+            <div class="referral-body">
+              <div class="referral-details">
+                <div class="detail-item">
+                  <span class="detail-label">Service Type</span>
+                  <span class="detail-value">Collision Repair</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Estimated Value</span>
+                  <span class="detail-value highlight">$4,500</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Vehicle</span>
+                  <span class="detail-value">2022 Toyota Camry</span>
+                </div>
+              </div>
+              <div class="customer-card">
+                <div class="customer-avatar">JD</div>
+                <div class="customer-info">
+                  <h4>John Doe</h4>
+                  <p>john.doe@email.com | (555) 123-4567</p>
+                </div>
+              </div>
+              <div class="referral-reason">
+                <div class="reason-label">Reason for Referral</div>
+                <p class="reason-text">Customer was rear-ended at a stop light. Significant damage to rear bumper and trunk. Needs immediate attention as this is their only vehicle. Insurance claim already filed with State Farm.</p>
+              </div>
+              <div class="notes-section">
+                <h5>Notes from Mike's Auto Repair</h5>
+                <p>Great long-time customer. Please prioritize if possible. They've been coming to me for 5 years for regular maintenance. Claim number: SF-2024-789456</p>
+              </div>
+            </div>
+            <div class="referral-footer">
+              <span class="footer-info">Response needed within 24 hours</span>
+              <div class="footer-actions">
+                <button class="btn btn-secondary">View Details</button>
+                <button class="btn btn-decline">Decline</button>
+                <button class="btn btn-accept">Accept Referral</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Accepted/In Progress Referral Card -->
+          <div class="referral-card accepted">
+            <div class="referral-header">
+              <div class="referral-from">
+                <div class="professional-avatar">TC</div>
+                <div class="from-info">
+                  <h4>Tire Center Plus</h4>
+                  <p>Decatur, IL</p>
+                </div>
+              </div>
+              <div class="referral-meta">
+                <span class="badge badge-accepted">In Progress</span>
+                <span class="referral-date">Mar 18, 2024</span>
+              </div>
+            </div>
+            <div class="referral-body">
+              <div class="referral-details">
+                <div class="detail-item">
+                  <span class="detail-label">Service Type</span>
+                  <span class="detail-value">Paint & Body</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Estimated Value</span>
+                  <span class="detail-value highlight">$2,800</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Vehicle</span>
+                  <span class="detail-value">2019 Honda Civic</span>
+                </div>
+              </div>
+              <div class="customer-card">
+                <div class="customer-avatar">SM</div>
+                <div class="customer-info">
+                  <h4>Sarah Miller</h4>
+                  <p>sarah.m@email.com | (555) 234-5678</p>
+                </div>
+              </div>
+              <div class="timeline-progress">
+                <div class="timeline-step">
+                  <div class="step-circle completed">✓</div>
+                  <span class="step-label active">Received</span>
+                </div>
+                <div class="timeline-line completed"></div>
+                <div class="timeline-step">
+                  <div class="step-circle completed">✓</div>
+                  <span class="step-label active">Accepted</span>
+                </div>
+                <div class="timeline-line completed"></div>
+                <div class="timeline-step">
+                  <div class="step-circle current">3</div>
+                  <span class="step-label active">In Progress</span>
+                </div>
+                <div class="timeline-line"></div>
+                <div class="timeline-step">
+                  <div class="step-circle">4</div>
+                  <span class="step-label">Completed</span>
+                </div>
+              </div>
+            </div>
+            <div class="referral-footer">
+              <span class="footer-info">Started Mar 19 | Expected completion: Mar 25</span>
+              <div class="footer-actions">
+                <button class="btn btn-secondary">Contact Customer</button>
+                <button class="btn btn-primary">Mark Complete</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Completed Referral Card -->
+          <div class="referral-card completed">
+            <div class="referral-header">
+              <div class="referral-from">
+                <div class="professional-avatar">QA</div>
+                <div class="from-info">
+                  <h4>Quick Auto Service</h4>
+                  <p>Springfield, IL</p>
+                </div>
+              </div>
+              <div class="referral-meta">
+                <span class="badge badge-completed">Completed</span>
+                <span class="referral-date">Mar 10, 2024</span>
+              </div>
+            </div>
+            <div class="referral-body">
+              <div class="referral-details">
+                <div class="detail-item">
+                  <span class="detail-label">Service Type</span>
+                  <span class="detail-value">Dent Removal</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Final Value</span>
+                  <span class="detail-value highlight">$650</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Vehicle</span>
+                  <span class="detail-value">2020 Ford F-150</span>
+                </div>
+              </div>
+              <div class="customer-card">
+                <div class="customer-avatar">RJ</div>
+                <div class="customer-info">
+                  <h4>Robert Johnson</h4>
+                  <p>r.johnson@email.com | (555) 345-6789</p>
+                </div>
+              </div>
+              <div class="timeline-progress">
+                <div class="timeline-step">
+                  <div class="step-circle completed">✓</div>
+                  <span class="step-label">Received</span>
+                </div>
+                <div class="timeline-line completed"></div>
+                <div class="timeline-step">
+                  <div class="step-circle completed">✓</div>
+                  <span class="step-label">Accepted</span>
+                </div>
+                <div class="timeline-line completed"></div>
+                <div class="timeline-step">
+                  <div class="step-circle completed">✓</div>
+                  <span class="step-label">In Progress</span>
+                </div>
+                <div class="timeline-line completed"></div>
+                <div class="timeline-step">
+                  <div class="step-circle completed">✓</div>
+                  <span class="step-label active">Completed</span>
+                </div>
+              </div>
+            </div>
+            <div class="referral-footer">
+              <span class="footer-info">Completed Mar 12 | Customer rated 5 stars</span>
+              <div class="footer-actions">
+                <button class="btn btn-secondary">View Invoice</button>
+                <button class="btn btn-secondary">Send Thank You</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
