@@ -1,0 +1,58 @@
+<div class="professional-directory">
+  <div class="professional-directory__header">
+    <div class="professional-directory__container">
+      <h1 class="professional-directory__title">Find Automotive Professionals</h1>
+      <p class="professional-directory__subtitle">Connect with trusted experts in your area</p>
+    </div>
+  </div>
+
+  <div class="professional-directory__container">
+    <ng-container *ngIf="professionals$ | async as professionals">
+      <div class="professional-directory__grid">
+        <div class="professional-card" *ngFor="let professional of professionals">
+          <div class="professional-card__header">
+            <img 
+              [src]="professional.photoUrl" 
+              [alt]="professional.businessName"
+              class="professional-card__photo"
+            />
+            <span 
+              *ngIf="professional.verified" 
+              class="professional-card__badge professional-card__badge--verified"
+            >
+              ✓ Verified
+            </span>
+          </div>
+          
+          <div class="professional-card__content">
+            <h3 class="professional-card__business-name">{{ professional.businessName }}</h3>
+            <p class="professional-card__professional-name">{{ professional.professionalName }}</p>
+            <span class="professional-card__type">{{ professional.businessType }}</span>
+            
+            <div class="professional-card__rating">
+              <span class="professional-card__rating-stars">★</span>
+              <span class="professional-card__rating-value">{{ professional.rating }}</span>
+              <span class="professional-card__rating-count">({{ professional.reviewCount }} reviews)</span>
+            </div>
+            
+            <div class="professional-card__specialties">
+              <span 
+                class="professional-card__specialty" 
+                *ngFor="let specialty of professional.specialties.slice(0, 3)"
+              >
+                {{ specialty }}
+              </span>
+            </div>
+            
+            <a 
+              [routerLink]="['/professionals', professional.slug]"
+              class="professional-card__action"
+            >
+              View Profile
+            </a>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

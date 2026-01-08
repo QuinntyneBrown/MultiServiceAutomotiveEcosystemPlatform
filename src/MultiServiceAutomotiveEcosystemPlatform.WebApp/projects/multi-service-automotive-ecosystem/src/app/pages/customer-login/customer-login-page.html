@@ -1,0 +1,12 @@
+<div class="customer-login-page">
+  <div class="customer-login-page__container">
+    <div class="customer-login-page__header">
+      <h1 class="customer-login-page__title">Welcome Back</h1>
+      <p class="customer-login-page__subtitle">Sign in to access your account</p>
+    </div>
+    <ms-customer-login
+      (loginSuccess)="onLogin($event)"
+      (loginError)="onError($event)"
+    ></ms-customer-login>
+  </div>
+</div>

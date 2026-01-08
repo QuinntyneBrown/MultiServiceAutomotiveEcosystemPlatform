@@ -1,0 +1,81 @@
+<div class="referral-dashboard">
+  <div class="referral-dashboard__header">
+    <h1 class="referral-dashboard__title">Your Referral Dashboard</h1>
+    <p class="referral-dashboard__subtitle">Share your code and earn rewards</p>
+  </div>
+
+  <div class="referral-dashboard__container">
+    <!-- Referral Code Card -->
+    <div class="referral-dashboard__code-card">
+      <h2 class="referral-dashboard__code-title">Your Referral Code</h2>
+      <div class="referral-dashboard__code-display">
+        <span class="referral-dashboard__code">{{ referralCode }}</span>
+        <button 
+          class="referral-dashboard__copy-btn"
+          (click)="copyReferralCode()"
+          type="button"
+        >
+          Copy Code
+        </button>
+      </div>
+      <p class="referral-dashboard__code-hint">Share this code with friends to earn rewards</p>
+    </div>
+
+    <!-- Statistics Cards -->
+    <ng-container *ngIf="stats$ | async as stats">
+      <div class="referral-dashboard__stats-grid">
+        <div class="referral-dashboard__stat-card">
+          <span class="referral-dashboard__stat-label">Total Referrals</span>
+          <span class="referral-dashboard__stat-value">{{ stats.totalReferrals }}</span>
+        </div>
+        <div class="referral-dashboard__stat-card">
+          <span class="referral-dashboard__stat-label">Successful</span>
+          <span class="referral-dashboard__stat-value">{{ stats.successfulConversions }}</span>
+        </div>
+        <div class="referral-dashboard__stat-card">
+          <span class="referral-dashboard__stat-label">Pending</span>
+          <span class="referral-dashboard__stat-value">{{ stats.pendingReferrals }}</span>
+        </div>
+        <div class="referral-dashboard__stat-card referral-dashboard__stat-card--highlight">
+          <span class="referral-dashboard__stat-label">Total Rewards</span>
+          <span class="referral-dashboard__stat-value">${{ stats.totalRewards.toFixed(2) }}</span>
+        </div>
+        <div class="referral-dashboard__stat-card">
+          <span class="referral-dashboard__stat-label">Pending Rewards</span>
+          <span class="referral-dashboard__stat-value">${{ stats.pendingRewards.toFixed(2) }}</span>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Referral List -->
+    <div class="referral-dashboard__section">
+      <h2 class="referral-dashboard__section-title">Your Referrals</h2>
+      <ng-container *ngIf="referrals$ | async as referrals">
+        <div class="referral-dashboard__table">
+          <div class="referral-dashboard__table-header">
+            <div class="referral-dashboard__table-cell">Friend</div>
+            <div class="referral-dashboard__table-cell">Date Sent</div>
+            <div class="referral-dashboard__table-cell">Status</div>
+            <div class="referral-dashboard__table-cell">Reward</div>
+          </div>
+          <div 
+            class="referral-dashboard__table-row" 
+            *ngFor="let referral of referrals"
+          >
+            <div class="referral-dashboard__table-cell">{{ referral.friendName }}</div>
+            <div class="referral-dashboard__table-cell">{{ referral.dateSent | date: 'MMM d, y' }}</div>
+            <div class="referral-dashboard__table-cell">
+              <span 
+                class="referral-dashboard__status"
+                [ngClass]="getStatusClass(referral.status)"
+              >
+                {{ getStatusLabel(referral.status) }}
+              </span>
+            </div>
+            <div class="referral-dashboard__table-cell">${{ referral.rewardAmount.toFixed(2) }}</div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
