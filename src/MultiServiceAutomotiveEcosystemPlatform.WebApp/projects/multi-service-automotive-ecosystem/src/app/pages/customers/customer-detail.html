@@ -1,0 +1,158 @@
+<div class="customer-detail">
+  <ng-container *ngIf="customer$ | async as customer">
+    <!-- Header -->
+    <div class="customer-detail__header">
+      <div class="customer-detail__header-content">
+        <div>
+          <h1 class="customer-detail__title">
+            {{ customer.firstName }} {{ customer.lastName }}
+          </h1>
+          <p class="customer-detail__subtitle">Customer since {{ customer.createdDate | date: 'MMM d, y' }}</p>
+        </div>
+        <div class="customer-detail__header-actions">
+          <a 
+            [routerLink]="['/customers', customer.id, 'edit']"
+            class="customer-detail__action-btn customer-detail__action-btn--primary"
+          >
+            Edit
+          </a>
+          <button 
+            type="button"
+            class="customer-detail__action-btn"
+          >
+            Refer
+          </button>
+          <button 
+            type="button"
+            class="customer-detail__action-btn"
+          >
+            Message
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="customer-detail__container">
+      <!-- Main Content Grid -->
+      <div class="customer-detail__grid">
+        <!-- Left Column -->
+        <div class="customer-detail__main">
+          <!-- Contact Information Card -->
+          <div class="customer-detail__card">
+            <h2 class="customer-detail__card-title">Contact Information</h2>
+            <div class="customer-detail__info-grid">
+              <div class="customer-detail__info-item">
+                <span class="customer-detail__info-label">Email</span>
+                <a href="mailto:{{ customer.email }}" class="customer-detail__info-value customer-detail__info-value--link">
+                  {{ customer.email }}
+                </a>
+              </div>
+              <div class="customer-detail__info-item">
+                <span class="customer-detail__info-label">Phone</span>
+                <a href="tel:{{ customer.phone }}" class="customer-detail__info-value customer-detail__info-value--link">
+                  {{ customer.phone }}
+                </a>
+              </div>
+              <div class="customer-detail__info-item customer-detail__info-item--full">
+                <span class="customer-detail__info-label">Address</span>
+                <span class="customer-detail__info-value">{{ customer.address }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Vehicles Card -->
+          <div class="customer-detail__card">
+            <div class="customer-detail__card-header">
+              <h2 class="customer-detail__card-title">Vehicles</h2>
+              <button type="button" class="customer-detail__link-btn">+ Add Vehicle</button>
+            </div>
+            <div class="customer-detail__vehicles">
+              <ng-container *ngIf="vehicles$ | async as vehicles">
+                <div 
+                  *ngFor="let vehicle of vehicles"
+                  class="customer-detail__vehicle"
+                  [class.customer-detail__vehicle--primary]="vehicle.isPrimary"
+                >
+                  <div class="customer-detail__vehicle-info">
+                    <span class="customer-detail__vehicle-name">
+                      {{ vehicle.year }} {{ vehicle.make }} {{ vehicle.model }}
+                    </span>
+                    <span 
+                      *ngIf="vehicle.isPrimary"
+                      class="customer-detail__vehicle-badge"
+                    >
+                      Primary
+                    </span>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+
+          <!-- Activity Timeline Card -->
+          <div class="customer-detail__card">
+            <h2 class="customer-detail__card-title">Activity Timeline</h2>
+            <div class="customer-detail__timeline">
+              <ng-container *ngIf="activities$ | async as activities">
+                <div 
+                  *ngFor="let activity of activities"
+                  class="customer-detail__activity"
+                >
+                  <div 
+                    class="customer-detail__activity-icon"
+                    [ngClass]="getActivityClass(activity.type)"
+                  >
+                    {{ getActivityIcon(activity.type) }}
+                  </div>
+                  <div class="customer-detail__activity-content">
+                    <p class="customer-detail__activity-description">{{ activity.description }}</p>
+                    <span class="customer-detail__activity-date">{{ activity.date | date: 'MMM d, y h:mm a' }}</span>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column (Sidebar) -->
+        <div class="customer-detail__sidebar">
+          <!-- Ownership Card -->
+          <div class="customer-detail__card">
+            <h2 class="customer-detail__card-title">Ownership</h2>
+            <div class="customer-detail__info-item">
+              <span class="customer-detail__info-label">Type</span>
+              <span class="customer-detail__info-value">
+                {{ customer.ownership === 'my-customer' ? 'My Customer' : 
+                   customer.ownership === 'referred' ? 'Referred' : 'Shared' }}
+              </span>
+            </div>
+            <button type="button" class="customer-detail__link-btn customer-detail__link-btn--block">
+              Transfer Ownership
+            </button>
+          </div>
+
+          <!-- Status Card -->
+          <div class="customer-detail__card">
+            <h2 class="customer-detail__card-title">Status</h2>
+            <div class="customer-detail__status-display">
+              <span 
+                class="customer-detail__status-badge"
+                [class.customer-detail__status-badge--active]="customer.status === 'active'"
+                [class.customer-detail__status-badge--inactive]="customer.status === 'inactive'"
+              >
+                {{ customer.status }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Notes Card -->
+          <div class="customer-detail__card">
+            <h2 class="customer-detail__card-title">Notes</h2>
+            <p class="customer-detail__notes">{{ customer.notes }}</p>
+            <button type="button" class="customer-detail__link-btn">Edit Notes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

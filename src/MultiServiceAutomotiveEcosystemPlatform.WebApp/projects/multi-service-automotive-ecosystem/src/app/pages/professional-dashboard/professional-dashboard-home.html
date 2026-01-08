@@ -1,0 +1,122 @@
+<div class="professional-dashboard-home">
+  <div class="professional-dashboard-home__header">
+    <h1 class="professional-dashboard-home__title">Welcome back, {{ professionalName }}!</h1>
+    <p class="professional-dashboard-home__subtitle">Here's what's happening with your business</p>
+  </div>
+
+  <div class="professional-dashboard-home__container">
+    <!-- Profile Completion Banner -->
+    <div class="professional-dashboard-home__banner">
+      <div class="professional-dashboard-home__banner-content">
+        <h3 class="professional-dashboard-home__banner-title">Complete Your Profile</h3>
+        <p class="professional-dashboard-home__banner-text">
+          Your profile is {{ profileCompletionPercentage }}% complete
+        </p>
+      </div>
+      <div class="professional-dashboard-home__banner-progress">
+        <div 
+          class="professional-dashboard-home__banner-progress-bar"
+          [style.width.%]="profileCompletionPercentage"
+        ></div>
+      </div>
+      <a 
+        routerLink="/professional/profile"
+        class="professional-dashboard-home__banner-link"
+      >
+        Update Profile →
+      </a>
+    </div>
+
+    <!-- Statistics Cards -->
+    <ng-container *ngIf="stats$ | async as stats">
+      <div class="professional-dashboard-home__stats-grid">
+        <div class="professional-dashboard-home__stat-card">
+          <div class="professional-dashboard-home__stat-icon professional-dashboard-home__stat-icon--customers">
+            👥
+          </div>
+          <div class="professional-dashboard-home__stat-content">
+            <span class="professional-dashboard-home__stat-value">{{ stats.totalCustomers }}</span>
+            <span class="professional-dashboard-home__stat-label">Total Customers</span>
+          </div>
+        </div>
+
+        <div class="professional-dashboard-home__stat-card">
+          <div class="professional-dashboard-home__stat-icon professional-dashboard-home__stat-icon--inquiries">
+            📬
+          </div>
+          <div class="professional-dashboard-home__stat-content">
+            <span class="professional-dashboard-home__stat-value">{{ stats.newInquiries }}</span>
+            <span class="professional-dashboard-home__stat-label">New Inquiries</span>
+          </div>
+        </div>
+
+        <div class="professional-dashboard-home__stat-card">
+          <div class="professional-dashboard-home__stat-icon professional-dashboard-home__stat-icon--referrals">
+            ⏳
+          </div>
+          <div class="professional-dashboard-home__stat-content">
+            <span class="professional-dashboard-home__stat-value">{{ stats.pendingReferrals }}</span>
+            <span class="professional-dashboard-home__stat-label">Pending Referrals</span>
+          </div>
+        </div>
+
+        <div class="professional-dashboard-home__stat-card">
+          <div class="professional-dashboard-home__stat-icon professional-dashboard-home__stat-icon--monthly">
+            📊
+          </div>
+          <div class="professional-dashboard-home__stat-content">
+            <span class="professional-dashboard-home__stat-value">{{ stats.monthlyReferrals }}</span>
+            <span class="professional-dashboard-home__stat-label">This Month's Referrals</span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Quick Actions -->
+    <div class="professional-dashboard-home__section">
+      <h2 class="professional-dashboard-home__section-title">Quick Actions</h2>
+      <div class="professional-dashboard-home__actions-grid">
+        <a routerLink="/customers/new" class="professional-dashboard-home__action-card">
+          <span class="professional-dashboard-home__action-icon">➕</span>
+          <span class="professional-dashboard-home__action-label">Add Customer</span>
+        </a>
+        <a routerLink="/professional/referrals/send" class="professional-dashboard-home__action-card">
+          <span class="professional-dashboard-home__action-icon">📤</span>
+          <span class="professional-dashboard-home__action-label">Send Referral</span>
+        </a>
+        <a routerLink="/inquiries" class="professional-dashboard-home__action-card">
+          <span class="professional-dashboard-home__action-icon">📋</span>
+          <span class="professional-dashboard-home__action-label">View Inquiries</span>
+        </a>
+        <a routerLink="/professional/profile" class="professional-dashboard-home__action-card">
+          <span class="professional-dashboard-home__action-icon">⚙️</span>
+          <span class="professional-dashboard-home__action-label">Update Profile</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Recent Activity Feed -->
+    <div class="professional-dashboard-home__section">
+      <h2 class="professional-dashboard-home__section-title">Recent Activity</h2>
+      <div class="professional-dashboard-home__activity-feed">
+        <ng-container *ngIf="activities$ | async as activities">
+          <div 
+            *ngFor="let activity of activities"
+            class="professional-dashboard-home__activity"
+          >
+            <div 
+              class="professional-dashboard-home__activity-icon"
+              [ngClass]="getActivityClass(activity.type)"
+            >
+              {{ getActivityIcon(activity.type) }}
+            </div>
+            <div class="professional-dashboard-home__activity-content">
+              <p class="professional-dashboard-home__activity-description">{{ activity.description }}</p>
+              <span class="professional-dashboard-home__activity-date">{{ activity.date | date: 'MMM d, y h:mm a' }}</span>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

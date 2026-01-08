@@ -1,0 +1,108 @@
+<div class="customer-list">
+  <div class="customer-list__header">
+    <h1 class="customer-list__title">Customers</h1>
+    <a routerLink="/customers/new" class="customer-list__add-btn">+ Add Customer</a>
+  </div>
+
+  <div class="customer-list__container">
+    <!-- Filters Section -->
+    <div class="customer-list__filters">
+      <div class="customer-list__filter-group">
+        <input
+          type="text"
+          [(ngModel)]="searchQuery"
+          placeholder="Search by name, email, or phone..."
+          class="customer-list__search"
+        />
+      </div>
+
+      <div class="customer-list__filter-group">
+        <label class="customer-list__filter-label">Ownership</label>
+        <select [(ngModel)]="selectedOwnership" class="customer-list__filter-select">
+          <option value="all">All Customers</option>
+          <option value="my-customer">My Customers</option>
+          <option value="referred">Referred</option>
+          <option value="shared">Shared</option>
+        </select>
+      </div>
+
+      <div class="customer-list__filter-group">
+        <label class="customer-list__filter-label">Status</label>
+        <select [(ngModel)]="selectedStatus" class="customer-list__filter-select">
+          <option value="all">All</option>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Customer List Table -->
+    <div class="customer-list__table-wrapper">
+      <table class="customer-list__table">
+        <thead class="customer-list__table-head">
+          <tr>
+            <th class="customer-list__table-header">Name</th>
+            <th class="customer-list__table-header">Email</th>
+            <th class="customer-list__table-header">Phone</th>
+            <th class="customer-list__table-header">Ownership</th>
+            <th class="customer-list__table-header">Status</th>
+            <th class="customer-list__table-header">Last Activity</th>
+            <th class="customer-list__table-header">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="customer-list__table-body">
+          <ng-container *ngIf="customers$ | async as customers">
+            <tr 
+              *ngFor="let customer of customers"
+              class="customer-list__table-row"
+            >
+              <td class="customer-list__table-cell">
+                <a 
+                  [routerLink]="['/customers', customer.id]"
+                  class="customer-list__name-link"
+                >
+                  {{ customer.firstName }} {{ customer.lastName }}
+                </a>
+              </td>
+              <td class="customer-list__table-cell">{{ customer.email }}</td>
+              <td class="customer-list__table-cell">{{ customer.phone }}</td>
+              <td class="customer-list__table-cell">
+                <span 
+                  class="customer-list__badge"
+                  [ngClass]="getOwnershipClass(customer.ownership)"
+                >
+                  {{ getOwnershipLabel(customer.ownership) }}
+                </span>
+              </td>
+              <td class="customer-list__table-cell">
+                <span 
+                  class="customer-list__status"
+                  [ngClass]="getStatusClass(customer.status)"
+                >
+                  {{ customer.status }}
+                </span>
+              </td>
+              <td class="customer-list__table-cell">
+                {{ customer.lastActivity | date: 'MMM d, y' }}
+              </td>
+              <td class="customer-list__table-cell">
+                <a 
+                  [routerLink]="['/customers', customer.id]"
+                  class="customer-list__action-btn"
+                >
+                  View
+                </a>
+                <a 
+                  [routerLink]="['/customers', customer.id, 'edit']"
+                  class="customer-list__action-btn"
+                >
+                  Edit
+                </a>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
