@@ -1,0 +1,145 @@
+@startuml referral-landing-page-flow
+title Referral Landing Page Flow - Phase 1
+
+skinparam activityBackgroundColor #E3F2FD
+skinparam activityBorderColor #1976D2
+skinparam activityDiamondBackgroundColor #FFF3E0
+skinparam activityDiamondBorderColor #F57C00
+
+start
+
+:New visitor clicks referral link;
+note right
+  Sources:
+  * Email invitation
+  * SMS invitation
+  * Social media share
+  * QR code scan
+  * Direct link
+end note
+
+:System extracts referral code from URL;
+
+:System validates referral code;
+
+if (Referral code valid?) then (yes)
+  :System loads referral data;
+
+  :Display Referral Landing Page;
+
+  #LightGreen:Hero Section;
+  note right
+    "[Referrer Name] invited you!"
+    * Discount offer highlight
+    * Sign up CTA button
+  end note
+
+  #LightGreen:About Section;
+  note right
+    * Platform description
+    * Benefits for new customers
+    * Trust indicators
+  end note
+
+  if (Specific professional in referral?) then (yes)
+    #LightGreen:Professional Spotlight;
+    note right
+      Featured professional:
+      * Profile photo
+      * Business name
+      * Specialties
+      * Rating
+    end note
+  else (no)
+    #LightGreen:Featured Professionals;
+    note right
+      Shows network of
+      available professionals
+    end note
+  endif
+
+  #LightGreen:How It Works Section;
+  note right
+    1. Sign up
+    2. Get service
+    3. Both earn rewards
+  end note
+
+  :Visitor reviews page content;
+
+  :Visitor clicks "Sign Up" button;
+
+  :Display Registration Form;
+  note right
+    * Referral code pre-filled
+    * Standard registration fields
+    * Discount preview shown
+  end note
+
+  if (Already have account?) then (yes)
+    :Visitor clicks "Login instead";
+
+    :Display Login Form;
+    :Referral code preserved in session;
+
+    :Visitor logs in;
+
+    :System checks if referral can be applied;
+
+    if (Eligible for referral reward?) then (yes)
+      :System links referral to account;
+      :Display "Referral Applied" message;
+    else (no)
+      :Display "Already a member" message;
+      :Referral not applied;
+    endif
+  else (no)
+    :Visitor fills registration form;
+    :Referral code auto-applied;
+
+    :System validates form;
+
+    if (Form valid?) then (yes)
+      :System creates account;
+      :System links referral to new account;
+      :System updates referral status to "Signed Up";
+      :System notifies referrer;
+
+      if (Discount offered?) then (yes)
+        :System creates discount code for new user;
+        :Display discount code prominently;
+      else (no)
+      endif
+
+      :Display "Welcome" success page;
+      note right
+        Shows:
+        * Welcome message
+        * Discount code (if any)
+        * Next steps
+        * Browse professionals
+      end note
+
+      :Redirect to Customer Dashboard;
+    else (no)
+      :Display validation errors;
+      :Visitor corrects form;
+    endif
+  endif
+
+else (no)
+  :Display "Invalid or Expired Link" page;
+  note right
+    Possible reasons:
+    * Code expired
+    * Code not found
+    * Code already used
+  end note
+
+  :Show generic signup option;
+  :Show browse professionals option;
+endif
+
+stop
+
+@enduml
