@@ -36,9 +36,6 @@ public static class ConfigureServices
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ConfigureServices).Assembly));
 
         // Register Services
-        services.AddScoped<ICustomerService, CustomerService>();
-        services.AddScoped<IProfessionalService, ProfessionalService>();
-        services.AddScoped<IReferralService, ReferralService>();
         services.AddScoped<IReferralCodeGenerator, ReferralCodeGenerator>();
 
         services.AddControllers()
