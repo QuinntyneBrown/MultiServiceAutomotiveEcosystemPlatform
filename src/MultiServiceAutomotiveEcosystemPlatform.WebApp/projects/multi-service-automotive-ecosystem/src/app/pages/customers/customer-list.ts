@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { FormsModule } from '@angular/forms';
+import { PageHeader } from 'multi-service-automotive-ecosystem-components';
 
 interface Customer {
   id: string;
@@ -18,7 +19,7 @@ interface Customer {
 
 @Component({
   selector: 'app-customer-list',
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, PageHeader],
   templateUrl: './customer-list.html',
   styleUrl: './customer-list.scss',
 })

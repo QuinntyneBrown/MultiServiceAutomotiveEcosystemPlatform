@@ -87,7 +87,12 @@
             ],
             "styles": [
               "projects/multi-service-automotive-ecosystem/src/styles.scss"
-            ]
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "projects"
+              ]
+            }
           },
           "configurations": {
             "production": {

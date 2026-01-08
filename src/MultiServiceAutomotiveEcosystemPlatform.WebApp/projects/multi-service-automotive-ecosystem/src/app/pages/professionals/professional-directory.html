@@ -1,10 +1,8 @@
 <div class="professional-directory">
-  <div class="professional-directory__header">
-    <div class="professional-directory__container">
-      <h1 class="professional-directory__title">Find Automotive Professionals</h1>
-      <p class="professional-directory__subtitle">Connect with trusted experts in your area</p>
-    </div>
-  </div>
+  <ms-page-header
+    title="Find Automotive Professionals"
+    subtitle="Connect with trusted experts in your area">
+  </ms-page-header>
 
   <div class="professional-directory__container">
     <ng-container *ngIf="professionals$ | async as professionals">

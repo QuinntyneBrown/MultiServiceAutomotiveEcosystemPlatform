@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Observable, of } from 'rxjs';
+import { PageHeader } from 'multi-service-automotive-ecosystem-components';
 
 interface Professional {
   id: string;
@@ -18,7 +19,7 @@ interface Professional {
 
 @Component({
   selector: 'app-professional-directory',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, PageHeader],
   templateUrl: './professional-directory.html',
   styleUrl: './professional-directory.scss',
 })
