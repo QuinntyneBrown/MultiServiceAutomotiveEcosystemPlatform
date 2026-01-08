@@ -24,3 +24,6 @@ app.MapControllers();
 app.UseCors("CorsPolicy");
 
 app.Run();
+
+// Make the implicit Program class accessible for testing
+public partial class Program { }
