@@ -1,0 +1,144 @@
+@startuml professional-profile-setup-flow
+title Professional Profile Setup Flow - Phase 1
+
+skinparam activityBackgroundColor #E3F2FD
+skinparam activityBorderColor #1976D2
+skinparam activityDiamondBackgroundColor #FFF3E0
+skinparam activityDiamondBorderColor #F57C00
+
+start
+
+:Professional logs into Dashboard;
+
+:System checks profile completion;
+
+if (Profile complete?) then (no)
+  :Display profile completion prompt;
+  :Show completion percentage;
+else (yes)
+  :Navigate to Profile Management;
+endif
+
+:Professional opens Profile Management;
+
+:Display Profile Edit Form;
+note right
+  Form Sections:
+  1. Basic Information
+  2. About/Bio
+  3. Contact Information
+  4. Location
+  5. Media Uploads
+  6. Specialties
+end note
+
+fork
+  :Edit Basic Information;
+  note right
+    * Business name
+    * Personal name
+    * Title
+    * Business type
+  end note
+fork again
+  :Edit About/Bio;
+  note right
+    * Rich text description
+    * Years in business
+    * Character count
+  end note
+fork again
+  :Edit Contact Information;
+  note right
+    * Phone numbers
+    * Email addresses
+    * Website URL
+  end note
+fork again
+  :Edit Location;
+  note right
+    * Street address
+    * City, State, ZIP
+    * Service radius
+  end note
+end fork
+
+:Professional uploads media;
+
+:Upload profile photo;
+
+if (Photo valid?) then (yes)
+  :Display image cropping tool;
+  :Professional adjusts crop;
+  :System saves cropped image;
+else (no)
+  :Display "Invalid image format" error;
+  note right
+    Accepted formats:
+    JPG, PNG
+    Max size: 5MB
+  end note
+endif
+
+:Upload cover photo (optional);
+
+if (Cover photo provided?) then (yes)
+  if (Photo valid?) then (yes)
+    :System saves cover image;
+  else (no)
+    :Display error message;
+  endif
+else (no)
+endif
+
+:Professional manages specialties;
+
+:Navigate to Specialty Management;
+
+:Display current specialties list;
+
+if (Add specialty?) then (yes)
+  :Open Add Specialty modal;
+  :Search specialty catalog;
+
+  if (Found in catalog?) then (yes)
+    :Select from catalog;
+  else (no)
+    :Enter custom specialty name;
+    :System creates custom specialty;
+  endif
+
+  :Add years of experience;
+  :Upload certification (optional);
+  :Save specialty;
+  :Update specialties list;
+else (no)
+endif
+
+:Drag-drop to reorder specialties;
+
+:Professional clicks Save Profile;
+
+:System validates all fields;
+
+if (All required fields complete?) then (yes)
+  :System saves profile changes;
+  :System generates URL slug;
+  :Update profile completion status;
+
+  if (First time completing profile?) then (yes)
+    :Display "Profile Published" celebration;
+    :Show public profile link;
+  else (no)
+    :Display "Changes Saved" success;
+  endif
+
+  :Preview public profile;
+else (no)
+  :Highlight missing required fields;
+  :Display validation errors;
+endif
+
+stop
+
+@enduml
