@@ -17,9 +17,14 @@ export function uniqueEmail(prefix = 'e2e') {
 
 export async function grantClipboardPermissions(
   context: BrowserContext,
+  browserName: string,
   origin = 'http://localhost:4200'
 ) {
-  await context.grantPermissions(['clipboard-read', 'clipboard-write'], { origin });
+  // Only Chromium supports clipboard permissions in Playwright
+  // WebKit (Safari) and Firefox don't support clipboard-write/clipboard-read permissions
+  if (browserName === 'chromium') {
+    await context.grantPermissions(['clipboard-read', 'clipboard-write'], { origin });
+  }
 }
 
 export async function acceptNextDialog(page: Page) {

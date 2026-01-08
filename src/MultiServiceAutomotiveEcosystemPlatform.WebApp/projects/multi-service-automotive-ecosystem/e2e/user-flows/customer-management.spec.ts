@@ -6,7 +6,8 @@ test.describe('User Flow: Customer Management', () => {
     await setupApiMocks(page);
 
     await page.goto('/customers');
-    await expect(page.locator('text=Customers')).toBeVisible();
+    // Use more specific selector for heading
+    await expect(page.locator('h1:has-text("Customers")')).toBeVisible();
 
     await page.click('a:has-text("+ Add Customer")');
     await page.waitForURL('**/customers/new');
