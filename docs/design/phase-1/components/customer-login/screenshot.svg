@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700">
+  <defs>
+    <style>
+      .bg { fill: #FAFAFA; }
+      .header-bg { fill: #FFFFFF; }
+      .card-bg { fill: #FFFFFF; }
+      .primary { fill: #00529F; }
+      .primary-text { fill: #00529F; }
+      .text-dark { fill: #1A1A1A; }
+      .text-medium { fill: #666666; }
+      .text-light { fill: #999999; }
+      .border { fill: none; stroke: #CCCCCC; }
+      .divider { stroke: #E5E5E5; }
+      .shadow { filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
+      .font-primary { font-family: 'Montserrat', Arial, sans-serif; }
+      .font-secondary { font-family: 'Lato', Arial, sans-serif; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect class="bg" width="1200" height="700"/>
+
+  <!-- Header -->
+  <rect class="header-bg shadow" x="0" y="0" width="1200" height="72"/>
+
+  <!-- Logo -->
+  <rect class="primary" x="100" y="16" width="40" height="40" rx="8"/>
+  <text x="120" y="42" fill="white" font-size="18" font-weight="bold" text-anchor="middle">A</text>
+  <text class="font-primary primary-text" x="150" y="42" font-size="18" font-weight="700">AutoService Platform</text>
+
+  <!-- Create Account Link -->
+  <text class="font-secondary text-medium" x="980" y="42" font-size="14" text-anchor="end">New to the platform? </text>
+  <text class="font-secondary primary-text" x="985" y="42" font-size="14" font-weight="600">Create account</text>
+
+  <!-- Main Card -->
+  <rect class="card-bg shadow" x="390" y="110" width="420" height="520" rx="12"/>
+
+  <!-- Card Header -->
+  <text class="font-primary text-dark" x="600" y="165" font-size="24" font-weight="700" text-anchor="middle">Welcome Back</text>
+  <text class="font-secondary text-medium" x="600" y="190" font-size="14" text-anchor="middle">Sign in to access your account</text>
+
+  <!-- Email Field -->
+  <text class="font-secondary text-dark" x="430" y="240" font-size="12" font-weight="600">Email Address</text>
+  <rect class="border" x="430" y="250" width="340" height="44" rx="8"/>
+  <text class="font-secondary text-light" x="445" y="278" font-size="14">Enter your email</text>
+
+  <!-- Password Field -->
+  <text class="font-secondary text-dark" x="430" y="320" font-size="12" font-weight="600">Password</text>
+  <rect class="border" x="430" y="330" width="340" height="44" rx="8"/>
+  <text class="font-secondary text-light" x="445" y="358" font-size="14">Enter your password</text>
+  <!-- Eye icon -->
+  <circle cx="745" cy="352" r="6" fill="none" stroke="#999999" stroke-width="1.5"/>
+  <ellipse cx="745" cy="352" rx="12" ry="8" fill="none" stroke="#999999" stroke-width="1.5"/>
+
+  <!-- Remember me / Forgot password -->
+  <rect class="border" x="430" y="395" width="14" height="14" rx="3"/>
+  <text class="font-secondary text-dark" x="452" y="406" font-size="12">Remember me</text>
+  <text class="font-secondary primary-text" x="770" y="406" font-size="12" text-anchor="end">Forgot password?</text>
+
+  <!-- Sign In Button -->
+  <rect class="primary" x="430" y="435" width="340" height="48" rx="8"/>
+  <text x="600" y="465" fill="white" font-size="16" font-weight="600" text-anchor="middle" class="font-secondary">Sign In</text>
+
+  <!-- Divider -->
+  <line class="divider" x1="430" y1="510" x2="545" y2="510"/>
+  <text class="font-secondary text-medium" x="600" y="514" font-size="12" text-anchor="middle">or continue with</text>
+  <line class="divider" x1="655" y1="510" x2="770" y2="510"/>
+
+  <!-- Social Buttons -->
+  <rect class="border" x="430" y="535" width="160" height="40" rx="8"/>
+  <text class="font-secondary text-dark" x="510" y="560" font-size="13" text-anchor="middle">Google</text>
+
+  <rect class="border" x="610" y="535" width="160" height="40" rx="8"/>
+  <text class="font-secondary text-dark" x="690" y="560" font-size="13" text-anchor="middle">Facebook</text>
+
+  <!-- Footer -->
+  <text class="font-secondary text-medium" x="600" y="620" font-size="13" text-anchor="middle">Don't have an account? </text>
+  <text class="font-secondary primary-text" x="720" y="620" font-size="13" font-weight="600">Sign up for free</text>
+</svg>
