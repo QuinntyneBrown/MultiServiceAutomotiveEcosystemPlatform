@@ -1,14 +1,11 @@
 <div class="home">
-  <div class="home__hero">
-    <div class="home__hero-content">
-      <h1 class="home__title">Welcome to Multi-Service Automotive Ecosystem</h1>
-      <p class="home__subtitle">Connect with trusted automotive professionals in your network</p>
-      <div class="home__actions">
-        <a routerLink="/professionals" class="home__action-button home__action-button--primary">Find Professionals</a>
-        <a routerLink="/customer/register" class="home__action-button home__action-button--secondary">Get Started</a>
-      </div>
-    </div>
-  </div>
+  <ms-page-header
+    title="Welcome to Multi-Service Automotive Ecosystem"
+    subtitle="Connect with trusted automotive professionals in your network"
+    variant="hero">
+    <a actions routerLink="/professionals" class="action-button action-button--primary">Find Professionals</a>
+    <a actions routerLink="/customer/register" class="action-button action-button--secondary">Get Started</a>
+  </ms-page-header>
 
   <section class="home__features">
     <div class="home__container">

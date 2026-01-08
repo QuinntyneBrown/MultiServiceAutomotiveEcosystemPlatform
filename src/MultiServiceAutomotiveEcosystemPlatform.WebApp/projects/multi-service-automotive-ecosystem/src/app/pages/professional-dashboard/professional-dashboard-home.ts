@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Observable, of } from 'rxjs';
+import { PageHeader } from 'multi-service-automotive-ecosystem-components';
 
 interface DashboardStats {
   totalCustomers: number;
@@ -19,7 +20,7 @@ interface Activity {
 
 @Component({
   selector: 'app-professional-dashboard-home',
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, PageHeader],
   templateUrl: './professional-dashboard-home.html',
   styleUrl: './professional-dashboard-home.scss',
 })

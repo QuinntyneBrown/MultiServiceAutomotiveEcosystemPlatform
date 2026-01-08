@@ -1,0 +1,46 @@
+<div class="main-layout">
+  <!-- Site Navigation Header -->
+  <header *ngIf="showNavigation" class="main-layout__header">
+    <div class="main-layout__header-container">
+      <a routerLink="/" class="main-layout__brand" (click)="closeMobileMenu()">
+        {{ brandName }}
+      </a>
+
+      <!-- Mobile Menu Toggle -->
+      <button
+        class="main-layout__mobile-toggle"
+        (click)="toggleMobileMenu()"
+        [attr.aria-expanded]="mobileMenuOpen"
+        aria-label="Toggle navigation menu"
+      >
+        <span class="main-layout__mobile-toggle-icon" [class.main-layout__mobile-toggle-icon--open]="mobileMenuOpen">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+
+      <!-- Navigation Links -->
+      <nav
+        class="main-layout__nav"
+        [class.main-layout__nav--open]="mobileMenuOpen"
+      >
+        <a
+          *ngFor="let item of navItems"
+          [routerLink]="item.route"
+          routerLinkActive="main-layout__nav-link--active"
+          class="main-layout__nav-link"
+          (click)="closeMobileMenu()"
+        >
+          <span *ngIf="item.icon" class="main-layout__nav-icon">{{ item.icon }}</span>
+          {{ item.label }}
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="main-layout__content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

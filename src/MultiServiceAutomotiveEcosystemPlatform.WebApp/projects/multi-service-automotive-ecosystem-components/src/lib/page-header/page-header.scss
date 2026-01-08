@@ -1,0 +1,121 @@
+@use '../styles/design-tokens' as *;
+
+.page-header {
+  background: linear-gradient(135deg, var(--color-blue-700, #00529F) 0%, var(--color-blue-900, #001F3F) 100%);
+  color: var(--color-text-inverse, #FFFFFF);
+  padding: var(--spacing-8, 2rem) var(--spacing-6, 1.5rem);
+
+  &--hero {
+    padding: var(--spacing-16, 4rem) var(--spacing-6, 1.5rem);
+    text-align: center;
+
+    .page-header__container {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .page-header__content {
+      text-align: center;
+    }
+
+    .page-header__title {
+      font-size: var(--text-display-sm, 2.25rem);
+
+      @media (min-width: 768px) {
+        font-size: var(--text-display-md, 3rem);
+      }
+    }
+
+    .page-header__subtitle {
+      font-size: var(--text-body-lg, 1.125rem);
+      max-width: 600px;
+    }
+
+    .page-header__actions {
+      margin-top: var(--spacing-6, 1.5rem);
+      justify-content: center;
+    }
+  }
+
+  &__container {
+    max-width: var(--container-max-width, 1200px);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4, 1rem);
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  &__content {
+    flex: 1;
+  }
+
+  &__title {
+    font-family: var(--font-family-primary, 'Sharp Sans', sans-serif);
+    font-size: var(--text-h1, 2rem);
+    font-weight: var(--font-weight-bold, 700);
+    line-height: var(--line-height-snug, 1.25);
+    margin: 0 0 var(--spacing-2, 0.5rem) 0;
+    color: inherit;
+  }
+
+  &__subtitle {
+    font-family: var(--font-family-secondary, 'Lato', sans-serif);
+    font-size: var(--text-body-md, 1rem);
+    font-weight: var(--font-weight-regular, 400);
+    line-height: var(--line-height-relaxed, 1.6);
+    opacity: 0.9;
+    margin: 0;
+  }
+
+  &__actions {
+    display: flex;
+    gap: var(--spacing-3, 0.75rem);
+    flex-wrap: wrap;
+
+    // Default button styling for projected action buttons
+    ::ng-deep {
+      .action-button,
+      button,
+      a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: var(--spacing-3, 0.75rem) var(--spacing-6, 1.5rem);
+        font-family: var(--font-family-primary, 'Sharp Sans', sans-serif);
+        font-size: var(--text-body-sm, 0.875rem);
+        font-weight: var(--font-weight-semibold, 600);
+        text-decoration: none;
+        border-radius: var(--radius-md, 0.5rem);
+        cursor: pointer;
+        transition: all var(--transition-normal, 200ms ease);
+        border: none;
+
+        &.action-button--primary,
+        &:first-child:not(.action-button--secondary) {
+          background-color: var(--color-accent, #FFD520);
+          color: var(--color-gray-900, #1A1A1A);
+
+          &:hover {
+            background-color: var(--color-accent-dark, #DAA520);
+          }
+        }
+
+        &.action-button--secondary {
+          background-color: rgba(255, 255, 255, 0.15);
+          color: var(--color-text-inverse, #FFFFFF);
+          border: 1px solid rgba(255, 255, 255, 0.3);
+
+          &:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,8 +1,8 @@
 <div class="professional-dashboard-home">
-  <div class="professional-dashboard-home__header">
-    <h1 class="professional-dashboard-home__title">Welcome back, {{ professionalName }}!</h1>
-    <p class="professional-dashboard-home__subtitle">Here's what's happening with your business</p>
-  </div>
+  <ms-page-header
+    [title]="'Welcome back, ' + professionalName + '!'"
+    subtitle="Here's what's happening with your business">
+  </ms-page-header>
 
   <div class="professional-dashboard-home__container">
     <!-- Profile Completion Banner -->
