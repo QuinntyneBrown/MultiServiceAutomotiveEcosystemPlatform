@@ -1,0 +1,86 @@
+<div class="tenant-not-found">
+  <div class="tenant-not-found__container">
+    <div class="tenant-not-found__card">
+      <!-- Error Icon -->
+      <div class="tenant-not-found__icon-wrapper">
+        <svg class="tenant-not-found__icon" width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="40" cy="40" r="40" fill="currentColor" opacity="0.1"/>
+          <path d="M40 20C29.5 20 21 28.5 21 39s8.5 19 19 19 19-8.5 19-19-8.5-19-19-19zm0 34c-8.3 0-15-6.7-15-15s6.7-15 15-15 15 6.7 15 15-6.7 15-15 15z" fill="currentColor"/>
+          <path d="M38.5 44h3v3h-3v-3zm0-18h3v15h-3V26z" fill="currentColor"/>
+        </svg>
+      </div>
+
+      <!-- Error Code Badge -->
+      <div class="tenant-not-found__badge">
+        <span class="tenant-not-found__badge-text">ERROR 404</span>
+      </div>
+
+      <!-- Header -->
+      <div class="tenant-not-found__header">
+        <h1 class="tenant-not-found__title">Network Not Found</h1>
+        <p class="tenant-not-found__description">
+          {{ customMessage || defaultMessage }}
+        </p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="tenant-not-found__actions">
+        <button
+          type="button"
+          class="tenant-not-found__button tenant-not-found__button--primary"
+          (click)="onNavigateToMainClick()"
+        >
+          <svg class="tenant-not-found__button-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+          </svg>
+          <span>Go to Main Platform</span>
+        </button>
+
+        <button
+          type="button"
+          class="tenant-not-found__button tenant-not-found__button--secondary"
+          (click)="onContactSupportClick()"
+        >
+          <svg class="tenant-not-found__button-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+          </svg>
+          <span>Contact Support</span>
+        </button>
+      </div>
+
+      <!-- Help Section -->
+      <div class="tenant-not-found__help">
+        <h2 class="tenant-not-found__help-title">What can you do?</h2>
+        <ul class="tenant-not-found__help-list">
+          <li class="tenant-not-found__help-item">
+            <svg class="tenant-not-found__help-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+              <path fill-rule="evenodd" d="M8 16A8 8 0 108 0a8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L7 8.586 5.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+            <span>Check that you've entered the correct network URL</span>
+          </li>
+          <li class="tenant-not-found__help-item">
+            <svg class="tenant-not-found__help-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+              <path fill-rule="evenodd" d="M8 16A8 8 0 108 0a8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L7 8.586 5.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+            <span>Contact the network owner to confirm the URL</span>
+          </li>
+          <li class="tenant-not-found__help-item">
+            <svg class="tenant-not-found__help-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+              <path fill-rule="evenodd" d="M8 16A8 8 0 108 0a8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L7 8.586 5.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+            <span>Browse available networks on our main platform</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Footer -->
+      <div class="tenant-not-found__footer">
+        <p class="tenant-not-found__footer-text">
+          Need more help? Visit our 
+          <a [href]="supportUrl" class="tenant-not-found__link">Help Center</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

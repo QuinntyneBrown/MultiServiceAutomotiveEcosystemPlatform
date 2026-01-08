@@ -7,6 +7,7 @@ export * from './lib/multi-service-automotive-ecosystem-components';
 // Components
 export * from './lib/customer-login/customer-login';
 export * from './lib/customer-registration/customer-registration';
+export * from './lib/tenant-not-found/tenant-not-found';
 
 // Types
 export type { AuthenticatedUser, AuthError } from './lib/customer-login/customer-login';
