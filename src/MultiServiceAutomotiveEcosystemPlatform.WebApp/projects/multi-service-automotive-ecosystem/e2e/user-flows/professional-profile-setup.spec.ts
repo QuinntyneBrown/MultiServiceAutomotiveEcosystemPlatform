@@ -14,6 +14,7 @@ test.describe('User Flow: Professional Profile Setup', () => {
     await expect(page.locator('h1')).toContainText('Manage Your Profile');
 
     // Form is prefilled by mock data; save shows an alert.
+    // Set up dialog handler before clicking (must not await - it needs to be ready when dialog appears)
     acceptNextDialog(page);
     await page.click('button:has-text("Save Changes")');
     
@@ -27,6 +28,7 @@ test.describe('User Flow: Professional Profile Setup', () => {
     // Use more specific selector for the modal heading
     await expect(page.locator('h2:has-text("Add Specialty")')).toBeVisible();
 
+    // Set up dialog handler before clicking (must not await - it needs to be ready when dialog appears)
     acceptNextDialog(page);
     await page.click('button.specialty-management__modal-item');
     
