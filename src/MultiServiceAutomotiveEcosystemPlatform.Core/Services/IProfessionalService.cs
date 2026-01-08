@@ -15,7 +15,7 @@ public interface IProfessionalService
         string phone,
         string addressLine1,
         string city,
-        string state,
+        string province,
         string postalCode,
         CancellationToken cancellationToken = default);
 
