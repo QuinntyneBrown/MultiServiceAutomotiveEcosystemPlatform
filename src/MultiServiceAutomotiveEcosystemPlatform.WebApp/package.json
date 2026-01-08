@@ -40,24 +40,25 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
+    "@angular-devkit/architect": "^0.2100.0",
+    "@angular-devkit/build-angular": "^21.0.0",
+    "@angular-devkit/core": "^21.0.0",
     "@angular/build": "^21.0.5",
     "@angular/cli": "^21.0.3",
     "@angular/compiler-cli": "^21.0.0",
-    "@types/express": "^5.0.1",
-    "@types/node": "^20.17.19",
-    "jsdom": "^27.1.0",
-    "ng-packagr": "^21.0.0",
-    "typescript": "~5.9.2",
-    "vitest": "^4.0.8",
-    "storybook": "^10.1.11",
-    "@storybook/angular": "^10.1.11",
+    "@angular/platform-browser-dynamic": "^21.0.0",
+    "@compodoc/compodoc": "^1.1.32",
     "@storybook/addon-a11y": "^10.1.11",
     "@storybook/addon-docs": "^10.1.11",
     "@storybook/addon-onboarding": "^10.1.11",
-    "@angular-devkit/build-angular": "^21.0.0",
-    "@angular-devkit/architect": "^0.2100.0",
-    "@angular-devkit/core": "^21.0.0",
-    "@angular/platform-browser-dynamic": "^21.0.0",
-    "@compodoc/compodoc": "^1.1.32"
+    "@storybook/angular": "^10.1.11",
+    "@types/express": "^5.0.1",
+    "@types/node": "^20.17.19",
+    "@vitest/coverage-v8": "^4.0.16",
+    "jsdom": "^27.1.0",
+    "ng-packagr": "^21.0.0",
+    "storybook": "^10.1.11",
+    "typescript": "~5.9.2",
+    "vitest": "^4.0.8"
   }
 }
