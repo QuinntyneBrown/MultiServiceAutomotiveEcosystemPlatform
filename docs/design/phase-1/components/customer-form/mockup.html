@@ -586,32 +586,36 @@
               <input type="text" id="city" name="city" class="form-input" placeholder="Springfield" required>
             </div>
             <div class="form-group">
-              <label class="form-label form-label--required" for="state">State</label>
-              <select id="state" name="state" class="form-select" required>
-                <option value="">Select State</option>
-                <option value="AL">Alabama</option>
-                <option value="AK">Alaska</option>
-                <option value="AZ">Arizona</option>
-                <option value="CA">California</option>
-                <option value="FL">Florida</option>
-                <option value="IL">Illinois</option>
-                <option value="NY">New York</option>
-                <option value="TX">Texas</option>
-                <!-- Additional states would be listed here -->
+              <label class="form-label form-label--required" for="province">Province</label>
+              <select id="province" name="province" class="form-select" required>
+                <option value="">Select Province</option>
+                <option value="AB">Alberta</option>
+                <option value="BC">British Columbia</option>
+                <option value="MB">Manitoba</option>
+                <option value="NB">New Brunswick</option>
+                <option value="NL">Newfoundland and Labrador</option>
+                <option value="NS">Nova Scotia</option>
+                <option value="NT">Northwest Territories</option>
+                <option value="NU">Nunavut</option>
+                <option value="ON">Ontario</option>
+                <option value="PE">Prince Edward Island</option>
+                <option value="QC">Quebec</option>
+                <option value="SK">Saskatchewan</option>
+                <option value="YT">Yukon</option>
               </select>
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
-              <label class="form-label form-label--required" for="zipCode">ZIP Code</label>
-              <input type="text" id="zipCode" name="zipCode" class="form-input" placeholder="12345" pattern="[0-9]{5}" required>
+              <label class="form-label form-label--required" for="postalCode">Postal Code</label>
+              <input type="text" id="postalCode" name="postalCode" class="form-input" placeholder="A1A 1A1" pattern="[A-Za-z][0-9][A-Za-z] [0-9][A-Za-z][0-9]" required>
+              <p class="form-helper">Format: A1A 1A1</p>
             </div>
             <div class="form-group">
               <label class="form-label" for="country">Country</label>
               <select id="country" name="country" class="form-select">
-                <option value="US" selected>United States</option>
-                <option value="CA">Canada</option>
+                <option value="CA" selected>Canada</option>
               </select>
             </div>
           </div>

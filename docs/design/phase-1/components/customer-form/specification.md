@@ -147,9 +147,9 @@ export class CustomerFormComponent {
 | street | text | Yes | 5-100 characters |
 | street2 | text | No | Max 100 characters |
 | city | text | Yes | 2-50 characters |
-| state | select | Yes | Valid US state code |
-| zipCode | text | Yes | 5-digit US ZIP code |
-| country | select | No | Default: US |
+| province | select | Yes | Valid Canadian province code |
+| postalCode | text | Yes | Canadian postal code format (A1A 1A1) |
+| country | select | No | Default: CA |
 
 ### Preferences
 
@@ -179,8 +179,8 @@ interface CustomerFormState {
       street: string;
       street2: string;
       city: string;
-      state: string;
-      zipCode: string;
+      province: string;
+      postalCode: string;
       country: string;
     };
     preferences: {
@@ -380,14 +380,14 @@ const customerFormSchema = {
     minLength: { value: 2, message: 'City must be at least 2 characters' },
     maxLength: { value: 50, message: 'City must be less than 50 characters' }
   },
-  'address.state': {
-    required: 'State is required'
+  'address.province': {
+    required: 'Province is required'
   },
-  'address.zipCode': {
-    required: 'ZIP code is required',
+  'address.postalCode': {
+    required: 'Postal code is required',
     pattern: {
-      value: /^\d{5}$/,
-      message: 'ZIP code must be 5 digits'
+      value: /^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$/,
+      message: 'Postal code must be in format A1A 1A1'
     }
   },
   notes: {
@@ -446,8 +446,8 @@ interface CreateCustomerRequest {
     street: string;
     street2?: string;
     city: string;
-    state: string;
-    zipCode: string;
+    province: string;
+    postalCode: string;
     country: string;
   };
   preferences: {
@@ -574,7 +574,7 @@ interface DuplicateCheckResponse {
 | Required field empty | "[Field] is required" | Show on blur |
 | Invalid email | "Please enter a valid email address" | Show on blur |
 | Invalid phone | "Please enter a valid phone number" | Show on blur |
-| Invalid ZIP | "ZIP code must be 5 digits" | Show on blur |
+| Invalid postal code | "Postal code must be in format A1A 1A1" | Show on blur |
 | Max length exceeded | "[Field] must be less than [X] characters" | Show while typing |
 
 ### Server-Side Errors
@@ -670,7 +670,7 @@ describe('CustomerForm', () => {
   it('validates email format', () => {});
   it('validates phone format', () => {});
   it('formats phone number as user types', () => {});
-  it('validates ZIP code format', () => {});
+  it('validates postal code format', () => {});
   it('validates name character restrictions', () => {});
   it('validates max length for notes', () => {});
   it('adds and removes tags correctly', () => {});
