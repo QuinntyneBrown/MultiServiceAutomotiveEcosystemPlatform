@@ -1,6 +1,8 @@
 // Copyright (c) Quinntyne Brown. All Rights Reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System.Text.Json.Serialization;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApiServices(builder.Configuration);
@@ -22,3 +24,6 @@ app.MapControllers();
 app.UseCors("CorsPolicy");
 
 app.Run();
+
+// Make the implicit Program class accessible for testing
+public partial class Program { }

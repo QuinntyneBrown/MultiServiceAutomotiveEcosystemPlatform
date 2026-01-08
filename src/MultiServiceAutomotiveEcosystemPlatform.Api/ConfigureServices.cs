@@ -1,6 +1,7 @@
 // Copyright (c) Quinntyne Brown. All Rights Reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using MultiServiceAutomotiveEcosystemPlatform.Core.Data;
 using MultiServiceAutomotiveEcosystemPlatform.Core.Services;
@@ -31,7 +32,20 @@ public static class ConfigureServices
 
         services.AddScoped<ITenantContext, TenantContext>();
 
-        services.AddControllers();
+        // Register MediatR
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ConfigureServices).Assembly));
+
+        // Register Services
+        services.AddScoped<ICustomerService, CustomerService>();
+        services.AddScoped<IProfessionalService, ProfessionalService>();
+        services.AddScoped<IReferralService, ReferralService>();
+        services.AddScoped<IReferralCodeGenerator, ReferralCodeGenerator>();
+
+        services.AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
     }
