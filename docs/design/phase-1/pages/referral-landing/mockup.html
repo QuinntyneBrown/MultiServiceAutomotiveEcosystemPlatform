@@ -1,0 +1,1696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>You're Invited! - AutoPro Network</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../shared-styles.css">
+  <style>
+    /* Page-specific styles */
+    body {
+      margin: 0;
+      background-color: var(--color-bg-secondary);
+    }
+
+    /* Header - Public Version */
+    .public-header {
+      background-color: var(--color-bg-primary);
+      border-bottom: 1px solid var(--color-border-light);
+      padding: var(--spacing-4) 0;
+      position: sticky;
+      top: 0;
+      z-index: var(--z-sticky);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .public-header__container {
+      max-width: var(--container-max-width);
+      margin: 0 auto;
+      padding: 0 var(--spacing-6);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .public-header__logo {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+      text-decoration: none;
+    }
+
+    .public-header__logo-icon {
+      width: 40px;
+      height: 40px;
+      background-color: var(--color-blue-700);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .public-header__logo-text {
+      font-family: var(--font-family-primary);
+      font-weight: var(--font-weight-bold);
+      font-size: var(--text-h5);
+      color: var(--color-blue-700);
+    }
+
+    .public-header__actions {
+      display: flex;
+      gap: var(--spacing-4);
+      align-items: center;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      background: linear-gradient(135deg, var(--color-blue-700) 0%, var(--color-blue-900) 100%);
+      color: var(--color-text-inverse);
+      padding: var(--spacing-20) 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 50%;
+      height: 100%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="rgba(255,213,32,0.1)"/></svg>') no-repeat center;
+      background-size: 500px;
+      opacity: 0.3;
+    }
+
+    .hero-section__container {
+      max-width: var(--container-max-width);
+      margin: 0 auto;
+      padding: 0 var(--spacing-6);
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .hero-section__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--spacing-2);
+      background-color: rgba(255, 213, 32, 0.2);
+      border: 1px solid var(--color-accent);
+      padding: var(--spacing-2) var(--spacing-5);
+      border-radius: var(--radius-full);
+      font-size: var(--text-body-sm);
+      font-weight: var(--font-weight-semibold);
+      margin-bottom: var(--spacing-6);
+      color: var(--color-accent);
+    }
+
+    .hero-section__title {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-display-md);
+      font-weight: var(--font-weight-bold);
+      line-height: 1.1;
+      margin-bottom: var(--spacing-4);
+    }
+
+    .hero-section__referrer {
+      color: var(--color-accent);
+    }
+
+    .hero-section__subtitle {
+      font-size: var(--text-h4);
+      opacity: 0.95;
+      margin-bottom: var(--spacing-8);
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-section__discount {
+      background-color: var(--color-accent);
+      color: var(--color-blue-900);
+      font-family: var(--font-family-primary);
+      font-size: var(--text-display-sm);
+      font-weight: var(--font-weight-bold);
+      padding: var(--spacing-6) var(--spacing-12);
+      border-radius: var(--radius-xl);
+      display: inline-block;
+      margin-bottom: var(--spacing-8);
+      box-shadow: var(--shadow-lg);
+      transform: rotate(-2deg);
+    }
+
+    .hero-section__cta {
+      display: flex;
+      gap: var(--spacing-4);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* About Section */
+    .about-section {
+      background-color: var(--color-bg-primary);
+      padding: var(--spacing-20) 0;
+    }
+
+    .about-section__container {
+      max-width: var(--container-max-width);
+      margin: 0 auto;
+      padding: 0 var(--spacing-6);
+    }
+
+    .about-section__content {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .about-section__overline {
+      font-size: var(--text-body-sm);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-blue-700);
+      text-transform: uppercase;
+      letter-spacing: var(--letter-spacing-widest);
+      margin-bottom: var(--spacing-3);
+    }
+
+    .about-section__title {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-display-sm);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-gray-900);
+      margin-bottom: var(--spacing-6);
+    }
+
+    .about-section__description {
+      font-size: var(--text-body-lg);
+      color: var(--color-gray-700);
+      line-height: var(--line-height-relaxed);
+      margin-bottom: var(--spacing-10);
+    }
+
+    .about-section__benefits {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--spacing-8);
+      margin-top: var(--spacing-12);
+    }
+
+    .benefit-card {
+      text-align: left;
+    }
+
+    .benefit-card__icon {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--color-blue-100) 0%, var(--color-blue-200) 100%);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--spacing-4);
+    }
+
+    .benefit-card__icon svg {
+      width: 28px;
+      height: 28px;
+      color: var(--color-blue-700);
+    }
+
+    .benefit-card__title {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-h5);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-900);
+      margin-bottom: var(--spacing-2);
+    }
+
+    .benefit-card__description {
+      font-size: var(--text-body-md);
+      color: var(--color-gray-700);
+      line-height: var(--line-height-relaxed);
+    }
+
+    /* Professional Spotlight Section */
+    .professional-section {
+      background-color: var(--color-bg-secondary);
+      padding: var(--spacing-20) 0;
+    }
+
+    .professional-section__container {
+      max-width: var(--container-max-width);
+      margin: 0 auto;
+      padding: 0 var(--spacing-6);
+    }
+
+    .professional-section__header {
+      text-align: center;
+      margin-bottom: var(--spacing-12);
+    }
+
+    .professional-section__title {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-display-sm);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-gray-900);
+      margin-bottom: var(--spacing-4);
+    }
+
+    .professional-section__subtitle {
+      font-size: var(--text-body-lg);
+      color: var(--color-gray-700);
+    }
+
+    /* Featured Professional Card */
+    .featured-professional {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: var(--color-bg-primary);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+
+    .featured-professional__header {
+      background: linear-gradient(135deg, var(--color-blue-700) 0%, var(--color-blue-800) 100%);
+      padding: var(--spacing-8);
+      color: var(--color-text-inverse);
+      text-align: center;
+      position: relative;
+    }
+
+    .featured-professional__badge {
+      position: absolute;
+      top: var(--spacing-4);
+      right: var(--spacing-4);
+      background-color: var(--color-accent);
+      color: var(--color-blue-900);
+      padding: var(--spacing-1) var(--spacing-4);
+      border-radius: var(--radius-full);
+      font-size: var(--text-caption);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    .featured-professional__avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: var(--radius-full);
+      background: linear-gradient(135deg, var(--color-blue-300) 0%, var(--color-blue-400) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--spacing-4);
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      font-size: var(--text-display-sm);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-blue-900);
+    }
+
+    .featured-professional__name {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-h3);
+      font-weight: var(--font-weight-bold);
+      margin-bottom: var(--spacing-2);
+    }
+
+    .featured-professional__specialty {
+      font-size: var(--text-body-md);
+      opacity: 0.9;
+      margin-bottom: var(--spacing-1);
+    }
+
+    .featured-professional__location {
+      font-size: var(--text-body-sm);
+      opacity: 0.8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spacing-1);
+    }
+
+    .featured-professional__body {
+      padding: var(--spacing-8);
+    }
+
+    .featured-professional__stats {
+      display: flex;
+      justify-content: space-around;
+      padding-bottom: var(--spacing-6);
+      border-bottom: 1px solid var(--color-border-light);
+      margin-bottom: var(--spacing-6);
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat__value {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-h3);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-blue-700);
+      display: block;
+    }
+
+    .stat__label {
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-600);
+      margin-top: var(--spacing-1);
+    }
+
+    .featured-professional__bio {
+      font-size: var(--text-body-md);
+      color: var(--color-gray-700);
+      line-height: var(--line-height-relaxed);
+      margin-bottom: var(--spacing-6);
+    }
+
+    .featured-professional__specialties {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-2);
+    }
+
+    .specialty-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--spacing-2);
+      padding: var(--spacing-2) var(--spacing-4);
+      background-color: var(--color-blue-50);
+      border: 1px solid var(--color-blue-200);
+      color: var(--color-blue-700);
+      font-size: var(--text-body-sm);
+      border-radius: var(--radius-full);
+    }
+
+    /* Professional Grid (for general referrals) */
+    .professionals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--spacing-6);
+    }
+
+    .professional-card {
+      background-color: var(--color-bg-primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      transition: all var(--transition-normal);
+    }
+
+    .professional-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-4px);
+    }
+
+    .professional-card__header {
+      background: linear-gradient(135deg, var(--color-blue-700) 0%, var(--color-blue-800) 100%);
+      padding: var(--spacing-6);
+      color: var(--color-text-inverse);
+      text-align: center;
+    }
+
+    .professional-card__avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: var(--radius-full);
+      background: linear-gradient(135deg, var(--color-blue-300) 0%, var(--color-blue-400) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--spacing-3);
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      font-size: var(--text-h4);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-blue-900);
+    }
+
+    .professional-card__name {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-h5);
+      font-weight: var(--font-weight-semibold);
+      margin-bottom: var(--spacing-1);
+    }
+
+    .professional-card__specialty {
+      font-size: var(--text-body-sm);
+      opacity: 0.9;
+    }
+
+    .professional-card__body {
+      padding: var(--spacing-5);
+    }
+
+    .professional-card__rating {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spacing-2);
+      margin-bottom: var(--spacing-4);
+    }
+
+    .professional-card__stars {
+      color: var(--color-accent);
+      display: flex;
+      gap: 2px;
+    }
+
+    .professional-card__rating-text {
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-600);
+    }
+
+    .professional-card__location {
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-600);
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spacing-1);
+    }
+
+    /* How It Works Section */
+    .how-it-works {
+      background-color: var(--color-bg-primary);
+      padding: var(--spacing-20) 0;
+    }
+
+    .how-it-works__container {
+      max-width: var(--container-max-width);
+      margin: 0 auto;
+      padding: 0 var(--spacing-6);
+    }
+
+    .how-it-works__header {
+      text-align: center;
+      margin-bottom: var(--spacing-12);
+    }
+
+    .how-it-works__title {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-display-sm);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-gray-900);
+      margin-bottom: var(--spacing-4);
+    }
+
+    .how-it-works__subtitle {
+      font-size: var(--text-body-lg);
+      color: var(--color-gray-700);
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--spacing-8);
+      position: relative;
+    }
+
+    @media (min-width: 768px) {
+      .steps::before {
+        content: '';
+        position: absolute;
+        top: 56px;
+        left: 20%;
+        right: 20%;
+        height: 2px;
+        background: linear-gradient(90deg, var(--color-blue-300) 0%, var(--color-accent) 50%, var(--color-blue-300) 100%);
+        z-index: 0;
+      }
+    }
+
+    .step {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step__number {
+      width: 72px;
+      height: 72px;
+      background: linear-gradient(135deg, var(--color-blue-700) 0%, var(--color-blue-800) 100%);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--spacing-4);
+      border: 4px solid var(--color-bg-primary);
+      box-shadow: var(--shadow-md);
+    }
+
+    .step__number-text {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-h3);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-inverse);
+    }
+
+    .step__icon {
+      width: 72px;
+      height: 72px;
+      background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-yellow-600) 100%);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--spacing-4);
+      border: 4px solid var(--color-bg-primary);
+      box-shadow: var(--shadow-md);
+    }
+
+    .step__icon svg {
+      width: 36px;
+      height: 36px;
+      color: var(--color-blue-900);
+    }
+
+    .step__title {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-h5);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-900);
+      margin-bottom: var(--spacing-2);
+    }
+
+    .step__description {
+      font-size: var(--text-body-md);
+      color: var(--color-gray-700);
+      line-height: var(--line-height-relaxed);
+    }
+
+    /* Sign Up Section */
+    .signup-section {
+      background: linear-gradient(135deg, var(--color-blue-50) 0%, var(--color-blue-100) 100%);
+      padding: var(--spacing-20) 0;
+    }
+
+    .signup-section__container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0 var(--spacing-6);
+    }
+
+    .signup-section__header {
+      text-align: center;
+      margin-bottom: var(--spacing-8);
+    }
+
+    .signup-section__title {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-display-sm);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-gray-900);
+      margin-bottom: var(--spacing-4);
+    }
+
+    .signup-section__subtitle {
+      font-size: var(--text-body-lg);
+      color: var(--color-gray-700);
+    }
+
+    .signup-form {
+      background-color: var(--color-bg-primary);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      padding: var(--spacing-8);
+    }
+
+    /* Referral Code Display */
+    .referral-code-display {
+      background: linear-gradient(135deg, var(--color-blue-700) 0%, var(--color-blue-800) 100%);
+      color: var(--color-text-inverse);
+      padding: var(--spacing-6);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--spacing-8);
+      text-align: center;
+    }
+
+    .referral-code-display__label {
+      font-size: var(--text-body-sm);
+      opacity: 0.9;
+      margin-bottom: var(--spacing-2);
+    }
+
+    .referral-code-display__code {
+      font-family: var(--font-family-mono);
+      font-size: var(--text-h3);
+      font-weight: var(--font-weight-bold);
+      letter-spacing: 0.1em;
+      margin-bottom: var(--spacing-3);
+      color: var(--color-accent);
+    }
+
+    .referral-code-display__referrer {
+      font-size: var(--text-body-md);
+      opacity: 0.95;
+    }
+
+    .referral-code-display__discount {
+      background-color: var(--color-accent);
+      color: var(--color-blue-900);
+      padding: var(--spacing-2) var(--spacing-5);
+      border-radius: var(--radius-full);
+      font-weight: var(--font-weight-semibold);
+      display: inline-block;
+      margin-top: var(--spacing-4);
+    }
+
+    /* Form Fields */
+    .form-group {
+      margin-bottom: var(--spacing-6);
+    }
+
+    .form-group__label {
+      display: block;
+      font-size: var(--text-body-sm);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-800);
+      margin-bottom: var(--spacing-2);
+    }
+
+    .form-group__label--required::after {
+      content: '*';
+      color: var(--color-error);
+      margin-left: var(--spacing-1);
+    }
+
+    .form-group__input {
+      width: 100%;
+      height: 48px;
+      padding: 0 var(--spacing-4);
+      font-family: var(--font-family-secondary);
+      font-size: var(--text-body-md);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      background-color: var(--color-bg-primary);
+      transition: all var(--transition-normal);
+    }
+
+    .form-group__input:focus {
+      outline: none;
+      border-color: var(--color-blue-700);
+      box-shadow: var(--shadow-focus);
+    }
+
+    .form-group__input:disabled {
+      background-color: var(--color-gray-100);
+      color: var(--color-gray-600);
+      cursor: not-allowed;
+    }
+
+    .form-group__input--error {
+      border-color: var(--color-error);
+    }
+
+    .form-group__helper {
+      font-size: var(--text-caption);
+      color: var(--color-gray-600);
+      margin-top: var(--spacing-1);
+    }
+
+    .form-group__error {
+      font-size: var(--text-caption);
+      color: var(--color-error);
+      margin-top: var(--spacing-1);
+      display: none;
+    }
+
+    .form-group__input--error + .form-group__error {
+      display: block;
+    }
+
+    .form-group__row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-4);
+    }
+
+    @media (max-width: 576px) {
+      .form-group__row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Referral Code Entry */
+    .referral-code-entry {
+      border-top: 2px solid var(--color-border-light);
+      padding-top: var(--spacing-6);
+      margin-top: var(--spacing-6);
+    }
+
+    .referral-code-entry__title {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-h5);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-900);
+      margin-bottom: var(--spacing-1);
+    }
+
+    .referral-code-entry__subtitle {
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-600);
+      margin-bottom: var(--spacing-4);
+    }
+
+    .referral-code-entry__input-wrapper {
+      position: relative;
+    }
+
+    .referral-code-entry__input {
+      width: 100%;
+      height: 56px;
+      padding: 0 var(--spacing-16) 0 var(--spacing-4);
+      font-family: var(--font-family-mono);
+      font-size: var(--text-body-lg);
+      font-weight: var(--font-weight-semibold);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 2px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      background-color: var(--color-bg-primary);
+      transition: all var(--transition-normal);
+    }
+
+    .referral-code-entry__input:focus {
+      outline: none;
+      border-color: var(--color-blue-700);
+      box-shadow: var(--shadow-focus);
+    }
+
+    .referral-code-entry__input--valid {
+      border-color: var(--color-success);
+      background-color: var(--color-success-light);
+    }
+
+    .referral-code-entry__input--error {
+      border-color: var(--color-error);
+      background-color: var(--color-error-light);
+    }
+
+    .referral-code-entry__status {
+      position: absolute;
+      right: var(--spacing-4);
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .referral-code-entry__spinner {
+      width: 24px;
+      height: 24px;
+      border: 3px solid var(--color-gray-300);
+      border-top-color: var(--color-blue-700);
+      border-radius: var(--radius-full);
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: translateY(-50%) rotate(360deg); }
+    }
+
+    .referral-code-entry__status-icon {
+      width: 24px;
+      height: 24px;
+    }
+
+    .referral-code-entry__status-icon--success {
+      color: var(--color-success);
+    }
+
+    .referral-code-entry__status-icon--error {
+      color: var(--color-error);
+    }
+
+    .referral-code-entry__validation {
+      margin-top: var(--spacing-3);
+      padding: var(--spacing-3) var(--spacing-4);
+      border-radius: var(--radius-md);
+      font-size: var(--text-body-sm);
+      display: none;
+    }
+
+    .referral-code-entry__validation--success {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-2);
+      background-color: var(--color-success-light);
+      color: var(--color-success);
+      border: 1px solid var(--color-success);
+    }
+
+    .referral-code-entry__validation--error {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-2);
+      background-color: var(--color-error-light);
+      color: var(--color-error);
+      border: 1px solid var(--color-error);
+    }
+
+    .referral-code-entry__validation-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--spacing-3);
+      margin-bottom: var(--spacing-6);
+    }
+
+    .checkbox-group__input {
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+      cursor: pointer;
+      accent-color: var(--color-blue-700);
+    }
+
+    .checkbox-group__label {
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-700);
+      line-height: var(--line-height-relaxed);
+      cursor: pointer;
+    }
+
+    .checkbox-group__label a {
+      color: var(--color-blue-700);
+      text-decoration: none;
+    }
+
+    .checkbox-group__label a:hover {
+      text-decoration: underline;
+    }
+
+    .submit-button {
+      width: 100%;
+      height: 56px;
+      background: linear-gradient(135deg, var(--color-blue-700) 0%, var(--color-blue-800) 100%);
+      color: var(--color-text-inverse);
+      font-family: var(--font-family-primary);
+      font-size: var(--text-body-lg);
+      font-weight: var(--font-weight-semibold);
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--transition-normal);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .submit-button:hover {
+      background: linear-gradient(135deg, var(--color-blue-800) 0%, var(--color-blue-900) 100%);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .submit-button:active {
+      transform: translateY(0);
+    }
+
+    .submit-button:disabled {
+      background: var(--color-gray-300);
+      color: var(--color-gray-500);
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .signup-form__footer {
+      text-align: center;
+      margin-top: var(--spacing-6);
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-600);
+    }
+
+    .signup-form__footer a {
+      color: var(--color-blue-700);
+      text-decoration: none;
+      font-weight: var(--font-weight-semibold);
+    }
+
+    .signup-form__footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Footer */
+    .public-footer {
+      background-color: var(--color-blue-900);
+      color: var(--color-text-inverse);
+      padding: var(--spacing-12) 0 var(--spacing-6);
+    }
+
+    .public-footer__container {
+      max-width: var(--container-max-width);
+      margin: 0 auto;
+      padding: 0 var(--spacing-6);
+    }
+
+    .public-footer__content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--spacing-8);
+      margin-bottom: var(--spacing-8);
+      padding-bottom: var(--spacing-8);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .public-footer__section-title {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-h6);
+      font-weight: var(--font-weight-semibold);
+      margin-bottom: var(--spacing-4);
+    }
+
+    .public-footer__links {
+      list-style: none;
+    }
+
+    .public-footer__link {
+      margin-bottom: var(--spacing-2);
+    }
+
+    .public-footer__link a {
+      color: var(--color-text-inverse);
+      text-decoration: none;
+      font-size: var(--text-body-sm);
+      opacity: 0.8;
+      transition: opacity var(--transition-normal);
+    }
+
+    .public-footer__link a:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+
+    .public-footer__bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--spacing-4);
+      font-size: var(--text-body-sm);
+      opacity: 0.7;
+    }
+
+    .public-footer__social {
+      display: flex;
+      gap: var(--spacing-4);
+    }
+
+    .public-footer__social a {
+      color: var(--color-text-inverse);
+      opacity: 0.8;
+      transition: opacity var(--transition-normal);
+    }
+
+    .public-footer__social a:hover {
+      opacity: 1;
+    }
+
+    /* Utility Classes */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spacing-2);
+      padding: var(--spacing-4) var(--spacing-8);
+      font-family: var(--font-family-secondary);
+      font-size: var(--text-body-md);
+      font-weight: var(--font-weight-semibold);
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      transition: all var(--transition-normal);
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn--primary {
+      background-color: var(--color-accent);
+      color: var(--color-blue-900);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn--primary:hover {
+      background-color: var(--color-yellow-600);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .btn--secondary {
+      background-color: transparent;
+      color: var(--color-text-inverse);
+      border: 2px solid var(--color-text-inverse);
+    }
+
+    .btn--secondary:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .btn--outline {
+      background-color: var(--color-bg-primary);
+      color: var(--color-blue-700);
+      border: 2px solid var(--color-blue-700);
+    }
+
+    .btn--outline:hover {
+      background-color: var(--color-blue-700);
+      color: var(--color-text-inverse);
+    }
+
+    .btn--lg {
+      height: 56px;
+      padding: 0 var(--spacing-10);
+      font-size: var(--text-body-lg);
+    }
+  </style>
+</head>
+<body>
+  <!-- Public Header -->
+  <header class="public-header">
+    <div class="public-header__container">
+      <a href="#" class="public-header__logo">
+        <div class="public-header__logo-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L2 7V17L12 22L22 17V7L12 2Z" fill="white"/>
+          </svg>
+        </div>
+        <span class="public-header__logo-text">AutoPro Network</span>
+      </a>
+      <div class="public-header__actions">
+        <a href="#" class="btn btn--outline">Sign In</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-section__container">
+      <div class="hero-section__badge">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
+        </svg>
+        Special Invitation
+      </div>
+
+      <h1 class="hero-section__title">
+        <span class="hero-section__referrer">Sarah Johnson</span><br>
+        invited you to join AutoPro Network!
+      </h1>
+
+      <p class="hero-section__subtitle">
+        Join thousands of satisfied customers getting quality automotive services from trusted professionals.
+      </p>
+
+      <div class="hero-section__discount">
+        Get 10% OFF your first service!
+      </div>
+
+      <div class="hero-section__cta">
+        <a href="#signup" class="btn btn--primary btn--lg">
+          Claim Your Discount
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a href="#how-it-works" class="btn btn--secondary btn--lg">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about-section">
+    <div class="about-section__container">
+      <div class="about-section__content">
+        <div class="about-section__overline">About AutoPro Network</div>
+        <h2 class="about-section__title">Your Trusted Automotive Service Platform</h2>
+        <p class="about-section__description">
+          AutoPro Network connects you with certified automotive professionals for all your vehicle needs.
+          From routine maintenance to complex repairs, our network of trusted mechanics, detailers, and
+          service providers ensures your vehicle gets the care it deserves.
+        </p>
+      </div>
+
+      <div class="about-section__benefits">
+        <div class="benefit-card">
+          <div class="benefit-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="benefit-card__title">Verified Professionals</h3>
+          <p class="benefit-card__description">
+            All service providers are thoroughly vetted, certified, and background-checked for your peace of mind.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 8V12L15 15M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="benefit-card__title">Convenient Scheduling</h3>
+          <p class="benefit-card__description">
+            Book services at your convenience with flexible scheduling options that fit your busy life.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="benefit-card__title">Quality Guaranteed</h3>
+          <p class="benefit-card__description">
+            Every service comes with a satisfaction guarantee and transparent pricing - no hidden fees.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 8C13.6569 8 15 6.65685 15 5C15 3.34315 13.6569 2 12 2C10.3431 2 9 3.34315 9 5C9 6.65685 10.3431 8 12 8ZM12 8V12M12 22V15M12 15C14.5 15 18 16.5 18 19V22H6V19C6 16.5 9.5 15 12 15Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="benefit-card__title">Rewards Program</h3>
+          <p class="benefit-card__description">
+            Earn points with every service and refer friends to unlock exclusive discounts and perks.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Professional Spotlight Section -->
+  <section class="professional-section">
+    <div class="professional-section__container">
+      <div class="professional-section__header">
+        <h2 class="professional-section__title">Meet Your Referrer</h2>
+        <p class="professional-section__subtitle">The trusted professional who invited you</p>
+      </div>
+
+      <!-- Featured Professional Card (shown when specific professional referral) -->
+      <div class="featured-professional">
+        <div class="featured-professional__header">
+          <div class="featured-professional__badge">Top Rated</div>
+          <div class="featured-professional__avatar">SJ</div>
+          <h3 class="featured-professional__name">Sarah Johnson</h3>
+          <p class="featured-professional__specialty">Certified Master Mechanic</p>
+          <p class="featured-professional__location">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 5.02944 7.02944 1 12 1C16.9706 1 21 5.02944 21 10Z" stroke="currentColor" stroke-width="2"/>
+              <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            Charlotte, NC
+          </p>
+        </div>
+
+        <div class="featured-professional__body">
+          <div class="featured-professional__stats">
+            <div class="stat">
+              <span class="stat__value">15+</span>
+              <span class="stat__label">Years Experience</span>
+            </div>
+            <div class="stat">
+              <span class="stat__value">4.9</span>
+              <span class="stat__label">Rating</span>
+            </div>
+            <div class="stat">
+              <span class="stat__value">500+</span>
+              <span class="stat__label">Happy Customers</span>
+            </div>
+          </div>
+
+          <p class="featured-professional__bio">
+            With over 15 years of experience in automotive repair and maintenance, I'm passionate about
+            providing honest, reliable service to every customer. I specialize in diagnostics, engine repair,
+            and preventative maintenance for all makes and models.
+          </p>
+
+          <div class="featured-professional__specialties">
+            <span class="specialty-chip">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              Engine Repair
+            </span>
+            <span class="specialty-chip">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              Diagnostics
+            </span>
+            <span class="specialty-chip">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              Brake Service
+            </span>
+            <span class="specialty-chip">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              Oil Changes
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Professional Grid (alternative: shown for general platform referrals) -->
+      <!-- Uncomment this section and comment out the featured-professional card above for general referrals -->
+      <!--
+      <div class="professionals-grid">
+        <div class="professional-card">
+          <div class="professional-card__header">
+            <div class="professional-card__avatar">SJ</div>
+            <h3 class="professional-card__name">Sarah Johnson</h3>
+            <p class="professional-card__specialty">Master Mechanic</p>
+          </div>
+          <div class="professional-card__body">
+            <div class="professional-card__rating">
+              <div class="professional-card__stars">★★★★★</div>
+              <span class="professional-card__rating-text">4.9 (120)</span>
+            </div>
+            <p class="professional-card__location">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 5.02944 7.02944 1 12 1C16.9706 1 21 5.02944 21 10Z" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              Charlotte, NC
+            </p>
+          </div>
+        </div>
+
+        <div class="professional-card">
+          <div class="professional-card__header">
+            <div class="professional-card__avatar">MT</div>
+            <h3 class="professional-card__name">Mike Thompson</h3>
+            <p class="professional-card__specialty">Auto Detailing</p>
+          </div>
+          <div class="professional-card__body">
+            <div class="professional-card__rating">
+              <div class="professional-card__stars">★★★★★</div>
+              <span class="professional-card__rating-text">5.0 (85)</span>
+            </div>
+            <p class="professional-card__location">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 5.02944 7.02944 1 12 1C16.9706 1 21 5.02944 21 10Z" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              Raleigh, NC
+            </p>
+          </div>
+        </div>
+
+        <div class="professional-card">
+          <div class="professional-card__header">
+            <div class="professional-card__avatar">LC</div>
+            <h3 class="professional-card__name">Lisa Chen</h3>
+            <p class="professional-card__specialty">Tire Specialist</p>
+          </div>
+          <div class="professional-card__body">
+            <div class="professional-card__rating">
+              <div class="professional-card__stars">★★★★★</div>
+              <span class="professional-card__rating-text">4.8 (95)</span>
+            </div>
+            <p class="professional-card__location">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 5.02944 7.02944 1 12 1C16.9706 1 21 5.02944 21 10Z" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              Durham, NC
+            </p>
+          </div>
+        </div>
+      </div>
+      -->
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section id="how-it-works" class="how-it-works">
+    <div class="how-it-works__container">
+      <div class="how-it-works__header">
+        <h2 class="how-it-works__title">How It Works</h2>
+        <p class="how-it-works__subtitle">Get started in three simple steps</p>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step__icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16 21V19C16 17.9391 15.5786 16.9217 14.8284 16.1716C14.0783 15.4214 13.0609 15 12 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13M16 3.13C16.8604 3.3503 17.623 3.8507 18.1676 4.55231C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89317 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88M12.5 7C12.5 9.20914 10.7091 11 8.5 11C6.29086 11 4.5 9.20914 4.5 7C4.5 4.79086 6.29086 3 8.5 3C10.7091 3 12.5 4.79086 12.5 7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="step__title">1. Sign Up</h3>
+          <p class="step__description">
+            Create your free account using the referral code to unlock your exclusive discount.
+          </p>
+        </div>
+
+        <div class="step">
+          <div class="step__icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 7V3M16 7V3M7 11H17M5 21H19C20.1046 21 21 20.1046 21 19V7C21 5.89543 20.1046 5 19 5H5C3.89543 5 3 5.89543 3 7V19C3 20.1046 3.89543 21 5 21Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="step__title">2. Get Service</h3>
+          <p class="step__description">
+            Browse professionals, book your first service, and enjoy quality automotive care.
+          </p>
+        </div>
+
+        <div class="step">
+          <div class="step__icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="step__title">3. Both Earn Rewards</h3>
+          <p class="step__description">
+            You save on your service, and your referrer earns rewards. Everyone wins!
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sign Up Section -->
+  <section id="signup" class="signup-section">
+    <div class="signup-section__container">
+      <div class="signup-section__header">
+        <h2 class="signup-section__title">Create Your Account</h2>
+        <p class="signup-section__subtitle">Join AutoPro Network and claim your exclusive discount</p>
+      </div>
+
+      <form class="signup-form" id="signupForm">
+        <!-- Referral Code Display (when coming from referral link) -->
+        <div class="referral-code-display">
+          <div class="referral-code-display__label">Your Referral Code</div>
+          <div class="referral-code-display__code">SARAH2024</div>
+          <div class="referral-code-display__referrer">Referred by Sarah Johnson</div>
+          <div class="referral-code-display__discount">10% OFF First Service</div>
+        </div>
+
+        <!-- Personal Information -->
+        <div class="form-group__row">
+          <div class="form-group">
+            <label for="firstName" class="form-group__label form-group__label--required">First Name</label>
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              class="form-group__input"
+              placeholder="John"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="lastName" class="form-group__label form-group__label--required">Last Name</label>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              class="form-group__input"
+              placeholder="Doe"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email" class="form-group__label form-group__label--required">Email Address</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="form-group__input"
+            placeholder="john.doe@example.com"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="phone" class="form-group__label form-group__label--required">Phone Number</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            class="form-group__input"
+            placeholder="(555) 123-4567"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="form-group__label form-group__label--required">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="form-group__input"
+            placeholder="Minimum 8 characters"
+            required
+          >
+          <div class="form-group__helper">Must be at least 8 characters with 1 uppercase, 1 lowercase, and 1 number</div>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword" class="form-group__label form-group__label--required">Confirm Password</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            class="form-group__input"
+            placeholder="Re-enter your password"
+            required
+          >
+        </div>
+
+        <!-- Alternative: Referral Code Entry (shown when NOT coming from referral link) -->
+        <div class="referral-code-entry" style="display: none;">
+          <h3 class="referral-code-entry__title">Have a Referral Code?</h3>
+          <p class="referral-code-entry__subtitle">Enter it below to unlock exclusive discounts</p>
+
+          <div class="form-group">
+            <div class="referral-code-entry__input-wrapper">
+              <input
+                type="text"
+                id="referralCode"
+                name="referralCode"
+                class="referral-code-entry__input"
+                placeholder="ENTER CODE"
+                maxlength="12"
+              >
+              <div class="referral-code-entry__status" id="validationStatus">
+                <!-- Spinner (shown during validation) -->
+                <!-- <div class="referral-code-entry__spinner"></div> -->
+
+                <!-- Success Icon (shown when valid) -->
+                <!-- <svg class="referral-code-entry__status-icon referral-code-entry__status-icon--success" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg> -->
+
+                <!-- Error Icon (shown when invalid) -->
+                <!-- <svg class="referral-code-entry__status-icon referral-code-entry__status-icon--error" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10 14L12 12M12 12L14 10M12 12L10 10M12 12L14 14M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg> -->
+              </div>
+            </div>
+
+            <!-- Validation Messages -->
+            <div class="referral-code-entry__validation referral-code-entry__validation--success" id="validationSuccess" style="display: none;">
+              <svg class="referral-code-entry__validation-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              <div>
+                <strong>Code applied!</strong> Referred by <strong>Sarah Johnson</strong> - Get 10% off your first service
+              </div>
+            </div>
+
+            <div class="referral-code-entry__validation referral-code-entry__validation--error" id="validationError" style="display: none;">
+              <svg class="referral-code-entry__validation-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 14L12 12M12 12L14 10M12 12L10 10M12 12L14 14M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              <div>Invalid referral code. Please check and try again.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Terms and Conditions -->
+        <div class="checkbox-group">
+          <input
+            type="checkbox"
+            id="terms"
+            name="terms"
+            class="checkbox-group__input"
+            required
+          >
+          <label for="terms" class="checkbox-group__label">
+            I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+          </label>
+        </div>
+
+        <div class="checkbox-group">
+          <input
+            type="checkbox"
+            id="marketing"
+            name="marketing"
+            class="checkbox-group__input"
+          >
+          <label for="marketing" class="checkbox-group__label">
+            Send me updates about special offers and promotions
+          </label>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="submit-button">
+          Create Account & Claim Discount
+        </button>
+
+        <div class="signup-form__footer">
+          Already have an account? <a href="#">Sign in</a>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="public-footer">
+    <div class="public-footer__container">
+      <div class="public-footer__content">
+        <div>
+          <h3 class="public-footer__section-title">AutoPro Network</h3>
+          <p style="font-size: var(--text-body-sm); opacity: 0.8; margin-top: var(--spacing-4);">
+            Connecting customers with trusted automotive professionals across the nation.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="public-footer__section-title">Services</h4>
+          <ul class="public-footer__links">
+            <li class="public-footer__link"><a href="#">Find Professionals</a></li>
+            <li class="public-footer__link"><a href="#">Book Service</a></li>
+            <li class="public-footer__link"><a href="#">Pricing</a></li>
+            <li class="public-footer__link"><a href="#">Referral Program</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="public-footer__section-title">Company</h4>
+          <ul class="public-footer__links">
+            <li class="public-footer__link"><a href="#">About Us</a></li>
+            <li class="public-footer__link"><a href="#">Careers</a></li>
+            <li class="public-footer__link"><a href="#">Blog</a></li>
+            <li class="public-footer__link"><a href="#">Contact</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="public-footer__section-title">Support</h4>
+          <ul class="public-footer__links">
+            <li class="public-footer__link"><a href="#">Help Center</a></li>
+            <li class="public-footer__link"><a href="#">Safety</a></li>
+            <li class="public-footer__link"><a href="#">Terms of Service</a></li>
+            <li class="public-footer__link"><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="public-footer__bottom">
+        <div>&copy; 2026 AutoPro Network. All rights reserved.</div>
+        <div class="public-footer__social">
+          <a href="#" aria-label="Facebook">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+          </a>
+          <a href="#" aria-label="Twitter">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+            </svg>
+          </a>
+          <a href="#" aria-label="Instagram">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Referral Code Validation (Demo)
+    const referralCodeInput = document.getElementById('referralCode');
+    const validationStatus = document.getElementById('validationStatus');
+    const validationSuccess = document.getElementById('validationSuccess');
+    const validationError = document.getElementById('validationError');
+
+    if (referralCodeInput) {
+      let validationTimeout;
+
+      referralCodeInput.addEventListener('input', function(e) {
+        const code = e.target.value.toUpperCase();
+        e.target.value = code;
+
+        // Clear previous timeout
+        clearTimeout(validationTimeout);
+
+        // Hide previous validations
+        validationSuccess.style.display = 'none';
+        validationError.style.display = 'none';
+        referralCodeInput.classList.remove('referral-code-entry__input--valid', 'referral-code-entry__input--error');
+
+        if (code.length >= 4) {
+          // Show spinner
+          validationStatus.innerHTML = '<div class="referral-code-entry__spinner"></div>';
+
+          // Simulate API call with timeout
+          validationTimeout = setTimeout(() => {
+            // Demo validation (in real app, this would be an API call)
+            const isValid = code === 'SARAH2024' || code === 'MIKE2024';
+
+            if (isValid) {
+              // Show success
+              validationStatus.innerHTML = '<svg class="referral-code-entry__status-icon referral-code-entry__status-icon--success" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+              validationSuccess.style.display = 'flex';
+              referralCodeInput.classList.add('referral-code-entry__input--valid');
+            } else {
+              // Show error
+              validationStatus.innerHTML = '<svg class="referral-code-entry__status-icon referral-code-entry__status-icon--error" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 14L12 12M12 12L14 10M12 12L10 10M12 12L14 14M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+              validationError.style.display = 'flex';
+              referralCodeInput.classList.add('referral-code-entry__input--error');
+            }
+          }, 1000);
+        } else {
+          validationStatus.innerHTML = '';
+        }
+      });
+    }
+
+    // Form Submission (Demo)
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Demo: Form would be submitted to the server.\n\nIn production, this would:\n1. Validate all fields\n2. Create user account\n3. Apply referral code\n4. Redirect to dashboard');
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href !== '#' && document.querySelector(href)) {
+          e.preventDefault();
+          document.querySelector(href).scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

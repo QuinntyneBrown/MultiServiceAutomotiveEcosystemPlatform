@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Received Referrals - Multi-Service Automotive Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../shared-styles.css">
+  <style>
+    .dashboard {
+      min-height: 100vh;
+      display: flex;
+      background-color: var(--color-bg-secondary);
+    }
+
+    /* Sidebar Navigation */
+    .sidebar {
+      width: 280px;
+      background-color: var(--color-blue-900);
+      color: var(--color-text-inverse);
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @media (max-width: 991px) {
+      .sidebar {
+        display: none;
+      }
+    }
+
+    .sidebar__header {
+      padding: var(--spacing-6);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar__logo {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+    }
+
+    .sidebar__logo-icon {
+      width: 40px;
+      height: 40px;
+      background-color: var(--color-accent);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sidebar__logo-text {
+      font-family: var(--font-family-primary);
+      font-weight: var(--font-weight-bold);
+      font-size: var(--text-body-lg);
+    }
+
+    .sidebar__nav {
+      flex: 1;
+      padding: var(--spacing-4);
+    }
+
+    .nav-section {
+      margin-bottom: var(--spacing-6);
+    }
+
+    .nav-section__title {
+      font-size: var(--text-caption);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(255, 255, 255, 0.5);
+      padding: var(--spacing-2) var(--spacing-3);
+      margin-bottom: var(--spacing-2);
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+      padding: var(--spacing-3);
+      border-radius: var(--radius-md);
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      font-size: var(--text-body-sm);
+      transition: all var(--transition-normal);
+    }
+
+    .nav-link:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: var(--color-text-inverse);
+    }
+
+    .nav-link--active {
+      background-color: var(--color-blue-700);
+      color: var(--color-text-inverse);
+    }
+
+    .nav-link__icon {
+      width: 20px;
+      height: 20px;
+      opacity: 0.8;
+    }
+
+    .nav-link--active .nav-link__icon {
+      opacity: 1;
+    }
+
+    .nav-link__badge {
+      margin-left: auto;
+      background-color: var(--color-accent);
+      color: var(--color-blue-900);
+      font-size: var(--text-micro);
+      font-weight: var(--font-weight-bold);
+      padding: 2px 6px;
+      border-radius: var(--radius-full);
+    }
+
+    .sidebar__footer {
+      padding: var(--spacing-4);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+      padding: var(--spacing-3);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: background-color var(--transition-normal);
+    }
+
+    .user-menu:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .user-menu__avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-full);
+      background-color: var(--color-blue-500);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: var(--font-weight-semibold);
+    }
+
+    .user-menu__info {
+      flex: 1;
+    }
+
+    .user-menu__name {
+      font-size: var(--text-body-sm);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .user-menu__role {
+      font-size: var(--text-caption);
+      opacity: 0.7;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--spacing-4) var(--spacing-6);
+      background-color: var(--color-bg-primary);
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      padding: var(--spacing-2);
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    @media (max-width: 991px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+    }
+
+    .mobile-menu-btn svg {
+      width: 24px;
+      height: 24px;
+      color: var(--color-gray-700);
+    }
+
+    .top-bar__search {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-2);
+      flex: 1;
+      max-width: 400px;
+      margin: 0 var(--spacing-4);
+    }
+
+    @media (max-width: 767px) {
+      .top-bar__search {
+        display: none;
+      }
+    }
+
+    .search-input {
+      flex: 1;
+      height: 40px;
+      padding: 0 var(--spacing-4);
+      padding-left: var(--spacing-10);
+      border: 1px solid var(--color-gray-300);
+      border-radius: var(--radius-full);
+      font-size: var(--text-body-sm);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: 12px center;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--color-blue-700);
+    }
+
+    .top-bar__actions {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-4);
+    }
+
+    .notification-btn {
+      position: relative;
+      padding: var(--spacing-2);
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .notification-btn svg {
+      width: 24px;
+      height: 24px;
+      color: var(--color-gray-600);
+    }
+
+    .notification-btn__badge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 18px;
+      height: 18px;
+      background-color: var(--color-error);
+      color: white;
+      font-size: 10px;
+      font-weight: var(--font-weight-bold);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Page Content */
+    .page-content {
+      flex: 1;
+      padding: var(--spacing-6);
+      overflow-y: auto;
+    }
+
+    @media (max-width: 575px) {
+      .page-content {
+        padding: var(--spacing-4);
+      }
+    }
+
+    /* Page Header */
+    .page-header {
+      margin-bottom: var(--spacing-6);
+    }
+
+    .page-header__top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--spacing-4);
+    }
+
+    .page-title {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-h2);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-gray-900);
+    }
+
+    .page-subtitle {
+      font-size: var(--text-body-md);
+      color: var(--color-gray-600);
+      margin-top: var(--spacing-2);
+    }
+
+    /* Filter Bar */
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--spacing-4);
+      padding: var(--spacing-4);
+      background-color: var(--color-bg-primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: var(--spacing-6);
+    }
+
+    @media (max-width: 767px) {
+      .filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: var(--spacing-2);
+    }
+
+    .filter-tab {
+      padding: var(--spacing-2) var(--spacing-4);
+      font-size: var(--text-body-sm);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-gray-600);
+      background-color: transparent;
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: all var(--transition-normal);
+    }
+
+    .filter-tab:hover {
+      background-color: var(--color-blue-50);
+      color: var(--color-blue-700);
+      border-color: var(--color-blue-700);
+    }
+
+    .filter-tab--active {
+      background-color: var(--color-blue-700);
+      color: var(--color-text-inverse);
+      border-color: var(--color-blue-700);
+    }
+
+    .filter-actions {
+      display: flex;
+      gap: var(--spacing-3);
+    }
+
+    /* Referral Cards */
+    .referrals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: var(--spacing-6);
+    }
+
+    @media (max-width: 575px) {
+      .referrals-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .referral-card {
+      background-color: var(--color-bg-primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      transition: box-shadow var(--transition-normal), transform var(--transition-normal);
+      border-left: 4px solid var(--color-blue-700);
+    }
+
+    .referral-card--urgent {
+      border-left-color: var(--color-error);
+    }
+
+    .referral-card--high {
+      border-left-color: var(--color-warning);
+    }
+
+    .referral-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .referral-card__header {
+      padding: var(--spacing-5);
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .referral-card__priority {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--spacing-1);
+      padding: var(--spacing-1) var(--spacing-3);
+      font-size: var(--text-micro);
+      font-weight: var(--font-weight-bold);
+      border-radius: var(--radius-full);
+      margin-bottom: var(--spacing-3);
+    }
+
+    .referral-card__priority--normal {
+      background-color: var(--color-blue-100);
+      color: var(--color-blue-700);
+    }
+
+    .referral-card__priority--high {
+      background-color: var(--color-warning-light);
+      color: var(--color-warning);
+    }
+
+    .referral-card__priority--urgent {
+      background-color: var(--color-error-light);
+      color: var(--color-error);
+    }
+
+    .referral-card__customer {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-h4);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-900);
+      margin-bottom: var(--spacing-2);
+    }
+
+    .referral-card__referred-by {
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-600);
+      margin-bottom: var(--spacing-1);
+    }
+
+    .referral-card__referred-by strong {
+      color: var(--color-blue-700);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    .referral-card__date {
+      font-size: var(--text-caption);
+      color: var(--color-gray-500);
+    }
+
+    .referral-card__body {
+      padding: var(--spacing-5);
+    }
+
+    .referral-card__info-row {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--spacing-3);
+      margin-bottom: var(--spacing-4);
+    }
+
+    .referral-card__info-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .referral-card__icon {
+      width: 20px;
+      height: 20px;
+      color: var(--color-gray-500);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .referral-card__info-content {
+      flex: 1;
+    }
+
+    .referral-card__info-label {
+      font-size: var(--text-caption);
+      color: var(--color-gray-500);
+      margin-bottom: var(--spacing-1);
+    }
+
+    .referral-card__info-value {
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-900);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .referral-card__discount {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-2);
+      padding: var(--spacing-3);
+      background-color: var(--color-yellow-300);
+      border-radius: var(--radius-md);
+      margin-top: var(--spacing-4);
+    }
+
+    .referral-card__discount svg {
+      width: 20px;
+      height: 20px;
+      color: var(--color-yellow-900);
+      flex-shrink: 0;
+    }
+
+    .referral-card__discount-text {
+      font-size: var(--text-body-sm);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-yellow-900);
+    }
+
+    .referral-card__actions {
+      display: flex;
+      gap: var(--spacing-2);
+      padding: var(--spacing-4) var(--spacing-5);
+      border-top: 1px solid var(--color-border-light);
+    }
+
+    /* Modal Overlay */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: var(--z-modal-backdrop);
+      padding: var(--spacing-4);
+    }
+
+    .modal-overlay--active {
+      display: flex;
+    }
+
+    .modal {
+      background-color: var(--color-bg-primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-xl);
+      max-width: 600px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      z-index: var(--z-modal);
+    }
+
+    .modal--large {
+      max-width: 800px;
+    }
+
+    .modal__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--spacing-6);
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .modal__title {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-h3);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-900);
+    }
+
+    .modal__close {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      color: var(--color-gray-600);
+      transition: all var(--transition-normal);
+    }
+
+    .modal__close:hover {
+      background-color: var(--color-gray-100);
+      color: var(--color-gray-900);
+    }
+
+    .modal__body {
+      padding: var(--spacing-6);
+    }
+
+    .modal__footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--spacing-3);
+      padding: var(--spacing-6);
+      border-top: 1px solid var(--color-border-light);
+    }
+
+    /* Detail Modal */
+    .detail-section {
+      margin-bottom: var(--spacing-6);
+    }
+
+    .detail-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .detail-section__title {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-h5);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-900);
+      margin-bottom: var(--spacing-4);
+      padding-bottom: var(--spacing-2);
+      border-bottom: 2px solid var(--color-blue-700);
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--spacing-4);
+    }
+
+    @media (max-width: 575px) {
+      .detail-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .detail-field {
+      margin-bottom: var(--spacing-4);
+    }
+
+    .detail-field__label {
+      font-size: var(--text-caption);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-gray-600);
+      margin-bottom: var(--spacing-1);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .detail-field__value {
+      font-size: var(--text-body-md);
+      color: var(--color-gray-900);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .detail-field--full {
+      grid-column: 1 / -1;
+    }
+
+    .detail-notes {
+      padding: var(--spacing-4);
+      background-color: var(--color-blue-50);
+      border-left: 4px solid var(--color-blue-700);
+      border-radius: var(--radius-md);
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-800);
+      line-height: 1.6;
+    }
+
+    .contact-actions {
+      display: flex;
+      gap: var(--spacing-3);
+      margin-top: var(--spacing-4);
+    }
+
+    /* Accept Modal */
+    .accept-summary {
+      padding: var(--spacing-5);
+      background-color: var(--color-success-light);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--spacing-6);
+    }
+
+    .accept-summary__item {
+      display: flex;
+      justify-content: space-between;
+      padding: var(--spacing-2) 0;
+    }
+
+    .accept-summary__label {
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-700);
+    }
+
+    .accept-summary__value {
+      font-size: var(--text-body-sm);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-900);
+    }
+
+    .checkbox-field {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--spacing-3);
+      padding: var(--spacing-4);
+      background-color: var(--color-yellow-300);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--spacing-6);
+    }
+
+    .checkbox-field input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+      cursor: pointer;
+    }
+
+    .checkbox-field__label {
+      flex: 1;
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-900);
+      font-weight: var(--font-weight-medium);
+    }
+
+    /* Decline Modal */
+    .decline-reasons {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-3);
+      margin-bottom: var(--spacing-6);
+    }
+
+    .reason-option {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--spacing-3);
+      padding: var(--spacing-4);
+      border: 2px solid var(--color-border-light);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--transition-normal);
+    }
+
+    .reason-option:hover {
+      background-color: var(--color-gray-50);
+      border-color: var(--color-blue-700);
+    }
+
+    .reason-option input[type="radio"] {
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+      cursor: pointer;
+    }
+
+    .reason-option__content {
+      flex: 1;
+    }
+
+    .reason-option__title {
+      font-size: var(--text-body-md);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-gray-900);
+      margin-bottom: var(--spacing-1);
+    }
+
+    .reason-option__description {
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-600);
+    }
+
+    .textarea-field {
+      width: 100%;
+      min-height: 100px;
+      padding: var(--spacing-4);
+      font-family: var(--font-family-secondary);
+      font-size: var(--text-body-sm);
+      border: 1px solid var(--color-gray-400);
+      border-radius: var(--radius-md);
+      resize: vertical;
+      transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+    }
+
+    .textarea-field:focus {
+      outline: none;
+      border-color: var(--color-blue-700);
+      box-shadow: var(--shadow-focus);
+    }
+
+    /* Empty State */
+    .empty-state {
+      padding: var(--spacing-12) var(--spacing-6);
+      text-align: center;
+      background-color: var(--color-bg-primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .empty-state__icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto var(--spacing-4);
+      background-color: var(--color-gray-100);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .empty-state__icon svg {
+      width: 40px;
+      height: 40px;
+      color: var(--color-gray-400);
+    }
+
+    .empty-state__title {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-h4);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-900);
+      margin-bottom: var(--spacing-2);
+    }
+
+    .empty-state__description {
+      font-size: var(--text-body-md);
+      color: var(--color-gray-600);
+      max-width: 400px;
+      margin: 0 auto var(--spacing-6);
+    }
+
+    /* Hidden class for toggling */
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar__header">
+        <div class="sidebar__logo">
+          <div class="sidebar__logo-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+            </svg>
+          </div>
+          <span class="sidebar__logo-text">AutoPro</span>
+        </div>
+      </div>
+
+      <nav class="sidebar__nav">
+        <div class="nav-section">
+          <div class="nav-section__title">Main</div>
+          <a href="#" class="nav-link">
+            <svg class="nav-link__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+            Dashboard
+          </a>
+          <a href="#" class="nav-link">
+            <svg class="nav-link__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+            Customers
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section__title">Referrals</div>
+          <a href="#" class="nav-link">
+            <svg class="nav-link__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="18" cy="5" r="3"/>
+              <circle cx="6" cy="12" r="3"/>
+              <circle cx="18" cy="19" r="3"/>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+            </svg>
+            Send Referrals
+          </a>
+          <a href="#" class="nav-link nav-link--active">
+            <svg class="nav-link__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Received
+            <span class="nav-link__badge">5</span>
+          </a>
+          <a href="#" class="nav-link">
+            <svg class="nav-link__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+            Analytics
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section__title">Account</div>
+          <a href="#" class="nav-link">
+            <svg class="nav-link__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+            My Profile
+          </a>
+        </div>
+      </nav>
+
+      <div class="sidebar__footer">
+        <div class="user-menu">
+          <div class="user-menu__avatar">JS</div>
+          <div class="user-menu__info">
+            <div class="user-menu__name">John Smith</div>
+            <div class="user-menu__role">Auto Body Shop</div>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Top Bar -->
+      <header class="top-bar">
+        <button class="mobile-menu-btn" aria-label="Open menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+
+        <div class="top-bar__search">
+          <input type="search" class="search-input" placeholder="Search referrals...">
+        </div>
+
+        <div class="top-bar__actions">
+          <button class="notification-btn" aria-label="Notifications">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+            <span class="notification-btn__badge">5</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Page Content -->
+      <div class="page-content">
+        <!-- Page Header -->
+        <div class="page-header">
+          <div class="page-header__top">
+            <div>
+              <h1 class="page-title">Received Referrals</h1>
+              <p class="page-subtitle">Manage customer referrals from other professionals</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+          <div class="filter-tabs">
+            <button class="filter-tab filter-tab--active">All (5)</button>
+            <button class="filter-tab">Pending (5)</button>
+            <button class="filter-tab">Accepted (0)</button>
+            <button class="filter-tab">Declined (0)</button>
+          </div>
+          <div class="filter-actions">
+            <select class="form-input" style="height: 36px; width: auto; padding: 0 var(--spacing-4);">
+              <option>All Priorities</option>
+              <option>Urgent</option>
+              <option>High</option>
+              <option>Normal</option>
+            </select>
+            <select class="form-input" style="height: 36px; width: auto; padding: 0 var(--spacing-4);">
+              <option>Sort: Newest First</option>
+              <option>Sort: Oldest First</option>
+              <option>Sort: Priority</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Referrals Grid -->
+        <div class="referrals-grid">
+          <!-- Referral Card 1 - Urgent -->
+          <div class="referral-card referral-card--urgent">
+            <div class="referral-card__header">
+              <span class="referral-card__priority referral-card__priority--urgent">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                  <circle cx="12" cy="12" r="10"/>
+                </svg>
+                URGENT
+              </span>
+              <h3 class="referral-card__customer">Michael Rodriguez</h3>
+              <p class="referral-card__referred-by">Referred by: <strong>Elite Motors</strong></p>
+              <p class="referral-card__date">Received 2 hours ago</p>
+            </div>
+            <div class="referral-card__body">
+              <div class="referral-card__info-row">
+                <svg class="referral-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="3"/>
+                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                </svg>
+                <div class="referral-card__info-content">
+                  <div class="referral-card__info-label">Service Needed</div>
+                  <div class="referral-card__info-value">Complete body repair after collision</div>
+                </div>
+              </div>
+              <div class="referral-card__info-row">
+                <svg class="referral-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6"/>
+                  <line x1="8" y1="2" x2="8" y2="6"/>
+                  <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+                <div class="referral-card__info-content">
+                  <div class="referral-card__info-label">Vehicle</div>
+                  <div class="referral-card__info-value">2021 Tesla Model 3</div>
+                </div>
+              </div>
+              <div class="referral-card__discount">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                  <line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+                <span class="referral-card__discount-text">15% discount included</span>
+              </div>
+            </div>
+            <div class="referral-card__actions">
+              <button class="btn btn--primary btn--sm" onclick="openDetailModal('michael')">View Details</button>
+              <button class="btn btn--secondary btn--sm" onclick="openAcceptModal()">Accept</button>
+              <button class="btn btn--ghost btn--sm" onclick="openDeclineModal()">Decline</button>
+            </div>
+          </div>
+
+          <!-- Referral Card 2 - High Priority -->
+          <div class="referral-card referral-card--high">
+            <div class="referral-card__header">
+              <span class="referral-card__priority referral-card__priority--high">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                  <circle cx="12" cy="12" r="10"/>
+                </svg>
+                HIGH PRIORITY
+              </span>
+              <h3 class="referral-card__customer">Sarah Thompson</h3>
+              <p class="referral-card__referred-by">Referred by: <strong>Quick Oil Change</strong></p>
+              <p class="referral-card__date">Received 5 hours ago</p>
+            </div>
+            <div class="referral-card__body">
+              <div class="referral-card__info-row">
+                <svg class="referral-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="3"/>
+                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                </svg>
+                <div class="referral-card__info-content">
+                  <div class="referral-card__info-label">Service Needed</div>
+                  <div class="referral-card__info-value">Paint scratch repair and touch-up</div>
+                </div>
+              </div>
+              <div class="referral-card__info-row">
+                <svg class="referral-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6"/>
+                  <line x1="8" y1="2" x2="8" y2="6"/>
+                  <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+                <div class="referral-card__info-content">
+                  <div class="referral-card__info-label">Vehicle</div>
+                  <div class="referral-card__info-value">2019 BMW X5</div>
+                </div>
+              </div>
+              <div class="referral-card__discount">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                  <line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+                <span class="referral-card__discount-text">10% discount included</span>
+              </div>
+            </div>
+            <div class="referral-card__actions">
+              <button class="btn btn--primary btn--sm">View Details</button>
+              <button class="btn btn--secondary btn--sm" onclick="openAcceptModal()">Accept</button>
+              <button class="btn btn--ghost btn--sm" onclick="openDeclineModal()">Decline</button>
+            </div>
+          </div>
+
+          <!-- Referral Card 3 - Normal Priority -->
+          <div class="referral-card">
+            <div class="referral-card__header">
+              <span class="referral-card__priority referral-card__priority--normal">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                  <circle cx="12" cy="12" r="10"/>
+                </svg>
+                NORMAL
+              </span>
+              <h3 class="referral-card__customer">David Chen</h3>
+              <p class="referral-card__referred-by">Referred by: <strong>Premium Auto Detailing</strong></p>
+              <p class="referral-card__date">Received 1 day ago</p>
+            </div>
+            <div class="referral-card__body">
+              <div class="referral-card__info-row">
+                <svg class="referral-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="3"/>
+                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                </svg>
+                <div class="referral-card__info-content">
+                  <div class="referral-card__info-label">Service Needed</div>
+                  <div class="referral-card__info-value">Minor dent removal - rear door</div>
+                </div>
+              </div>
+              <div class="referral-card__info-row">
+                <svg class="referral-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6"/>
+                  <line x1="8" y1="2" x2="8" y2="6"/>
+                  <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+                <div class="referral-card__info-content">
+                  <div class="referral-card__info-label">Vehicle</div>
+                  <div class="referral-card__info-value">2020 Honda Accord</div>
+                </div>
+              </div>
+            </div>
+            <div class="referral-card__actions">
+              <button class="btn btn--primary btn--sm">View Details</button>
+              <button class="btn btn--secondary btn--sm" onclick="openAcceptModal()">Accept</button>
+              <button class="btn btn--ghost btn--sm" onclick="openDeclineModal()">Decline</button>
+            </div>
+          </div>
+
+          <!-- Referral Card 4 -->
+          <div class="referral-card">
+            <div class="referral-card__header">
+              <span class="referral-card__priority referral-card__priority--normal">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                  <circle cx="12" cy="12" r="10"/>
+                </svg>
+                NORMAL
+              </span>
+              <h3 class="referral-card__customer">Jennifer Martinez</h3>
+              <p class="referral-card__referred-by">Referred by: <strong>CarCare Specialists</strong></p>
+              <p class="referral-card__date">Received 2 days ago</p>
+            </div>
+            <div class="referral-card__body">
+              <div class="referral-card__info-row">
+                <svg class="referral-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="3"/>
+                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                </svg>
+                <div class="referral-card__info-content">
+                  <div class="referral-card__info-label">Service Needed</div>
+                  <div class="referral-card__info-value">Bumper paint and refinish</div>
+                </div>
+              </div>
+              <div class="referral-card__info-row">
+                <svg class="referral-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6"/>
+                  <line x1="8" y1="2" x2="8" y2="6"/>
+                  <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+                <div class="referral-card__info-content">
+                  <div class="referral-card__info-label">Vehicle</div>
+                  <div class="referral-card__info-value">2018 Toyota Camry</div>
+                </div>
+              </div>
+              <div class="referral-card__discount">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                  <line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+                <span class="referral-card__discount-text">$50 discount included</span>
+              </div>
+            </div>
+            <div class="referral-card__actions">
+              <button class="btn btn--primary btn--sm">View Details</button>
+              <button class="btn btn--secondary btn--sm" onclick="openAcceptModal()">Accept</button>
+              <button class="btn btn--ghost btn--sm" onclick="openDeclineModal()">Decline</button>
+            </div>
+          </div>
+
+          <!-- Referral Card 5 -->
+          <div class="referral-card referral-card--high">
+            <div class="referral-card__header">
+              <span class="referral-card__priority referral-card__priority--high">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                  <circle cx="12" cy="12" r="10"/>
+                </svg>
+                HIGH PRIORITY
+              </span>
+              <h3 class="referral-card__customer">Robert Anderson</h3>
+              <p class="referral-card__referred-by">Referred by: <strong>Pro Collision Center</strong></p>
+              <p class="referral-card__date">Received 3 days ago</p>
+            </div>
+            <div class="referral-card__body">
+              <div class="referral-card__info-row">
+                <svg class="referral-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="3"/>
+                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                </svg>
+                <div class="referral-card__info-content">
+                  <div class="referral-card__info-label">Service Needed</div>
+                  <div class="referral-card__info-value">Full front-end respray</div>
+                </div>
+              </div>
+              <div class="referral-card__info-row">
+                <svg class="referral-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6"/>
+                  <line x1="8" y1="2" x2="8" y2="6"/>
+                  <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+                <div class="referral-card__info-content">
+                  <div class="referral-card__info-label">Vehicle</div>
+                  <div class="referral-card__info-value">2022 Mercedes-Benz C-Class</div>
+                </div>
+              </div>
+            </div>
+            <div class="referral-card__actions">
+              <button class="btn btn--primary btn--sm">View Details</button>
+              <button class="btn btn--secondary btn--sm" onclick="openAcceptModal()">Accept</button>
+              <button class="btn btn--ghost btn--sm" onclick="openDeclineModal()">Decline</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Detail Modal -->
+  <div id="detailModal" class="modal-overlay">
+    <div class="modal modal--large">
+      <div class="modal__header">
+        <h2 class="modal__title">Referral Details</h2>
+        <button class="modal__close" onclick="closeDetailModal()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal__body">
+        <!-- Customer Information -->
+        <div class="detail-section">
+          <h3 class="detail-section__title">Customer Information</h3>
+          <div class="detail-grid">
+            <div class="detail-field">
+              <div class="detail-field__label">Customer Name</div>
+              <div class="detail-field__value">Michael Rodriguez</div>
+            </div>
+            <div class="detail-field">
+              <div class="detail-field__label">Phone Number</div>
+              <div class="detail-field__value">(555) 123-4567</div>
+            </div>
+            <div class="detail-field">
+              <div class="detail-field__label">Email Address</div>
+              <div class="detail-field__value">michael.rodriguez@email.com</div>
+            </div>
+            <div class="detail-field">
+              <div class="detail-field__label">Preferred Contact</div>
+              <div class="detail-field__value">Phone</div>
+            </div>
+          </div>
+          <div class="contact-actions">
+            <button class="btn btn--primary btn--sm">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+              Call Customer
+            </button>
+            <button class="btn btn--secondary btn--sm">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+              Send Email
+            </button>
+          </div>
+        </div>
+
+        <!-- Vehicle Information -->
+        <div class="detail-section">
+          <h3 class="detail-section__title">Vehicle Information</h3>
+          <div class="detail-grid">
+            <div class="detail-field">
+              <div class="detail-field__label">Make & Model</div>
+              <div class="detail-field__value">2021 Tesla Model 3</div>
+            </div>
+            <div class="detail-field">
+              <div class="detail-field__label">VIN</div>
+              <div class="detail-field__value">5YJ3E1EA1MF123456</div>
+            </div>
+            <div class="detail-field">
+              <div class="detail-field__label">Color</div>
+              <div class="detail-field__value">Midnight Silver Metallic</div>
+            </div>
+            <div class="detail-field">
+              <div class="detail-field__label">Mileage</div>
+              <div class="detail-field__value">15,230 miles</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Referral Details -->
+        <div class="detail-section">
+          <h3 class="detail-section__title">Referral Information</h3>
+          <div class="detail-grid">
+            <div class="detail-field">
+              <div class="detail-field__label">Referred By</div>
+              <div class="detail-field__value">Elite Motors</div>
+            </div>
+            <div class="detail-field">
+              <div class="detail-field__label">Contact Person</div>
+              <div class="detail-field__value">James Wilson</div>
+            </div>
+            <div class="detail-field">
+              <div class="detail-field__label">Priority</div>
+              <div class="detail-field__value">
+                <span class="badge badge--error">Urgent</span>
+              </div>
+            </div>
+            <div class="detail-field">
+              <div class="detail-field__label">Received Date</div>
+              <div class="detail-field__value">January 8, 2026 at 10:30 AM</div>
+            </div>
+            <div class="detail-field detail-field--full">
+              <div class="detail-field__label">Service Requested</div>
+              <div class="detail-field__value">Complete body repair after collision</div>
+            </div>
+            <div class="detail-field detail-field--full">
+              <div class="detail-field__label">Discount Offered</div>
+              <div class="detail-field__value">15% off total service cost</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Referrer Notes -->
+        <div class="detail-section">
+          <h3 class="detail-section__title">Notes from Referrer</h3>
+          <div class="detail-notes">
+            Michael was involved in a minor collision last week. The front bumper, hood, and right fender need repair and repainting. He's a long-time customer of ours and always pays promptly. Very easy to work with. He needs the work done ASAP as he has a business trip next week. I told him you do excellent work and should be able to handle this quickly.
+          </div>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn--ghost" onclick="closeDetailModal()">Close</button>
+        <button class="btn btn--destructive" onclick="openDeclineModal(); closeDetailModal();">Decline</button>
+        <button class="btn btn--primary" onclick="openAcceptModal(); closeDetailModal();">Accept Referral</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Accept Modal -->
+  <div id="acceptModal" class="modal-overlay">
+    <div class="modal">
+      <div class="modal__header">
+        <h2 class="modal__title">Accept Referral</h2>
+        <button class="modal__close" onclick="closeAcceptModal()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal__body">
+        <div class="accept-summary">
+          <div class="accept-summary__item">
+            <span class="accept-summary__label">Customer:</span>
+            <span class="accept-summary__value">Michael Rodriguez</span>
+          </div>
+          <div class="accept-summary__item">
+            <span class="accept-summary__label">Service:</span>
+            <span class="accept-summary__value">Complete body repair after collision</span>
+          </div>
+          <div class="accept-summary__item">
+            <span class="accept-summary__label">Referred by:</span>
+            <span class="accept-summary__value">Elite Motors (James Wilson)</span>
+          </div>
+          <div class="accept-summary__item">
+            <span class="accept-summary__label">Discount Offered:</span>
+            <span class="accept-summary__value">15% off total service</span>
+          </div>
+        </div>
+
+        <div class="checkbox-field">
+          <input type="checkbox" id="honorDiscount" checked>
+          <label class="checkbox-field__label" for="honorDiscount">
+            I agree to honor the 15% discount offered by the referring professional
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Message to Referrer (Optional)</label>
+          <textarea class="textarea-field" placeholder="Thank you for the referral. I'll contact Michael today and get him scheduled..."></textarea>
+          <div class="form-helper">This message will be sent to Elite Motors to confirm acceptance</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Expected Follow-up Date (Optional)</label>
+          <input type="date" class="form-input">
+          <div class="form-helper">When do you plan to contact or schedule this customer?</div>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn--ghost" onclick="closeAcceptModal()">Cancel</button>
+        <button class="btn btn--primary" onclick="confirmAccept()">Confirm Acceptance</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Decline Modal -->
+  <div id="declineModal" class="modal-overlay">
+    <div class="modal">
+      <div class="modal__header">
+        <h2 class="modal__title">Decline Referral</h2>
+        <button class="modal__close" onclick="closeDeclineModal()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal__body">
+        <p style="margin-bottom: var(--spacing-6); color: var(--color-gray-700);">
+          Please select a reason for declining this referral. This information will be shared with the referring professional.
+        </p>
+
+        <div class="decline-reasons">
+          <label class="reason-option">
+            <input type="radio" name="declineReason" value="busy">
+            <div class="reason-option__content">
+              <div class="reason-option__title">Too busy / No capacity</div>
+              <div class="reason-option__description">Currently at full capacity and unable to take new customers</div>
+            </div>
+          </label>
+
+          <label class="reason-option">
+            <input type="radio" name="declineReason" value="location">
+            <div class="reason-option__content">
+              <div class="reason-option__title">Outside service area</div>
+              <div class="reason-option__description">Customer location is outside my service area</div>
+            </div>
+          </label>
+
+          <label class="reason-option">
+            <input type="radio" name="declineReason" value="specialty">
+            <div class="reason-option__content">
+              <div class="reason-option__title">Not my specialty</div>
+              <div class="reason-option__description">This type of work is outside my area of expertise</div>
+            </div>
+          </label>
+
+          <label class="reason-option">
+            <input type="radio" name="declineReason" value="known">
+            <div class="reason-option__content">
+              <div class="reason-option__title">Customer already known</div>
+              <div class="reason-option__description">This customer is already in my system</div>
+            </div>
+          </label>
+
+          <label class="reason-option">
+            <input type="radio" name="declineReason" value="other">
+            <div class="reason-option__content">
+              <div class="reason-option__title">Other reason</div>
+              <div class="reason-option__description">Please specify below</div>
+            </div>
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Additional Details (Optional)</label>
+          <textarea class="textarea-field" placeholder="Provide additional context or suggest an alternative professional..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Suggest Alternative Professional (Optional)</label>
+          <select class="form-input">
+            <option value="">Select a professional to suggest...</option>
+            <option>ABC Auto Body - Specializes in collision repair</option>
+            <option>Premier Paint Shop - Expert in custom paint work</option>
+            <option>Quick Fix Body Shop - Fast turnaround times</option>
+          </select>
+          <div class="form-helper">Help the customer by suggesting another professional</div>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn--ghost" onclick="closeDeclineModal()">Cancel</button>
+        <button class="btn btn--destructive" onclick="confirmDecline()">Confirm Decline</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Modal functions
+    function openDetailModal(customerId) {
+      document.getElementById('detailModal').classList.add('modal-overlay--active');
+    }
+
+    function closeDetailModal() {
+      document.getElementById('detailModal').classList.remove('modal-overlay--active');
+    }
+
+    function openAcceptModal() {
+      document.getElementById('acceptModal').classList.add('modal-overlay--active');
+    }
+
+    function closeAcceptModal() {
+      document.getElementById('acceptModal').classList.remove('modal-overlay--active');
+    }
+
+    function openDeclineModal() {
+      document.getElementById('declineModal').classList.add('modal-overlay--active');
+    }
+
+    function closeDeclineModal() {
+      document.getElementById('declineModal').classList.remove('modal-overlay--active');
+    }
+
+    function confirmAccept() {
+      alert('Referral accepted! The referring professional and customer will be notified.');
+      closeAcceptModal();
+    }
+
+    function confirmDecline() {
+      const selectedReason = document.querySelector('input[name="declineReason"]:checked');
+      if (!selectedReason) {
+        alert('Please select a reason for declining this referral.');
+        return;
+      }
+      alert('Referral declined. The referring professional will be notified.');
+      closeDeclineModal();
+    }
+
+    // Close modals when clicking outside
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          overlay.classList.remove('modal-overlay--active');
+        }
+      });
+    });
+
+    // Filter tab functionality
+    document.querySelectorAll('.filter-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('filter-tab--active'));
+        tab.classList.add('filter-tab--active');
+      });
+    });
+  </script>
+</body>
+</html>
