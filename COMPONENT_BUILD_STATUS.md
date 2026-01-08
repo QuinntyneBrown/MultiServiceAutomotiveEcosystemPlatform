@@ -2,8 +2,8 @@
 
 ## Overview
 **Total Components: 17**
-**Completed: 1 (6%)**
-**Remaining: 16 (94%)**
+**Completed: 3 (18%)**
+**Remaining: 14 (82%)**
 
 ## Infrastructure ✅ COMPLETE
 - [x] Storybook configured and building successfully
@@ -24,30 +24,40 @@ npm run test:coverage          # Run tests with coverage
 
 ## Component Status
 
-### ✅ Completed (1)
-1. **customer-login** (CM-F002) - P0 Critical
+### ✅ Completed (3)
+
+#### Priority P0 - Critical (2/2 COMPLETE) ✅
+
+1. **customer-login** (CM-F002) - P0 Critical ✅
    - Full implementation with 30 unit tests
    - 7 Storybook stories
    - Form validation, password toggle, remember me
    - Responsive design with BEM methodology
    - WCAG 2.1 AA compliant
 
-### 🔴 Remaining (16)
-
-#### Priority P0 - Critical (2 remaining)
-2. **customer-registration** (CM-F001)
+2. **customer-registration** (CM-F001) - P0 Critical ✅
    - Location: `docs/design/phase-1/components/customer-registration/`
+   - Full implementation with 57 unit tests (88% TS coverage, 74% HTML coverage)
+   - 10 Storybook stories
    - Registration form with validation
-   - Social login support
+   - Password strength indicator
+   - Social login support (Google, Facebook, Apple)
    - Referral code integration
-   
-3. **tenant-not-found** (MT-F009)
+   - Marketing consent and terms acceptance
+   - Responsive design with BEM methodology
+   - WCAG 2.1 AA compliant
+    
+3. **tenant-not-found** (MT-F009) - P0 Critical ✅
    - Location: `docs/design/phase-1/components/tenant-not-found/`
+   - Full implementation with 30 unit tests (94% TS coverage, 85% HTML coverage)
+   - 8 Storybook stories
    - Error page for invalid tenant
-   - Professional branding
-   - Clear messaging
+   - Clear messaging with animated icon
+   - Action buttons and help section
+   - Responsive design with BEM methodology
+   - WCAG 2.1 AA compliant
 
-#### Priority P1 - High (8 remaining)
+### 🔴 Remaining (14)
 4. **customer-list-view** (CM-F006)
    - Location: `docs/design/phase-1/components/customer-list-view/`
    - Data table with pagination
