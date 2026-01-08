@@ -12,58 +12,70 @@ Phase 1 focuses on the MVP - Referral Core, establishing the foundational referr
 
 | # | Diagram | Description | Related Requirements |
 |---|---------|-------------|---------------------|
-| 01 | [Customer Registration](./01-customer-registration-flow.png) | Customer self-registration with email verification | REQ-CM-F001 |
-| 02 | [Customer Login](./02-customer-login-flow.png) | Secure authentication with session management | REQ-CM-F002 |
-| 03 | [Forgot Password](./03-forgot-password-flow.png) | Password reset with secure token flow | REQ-CM-F002 |
-| 04 | [Customer Referral Sharing](./04-customer-referral-sharing-flow.png) | Share referrals via email, SMS, social, QR | REQ-RF-F001, REQ-RF-F002, REQ-RF-F003 |
-| 05 | [Referral Status Tracking](./05-referral-status-tracking-flow.png) | Track referral status and rewards | REQ-RF-F004 |
+| 01 | [Customer Registration](./customer-registration/customer-registration.png) | Customer self-registration with email verification | REQ-CM-F001 |
+| 02 | [Customer Login](./customer-login/customer-login.png) | Secure authentication with session management | REQ-CM-F002 |
+| 03 | [Forgot Password](./forgot-password/forgot-password.png) | Password reset with secure token flow | REQ-CM-F002 |
+| 04 | [Customer Referral Sharing](./customer-referral-sharing/customer-referral-sharing.png) | Share referrals via email, SMS, social, QR | REQ-RF-F001, REQ-RF-F002, REQ-RF-F003 |
+| 05 | [Referral Status Tracking](./referral-status-tracking/referral-status-tracking.png) | Track referral status and rewards | REQ-RF-F004 |
 
 ### Professional Flows
 
 | # | Diagram | Description | Related Requirements |
 |---|---------|-------------|---------------------|
-| 06 | [Professional Profile Setup](./06-professional-profile-setup-flow.png) | Profile creation with media and specialties | REQ-SP-F006, REQ-SP-F007 |
-| 07 | [Professional Directory Browse](./07-professional-directory-browse-flow.png) | Browse and filter professional directory | REQ-SP-F001, REQ-SP-F002 |
-| 08 | [Professional Dashboard](./08-professional-dashboard-flow.png) | Dashboard home with stats and quick actions | REQ-SP-F005 |
-| 09 | [Professional Send Referral](./09-professional-send-referral-flow.png) | Refer customers to colleague professionals | REQ-RF-F005, REQ-RF-F006 |
-| 10 | [Professional Receive Referral](./10-professional-receive-referral-flow.png) | Accept or decline referrals from colleagues | REQ-RF-F007, REQ-RF-F008, REQ-RF-F009 |
-| 12 | [Customer Management](./12-customer-management-flow.png) | View, add, and manage customers | REQ-CM-F006, REQ-CM-F007, REQ-CM-F008 |
+| 06 | [Professional Profile Setup](./professional-profile-setup/professional-profile-setup.png) | Profile creation with media and specialties | REQ-SP-F006, REQ-SP-F007 |
+| 07 | [Professional Directory Browse](./professional-directory-browse/professional-directory-browse.png) | Browse and filter professional directory | REQ-SP-F001, REQ-SP-F002 |
+| 08 | [Professional Dashboard](./professional-dashboard/professional-dashboard.png) | Dashboard home with stats and quick actions | REQ-SP-F005 |
+| 09 | [Professional Send Referral](./professional-send-referral/professional-send-referral.png) | Refer customers to colleague professionals | REQ-RF-F005, REQ-RF-F006 |
+| 10 | [Professional Receive Referral](./professional-receive-referral/professional-receive-referral.png) | Accept or decline referrals from colleagues | REQ-RF-F007, REQ-RF-F008, REQ-RF-F009 |
+| 12 | [Customer Management](./customer-management/customer-management.png) | View, add, and manage customers | REQ-CM-F006, REQ-CM-F007, REQ-CM-F008 |
 
 ### Public/Landing Flows
 
 | # | Diagram | Description | Related Requirements |
 |---|---------|-------------|---------------------|
-| 11 | [Referral Landing Page](./11-referral-landing-page-flow.png) | New visitor arriving via referral link | REQ-RF-F015, REQ-RF-F016 |
+| 11 | [Referral Landing Page](./referral-landing-page/referral-landing-page.png) | New visitor arriving via referral link | REQ-RF-F015, REQ-RF-F016 |
 
 ## File Structure
 
 ```
 phase-1/
 ├── README.md                              # This file
-├── 01-customer-registration-flow.puml     # PlantUML source
-├── 01-customer-registration-flow.png      # Rendered diagram
-├── 02-customer-login-flow.puml
-├── 02-customer-login-flow.png
-├── 03-forgot-password-flow.puml
-├── 03-forgot-password-flow.png
-├── 04-customer-referral-sharing-flow.puml
-├── 04-customer-referral-sharing-flow.png
-├── 05-referral-status-tracking-flow.puml
-├── 05-referral-status-tracking-flow.png
-├── 06-professional-profile-setup-flow.puml
-├── 06-professional-profile-setup-flow.png
-├── 07-professional-directory-browse-flow.puml
-├── 07-professional-directory-browse-flow.png
-├── 08-professional-dashboard-flow.puml
-├── 08-professional-dashboard-flow.png
-├── 09-professional-send-referral-flow.puml
-├── 09-professional-send-referral-flow.png
-├── 10-professional-receive-referral-flow.puml
-├── 10-professional-receive-referral-flow.png
-├── 11-referral-landing-page-flow.puml
-├── 11-referral-landing-page-flow.png
-├── 12-customer-management-flow.puml
-└── 12-customer-management-flow.png
+├── customer-registration/
+│   ├── customer-registration.puml         # PlantUML source
+│   └── customer-registration.png          # Rendered diagram
+├── customer-login/
+│   ├── customer-login.puml
+│   └── customer-login.png
+├── forgot-password/
+│   ├── forgot-password.puml
+│   └── forgot-password.png
+├── customer-referral-sharing/
+│   ├── customer-referral-sharing.puml
+│   └── customer-referral-sharing.png
+├── referral-status-tracking/
+│   ├── referral-status-tracking.puml
+│   └── referral-status-tracking.png
+├── professional-profile-setup/
+│   ├── professional-profile-setup.puml
+│   └── professional-profile-setup.png
+├── professional-directory-browse/
+│   ├── professional-directory-browse.puml
+│   └── professional-directory-browse.png
+├── professional-dashboard/
+│   ├── professional-dashboard.puml
+│   └── professional-dashboard.png
+├── professional-send-referral/
+│   ├── professional-send-referral.puml
+│   └── professional-send-referral.png
+├── professional-receive-referral/
+│   ├── professional-receive-referral.puml
+│   └── professional-receive-referral.png
+├── referral-landing-page/
+│   ├── referral-landing-page.puml
+│   └── referral-landing-page.png
+└── customer-management/
+	├── customer-management.puml
+	└── customer-management.png
 ```
 
 ## Viewing Diagrams

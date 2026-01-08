@@ -11,4 +11,14 @@ public class TestTenantContext : ITenantContext
     {
         TenantId = tenantId ?? Guid.NewGuid();
     }
+
+    public void SetTenant(Guid tenantId)
+    {
+        TenantId = tenantId;
+    }
+
+    public void Clear()
+    {
+        TenantId = Guid.Empty;
+    }
 }

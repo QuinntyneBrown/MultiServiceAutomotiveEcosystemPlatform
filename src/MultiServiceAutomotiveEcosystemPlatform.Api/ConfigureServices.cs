@@ -22,10 +22,30 @@ public static class ConfigureServices
             .SetIsOriginAllowed(isOriginAllowed: _ => true)
             .AllowCredentials()));
 
+        var databaseProvider = configuration["Database:Provider"];
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
+        var inMemoryName = configuration["Database:InMemoryName"];
+
         services.AddDbContext<MultiServiceAutomotiveEcosystemPlatformContext>(options =>
+        {
+            if (string.Equals(databaseProvider, "InMemory", StringComparison.OrdinalIgnoreCase))
+            {
+                options.UseInMemoryDatabase(inMemoryName ?? "TestDb");
+                return;
+            }
+
+            if (string.Equals(databaseProvider, "Sqlite", StringComparison.OrdinalIgnoreCase))
+            {
+                options.UseSqlite(
+                    connectionString,
+                    b => b.MigrationsAssembly("MultiServiceAutomotiveEcosystemPlatform.Infrastructure"));
+                return;
+            }
+
             options.UseSqlServer(
-                configuration.GetConnectionString("DefaultConnection"),
-                b => b.MigrationsAssembly("MultiServiceAutomotiveEcosystemPlatform.Infrastructure")));
+                connectionString,
+                b => b.MigrationsAssembly("MultiServiceAutomotiveEcosystemPlatform.Infrastructure"));
+        });
 
         services.AddScoped<IMultiServiceAutomotiveEcosystemPlatformContext>(provider =>
             provider.GetRequiredService<MultiServiceAutomotiveEcosystemPlatformContext>());

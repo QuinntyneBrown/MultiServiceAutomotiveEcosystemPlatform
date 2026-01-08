@@ -11,8 +11,8 @@ interface Customer {
   phone: string;
   address: string;
   city: string;
-  state: string;
-  zip: string;
+  province: string;
+  postalCode: string;
   notes: string;
 }
 
@@ -40,8 +40,8 @@ export class CustomerForm implements OnInit {
       phone: ['', [Validators.required]],
       address: [''],
       city: [''],
-      state: [''],
-      zip: [''],
+      province: [''],
+      postalCode: [''],
       notes: ['']
     });
   }
@@ -65,8 +65,8 @@ export class CustomerForm implements OnInit {
       phone: '(555) 123-4567',
       address: '123 Main St',
       city: 'Springfield',
-      state: 'IL',
-      zip: '62701',
+      province: 'ON',
+      postalCode: 'K1A 0B1',
       notes: 'Prefers morning appointments.'
     };
 

@@ -58,7 +58,7 @@ fork again
   :Edit Location;
   note right
     * Street address
-    * City, State, ZIP
+    * City, Province, Postal Code
     * Service radius
   end note
 end fork

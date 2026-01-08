@@ -204,6 +204,16 @@
 
 /* ==================== UTILITY CLASSES ==================== */
 
+/* ==================== CDK OVERLAYS ==================== */
+
+.ms-toast-panel {
+  z-index: var(--z-toast, 800);
+}
+
+.ms-dialog-backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
 /* Typography Utilities */
 .text-display-xl {
   font-family: var(--font-family-primary);

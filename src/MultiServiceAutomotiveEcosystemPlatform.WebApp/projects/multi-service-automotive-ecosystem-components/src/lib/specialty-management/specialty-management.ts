@@ -1,7 +1,10 @@
-import { Component, Input, Output, EventEmitter, signal, computed } from '@angular/core';
+import { Component, Input, Output, EventEmitter, signal, computed, TemplateRef, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
+import { Dialog, DialogModule, DialogRef } from '@angular/cdk/dialog';
+
+import { ToastService } from '../toast/toast.service';
 
 export interface Specialty {
   id: string;
@@ -53,11 +56,11 @@ export interface Certification {
 
 @Component({
   selector: 'ms-specialty-management',
-  imports: [CommonModule, ReactiveFormsModule, DragDropModule],
+  imports: [CommonModule, ReactiveFormsModule, DragDropModule, DialogModule],
   templateUrl: './specialty-management.html',
   styleUrl: './specialty-management.scss',
 })
-export class SpecialtyManagement {
+export class SpecialtyManagement implements OnChanges {
   @Input() currentSpecialties: Specialty[] = [];
   @Input() availableSpecialties: SpecialtyCatalogItem[] = [];
   @Input() certifications: Certification[] = [];
@@ -74,15 +77,18 @@ export class SpecialtyManagement {
   @Output() removeCertification = new EventEmitter<string>();
 
   isModalOpen = signal(false);
+  @ViewChild('addSpecialtiesDialog') private addSpecialtiesDialog?: TemplateRef<unknown>;
+  private dialogRef: DialogRef<unknown> | null = null;
+
   searchQuery = signal('');
   selectedSpecialtyIds = signal<Set<string>>(new Set());
   customSpecialtyForm: FormGroup;
   uploadingFile = signal<string | null>(null);
   uploadProgress = signal(0);
-  successMessage = signal<string | null>(null);
-  errorMessage = signal<string | null>(null);
   confirmRemoveId = signal<string | null>(null);
   isDragOver = signal(false);
+
+  private lastExternalError: string | null = null;
 
   filteredSpecialties = computed(() => {
     const query = this.searchQuery().toLowerCase();
@@ -96,27 +102,65 @@ export class SpecialtyManagement {
     );
   });
 
-  canAddMore = computed(() => this.currentSpecialties.length < this.maxSpecialties);
-  canUploadMore = computed(() => this.certifications.length < this.maxCertifications);
+  canAddMore(): boolean {
+    return this.currentSpecialties.length < this.maxSpecialties;
+  }
 
-  constructor(private fb: FormBuilder) {
+  canUploadMore(): boolean {
+    return this.certifications.length < this.maxCertifications;
+  }
+
+  constructor(
+    private fb: FormBuilder,
+    private dialog: Dialog,
+    private toast: ToastService
+  ) {
     this.customSpecialtyForm = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(100)]],
       yearsOfExperience: [0, [Validators.required, Validators.min(0), Validators.max(99)]]
     });
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!changes['error']) return;
+
+    const nextError = changes['error'].currentValue as string | null;
+    if (nextError && nextError !== this.lastExternalError) {
+      this.toast.error(nextError);
+      this.lastExternalError = nextError;
+    }
+
+    if (!nextError) {
+      this.lastExternalError = null;
+    }
+  }
+
   openModal(): void {
     if (!this.canAddMore()) return;
-    this.isModalOpen.set(true);
+    if (!this.addSpecialtiesDialog) return;
+
     this.searchQuery.set('');
     this.selectedSpecialtyIds.set(new Set());
     this.customSpecialtyForm.reset({ name: '', yearsOfExperience: 0 });
+
+    this.dialogRef?.close();
+    this.dialogRef = this.dialog.open(this.addSpecialtiesDialog, {
+      backdropClass: 'ms-dialog-backdrop',
+      closeOnNavigation: true,
+      disableClose: false,
+      ariaLabel: 'Add Specialties',
+    });
+
+    this.isModalOpen.set(true);
+    this.dialogRef.closed.subscribe(() => {
+      this.isModalOpen.set(false);
+      this.selectedSpecialtyIds.set(new Set());
+      this.dialogRef = null;
+    });
   }
 
   closeModal(): void {
-    this.isModalOpen.set(false);
-    this.selectedSpecialtyIds.set(new Set());
+    this.dialogRef?.close();
   }
 
   onSearchChange(event: Event): void {
@@ -328,12 +372,10 @@ export class SpecialtyManagement {
   }
 
   private showSuccess(message: string): void {
-    this.successMessage.set(message);
-    setTimeout(() => this.successMessage.set(null), 3000);
+    this.toast.success(message);
   }
 
   private showError(message: string): void {
-    this.errorMessage.set(message);
-    setTimeout(() => this.errorMessage.set(null), 5000);
+    this.toast.error(message);
   }
 }

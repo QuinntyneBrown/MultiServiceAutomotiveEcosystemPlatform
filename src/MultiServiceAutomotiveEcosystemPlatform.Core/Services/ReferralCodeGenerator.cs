@@ -47,10 +47,11 @@ public class ReferralCodeGenerator : IReferralCodeGenerator
         string code;
         int attempts = 0;
         const int maxAttempts = 100;
+        const string discountPrefix = "DSC";
 
         do
         {
-            code = "DISC" + GenerateRandomString(DiscountCodeLength - 4);
+            code = discountPrefix + GenerateRandomString(DiscountCodeLength - discountPrefix.Length);
             attempts++;
 
             if (attempts >= maxAttempts)

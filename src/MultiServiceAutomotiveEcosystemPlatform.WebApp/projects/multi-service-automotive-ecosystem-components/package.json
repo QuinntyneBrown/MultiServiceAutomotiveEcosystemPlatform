@@ -2,6 +2,7 @@
   "name": "multi-service-automotive-ecosystem-components",
   "version": "0.0.1",
   "peerDependencies": {
+    "@angular/cdk": "^21.0.0",
     "@angular/common": "^21.0.0",
     "@angular/core": "^21.0.0"
   },

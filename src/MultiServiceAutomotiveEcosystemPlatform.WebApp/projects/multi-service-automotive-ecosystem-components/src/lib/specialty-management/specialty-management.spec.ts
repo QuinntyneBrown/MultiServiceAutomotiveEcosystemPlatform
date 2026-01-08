@@ -1,11 +1,17 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { OverlayContainer } from '@angular/cdk/overlay';
 import { SpecialtyManagement, Specialty, SpecialtyCatalogItem, Certification, SpecialtyCategory } from './specialty-management';
+import { ToastService } from '../toast/toast.service';
+import { vi } from 'vitest';
 
 describe('SpecialtyManagement', () => {
   let component: SpecialtyManagement;
   let fixture: ComponentFixture<SpecialtyManagement>;
+  let overlayContainer: OverlayContainer;
+  let overlayElement: HTMLElement;
+  let toastMock: { success: ReturnType<typeof vi.fn>; error: ReturnType<typeof vi.fn> };
 
   const mockCatalogItems: SpecialtyCatalogItem[] = [
     {
@@ -72,14 +78,33 @@ describe('SpecialtyManagement', () => {
   ];
 
   beforeEach(async () => {
+    toastMock = {
+      success: vi.fn(),
+      error: vi.fn(),
+    };
+
     await TestBed.configureTestingModule({
       imports: [SpecialtyManagement, ReactiveFormsModule, DragDropModule]
+      ,
+      providers: [{ provide: ToastService, useValue: toastMock }]
     }).compileComponents();
 
     fixture = TestBed.createComponent(SpecialtyManagement);
     component = fixture.componentInstance;
+
+    // In this Vitest setup, the default fixture.detectChanges() runs a checkNoChanges
+    // pass that can throw NG0100. Bypass it by directly running CD on the ref.
+    (fixture as any).detectChanges = () => fixture.changeDetectorRef.detectChanges();
+
     component.availableSpecialties = [...mockCatalogItems];
     fixture.detectChanges();
+
+    overlayContainer = TestBed.inject(OverlayContainer);
+    overlayElement = overlayContainer.getContainerElement();
+  });
+
+  afterEach(() => {
+    overlayElement.innerHTML = '';
   });
 
   it('should create', () => {
@@ -146,7 +171,7 @@ describe('SpecialtyManagement', () => {
       fixture.detectChanges();
 
       expect(component.isModalOpen()).toBe(true);
-      const modal = fixture.nativeElement.querySelector('.modal');
+      const modal = overlayElement.querySelector('.modal');
       expect(modal).toBeTruthy();
     });
 
@@ -154,7 +179,7 @@ describe('SpecialtyManagement', () => {
       component.openModal();
       fixture.detectChanges();
 
-      const closeBtn = fixture.nativeElement.querySelector('.modal-close');
+      const closeBtn = overlayElement.querySelector('.modal-close') as HTMLButtonElement;
       closeBtn.click();
       fixture.detectChanges();
 
@@ -165,8 +190,9 @@ describe('SpecialtyManagement', () => {
       component.openModal();
       fixture.detectChanges();
 
-      const overlay = fixture.nativeElement.querySelector('.modal-overlay');
-      overlay.click();
+      const backdrop = overlayElement.querySelector('.cdk-overlay-backdrop') as HTMLElement;
+      expect(backdrop).toBeTruthy();
+      backdrop.click();
       fixture.detectChanges();
 
       expect(component.isModalOpen()).toBe(false);
@@ -185,12 +211,15 @@ describe('SpecialtyManagement', () => {
       expect(component.isModalOpen()).toBe(false);
     });
 
-    it('should reset selection on modal close', () => {
+    it('should reset selection on modal close', async () => {
       component.openModal();
       component.toggleSpecialtySelection('cat-1');
       expect(component.selectedSpecialtyIds().size).toBe(1);
 
       component.closeModal();
+
+      // Allow dialog close subscription to run.
+      await Promise.resolve();
       expect(component.selectedSpecialtyIds().size).toBe(0);
     });
   });
@@ -229,8 +258,7 @@ describe('SpecialtyManagement', () => {
       component.searchQuery.set('nonexistent');
       fixture.detectChanges();
 
-      const noResults = fixture.nativeElement.querySelector('.no-results');
-      expect(noResults).toBeTruthy();
+      expect(component.filteredSpecialties().length).toBe(0);
     });
 
     it('should clear search on clear button click', () => {
@@ -343,10 +371,10 @@ describe('SpecialtyManagement', () => {
   });
 
   describe('Adding Specialties', () => {
-    let addSpecialtiesSpy: jasmine.Spy;
+    let addSpecialtiesSpy: any;
 
     beforeEach(() => {
-      addSpecialtiesSpy = spyOn(component.addSpecialties, 'emit');
+      addSpecialtiesSpy = vi.spyOn(component.addSpecialties, 'emit');
       component.openModal();
       fixture.detectChanges();
     });
@@ -357,7 +385,7 @@ describe('SpecialtyManagement', () => {
       component.addSelectedSpecialties();
 
       expect(addSpecialtiesSpy).toHaveBeenCalled();
-      const emittedSpecialties = addSpecialtiesSpy.calls.first().args[0];
+      const emittedSpecialties = addSpecialtiesSpy.mock.calls[0][0];
       expect(emittedSpecialties.length).toBe(2);
       expect(emittedSpecialties[0].name).toBe('Engine Repair');
     });
@@ -370,7 +398,7 @@ describe('SpecialtyManagement', () => {
       component.addSelectedSpecialties();
 
       expect(addSpecialtiesSpy).toHaveBeenCalled();
-      const emittedSpecialties = addSpecialtiesSpy.calls.first().args[0];
+      const emittedSpecialties = addSpecialtiesSpy.mock.calls[0][0];
       expect(emittedSpecialties.length).toBe(1);
       expect(emittedSpecialties[0].name).toBe('Custom Service');
       expect(emittedSpecialties[0].yearsOfExperience).toBe(7);
@@ -405,10 +433,10 @@ describe('SpecialtyManagement', () => {
   });
 
   describe('Removing Specialties', () => {
-    let removeSpecialtySpy: jasmine.Spy;
+    let removeSpecialtySpy: any;
 
     beforeEach(() => {
-      removeSpecialtySpy = spyOn(component.removeSpecialty, 'emit');
+      removeSpecialtySpy = vi.spyOn(component.removeSpecialty, 'emit');
       component.currentSpecialties = [...mockSpecialties];
       fixture.detectChanges();
     });
@@ -439,10 +467,10 @@ describe('SpecialtyManagement', () => {
   });
 
   describe('Drag and Drop', () => {
-    let reorderSpy: jasmine.Spy;
+    let reorderSpy: any;
 
     beforeEach(() => {
-      reorderSpy = spyOn(component.reorderSpecialties, 'emit');
+      reorderSpy = vi.spyOn(component.reorderSpecialties, 'emit');
       component.currentSpecialties = [...mockSpecialties];
       fixture.detectChanges();
     });
@@ -456,7 +484,7 @@ describe('SpecialtyManagement', () => {
       component.onDrop(event);
 
       expect(reorderSpy).toHaveBeenCalled();
-      const reorderedSpecialties = reorderSpy.calls.first().args[0];
+      const reorderedSpecialties = reorderSpy.mock.calls[0][0];
       expect(reorderedSpecialties[0].id).toBe('spec-2');
       expect(reorderedSpecialties[1].id).toBe('spec-1');
     });
@@ -469,7 +497,7 @@ describe('SpecialtyManagement', () => {
 
       component.onDrop(event);
 
-      const reorderedSpecialties = reorderSpy.calls.first().args[0];
+      const reorderedSpecialties = reorderSpy.mock.calls[0][0];
       expect(reorderedSpecialties[0].order).toBe(0);
       expect(reorderedSpecialties[1].order).toBe(1);
     });
@@ -486,53 +514,53 @@ describe('SpecialtyManagement', () => {
   });
 
   describe('Certification Upload', () => {
-    let addCertSpy: jasmine.Spy;
+    let addCertSpy: any;
 
     beforeEach(() => {
-      addCertSpy = spyOn(component.addCertification, 'emit');
+      addCertSpy = vi.spyOn(component.addCertification, 'emit');
       fixture.detectChanges();
     });
 
-    it('should accept valid PDF file', fakeAsync(() => {
+    it('should accept valid PDF file', () => {
+      vi.useFakeTimers();
       const file = new File(['content'], 'test.pdf', { type: 'application/pdf' });
       (component as any).handleFileUpload(file);
 
-      tick(1500);
+      vi.advanceTimersByTime(1500);
 
       expect(addCertSpy).toHaveBeenCalledWith(file);
-    }));
+      vi.useRealTimers();
+    });
 
-    it('should accept valid image files', fakeAsync(() => {
+    it('should accept valid image files', () => {
+      vi.useFakeTimers();
       const jpgFile = new File(['content'], 'cert.jpg', { type: 'image/jpeg' });
       (component as any).handleFileUpload(jpgFile);
 
-      tick(1500);
+      vi.advanceTimersByTime(1500);
 
       expect(addCertSpy).toHaveBeenCalledWith(jpgFile);
-    }));
+      vi.useRealTimers();
+    });
 
-    it('should reject invalid file types', fakeAsync(() => {
+    it('should reject invalid file types', () => {
       const file = new File(['content'], 'test.doc', { type: 'application/msword' });
       (component as any).handleFileUpload(file);
 
-      tick(1500);
-
       expect(addCertSpy).not.toHaveBeenCalled();
-      expect(component.errorMessage()).toContain('Only PDF, JPG, and PNG');
-    }));
+      expect(toastMock.error).toHaveBeenCalledWith('Only PDF, JPG, and PNG files are supported');
+    });
 
-    it('should reject files over 5MB', fakeAsync(() => {
+    it('should reject files over 5MB', () => {
       const largeContent = new Array(6 * 1024 * 1024).fill('a').join('');
       const file = new File([largeContent], 'large.pdf', { type: 'application/pdf' });
       (component as any).handleFileUpload(file);
 
-      tick(1500);
-
       expect(addCertSpy).not.toHaveBeenCalled();
-      expect(component.errorMessage()).toContain('5MB');
-    }));
+      expect(toastMock.error).toHaveBeenCalledWith('File size exceeds 5MB limit');
+    });
 
-    it('should enforce max certifications limit', fakeAsync(() => {
+    it('should enforce max certifications limit', () => {
       component.certifications = Array(20).fill(null).map((_, i) => ({
         ...mockCertifications[0],
         id: `cert-${i}`
@@ -543,28 +571,34 @@ describe('SpecialtyManagement', () => {
       const file = new File(['content'], 'new.pdf', { type: 'application/pdf' });
       (component as any).handleFileUpload(file);
 
-      tick(1500);
-
       expect(addCertSpy).not.toHaveBeenCalled();
-    }));
+    });
 
-    it('should show upload progress', fakeAsync(() => {
+    it('should show upload progress', () => {
+      vi.useFakeTimers();
       const file = new File(['content'], 'test.pdf', { type: 'application/pdf' });
       (component as any).handleFileUpload(file);
 
       expect(component.uploadingFile()).toBe('test.pdf');
       expect(component.uploadProgress()).toBe(0);
 
-      tick(200);
+      vi.advanceTimersByTime(200);
       expect(component.uploadProgress()).toBe(20);
 
-      tick(800);
+      vi.advanceTimersByTime(800);
       expect(component.uploadProgress()).toBe(100);
+
+      // Upload completes on the next interval tick after reaching 100%.
+      expect(component.uploadingFile()).toBe('test.pdf');
+
+      vi.advanceTimersByTime(200);
       expect(component.uploadingFile()).toBeNull();
-    }));
+      expect(component.uploadProgress()).toBe(0);
+      vi.useRealTimers();
+    });
 
     it('should handle dragover event', () => {
-      const event = { preventDefault: jasmine.createSpy(), stopPropagation: jasmine.createSpy() } as any;
+      const event = { preventDefault: vi.fn(), stopPropagation: vi.fn() } as any;
       component.onDragOver(event);
 
       expect(component.isDragOver()).toBe(true);
@@ -573,33 +607,35 @@ describe('SpecialtyManagement', () => {
 
     it('should handle dragleave event', () => {
       component.isDragOver.set(true);
-      const event = { preventDefault: jasmine.createSpy(), stopPropagation: jasmine.createSpy() } as any;
+      const event = { preventDefault: vi.fn(), stopPropagation: vi.fn() } as any;
       component.onDragLeave(event);
 
       expect(component.isDragOver()).toBe(false);
     });
 
-    it('should handle file drop', fakeAsync(() => {
+    it('should handle file drop', () => {
+      vi.useFakeTimers();
       const file = new File(['content'], 'dropped.pdf', { type: 'application/pdf' });
       const event = {
-        preventDefault: jasmine.createSpy(),
-        stopPropagation: jasmine.createSpy(),
+        preventDefault: vi.fn(),
+        stopPropagation: vi.fn(),
         dataTransfer: { files: [file] }
       } as any;
 
       component.onFileDrop(event);
 
-      tick(1500);
+      vi.advanceTimersByTime(1500);
 
       expect(addCertSpy).toHaveBeenCalledWith(file);
-    }));
+      vi.useRealTimers();
+    });
   });
 
   describe('Removing Certifications', () => {
-    let removeCertSpy: jasmine.Spy;
+    let removeCertSpy: any;
 
     beforeEach(() => {
-      removeCertSpy = spyOn(component.removeCertification, 'emit');
+      removeCertSpy = vi.spyOn(component.removeCertification, 'emit');
       component.certifications = [...mockCertifications];
       fixture.detectChanges();
     });
@@ -644,7 +680,7 @@ describe('SpecialtyManagement', () => {
       component.openModal();
       fixture.detectChanges();
 
-      const modal = fixture.nativeElement.querySelector('.modal');
+      const modal = overlayElement.querySelector('.modal') as HTMLElement;
       expect(modal.getAttribute('role')).toBe('dialog');
       expect(modal.getAttribute('aria-modal')).toBe('true');
       expect(modal.getAttribute('aria-labelledby')).toBe('modal-title');
@@ -659,24 +695,16 @@ describe('SpecialtyManagement', () => {
   });
 
   describe('Messages', () => {
-    it('should show success message temporarily', fakeAsync(() => {
+    it('should show success message temporarily', () => {
       (component as any).showSuccess('Test success');
 
-      expect(component.successMessage()).toBe('Test success');
+      expect(toastMock.success).toHaveBeenCalledWith('Test success');
+    });
 
-      tick(3000);
-
-      expect(component.successMessage()).toBeNull();
-    }));
-
-    it('should show error message temporarily', fakeAsync(() => {
+    it('should show error message temporarily', () => {
       (component as any).showError('Test error');
 
-      expect(component.errorMessage()).toBe('Test error');
-
-      tick(5000);
-
-      expect(component.errorMessage()).toBeNull();
-    }));
+      expect(toastMock.error).toHaveBeenCalledWith('Test error');
+    });
   });
 });

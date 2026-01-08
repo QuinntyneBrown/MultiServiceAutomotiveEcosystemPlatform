@@ -3,10 +3,13 @@
 
 using System.Net;
 using System.Net.Http.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using MultiServiceAutomotiveEcosystemPlatform.Api.Features.Customers;
 using MultiServiceAutomotiveEcosystemPlatform.Core.Data;
@@ -17,6 +20,11 @@ namespace MultiServiceAutomotiveEcosystemPlatform.Api.Tests.Integration;
 
 public class CustomersControllerTests : IClassFixture<TestWebApplicationFactory>
 {
+    private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web)
+    {
+        Converters = { new JsonStringEnumConverter() }
+    };
+
     private readonly HttpClient _client;
     private readonly TestWebApplicationFactory _factory;
 
@@ -44,7 +52,7 @@ public class CustomersControllerTests : IClassFixture<TestWebApplicationFactory>
 
         // Assert
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
-        var customer = await response.Content.ReadFromJsonAsync<CustomerDto>();
+        var customer = await response.Content.ReadFromJsonAsync<CustomerDto>(JsonOptions);
         Assert.NotNull(customer);
         Assert.Equal("John", customer.FirstName);
         Assert.Equal("Doe", customer.LastName);
@@ -63,14 +71,14 @@ public class CustomersControllerTests : IClassFixture<TestWebApplicationFactory>
             LastName = "Smith"
         };
         var createResponse = await _client.PostAsJsonAsync("/api/customers", command);
-        var createdCustomer = await createResponse.Content.ReadFromJsonAsync<CustomerDto>();
+        var createdCustomer = await createResponse.Content.ReadFromJsonAsync<CustomerDto>(JsonOptions);
 
         // Act
         var response = await _client.GetAsync($"/api/customers/{createdCustomer!.CustomerId}");
 
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        var customer = await response.Content.ReadFromJsonAsync<CustomerDto>();
+        var customer = await response.Content.ReadFromJsonAsync<CustomerDto>(JsonOptions);
         Assert.NotNull(customer);
         Assert.Equal("Jane", customer.FirstName);
         Assert.Equal("Smith", customer.LastName);
@@ -85,7 +93,7 @@ public class CustomersControllerTests : IClassFixture<TestWebApplicationFactory>
             var command = new CreateCustomerCommand
             {
                 Email = $"list{i}@example.com",
-                Phone = $"55500{i}",
+                Phone = $"555000{i}0000",
                 FirstName = $"Customer{i}",
                 LastName = "Test"
             };
@@ -97,7 +105,7 @@ public class CustomersControllerTests : IClassFixture<TestWebApplicationFactory>
 
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        var result = await response.Content.ReadFromJsonAsync<GetCustomersQueryResponse>();
+        var result = await response.Content.ReadFromJsonAsync<GetCustomersQueryResponse>(JsonOptions);
         Assert.NotNull(result);
         Assert.True(result.Customers.Count >= 3);
     }
@@ -105,36 +113,37 @@ public class CustomersControllerTests : IClassFixture<TestWebApplicationFactory>
 
 public class TestWebApplicationFactory : WebApplicationFactory<Program>, IDisposable
 {
-    private readonly string _connectionString;
-    private readonly string _databaseName;
+    private readonly string _inMemoryDbName;
+    private Guid _defaultTenantId;
 
     public TestWebApplicationFactory()
     {
-        // Use SQL Server LocalDB or test instance
-        _databaseName = $"MultiServiceAutomotiveEcosystemPlatformTest_{Guid.NewGuid():N}";
-        _connectionString = $"Server=(localdb)\\mssqllocaldb;Database={_databaseName};Trusted_Connection=True;MultipleActiveResultSets=true";
+        _inMemoryDbName = $"msauto-tests-{Guid.NewGuid():N}";
+
+        // Set via environment variables so the app sees this when building IConfiguration.
+        Environment.SetEnvironmentVariable("Database__Provider", "InMemory");
+        Environment.SetEnvironmentVariable("Database__InMemoryName", _inMemoryDbName);
+        Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "Testing");
+    }
+
+    protected override void ConfigureWebHost(IWebHostBuilder builder)
+    {
+        builder.UseEnvironment("Testing");
+
+        builder.ConfigureAppConfiguration((context, configBuilder) =>
+        {
+            var settings = new Dictionary<string, string?>
+            {
+                ["Database:Provider"] = "InMemory",
+                ["Database:InMemoryName"] = _inMemoryDbName,
+            };
+
+            configBuilder.AddInMemoryCollection(settings);
+        });
     }
 
     protected override IHost CreateHost(IHostBuilder builder)
     {
-        builder.ConfigureServices(services =>
-        {
-            // Remove the real database context registration
-            var descriptor = services.SingleOrDefault(
-                d => d.ServiceType == typeof(DbContextOptions<MultiServiceAutomotiveEcosystemPlatformContext>));
-            if (descriptor != null)
-            {
-                services.Remove(descriptor);
-            }
-
-            // Add SQL Server database for testing
-            services.AddDbContext<MultiServiceAutomotiveEcosystemPlatformContext>(options =>
-            {
-                options.UseSqlServer(_connectionString, 
-                    b => b.MigrationsAssembly("MultiServiceAutomotiveEcosystemPlatform.Infrastructure"));
-            });
-        });
-
         var host = base.CreateHost(builder);
 
         // Create database and seed test data
@@ -145,12 +154,23 @@ public class TestWebApplicationFactory : WebApplicationFactory<Program>, IDispos
         context.Database.EnsureCreated();
         
         // Seed test data
-        SeedTestData(context);
+        _defaultTenantId = SeedTestData(context);
 
         return host;
     }
 
-    private static void SeedTestData(MultiServiceAutomotiveEcosystemPlatformContext context)
+    protected override void ConfigureClient(HttpClient client)
+    {
+        base.ConfigureClient(client);
+
+        if (_defaultTenantId != Guid.Empty)
+        {
+            client.DefaultRequestHeaders.Remove("X-Tenant-Id");
+            client.DefaultRequestHeaders.Add("X-Tenant-Id", _defaultTenantId.ToString());
+        }
+    }
+
+    private static Guid SeedTestData(MultiServiceAutomotiveEcosystemPlatformContext context)
     {
         // Add a default tenant for testing
         var tenant = new MultiServiceAutomotiveEcosystemPlatform.Core.Models.TenantAggregate.Tenant(
@@ -160,16 +180,15 @@ public class TestWebApplicationFactory : WebApplicationFactory<Program>, IDispos
 
         context.Tenants.Add(tenant);
         context.SaveChanges();
+
+        return tenant.TenantId;
     }
 
     protected override void Dispose(bool disposing)
     {
         if (disposing)
         {
-            // Clean up test database
-            using var scope = Services.CreateScope();
-            var context = scope.ServiceProvider.GetRequiredService<MultiServiceAutomotiveEcosystemPlatformContext>();
-            context.Database.EnsureDeleted();
+            // InMemory DB is process-local; no explicit cleanup required.
         }
         base.Dispose(disposing);
     }

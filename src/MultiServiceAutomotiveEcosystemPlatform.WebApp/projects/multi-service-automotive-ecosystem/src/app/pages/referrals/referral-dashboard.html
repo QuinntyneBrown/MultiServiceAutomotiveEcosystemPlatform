@@ -86,14 +86,4 @@
     </div>
   </div>
 
-  <!-- Share Referral Modal -->
-  @if (showShareModal()) {
-    <ms-share-referral
-      [referralCode]="referralCode"
-      [user]="currentUser"
-      (closeModal)="closeShareModal()"
-      (shareSuccess)="onShareSuccess($event)"
-      (shareError)="onShareError($event)"
-    ></ms-share-referral>
-  }
 </div>

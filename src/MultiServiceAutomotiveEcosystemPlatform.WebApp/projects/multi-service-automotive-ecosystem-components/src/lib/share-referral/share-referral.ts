@@ -1,6 +1,9 @@
-import { Component, Input, Output, EventEmitter, signal, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
+import { Component, Input, Output, EventEmitter, signal, OnInit, OnDestroy, ElementRef, ViewChild, Inject, Optional } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
+
+import { ToastService } from '../toast/toast.service';
 
 export type ShareMethod = 'copy-link' | 'email' | 'sms' | 'facebook' | 'twitter' | 'whatsapp' | 'linkedin' | 'qr-code';
 
@@ -36,6 +39,17 @@ export interface ShareSuccessEvent {
 export interface ShareErrorEvent {
   method: ShareMethod;
   error: ShareError;
+}
+
+export interface ShareReferralDialogData {
+  referralCode: string;
+  referralUrl?: string;
+  user: UserInfo;
+  defaultTab?: ShareMethod;
+  enabledMethods?: ShareMethod[];
+  defaultMessage?: string;
+  branding?: BrandingOptions;
+  enableAnalytics?: boolean;
 }
 
 /**
@@ -101,9 +115,25 @@ export class ShareReferral implements OnInit, OnDestroy {
 
   private baseUrl = 'https://autoservice.com/r/';
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private toast: ToastService,
+    @Optional() private dialogRef: DialogRef<unknown, void> | null,
+    @Optional() @Inject(DIALOG_DATA) private dialogData: ShareReferralDialogData | null
+  ) {}
 
   ngOnInit() {
+    if (this.dialogData) {
+      this.referralCode ??= this.dialogData.referralCode;
+      this.referralUrl ??= this.dialogData.referralUrl;
+      this.user ??= this.dialogData.user;
+      this.defaultTab = this.dialogData.defaultTab ?? this.defaultTab;
+      this.enabledMethods = this.dialogData.enabledMethods ?? this.enabledMethods;
+      this.defaultMessage ??= this.dialogData.defaultMessage;
+      this.branding ??= this.dialogData.branding;
+      this.enableAnalytics = this.dialogData.enableAnalytics ?? this.enableAnalytics;
+    }
+
     this.activeTab.set(this.defaultTab);
 
     if (!this.referralUrl) {
@@ -152,6 +182,7 @@ export class ShareReferral implements OnInit, OnDestroy {
     try {
       await navigator.clipboard.writeText(this.referralUrl!);
       this.isCopied.set(true);
+      this.toast.success('Link copied to clipboard!');
 
       this.shareSuccess.emit({
         method: 'copy-link',
@@ -165,6 +196,7 @@ export class ShareReferral implements OnInit, OnDestroy {
         method: 'copy-link',
         error: { code: 'SERVICE_UNAVAILABLE', message: 'Failed to copy link' }
       });
+      this.toast.error('Failed to copy link');
     }
   }
 
@@ -304,6 +336,7 @@ export class ShareReferral implements OnInit, OnDestroy {
 
   close() {
     this.closeModal.emit();
+    this.dialogRef?.close();
   }
 
   onKeydown(event: KeyboardEvent) {

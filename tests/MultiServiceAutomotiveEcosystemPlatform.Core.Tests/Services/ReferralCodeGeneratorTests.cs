@@ -31,7 +31,8 @@ public class ReferralCodeGeneratorTests
 
         // Assert
         Assert.NotNull(code);
-        Assert.StartsWith("JOHN", code);
+        // 'O' is excluded from allowed characters (ambiguous), so it is removed.
+        Assert.StartsWith("JHN", code);
         Assert.Equal(8, code.Length);
     }
 
@@ -79,7 +80,7 @@ public class ReferralCodeGeneratorTests
         // Assert
         Assert.NotNull(code);
         Assert.Equal(10, code.Length);
-        Assert.StartsWith("DISC", code);
+        Assert.StartsWith("DSC", code);
     }
 
     [Fact]
@@ -95,9 +96,9 @@ public class ReferralCodeGeneratorTests
     }
 
     [Theory]
-    [InlineData("ABCD1234", true)]
-    [InlineData("JOHN7K2M", true)]
-    [InlineData("XYZ123456789", true)]
+    [InlineData("ABCD2345", true)]
+    [InlineData("JHN7K2M", true)]
+    [InlineData("XYZ23456789", true)]
     [InlineData("ABC", false)] // Too short
     [InlineData("ABCDEFGHIJKLMNOP", false)] // Too long
     [InlineData("", false)]

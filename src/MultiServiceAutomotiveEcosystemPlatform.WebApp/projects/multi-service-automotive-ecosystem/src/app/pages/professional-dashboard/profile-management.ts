@@ -15,8 +15,8 @@ interface Professional {
   website: string;
   address: string;
   city: string;
-  state: string;
-  zip: string;
+  province: string;
+  postalCode: string;
 }
 
 @Component({
@@ -44,8 +44,8 @@ export class ProfileManagement implements OnInit {
       website: [''],
       address: [''],
       city: [''],
-      state: [''],
-      zip: ['']
+      province: [''],
+      postalCode: ['']
     });
   }
 
@@ -67,8 +67,8 @@ export class ProfileManagement implements OnInit {
       website: 'https://bobsauto.com',
       address: '123 Main St',
       city: 'Springfield',
-      state: 'IL',
-      zip: '62701'
+      province: 'ON',
+      postalCode: 'K1A 0B1'
     };
 
     this.profileForm.patchValue(mockProfile);

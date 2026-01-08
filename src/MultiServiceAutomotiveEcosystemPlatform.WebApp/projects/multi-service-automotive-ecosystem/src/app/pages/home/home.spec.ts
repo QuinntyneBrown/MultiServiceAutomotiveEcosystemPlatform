@@ -22,21 +22,21 @@ describe('Home', () => {
 
   it('should display the main title', () => {
     const compiled = fixture.nativeElement;
-    const title = compiled.querySelector('.home__title');
+    const title = compiled.querySelector('.page-header__title');
     expect(title).toBeTruthy();
     expect(title.textContent).toContain('Welcome');
   });
 
   it('should display the subtitle', () => {
     const compiled = fixture.nativeElement;
-    const subtitle = compiled.querySelector('.home__subtitle');
+    const subtitle = compiled.querySelector('.page-header__subtitle');
     expect(subtitle).toBeTruthy();
     expect(subtitle.textContent).toContain('Connect with trusted automotive professionals');
   });
 
   it('should have action buttons', () => {
     const compiled = fixture.nativeElement;
-    const buttons = compiled.querySelectorAll('.home__action-button');
+    const buttons = compiled.querySelectorAll('.action-button');
     expect(buttons.length).toBeGreaterThan(0);
   });
 

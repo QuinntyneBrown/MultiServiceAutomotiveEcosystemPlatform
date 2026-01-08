@@ -320,9 +320,9 @@ interface CustomerDto {
   addressLine1: string | null;
   addressLine2: string | null;
   city: string | null;
-  state: string | null;
+  province: string | null;
   postalCode: string | null;
-  country: string;              // Default: 'US'
+  country: string;              // Default: 'CA'
 
   // Preferences
   preferredContactMethod: 'Email' | 'Phone' | 'Sms';
@@ -378,9 +378,9 @@ interface CreateCustomerRequest {
   addressLine1?: string;
   addressLine2?: string;
   city?: string;
-  state?: string;
+  province?: string;
   postalCode?: string;
-  country?: string;             // Default: 'US'
+  country?: string;             // Default: 'CA'
   preferredContactMethod?: 'Email' | 'Phone' | 'Sms';
   marketingConsent?: boolean;
   newsletterSubscribed?: boolean;
@@ -401,7 +401,7 @@ interface UpdateCustomerRequest {
   addressLine1?: string;
   addressLine2?: string;
   city?: string;
-  state?: string;
+  province?: string;
   postalCode?: string;
   country?: string;
   preferredContactMethod?: 'Email' | 'Phone' | 'Sms';
@@ -652,7 +652,7 @@ interface ProfessionalDto {
   addressLine1: string;
   addressLine2: string | null;
   city: string;
-  state: string;
+  province: string;
   postalCode: string;
   country: string;
 
@@ -714,7 +714,7 @@ interface ProfessionalSummaryDto {
   title: string | null;
   profilePhotoUrl: string | null;
   city: string;
-  state: string;
+  province: string;
   verified: boolean;
   featured: boolean;
   slug: string;
@@ -741,9 +741,9 @@ interface ProfessionalPublicDto {
   phoneBusiness: string | null;
   website: string | null;
 
-  // Location (city/state only, not full address)
+  // Location (city/province only, not full address)
   city: string;
-  state: string;
+  province: string;
   serviceRadiusMiles: number | null;
 
   // Media
@@ -801,9 +801,9 @@ interface CreateProfessionalRequest {
   addressLine1: string;         // Required
   addressLine2?: string;
   city: string;                 // Required
-  state: string;                // Required
+  province: string;             // Required
   postalCode: string;           // Required
-  country?: string;             // Default: 'US'
+  country?: string;             // Default: 'CA'
   serviceRadiusMiles?: number;
   acceptsReferrals?: boolean;   // Default: true
 }
@@ -824,7 +824,7 @@ interface UpdateProfessionalRequest {
   addressLine1?: string;
   addressLine2?: string;
   city?: string;
-  state?: string;
+  province?: string;
   postalCode?: string;
   country?: string;
   serviceRadiusMiles?: number;
@@ -949,8 +949,8 @@ Get featured professionals (public).
       "businessTypeDisplay": "German Vehicle Specialist",
       "fullName": "Hans Mueller",
       "profilePhotoUrl": "https://...",
-      "city": "Austin",
-      "state": "TX",
+      "city": "Toronto",
+      "province": "ON",
       "verified": true,
       "featured": true,
       "slug": "german-auto-specialists",

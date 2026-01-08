@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProfessionalDashboardHome } from './professional-dashboard-home';
 import { RouterModule } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 
 describe('ProfessionalDashboardHome', () => {
   let component: ProfessionalDashboardHome;
@@ -20,23 +21,19 @@ describe('ProfessionalDashboardHome', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should load stats on init', (done) => {
-    component.stats$.subscribe(stats => {
-      expect(stats).toBeDefined();
-      expect(stats.totalCustomers).toBeGreaterThanOrEqual(0);
-      expect(stats.newInquiries).toBeGreaterThanOrEqual(0);
-      expect(stats.pendingReferrals).toBeGreaterThanOrEqual(0);
-      expect(stats.monthlyReferrals).toBeGreaterThanOrEqual(0);
-      done();
-    });
+  it('should load stats on init', async () => {
+    const stats = await firstValueFrom(component.stats$);
+    expect(stats).toBeDefined();
+    expect(stats.totalCustomers).toBeGreaterThanOrEqual(0);
+    expect(stats.newInquiries).toBeGreaterThanOrEqual(0);
+    expect(stats.pendingReferrals).toBeGreaterThanOrEqual(0);
+    expect(stats.monthlyReferrals).toBeGreaterThanOrEqual(0);
   });
 
-  it('should load activities on init', (done) => {
-    component.activities$.subscribe(activities => {
-      expect(activities).toBeDefined();
-      expect(Array.isArray(activities)).toBe(true);
-      done();
-    });
+  it('should load activities on init', async () => {
+    const activities = await firstValueFrom(component.activities$);
+    expect(activities).toBeDefined();
+    expect(Array.isArray(activities)).toBe(true);
   });
 
   it('should return correct activity icon', () => {

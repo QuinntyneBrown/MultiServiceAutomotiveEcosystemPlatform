@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ShareReferral, UserInfo } from './share-referral';
+import { ToastService } from '../toast/toast.service';
 import { vi } from 'vitest';
 
 describe('ShareReferral', () => {
@@ -17,6 +18,12 @@ describe('ShareReferral', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ShareReferral, ReactiveFormsModule],
+      providers: [
+        {
+          provide: ToastService,
+          useValue: { success: vi.fn(), error: vi.fn() },
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ShareReferral);
@@ -24,6 +31,12 @@ describe('ShareReferral', () => {
     component.referralCode = 'ABC123';
     component.user = mockUser;
     fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    vi.clearAllTimers();
+    vi.useRealTimers();
+    vi.restoreAllMocks();
   });
 
   it('should create', () => {
@@ -153,14 +166,16 @@ describe('ShareReferral', () => {
     });
 
     it('should emit success on valid email submit', async () => {
+      vi.useFakeTimers();
       const successSpy = vi.spyOn(component.shareSuccess, 'emit');
       component.emailForm.patchValue({
         recipients: 'test@example.com',
         message: 'Test message'
       });
 
-      await component.sendEmail();
-      await new Promise(resolve => setTimeout(resolve, 1100));
+      const sendPromise = component.sendEmail();
+      vi.advanceTimersByTime(1100);
+      await sendPromise;
 
       expect(successSpy).toHaveBeenCalledWith(expect.objectContaining({
         method: 'email',
@@ -169,14 +184,16 @@ describe('ShareReferral', () => {
     });
 
     it('should count multiple recipients correctly', async () => {
+      vi.useFakeTimers();
       const successSpy = vi.spyOn(component.shareSuccess, 'emit');
       component.emailForm.patchValue({
         recipients: 'one@example.com, two@example.com, three@example.com',
         message: 'Test'
       });
 
-      await component.sendEmail();
-      await new Promise(resolve => setTimeout(resolve, 1100));
+      const sendPromise = component.sendEmail();
+      vi.advanceTimersByTime(1100);
+      await sendPromise;
 
       expect(successSpy).toHaveBeenCalledWith(expect.objectContaining({
         metadata: expect.objectContaining({ recipientCount: 3 })

@@ -12,7 +12,7 @@ using MultiServiceAutomotiveEcosystemPlatform.Infrastructure.Data;
 namespace MultiServiceAutomotiveEcosystemPlatform.Infrastructure.Migrations
 {
     [DbContext(typeof(MultiServiceAutomotiveEcosystemPlatformContext))]
-    [Migration("20260108011808_InitialCreate")]
+    [Migration("20260108161601_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -106,13 +106,13 @@ namespace MultiServiceAutomotiveEcosystemPlatform.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Province")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<string>("Source")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("State")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -278,6 +278,11 @@ namespace MultiServiceAutomotiveEcosystemPlatform.Infrastructure.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<string>("Province")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<int?>("ServiceRadiusMiles")
                         .HasColumnType("int");
 
@@ -285,11 +290,6 @@ namespace MultiServiceAutomotiveEcosystemPlatform.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
-
-                    b.Property<string>("State")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Status")
                         .IsRequired()

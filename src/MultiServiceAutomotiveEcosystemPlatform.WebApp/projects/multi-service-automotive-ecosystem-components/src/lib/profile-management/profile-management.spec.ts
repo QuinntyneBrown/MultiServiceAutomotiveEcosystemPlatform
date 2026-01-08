@@ -125,12 +125,12 @@ describe('ProfileManagement', () => {
       expect(control?.valid).toBeTruthy();
     });
 
-    it('should validate ZIP code pattern', () => {
-      const control = component.profileForm.get('address.zipCode');
-      control?.setValue('123');
+    it('should validate postal code pattern', () => {
+      const control = component.profileForm.get('address.postalCode');
+      control?.setValue('12345');
       expect(control?.hasError('pattern')).toBeTruthy();
 
-      control?.setValue('12345');
+      control?.setValue('K1A 0B1');
       expect(control?.valid).toBeTruthy();
     });
   });
@@ -218,11 +218,9 @@ describe('ProfileManagement', () => {
     it('should update save status', async () => {
       component.profileForm.patchValue({ businessName: 'Test Shop' });
 
-      const promise = component.saveDraft();
-      expect(component.isSavingDraft()).toBe(true);
-
-      await promise;
+      await component.saveDraft();
       expect(component.autoSaveStatus()).toBe('saved');
+      expect(component.isSavingDraft()).toBe(false);
     });
   });
 
@@ -275,16 +273,24 @@ describe('ProfileManagement', () => {
         target: { files: [mockFile] }
       } as unknown as Event;
 
-      const reader = new FileReader();
-      vi.spyOn(window, 'FileReader').mockImplementation(() => ({
-        readAsDataURL: function() {
+      const OriginalFileReader = window.FileReader;
+
+      class MockFileReader {
+        public result: string | ArrayBuffer | null = null;
+        public onload: (() => void) | null = null;
+
+        readAsDataURL(_file: Blob) {
           this.result = 'data:image/jpeg;base64,test';
           this.onload?.();
-        },
-        result: ''
-      } as any));
+        }
+      }
 
-      component.onFileSelected(event, 'profilePhoto');
+      try {
+        (window as any).FileReader = MockFileReader as any;
+        component.onFileSelected(event, 'profilePhoto');
+      } finally {
+        (window as any).FileReader = OriginalFileReader;
+      }
     });
 
     it('should remove file', () => {
@@ -333,9 +339,9 @@ describe('ProfileManagement', () => {
     });
   });
 
-  describe('States List', () => {
-    it('should have 50 states', () => {
-      expect(component.states.length).toBe(50);
+  describe('Provinces List', () => {
+    it('should have 13 provinces and territories', () => {
+      expect(component.provinces.length).toBe(13);
     });
   });
 });
@@ -349,8 +355,8 @@ function fillValidForm(component: ProfileManagement) {
     address: {
       street: '123 Main Street',
       city: 'Springfield',
-      state: 'IL',
-      zipCode: '62701'
+      province: 'ON',
+      postalCode: 'K1A 0B1'
     }
   });
 

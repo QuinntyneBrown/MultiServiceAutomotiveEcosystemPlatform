@@ -22,7 +22,7 @@ public class CreateProfessionalCommand : IRequest<ProfessionalDto>
     public string AddressLine1 { get; set; } = string.Empty;
     public string? AddressLine2 { get; set; }
     public string City { get; set; } = string.Empty;
-    public string State { get; set; } = string.Empty;
+    public string Province { get; set; } = string.Empty;
     public string PostalCode { get; set; } = string.Empty;
 }
 
@@ -68,7 +68,7 @@ public class CreateProfessionalCommandHandler : IRequestHandler<CreateProfession
             request.Phone,
             request.AddressLine1,
             request.City,
-            request.State,
+            request.Province,
             request.PostalCode);
 
         if (!string.IsNullOrWhiteSpace(request.AddressLine2))
@@ -77,7 +77,7 @@ public class CreateProfessionalCommandHandler : IRequestHandler<CreateProfession
                 request.AddressLine1,
                 request.AddressLine2,
                 request.City,
-                request.State,
+                request.Province,
                 request.PostalCode);
         }
 

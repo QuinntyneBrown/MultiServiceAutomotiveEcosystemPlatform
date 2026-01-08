@@ -22,8 +22,8 @@ export interface Address {
   street: string;
   addressLine2?: string;
   city: string;
-  state: string;
-  zipCode: string;
+  province: string;
+  postalCode: string;
   country?: string;
 }
 
@@ -124,32 +124,20 @@ export class ProfileManagement implements OnInit, OnDestroy {
     { value: 'other', label: 'Other' }
   ];
 
-  readonly states = [
-    { code: 'AL', name: 'Alabama' }, { code: 'AK', name: 'Alaska' },
-    { code: 'AZ', name: 'Arizona' }, { code: 'AR', name: 'Arkansas' },
-    { code: 'CA', name: 'California' }, { code: 'CO', name: 'Colorado' },
-    { code: 'CT', name: 'Connecticut' }, { code: 'DE', name: 'Delaware' },
-    { code: 'FL', name: 'Florida' }, { code: 'GA', name: 'Georgia' },
-    { code: 'HI', name: 'Hawaii' }, { code: 'ID', name: 'Idaho' },
-    { code: 'IL', name: 'Illinois' }, { code: 'IN', name: 'Indiana' },
-    { code: 'IA', name: 'Iowa' }, { code: 'KS', name: 'Kansas' },
-    { code: 'KY', name: 'Kentucky' }, { code: 'LA', name: 'Louisiana' },
-    { code: 'ME', name: 'Maine' }, { code: 'MD', name: 'Maryland' },
-    { code: 'MA', name: 'Massachusetts' }, { code: 'MI', name: 'Michigan' },
-    { code: 'MN', name: 'Minnesota' }, { code: 'MS', name: 'Mississippi' },
-    { code: 'MO', name: 'Missouri' }, { code: 'MT', name: 'Montana' },
-    { code: 'NE', name: 'Nebraska' }, { code: 'NV', name: 'Nevada' },
-    { code: 'NH', name: 'New Hampshire' }, { code: 'NJ', name: 'New Jersey' },
-    { code: 'NM', name: 'New Mexico' }, { code: 'NY', name: 'New York' },
-    { code: 'NC', name: 'North Carolina' }, { code: 'ND', name: 'North Dakota' },
-    { code: 'OH', name: 'Ohio' }, { code: 'OK', name: 'Oklahoma' },
-    { code: 'OR', name: 'Oregon' }, { code: 'PA', name: 'Pennsylvania' },
-    { code: 'RI', name: 'Rhode Island' }, { code: 'SC', name: 'South Carolina' },
-    { code: 'SD', name: 'South Dakota' }, { code: 'TN', name: 'Tennessee' },
-    { code: 'TX', name: 'Texas' }, { code: 'UT', name: 'Utah' },
-    { code: 'VT', name: 'Vermont' }, { code: 'VA', name: 'Virginia' },
-    { code: 'WA', name: 'Washington' }, { code: 'WV', name: 'West Virginia' },
-    { code: 'WI', name: 'Wisconsin' }, { code: 'WY', name: 'Wyoming' }
+  readonly provinces = [
+    { code: 'AB', name: 'Alberta' },
+    { code: 'BC', name: 'British Columbia' },
+    { code: 'MB', name: 'Manitoba' },
+    { code: 'NB', name: 'New Brunswick' },
+    { code: 'NL', name: 'Newfoundland and Labrador' },
+    { code: 'NS', name: 'Nova Scotia' },
+    { code: 'NT', name: 'Northwest Territories' },
+    { code: 'NU', name: 'Nunavut' },
+    { code: 'ON', name: 'Ontario' },
+    { code: 'PE', name: 'Prince Edward Island' },
+    { code: 'QC', name: 'Quebec' },
+    { code: 'SK', name: 'Saskatchewan' },
+    { code: 'YT', name: 'Yukon' }
   ];
 
   constructor(private fb: FormBuilder) {}
@@ -188,9 +176,15 @@ export class ProfileManagement implements OnInit, OnDestroy {
         street: ['', [Validators.required, Validators.maxLength(200)]],
         addressLine2: ['', [Validators.maxLength(100)]],
         city: ['', [Validators.required, Validators.maxLength(100)]],
-        state: ['', [Validators.required]],
-        zipCode: ['', [Validators.required, Validators.pattern(/^\d{5}(-\d{4})?$/)]],
-        country: ['US']
+        province: ['', [Validators.required]],
+        postalCode: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern(/^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][ -]?\d[ABCEGHJ-NPRSTV-Z]\d$/i)
+          ]
+        ],
+        country: ['CA']
       }),
       serviceRadius: this.fb.group({
         value: [null, [Validators.min(0), Validators.max(500)]],
@@ -446,7 +440,7 @@ export class ProfileManagement implements OnInit, OnDestroy {
     if (control.hasError('email')) return 'Please enter a valid email';
     if (control.hasError('pattern')) {
       if (controlPath.includes('phone')) return 'Format: (555) 123-4567';
-      if (controlPath.includes('zipCode')) return 'Format: 12345 or 12345-6789';
+      if (controlPath.includes('postalCode')) return 'Format: A1A 1A1';
       if (controlPath.includes('website')) return 'Please enter a valid URL';
       return 'Invalid format';
     }

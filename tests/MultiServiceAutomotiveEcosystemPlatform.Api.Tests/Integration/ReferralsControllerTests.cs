@@ -3,6 +3,8 @@
 
 using System.Net;
 using System.Net.Http.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using MultiServiceAutomotiveEcosystemPlatform.Api.Features.Customers;
 using MultiServiceAutomotiveEcosystemPlatform.Api.Features.Referrals;
 using Xunit;
@@ -11,6 +13,11 @@ namespace MultiServiceAutomotiveEcosystemPlatform.Api.Tests.Integration;
 
 public class ReferralsControllerTests : IClassFixture<TestWebApplicationFactory>
 {
+    private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web)
+    {
+        Converters = { new JsonStringEnumConverter() }
+    };
+
     private readonly HttpClient _client;
     private readonly TestWebApplicationFactory _factory;
 
@@ -32,7 +39,7 @@ public class ReferralsControllerTests : IClassFixture<TestWebApplicationFactory>
             LastName = "Customer"
         };
         var customerResponse = await _client.PostAsJsonAsync("/api/customers", customerCommand);
-        var customer = await customerResponse.Content.ReadFromJsonAsync<CustomerDto>();
+        var customer = await customerResponse.Content.ReadFromJsonAsync<CustomerDto>(JsonOptions);
 
         var referralCommand = new CreateCustomerReferralCommand
         {
@@ -47,7 +54,7 @@ public class ReferralsControllerTests : IClassFixture<TestWebApplicationFactory>
 
         // Assert
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
-        var referral = await response.Content.ReadFromJsonAsync<CustomerReferralDto>();
+        var referral = await response.Content.ReadFromJsonAsync<CustomerReferralDto>(JsonOptions);
         Assert.NotNull(referral);
         Assert.Equal(customer.CustomerId, referral.ReferrerCustomerId);
         Assert.Equal("referee@example.com", referral.RefereeEmail);
@@ -65,7 +72,7 @@ public class ReferralsControllerTests : IClassFixture<TestWebApplicationFactory>
             LastName = "Referrer"
         };
         var customerResponse = await _client.PostAsJsonAsync("/api/customers", customerCommand);
-        var customer = await customerResponse.Content.ReadFromJsonAsync<CustomerDto>();
+        var customer = await customerResponse.Content.ReadFromJsonAsync<CustomerDto>(JsonOptions);
 
         var referralCommand = new CreateCustomerReferralCommand
         {
@@ -80,7 +87,7 @@ public class ReferralsControllerTests : IClassFixture<TestWebApplicationFactory>
 
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        var result = await response.Content.ReadFromJsonAsync<GetCustomerReferralsQueryResponse>();
+        var result = await response.Content.ReadFromJsonAsync<GetCustomerReferralsQueryResponse>(JsonOptions);
         Assert.NotNull(result);
         Assert.True(result.Referrals.Count > 0);
     }

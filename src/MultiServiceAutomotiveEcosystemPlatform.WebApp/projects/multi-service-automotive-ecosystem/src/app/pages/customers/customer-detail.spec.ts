@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CustomerDetail } from './customer-detail';
 import { RouterModule, ActivatedRoute } from '@angular/router';
-import { of } from 'rxjs';
+import { firstValueFrom, filter } from 'rxjs';
 
 describe('CustomerDetail', () => {
   let component: CustomerDetail;
@@ -35,35 +35,31 @@ describe('CustomerDetail', () => {
     expect(component.customerId).toBe('1');
   });
 
-  it('should load customer data on init', (done) => {
+  it('should load customer data on init', async () => {
     component.ngOnInit();
-    component.customer$.subscribe(customer => {
-      if (customer) {
-        expect(customer).toBeDefined();
-        expect(customer.id).toBe('1');
-        expect(customer.firstName).toBeDefined();
-        expect(customer.lastName).toBeDefined();
-        done();
-      }
-    });
+
+    const customer = await firstValueFrom(
+      component.customer$.pipe(filter((c): c is NonNullable<typeof c> => c != null))
+    );
+
+    expect(customer).toBeDefined();
+    expect(customer.id).toBe('1');
+    expect(customer.firstName).toBeDefined();
+    expect(customer.lastName).toBeDefined();
   });
 
-  it('should load activities on init', (done) => {
+  it('should load activities on init', async () => {
     component.ngOnInit();
-    component.activities$.subscribe(activities => {
-      expect(activities).toBeDefined();
-      expect(Array.isArray(activities)).toBe(true);
-      done();
-    });
+    const activities = await firstValueFrom(component.activities$);
+    expect(activities).toBeDefined();
+    expect(Array.isArray(activities)).toBe(true);
   });
 
-  it('should load vehicles on init', (done) => {
+  it('should load vehicles on init', async () => {
     component.ngOnInit();
-    component.vehicles$.subscribe(vehicles => {
-      expect(vehicles).toBeDefined();
-      expect(Array.isArray(vehicles)).toBe(true);
-      done();
-    });
+    const vehicles = await firstValueFrom(component.vehicles$);
+    expect(vehicles).toBeDefined();
+    expect(Array.isArray(vehicles)).toBe(true);
   });
 
   it('should return correct activity icon', () => {

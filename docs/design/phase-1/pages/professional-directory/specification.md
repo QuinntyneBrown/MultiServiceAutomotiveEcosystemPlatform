@@ -69,8 +69,8 @@ export interface Professional {
   location: {
     address: string;
     city: string;
-    state: string;
-    zipCode: string;
+    province: string;
+    postalCode: string;
     latitude?: number;
     longitude?: number;
   };
@@ -860,7 +860,7 @@ export class ProfessionalService {
 ### GET /api/professionals/search
 **Query Parameters**:
 - `q` - Search query
-- `location` - Location/zip code
+- `location` - Location/postal code
 - `types` - Comma-separated business types
 - `specialties` - Comma-separated specialties
 - `verified` - Boolean

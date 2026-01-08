@@ -1,16 +1,9 @@
 <div
-  class="share-referral-overlay"
-  (click)="close()"
-  (keydown)="onKeydown($event)"
-  role="presentation"
+  class="share-referral-modal"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="share-modal-title"
 >
-  <div
-    class="share-referral-modal"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="share-modal-title"
-    (click)="$event.stopPropagation()"
-  >
     <!-- Header -->
     <header class="modal-header">
       <h2 id="share-modal-title" class="modal-title">Share Your Referral</h2>
@@ -110,11 +103,6 @@
             </button>
           </div>
 
-          @if (isCopied()) {
-            <div class="success-toast" role="status" aria-live="polite">
-              Link copied to clipboard!
-            </div>
-          }
         </div>
       }
 
@@ -345,5 +333,4 @@
         </div>
       }
     </div>
-  </div>
 </div>

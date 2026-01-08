@@ -88,8 +88,8 @@ interface Customer {
     street: string;
     street2?: string;
     city: string;
-    state: string;
-    zipCode: string;
+    province: string;
+    postalCode: string;
     country: string;
   };
   preferences: {
@@ -552,7 +552,7 @@ interface DuplicateCheckResponse {
 
 ### Desktop (≥768px)
 
-- Two-column layout for name fields, email/phone, city/state, zip/country
+- Two-column layout for name fields, email/phone, city/province, postal code/country
 - Full width for street address and textarea
 - Buttons aligned to right
 - Maximum container width: 1200px

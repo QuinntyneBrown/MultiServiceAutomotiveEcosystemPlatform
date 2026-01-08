@@ -1,7 +1,7 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable, of } from 'rxjs';
-import { ShareReferral, UserInfo } from 'multi-service-automotive-ecosystem-components';
+import { ShareReferralDialogService, ToastService, UserInfo } from 'multi-service-automotive-ecosystem-components';
 
 interface ReferralStats {
   totalReferrals: number;
@@ -21,7 +21,7 @@ interface Referral {
 
 @Component({
   selector: 'app-referral-dashboard',
-  imports: [CommonModule, ShareReferral],
+  imports: [CommonModule],
   templateUrl: './referral-dashboard.html',
   styleUrl: './referral-dashboard.scss',
 })
@@ -30,7 +30,6 @@ export class ReferralDashboard {
   stats$: Observable<ReferralStats> = this.loadStats();
   referrals$: Observable<Referral[]> = this.loadReferrals();
   referralCode = 'WELCOME2024';
-  showShareModal = signal(false);
   
   // Mock user info for share modal
   currentUser: UserInfo = {
@@ -39,6 +38,11 @@ export class ReferralDashboard {
     lastName: 'Doe',
     email: 'john.doe@example.com'
   };
+
+  constructor(
+    private shareReferralDialog: ShareReferralDialogService,
+    private toast: ToastService
+  ) {}
 
   private loadStats(): Observable<ReferralStats> {
     // Mock data - replace with actual API call
@@ -82,18 +86,47 @@ export class ReferralDashboard {
     return of(mockReferrals);
   }
 
-  copyReferralCode(): void {
-    navigator.clipboard.writeText(this.referralCode);
-    // Show toast notification - implement later
-    console.log('Referral code copied to clipboard');
+  async copyReferralCode(): Promise<void> {
+    try {
+      if (navigator?.clipboard?.writeText) {
+        await navigator.clipboard.writeText(this.referralCode);
+        this.toast.success('Referral code copied to clipboard');
+        return;
+      }
+    } catch {
+      // fall through to legacy fallback
+    }
+
+    try {
+      const textarea = document.createElement('textarea');
+      textarea.value = this.referralCode;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.left = '-9999px';
+      document.body.appendChild(textarea);
+      textarea.select();
+      const copied = document.execCommand?.('copy') ?? false;
+      document.body.removeChild(textarea);
+
+      if (copied) {
+        this.toast.success('Referral code copied to clipboard');
+      } else {
+        this.toast.error('Unable to copy referral code');
+      }
+    } catch {
+      this.toast.error('Unable to copy referral code');
+    }
   }
 
   openShareModal(): void {
-    this.showShareModal.set(true);
-  }
+    const ref = this.shareReferralDialog.open({
+      referralCode: this.referralCode,
+      user: this.currentUser,
+    });
 
-  closeShareModal(): void {
-    this.showShareModal.set(false);
+    ref.closed.subscribe(() => {
+      // no-op: hook available for analytics if needed
+    });
   }
 
   onShareSuccess(event: any): void {

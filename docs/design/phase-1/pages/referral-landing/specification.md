@@ -517,9 +517,9 @@ GET /api/referrals/validate/SARAH2024
   "specialty": "Certified Master Mechanic",
   "bio": "With over 15 years of experience...",
   "location": {
-    "city": "Charlotte",
-    "state": "NC",
-    "zipCode": "28202"
+    "city": "Toronto",
+    "province": "ON",
+    "postalCode": "K1A 0B1"
   },
   "stats": {
     "yearsExperience": 15,

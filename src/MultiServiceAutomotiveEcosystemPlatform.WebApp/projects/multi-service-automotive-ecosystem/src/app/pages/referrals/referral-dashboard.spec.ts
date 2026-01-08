@@ -1,5 +1,7 @@
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReferralDashboard } from './referral-dashboard';
+import { firstValueFrom } from 'rxjs';
 
 describe('ReferralDashboard', () => {
   let component: ReferralDashboard;
@@ -32,22 +34,18 @@ describe('ReferralDashboard', () => {
     expect(typeof component.referralCode).toBe('string');
   });
 
-  it('should load statistics data', (done) => {
-    component.stats$.subscribe(stats => {
-      expect(stats).toBeTruthy();
-      expect(stats.totalReferrals).toBeDefined();
-      expect(stats.successfulConversions).toBeDefined();
-      expect(stats.pendingReferrals).toBeDefined();
-      done();
-    });
+  it('should load statistics data', async () => {
+    const stats = await firstValueFrom(component.stats$);
+    expect(stats).toBeTruthy();
+    expect(stats.totalReferrals).toBeDefined();
+    expect(stats.successfulConversions).toBeDefined();
+    expect(stats.pendingReferrals).toBeDefined();
   });
 
-  it('should load referrals data', (done) => {
-    component.referrals$.subscribe(referrals => {
-      expect(referrals).toBeTruthy();
-      expect(Array.isArray(referrals)).toBe(true);
-      done();
-    });
+  it('should load referrals data', async () => {
+    const referrals = await firstValueFrom(component.referrals$);
+    expect(referrals).toBeTruthy();
+    expect(Array.isArray(referrals)).toBe(true);
   });
 
   it('should display referral code', () => {
@@ -63,13 +61,11 @@ describe('ReferralDashboard', () => {
     expect(copyBtn).toBeTruthy();
   });
 
-  it('should display statistics cards after data loads', (done) => {
-    component.stats$.subscribe(() => {
-      fixture.detectChanges();
-      const statCards = fixture.nativeElement.querySelectorAll('.referral-dashboard__stat-card');
-      expect(statCards.length).toBeGreaterThan(0);
-      done();
-    });
+  it('should display statistics cards after data loads', async () => {
+    await firstValueFrom(component.stats$);
+    fixture.detectChanges();
+    const statCards = fixture.nativeElement.querySelectorAll('.referral-dashboard__stat-card');
+    expect(statCards.length).toBeGreaterThan(0);
   });
 
   it('should display referral table', () => {
@@ -79,7 +75,7 @@ describe('ReferralDashboard', () => {
   });
 
   it('should call copyReferralCode when copy button is clicked', () => {
-    spyOn(component, 'copyReferralCode');
+    vi.spyOn(component, 'copyReferralCode');
     const copyBtn = fixture.nativeElement.querySelector('.referral-dashboard__copy-btn');
     copyBtn.click();
     expect(component.copyReferralCode).toHaveBeenCalled();
@@ -99,12 +95,10 @@ describe('ReferralDashboard', () => {
     expect(component.getStatusLabel('expired')).toBe('Expired');
   });
 
-  it('should display referral rows after data loads', (done) => {
-    component.referrals$.subscribe(() => {
-      fixture.detectChanges();
-      const rows = fixture.nativeElement.querySelectorAll('.referral-dashboard__table-row');
-      expect(rows.length).toBeGreaterThan(0);
-      done();
-    });
+  it('should display referral rows after data loads', async () => {
+    await firstValueFrom(component.referrals$);
+    fixture.detectChanges();
+    const rows = fixture.nativeElement.querySelectorAll('.referral-dashboard__table-row');
+    expect(rows.length).toBeGreaterThan(0);
   });
 });

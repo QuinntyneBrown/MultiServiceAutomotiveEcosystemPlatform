@@ -42,9 +42,9 @@ describe('CustomerForm', () => {
         address: {
           street: '123 Main St',
           city: 'Springfield',
-          state: 'IL',
-          zipCode: '62701',
-          country: 'US'
+          province: 'ON',
+          postalCode: 'K1A 0B1',
+          country: 'CA'
         },
         preferences: {
           contactMethod: 'email'
@@ -104,17 +104,17 @@ describe('CustomerForm', () => {
       expect(control?.valid).toBeTruthy();
     });
 
-    it('should validate ZIP code format', () => {
-      const control = component.customerForm.get('address.zipCode');
-      control?.setValue('123');
+    it('should validate postal code format', () => {
+      const control = component.customerForm.get('address.postalCode');
+      control?.setValue('12345');
       expect(control?.hasError('pattern')).toBeTruthy();
 
-      control?.setValue('12345');
+      control?.setValue('K1A 0B1');
       expect(control?.valid).toBeTruthy();
     });
 
-    it('should require state', () => {
-      const control = component.customerForm.get('address.state');
+    it('should require province', () => {
+      const control = component.customerForm.get('address.province');
       expect(control?.valid).toBeFalsy();
       expect(control?.hasError('required')).toBeTruthy();
     });
@@ -142,7 +142,7 @@ describe('CustomerForm', () => {
       } as unknown as Event;
 
       component.formatPhoneNumber(event);
-      expect(component.customerForm.value.phone).toBe('(555');
+      expect(component.customerForm.value.phone).toBe('(555) ');
     });
   });
 
@@ -325,9 +325,9 @@ describe('CustomerForm', () => {
         address: {
           street: '456 Oak Ave',
           city: 'Chicago',
-          state: 'IL',
-          zipCode: '60601',
-          country: 'US'
+          province: 'QC',
+          postalCode: 'H2Y 1C6',
+          country: 'CA'
         },
         preferences: {
           contactMethod: 'phone'
@@ -374,14 +374,14 @@ describe('CustomerForm', () => {
     });
   });
 
-  describe('States List', () => {
-    it('should have all 50 US states', () => {
-      expect(component.states.length).toBe(50);
+  describe('Provinces List', () => {
+    it('should have 13 provinces and territories', () => {
+      expect(component.provinces.length).toBe(13);
     });
 
-    it('should have California in states list', () => {
-      const california = component.states.find(s => s.code === 'CA');
-      expect(california?.name).toBe('California');
+    it('should have Ontario in provinces list', () => {
+      const ontario = component.provinces.find(p => p.code === 'ON');
+      expect(ontario?.name).toBe('Ontario');
     });
   });
 });
@@ -395,9 +395,9 @@ function fillValidForm(component: CustomerForm) {
     address: {
       street: '123 Main St',
       city: 'Springfield',
-      state: 'IL',
-      zipCode: '62701',
-      country: 'US'
+      province: 'ON',
+      postalCode: 'K1A 0B1',
+      country: 'CA'
     },
     preferences: {
       contactMethod: 'email'

@@ -136,9 +136,9 @@ export const EditMode: Story = {
       address: {
         street: '456 Main Street',
         city: 'Springfield',
-        state: 'IL',
-        zipCode: '62701',
-        country: 'US'
+        province: 'ON',
+        postalCode: 'K1A 0B1',
+        country: 'CA'
       },
       serviceRadius: {
         value: 25,
@@ -193,9 +193,9 @@ export const BodyShopProfile: Story = {
         street: '789 Industrial Boulevard',
         addressLine2: 'Building C',
         city: 'Chicago',
-        state: 'IL',
-        zipCode: '60601',
-        country: 'US'
+        province: 'QC',
+        postalCode: 'H2Y 1C6',
+        country: 'CA'
       }
     } as Partial<Profile>,
   },

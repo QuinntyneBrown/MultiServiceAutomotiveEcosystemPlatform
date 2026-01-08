@@ -200,8 +200,8 @@ interface Address {
   street: string;
   addressLine2?: string;
   city: string;
-  state: string;
-  zipCode: string;
+  province: string;
+  postalCode: string;
   country?: string;
 }
 
@@ -318,8 +318,8 @@ export interface ProfileManagementOutputs {
 - **Street Address** (required, text, max 200 chars)
 - **Address Line 2** (optional, text, max 100 chars)
 - **City** (required, text, max 100 chars)
-- **State** (required, select)
-- **ZIP Code** (required, text, 5-10 chars)
+- **Province** (required, select)
+- **Postal Code** (required, text, 6-7 chars)
 - **Service Radius** (optional)
   - Value: number, min 0, max 500
   - Unit: miles or kilometers
@@ -416,11 +416,11 @@ const contactValidation = {
 const addressValidation = {
   street: { required: true, maxLength: 200 },
   city: { required: true, maxLength: 100 },
-  state: { required: true },
-  zipCode: {
+  province: { required: true },
+  postalCode: {
     required: true,
-    pattern: /^\d{5}(-\d{4})?$/,
-    message: 'ZIP code must be 5 or 9 digits'
+    pattern: /^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][ -]?\d[ABCEGHJ-NPRSTV-Z]\d$/i,
+    message: 'Postal code must be in format: A1A 1A1'
   }
 };
 ```
@@ -431,7 +431,7 @@ const addressValidation = {
 - All required fields must be completed
 - At least one phone number
 - At least one email address
-- Valid address (street, city, state, ZIP)
+- Valid address (street, city, province, postal code)
 - Bio minimum 50 characters
 
 **Draft Requirements:**

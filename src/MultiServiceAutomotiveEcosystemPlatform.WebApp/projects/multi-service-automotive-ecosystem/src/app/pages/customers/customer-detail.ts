@@ -61,7 +61,7 @@ export class CustomerDetail implements OnInit {
       lastName: 'Doe',
       email: 'john.doe@example.com',
       phone: '(555) 123-4567',
-      address: '123 Main St, Springfield, IL 62701',
+      address: '123 Main St, Springfield, ON K1A 0B1',
       status: 'active',
       ownership: 'my-customer',
       createdDate: new Date('2024-01-15'),

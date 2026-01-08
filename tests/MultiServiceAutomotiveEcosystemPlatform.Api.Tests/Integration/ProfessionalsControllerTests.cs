@@ -3,6 +3,8 @@
 
 using System.Net;
 using System.Net.Http.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using MultiServiceAutomotiveEcosystemPlatform.Api.Features.Professionals;
 using Xunit;
 
@@ -10,6 +12,11 @@ namespace MultiServiceAutomotiveEcosystemPlatform.Api.Tests.Integration;
 
 public class ProfessionalsControllerTests : IClassFixture<TestWebApplicationFactory>
 {
+    private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web)
+    {
+        Converters = { new JsonStringEnumConverter() }
+    };
+
     private readonly HttpClient _client;
     private readonly TestWebApplicationFactory _factory;
 
@@ -27,15 +34,15 @@ public class ProfessionalsControllerTests : IClassFixture<TestWebApplicationFact
         {
             UserId = Guid.NewGuid(),
             BusinessName = "Test Auto Shop",
-            BusinessType = "MECHANIC_DOMESTIC",
+            BusinessType = "MechanicDomestic",
             FirstName = "John",
             LastName = "Mechanic",
             Email = "john@testautoshop.com",
             Phone = "1234567890",
             AddressLine1 = "123 Main St",
             City = "TestCity",
-            State = "CA",
-            PostalCode = "90210"
+            Province = "ON",
+            PostalCode = "K1A 0B1"
         };
 
         // Act
@@ -43,7 +50,7 @@ public class ProfessionalsControllerTests : IClassFixture<TestWebApplicationFact
 
         // Assert
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
-        var professional = await response.Content.ReadFromJsonAsync<ProfessionalDto>();
+        var professional = await response.Content.ReadFromJsonAsync<ProfessionalDto>(JsonOptions);
         Assert.NotNull(professional);
         Assert.Equal("Test Auto Shop", professional.BusinessName);
         Assert.Equal("John", professional.FirstName);
@@ -58,25 +65,25 @@ public class ProfessionalsControllerTests : IClassFixture<TestWebApplicationFact
         {
             UserId = Guid.NewGuid(),
             BusinessName = "German Auto Specialists",
-            BusinessType = "MECHANIC_GERMAN",
+            BusinessType = "MechanicGerman",
             FirstName = "Hans",
             LastName = "Schmidt",
             Email = "hans@germanspecs.com",
             Phone = "9876543210",
             AddressLine1 = "456 Oak Ave",
             City = "Berlin",
-            State = "CA",
-            PostalCode = "90211"
+            Province = "QC",
+            PostalCode = "H2Y 1C6"
         };
         var createResponse = await _client.PostAsJsonAsync("/api/professionals", command);
-        var createdProfessional = await createResponse.Content.ReadFromJsonAsync<ProfessionalDto>();
+        var createdProfessional = await createResponse.Content.ReadFromJsonAsync<ProfessionalDto>(JsonOptions);
 
         // Act
         var response = await _client.GetAsync($"/api/professionals/{createdProfessional!.ProfessionalId}");
 
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        var professional = await response.Content.ReadFromJsonAsync<ProfessionalDto>();
+        var professional = await response.Content.ReadFromJsonAsync<ProfessionalDto>(JsonOptions);
         Assert.NotNull(professional);
         Assert.Equal("Hans", professional.FirstName);
         Assert.Equal("Schmidt", professional.LastName);
@@ -92,15 +99,15 @@ public class ProfessionalsControllerTests : IClassFixture<TestWebApplicationFact
             {
                 UserId = Guid.NewGuid(),
                 BusinessName = $"Auto Shop {i}",
-                BusinessType = "MECHANIC_DOMESTIC",
+                BusinessType = "MechanicDomestic",
                 FirstName = $"Professional{i}",
                 LastName = "Test",
                 Email = $"prof{i}@shop.com",
                 Phone = $"55500{i}0000",
                 AddressLine1 = $"{i} Test St",
                 City = "TestCity",
-                State = "CA",
-                PostalCode = "90210"
+                Province = "BC",
+                PostalCode = "V6B 1A1"
             };
             await _client.PostAsJsonAsync("/api/professionals", command);
         }
@@ -110,7 +117,7 @@ public class ProfessionalsControllerTests : IClassFixture<TestWebApplicationFact
 
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        var result = await response.Content.ReadFromJsonAsync<GetProfessionalsQueryResponse>();
+        var result = await response.Content.ReadFromJsonAsync<GetProfessionalsQueryResponse>(JsonOptions);
         Assert.NotNull(result);
         Assert.True(result.Professionals.Count >= 3);
     }

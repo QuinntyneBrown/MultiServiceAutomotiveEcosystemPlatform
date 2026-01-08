@@ -238,7 +238,7 @@ export class CustomerDetail implements OnInit {
 **Data Required:**
 - email
 - phone
-- address (street, city, state, zip)
+- address (street, city, province, postal code)
 - createdAt
 
 ### 3. Vehicle Information Card (Phase 1 Placeholder)
@@ -329,8 +329,8 @@ interface CustomerDetail {
     street: string;
     street2?: string;
     city: string;
-    state: string;
-    zipCode: string;
+    province: string;
+    postalCode: string;
     country: string;
   };
   status: 'active' | 'pending' | 'referred' | 'inactive';
@@ -407,10 +407,10 @@ Response:
   "address": {
     "street": "1234 Main Street",
     "street2": "Apartment 5B",
-    "city": "Springfield",
-    "state": "IL",
-    "zipCode": "62701",
-    "country": "US"
+    "city": "Ottawa",
+    "province": "ON",
+    "postalCode": "K1A 0B1",
+    "country": "CA"
   },
   "status": "active",
   "ownershipType": "referred",

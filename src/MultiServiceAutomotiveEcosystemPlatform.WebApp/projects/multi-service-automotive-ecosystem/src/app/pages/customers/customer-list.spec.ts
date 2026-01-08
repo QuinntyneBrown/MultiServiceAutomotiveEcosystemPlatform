@@ -1,9 +1,9 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CustomerList } from './customer-list';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { of } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 
 describe('CustomerList', () => {
   let component: CustomerList;
@@ -22,13 +22,11 @@ describe('CustomerList', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should load customers on init', (done) => {
-    component.customers$.subscribe(customers => {
-      expect(customers).toBeDefined();
-      expect(Array.isArray(customers)).toBe(true);
-      expect(customers.length).toBeGreaterThan(0);
-      done();
-    });
+  it('should load customers on init', async () => {
+    const customers = await firstValueFrom(component.customers$);
+    expect(customers).toBeDefined();
+    expect(Array.isArray(customers)).toBe(true);
+    expect(customers.length).toBeGreaterThan(0);
   });
 
   it('should return correct ownership label', () => {

@@ -1,6 +1,7 @@
+import { describe, it, expect, beforeEach } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { of } from 'rxjs';
+import { of, firstValueFrom } from 'rxjs';
 import { ProfessionalProfile } from './professional-profile';
 
 describe('ProfessionalProfile', () => {
@@ -31,67 +32,53 @@ describe('ProfessionalProfile', () => {
     expect(component.profile$).toBeTruthy();
   });
 
-  it('should load profile data based on route params', (done) => {
-    component.profile$.subscribe(profile => {
-      expect(profile).toBeTruthy();
-      expect(profile.slug).toBe('test-professional');
-      done();
-    });
+  it('should load profile data based on route params', async () => {
+    const profile = await firstValueFrom(component.profile$);
+    expect(profile).toBeTruthy();
+    expect(profile.slug).toBe('test-professional');
   });
 
-  it('should display business name after data loads', (done) => {
-    component.profile$.subscribe(() => {
+  it('should display business name after data loads', async () => {
+    await firstValueFrom(component.profile$);
+    fixture.detectChanges();
+    const businessName = fixture.nativeElement.querySelector('.professional-profile__business-name');
+    expect(businessName).toBeTruthy();
+  });
+
+  it('should display bio section', async () => {
+    await firstValueFrom(component.profile$);
+    fixture.detectChanges();
+    const bio = fixture.nativeElement.querySelector('.professional-profile__bio');
+    expect(bio).toBeTruthy();
+  });
+
+  it('should display specialties', async () => {
+    await firstValueFrom(component.profile$);
+    fixture.detectChanges();
+    const specialties = fixture.nativeElement.querySelectorAll('.professional-profile__specialty');
+    expect(specialties.length).toBeGreaterThan(0);
+  });
+
+  it('should display contact information', async () => {
+    await firstValueFrom(component.profile$);
+    fixture.detectChanges();
+    const contact = fixture.nativeElement.querySelector('.professional-profile__contact');
+    expect(contact).toBeTruthy();
+  });
+
+  it('should have action buttons', async () => {
+    await firstValueFrom(component.profile$);
+    fixture.detectChanges();
+    const buttons = fixture.nativeElement.querySelectorAll('.professional-profile__action-btn');
+    expect(buttons.length).toBeGreaterThan(0);
+  });
+
+  it('should display verified badge for verified professionals', async () => {
+    const profile = await firstValueFrom(component.profile$);
+    if (profile.verified) {
       fixture.detectChanges();
-      const businessName = fixture.nativeElement.querySelector('.professional-profile__business-name');
-      expect(businessName).toBeTruthy();
-      done();
-    });
-  });
-
-  it('should display bio section', (done) => {
-    component.profile$.subscribe(() => {
-      fixture.detectChanges();
-      const bio = fixture.nativeElement.querySelector('.professional-profile__bio');
-      expect(bio).toBeTruthy();
-      done();
-    });
-  });
-
-  it('should display specialties', (done) => {
-    component.profile$.subscribe(() => {
-      fixture.detectChanges();
-      const specialties = fixture.nativeElement.querySelectorAll('.professional-profile__specialty');
-      expect(specialties.length).toBeGreaterThan(0);
-      done();
-    });
-  });
-
-  it('should display contact information', (done) => {
-    component.profile$.subscribe(() => {
-      fixture.detectChanges();
-      const contact = fixture.nativeElement.querySelector('.professional-profile__contact');
-      expect(contact).toBeTruthy();
-      done();
-    });
-  });
-
-  it('should have action buttons', (done) => {
-    component.profile$.subscribe(() => {
-      fixture.detectChanges();
-      const buttons = fixture.nativeElement.querySelectorAll('.professional-profile__action-btn');
-      expect(buttons.length).toBeGreaterThan(0);
-      done();
-    });
-  });
-
-  it('should display verified badge for verified professionals', (done) => {
-    component.profile$.subscribe(profile => {
-      if (profile.verified) {
-        fixture.detectChanges();
-        const badge = fixture.nativeElement.querySelector('.professional-profile__badge');
-        expect(badge).toBeTruthy();
-      }
-      done();
-    });
+      const badge = fixture.nativeElement.querySelector('.professional-profile__badge');
+      expect(badge).toBeTruthy();
+    }
   });
 });

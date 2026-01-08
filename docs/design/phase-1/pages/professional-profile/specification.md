@@ -184,8 +184,8 @@ export interface Location {
 export interface Address {
   street: string;
   city: string;
-  state: string;
-  zipCode: string;
+  province: string;
+  postalCode: string;
   country: string;
 }
 
@@ -441,8 +441,8 @@ export class ProfessionalProfileComponent implements OnInit, OnDestroy {
         '@type': 'PostalAddress',
         'streetAddress': profile.location.address.street,
         'addressLocality': profile.location.address.city,
-        'addressRegion': profile.location.address.state,
-        'postalCode': profile.location.address.zipCode,
+        'addressRegion': profile.location.address.province,
+        'postalCode': profile.location.address.postalCode,
         'addressCountry': profile.location.address.country
       },
       'geo': {

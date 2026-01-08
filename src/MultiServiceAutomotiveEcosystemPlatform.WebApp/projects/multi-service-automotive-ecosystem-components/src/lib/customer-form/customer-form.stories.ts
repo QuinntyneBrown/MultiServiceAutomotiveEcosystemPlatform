@@ -9,7 +9,7 @@ import { CustomerForm, Customer } from './customer-form';
  *
  * ## Features
  * - Contact information fields with validation
- * - Address section with state dropdown
+ * - Address section with province dropdown
  * - Preferences for contact method and time
  * - Tags system for customer categorization
  * - Notes field for internal comments
@@ -125,9 +125,9 @@ export const EditMode: Story = {
         street: '123 Main Street',
         street2: 'Apt 4B',
         city: 'Springfield',
-        state: 'IL',
-        zipCode: '62701',
-        country: 'US',
+        province: 'ON',
+        postalCode: 'K1A 0B1',
+        country: 'CA',
       },
       preferences: {
         contactMethod: 'email',
@@ -159,9 +159,9 @@ export const WithAutoSave: Story = {
       address: {
         street: '456 Oak Avenue',
         city: 'Chicago',
-        state: 'IL',
-        zipCode: '60601',
-        country: 'US',
+        province: 'QC',
+        postalCode: 'H2Y 1C6',
+        country: 'CA',
       },
       preferences: {
         contactMethod: 'phone',
@@ -207,9 +207,9 @@ export const WithManyTags: Story = {
       address: {
         street: '789 Pine Road',
         city: 'Austin',
-        state: 'TX',
-        zipCode: '78701',
-        country: 'US',
+        province: 'BC',
+        postalCode: 'V6B 1A1',
+        country: 'CA',
       },
       preferences: {
         contactMethod: 'sms',
@@ -277,9 +277,9 @@ export const WithLongNotes: Story = {
       address: {
         street: '100 Corporate Drive',
         city: 'Denver',
-        state: 'CO',
-        zipCode: '80202',
-        country: 'US',
+        province: 'AB',
+        postalCode: 'T5J 0N3',
+        country: 'CA',
       },
       preferences: {
         contactMethod: 'email',
