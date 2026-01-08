@@ -1,0 +1,180 @@
+@startuml customer-management-flow
+title Customer Management Flow (Professional) - Phase 1
+
+skinparam activityBackgroundColor #E3F2FD
+skinparam activityBorderColor #1976D2
+skinparam activityDiamondBackgroundColor #FFF3E0
+skinparam activityDiamondBorderColor #F57C00
+
+start
+
+:Professional navigates to Customers;
+
+:System displays Customer List View;
+note right
+  List features:
+  * Paginated table
+  * Filter options
+  * Sort options
+  * Search bar
+end note
+
+fork
+  :Apply Filters;
+  note right
+    Filter by:
+    * My customers (owned)
+    * Referred customers
+    * All customers
+    * Status (active/inactive)
+  end note
+fork again
+  :Sort Results;
+  note right
+    Sort by:
+    * Name (A-Z)
+    * Date added
+    * Last activity
+  end note
+fork again
+  :Search Customers;
+  note right
+    Search by:
+    * Name
+    * Email
+    * Phone
+  end note
+end fork
+
+:View filtered customer list;
+
+switch (Action?)
+case (View Customer)
+  :Professional clicks customer row;
+
+  :System displays Customer Detail View;
+  note right
+    Detail sections:
+    * Header with name/status
+    * Contact information
+    * Vehicle information
+    * Ownership info
+    * Referral history
+    * Activity timeline
+  end note
+
+  :Professional reviews customer details;
+
+  switch (Detail Action?)
+  case (Edit Customer)
+    :Professional clicks Edit;
+    :Open Customer Edit Form;
+    :Professional updates fields;
+    :Professional clicks Save;
+
+    :System validates changes;
+
+    if (Valid?) then (yes)
+      :System saves changes;
+      :Display "Changes Saved" success;
+    else (no)
+      :Display validation errors;
+    endif
+
+  case (Contact Customer)
+    switch (Contact Method?)
+    case (Call)
+      :Click phone number;
+      :Open phone dialer;
+    case (Email)
+      :Click email address;
+      :Open email client;
+    endswitch
+
+  case (Refer Customer)
+    :Click "Refer to Colleague";
+    :Open Send Referral form;
+    note right
+      Customer pre-selected
+      See: Professional Send Referral Flow
+    end note
+
+  case (View Activity)
+    :Expand Activity Timeline;
+    :View chronological activities;
+    note right
+      Activity types:
+      * Inquiries
+      * Referrals
+      * Services
+      * Communications
+    end note
+
+  case (Back to List)
+    :Return to Customer List;
+  endswitch
+
+case (Add Customer)
+  :Professional clicks "Add Customer";
+
+  :System opens Customer Create Form;
+  note right
+    Form sections:
+    * Contact Information
+    * Personal Details
+    * Address
+    * Notes and Tags
+  end note
+
+  :Professional enters customer details;
+  note right
+    Required fields:
+    * First Name
+    * Last Name
+    * Email
+    * Phone
+  end note
+
+  :Professional clicks Save;
+
+  :System validates form;
+
+  if (Form valid?) then (yes)
+    :System checks for duplicates;
+
+    if (Possible duplicate found?) then (yes)
+      :Display duplicate warning;
+      :Show existing customer matches;
+
+      if (Continue anyway?) then (yes)
+        :System creates customer;
+      else (no)
+        :Navigate to existing customer;
+      endif
+    else (no)
+      :System creates customer;
+    endif
+
+    :System auto-assigns ownership to professional;
+    :Display "Customer Created" success;
+    :Navigate to Customer Detail;
+  else (no)
+    :Display validation errors;
+    :Highlight invalid fields;
+  endif
+
+case (Bulk Actions)
+  :Professional selects multiple customers;
+  :Display bulk action menu;
+  note right
+    Bulk actions:
+    * Export selected
+    * Add tags
+    * Send message (Phase 2)
+  end note
+
+endswitch
+
+stop
+
+@enduml
