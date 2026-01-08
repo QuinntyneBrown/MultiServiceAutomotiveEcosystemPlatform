@@ -1,0 +1,106 @@
+<div class="professional-referral-dashboard">
+  <div class="professional-referral-dashboard__header">
+    <h1 class="professional-referral-dashboard__title">Professional Referrals</h1>
+    <a routerLink="/professional/referrals/send" class="professional-referral-dashboard__send-btn">
+      Send Referral
+    </a>
+  </div>
+
+  <div class="professional-referral-dashboard__container">
+    <!-- Stats -->
+    <ng-container *ngIf="stats$ | async as stats">
+      <div class="professional-referral-dashboard__stats">
+        <div class="professional-referral-dashboard__stat-card">
+          <span class="professional-referral-dashboard__stat-value">{{ stats.sentThisMonth }}</span>
+          <span class="professional-referral-dashboard__stat-label">Sent This Month</span>
+        </div>
+        <div class="professional-referral-dashboard__stat-card">
+          <span class="professional-referral-dashboard__stat-value">{{ stats.receivedThisMonth }}</span>
+          <span class="professional-referral-dashboard__stat-label">Received This Month</span>
+        </div>
+        <div class="professional-referral-dashboard__stat-card">
+          <span class="professional-referral-dashboard__stat-value">{{ stats.acceptanceRate }}%</span>
+          <span class="professional-referral-dashboard__stat-label">Acceptance Rate</span>
+        </div>
+        <div class="professional-referral-dashboard__stat-card">
+          <span class="professional-referral-dashboard__stat-value">{{ stats.activeReferrals }}</span>
+          <span class="professional-referral-dashboard__stat-label">Active Referrals</span>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Received Referrals -->
+    <div class="professional-referral-dashboard__section">
+      <h2 class="professional-referral-dashboard__section-title">Received Referrals</h2>
+      <div class="professional-referral-dashboard__list">
+        <ng-container *ngIf="receivedReferrals$ | async as referrals">
+          <div 
+            *ngFor="let referral of referrals"
+            class="professional-referral-dashboard__item"
+          >
+            <div class="professional-referral-dashboard__item-info">
+              <h3 class="professional-referral-dashboard__item-title">{{ referral.customerName }}</h3>
+              <p class="professional-referral-dashboard__item-detail">
+                Service: {{ referral.serviceNeeded }}
+              </p>
+              <p class="professional-referral-dashboard__item-detail">
+                From: {{ referral.targetProfessionalName }}
+              </p>
+              <span class="professional-referral-dashboard__item-date">
+                {{ referral.date | date: 'MMM d, y' }}
+              </span>
+            </div>
+            <div class="professional-referral-dashboard__item-actions">
+              <span 
+                class="professional-referral-dashboard__status"
+                [ngClass]="getStatusClass(referral.status)"
+              >
+                {{ getStatusLabel(referral.status) }}
+              </span>
+              <div class="professional-referral-dashboard__buttons">
+                <button *ngIf="referral.status === 'pending'" type="button" class="professional-referral-dashboard__btn professional-referral-dashboard__btn--accept">Accept</button>
+                <button *ngIf="referral.status === 'pending'" type="button" class="professional-referral-dashboard__btn professional-referral-dashboard__btn--decline">Decline</button>
+                <a [routerLink]="['/professional/referrals/received', referral.id]" class="professional-referral-dashboard__btn">View</a>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <!-- Sent Referrals -->
+    <div class="professional-referral-dashboard__section">
+      <h2 class="professional-referral-dashboard__section-title">Sent Referrals</h2>
+      <div class="professional-referral-dashboard__list">
+        <ng-container *ngIf="sentReferrals$ | async as referrals">
+          <div 
+            *ngFor="let referral of referrals"
+            class="professional-referral-dashboard__item"
+          >
+            <div class="professional-referral-dashboard__item-info">
+              <h3 class="professional-referral-dashboard__item-title">{{ referral.customerName }}</h3>
+              <p class="professional-referral-dashboard__item-detail">
+                Service: {{ referral.serviceNeeded }}
+              </p>
+              <p class="professional-referral-dashboard__item-detail">
+                To: {{ referral.targetProfessionalName }}
+              </p>
+              <span class="professional-referral-dashboard__item-date">
+                {{ referral.date | date: 'MMM d, y' }}
+              </span>
+            </div>
+            <div class="professional-referral-dashboard__item-actions">
+              <span 
+                class="professional-referral-dashboard__status"
+                [ngClass]="getStatusClass(referral.status)"
+              >
+                {{ getStatusLabel(referral.status) }}
+              </span>
+              <a [routerLink]="['/professional/referrals/sent', referral.id]" class="professional-referral-dashboard__btn">View Details</a>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
