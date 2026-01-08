@@ -1,0 +1,360 @@
+<section class="customer-form-container">
+  <header class="customer-form-header">
+    <h1 class="customer-form-title">
+      {{ mode === 'create' ? 'Add New Customer' : 'Edit Customer' }}
+    </h1>
+    <p class="customer-form-subtitle">
+      {{ mode === 'create' ? 'Enter customer information below' : 'Update customer information' }}
+    </p>
+  </header>
+
+  @if (duplicateWarning) {
+    <div class="duplicate-warning" role="alert">
+      <span class="warning-icon">!</span>
+      <span>A customer with this {{ duplicateWarning.email ? 'email' : 'phone' }} already exists.</span>
+    </div>
+  }
+
+  <form [formGroup]="customerForm" (ngSubmit)="onSubmit()" class="customer-form">
+    <!-- Contact Information Section -->
+    <section class="form-section">
+      <h2 class="section-title">Contact Information</h2>
+      <p class="section-subtitle">Basic contact details for the customer</p>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName" class="form-label">
+            First Name <span class="required">*</span>
+          </label>
+          <input
+            type="text"
+            id="firstName"
+            formControlName="firstName"
+            class="form-input"
+            [class.error]="getError('firstName')"
+            aria-required="true"
+            [attr.aria-invalid]="!!getError('firstName')"
+            aria-describedby="firstName-error"
+          />
+          @if (getError('firstName')) {
+            <span id="firstName-error" class="form-error" role="alert">
+              {{ getError('firstName') }}
+            </span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="lastName" class="form-label">
+            Last Name <span class="required">*</span>
+          </label>
+          <input
+            type="text"
+            id="lastName"
+            formControlName="lastName"
+            class="form-input"
+            [class.error]="getError('lastName')"
+            aria-required="true"
+            [attr.aria-invalid]="!!getError('lastName')"
+            aria-describedby="lastName-error"
+          />
+          @if (getError('lastName')) {
+            <span id="lastName-error" class="form-error" role="alert">
+              {{ getError('lastName') }}
+            </span>
+          }
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="email" class="form-label">
+            Email <span class="required">*</span>
+          </label>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            class="form-input"
+            [class.error]="getError('email')"
+            aria-required="true"
+            [attr.aria-invalid]="!!getError('email')"
+            aria-describedby="email-error"
+          />
+          @if (getError('email')) {
+            <span id="email-error" class="form-error" role="alert">
+              {{ getError('email') }}
+            </span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="phone" class="form-label">
+            Phone <span class="required">*</span>
+          </label>
+          <input
+            type="tel"
+            id="phone"
+            formControlName="phone"
+            class="form-input"
+            [class.error]="getError('phone')"
+            placeholder="(555) 123-4567"
+            (input)="formatPhoneNumber($event)"
+            aria-required="true"
+            [attr.aria-invalid]="!!getError('phone')"
+            aria-describedby="phone-error"
+          />
+          @if (getError('phone')) {
+            <span id="phone-error" class="form-error" role="alert">
+              {{ getError('phone') }}
+            </span>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Address Section -->
+    <section class="form-section" formGroupName="address">
+      <h2 class="section-title">Address</h2>
+      <p class="section-subtitle">Customer's physical address</p>
+
+      <div class="form-group full-width">
+        <label for="street" class="form-label">
+          Street Address <span class="required">*</span>
+        </label>
+        <input
+          type="text"
+          id="street"
+          formControlName="street"
+          class="form-input"
+          [class.error]="getError('address.street')"
+          aria-required="true"
+          [attr.aria-invalid]="!!getError('address.street')"
+          aria-describedby="street-error"
+        />
+        @if (getError('address.street')) {
+          <span id="street-error" class="form-error" role="alert">
+            {{ getError('address.street') }}
+          </span>
+        }
+      </div>
+
+      <div class="form-group full-width">
+        <label for="street2" class="form-label">Address Line 2</label>
+        <input
+          type="text"
+          id="street2"
+          formControlName="street2"
+          class="form-input"
+          placeholder="Apt, Suite, Unit, etc."
+        />
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="city" class="form-label">
+            City <span class="required">*</span>
+          </label>
+          <input
+            type="text"
+            id="city"
+            formControlName="city"
+            class="form-input"
+            [class.error]="getError('address.city')"
+            aria-required="true"
+            [attr.aria-invalid]="!!getError('address.city')"
+            aria-describedby="city-error"
+          />
+          @if (getError('address.city')) {
+            <span id="city-error" class="form-error" role="alert">
+              {{ getError('address.city') }}
+            </span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="state" class="form-label">
+            State <span class="required">*</span>
+          </label>
+          <select
+            id="state"
+            formControlName="state"
+            class="form-input form-select"
+            [class.error]="getError('address.state')"
+            aria-required="true"
+            [attr.aria-invalid]="!!getError('address.state')"
+            aria-describedby="state-error"
+          >
+            <option value="">Select State</option>
+            @for (state of states; track state.code) {
+              <option [value]="state.code">{{ state.name }}</option>
+            }
+          </select>
+          @if (getError('address.state')) {
+            <span id="state-error" class="form-error" role="alert">
+              {{ getError('address.state') }}
+            </span>
+          }
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="zipCode" class="form-label">
+            ZIP Code <span class="required">*</span>
+          </label>
+          <input
+            type="text"
+            id="zipCode"
+            formControlName="zipCode"
+            class="form-input"
+            [class.error]="getError('address.zipCode')"
+            maxlength="5"
+            aria-required="true"
+            [attr.aria-invalid]="!!getError('address.zipCode')"
+            aria-describedby="zipCode-error"
+          />
+          @if (getError('address.zipCode')) {
+            <span id="zipCode-error" class="form-error" role="alert">
+              {{ getError('address.zipCode') }}
+            </span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="country" class="form-label">Country</label>
+          <select id="country" formControlName="country" class="form-input form-select">
+            <option value="US">United States</option>
+            <option value="CA">Canada</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Preferences Section -->
+    <section class="form-section" formGroupName="preferences">
+      <h2 class="section-title">Preferences</h2>
+      <p class="section-subtitle">Communication preferences</p>
+
+      <div class="form-group">
+        <label class="form-label">Preferred Contact Method</label>
+        <div class="radio-group" role="radiogroup" aria-label="Contact method">
+          <label class="radio-label">
+            <input type="radio" formControlName="contactMethod" value="email" />
+            <span class="radio-text">Email</span>
+          </label>
+          <label class="radio-label">
+            <input type="radio" formControlName="contactMethod" value="phone" />
+            <span class="radio-text">Phone</span>
+          </label>
+          <label class="radio-label">
+            <input type="radio" formControlName="contactMethod" value="sms" />
+            <span class="radio-text">SMS</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="preferredTime" class="form-label">Preferred Contact Time</label>
+        <select id="preferredTime" formControlName="preferredTime" class="form-input form-select">
+          <option [ngValue]="null">No preference</option>
+          <option value="morning">Morning (8am - 12pm)</option>
+          <option value="afternoon">Afternoon (12pm - 5pm)</option>
+          <option value="evening">Evening (5pm - 8pm)</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- Notes and Tags Section -->
+    <section class="form-section">
+      <h2 class="section-title">Notes & Tags</h2>
+      <p class="section-subtitle">Internal notes and customer categorization</p>
+
+      <div class="form-group full-width">
+        <label for="notes" class="form-label">
+          Notes
+          <span class="character-count">
+            {{ customerForm.get('notes')?.value?.length || 0 }}/1000
+          </span>
+        </label>
+        <textarea
+          id="notes"
+          formControlName="notes"
+          class="form-input form-textarea"
+          rows="4"
+          placeholder="Add any internal notes about this customer..."
+          aria-describedby="notes-hint"
+        ></textarea>
+        <span id="notes-hint" class="form-hint">
+          These notes are internal and not visible to the customer.
+        </span>
+      </div>
+
+      <div class="form-group full-width">
+        <label class="form-label">Tags</label>
+        <div class="tags-container">
+          <div class="tags-list">
+            @for (tag of tagsArray.controls; track $index) {
+              <span class="tag">
+                {{ tag.value }}
+                <button
+                  type="button"
+                  class="tag-remove"
+                  (click)="removeTag($index)"
+                  [attr.aria-label]="'Remove ' + tag.value + ' tag'"
+                >
+                  &times;
+                </button>
+              </span>
+            }
+          </div>
+          <input
+            type="text"
+            class="tags-input"
+            placeholder="{{ tagsArray.length >= 20 ? 'Maximum tags reached' : 'Add tag and press Enter' }}"
+            [disabled]="tagsArray.length >= 20"
+            [value]="newTag()"
+            (input)="newTag.set($any($event.target).value)"
+            (keydown)="onTagInputKeydown($event)"
+            aria-label="Add new tag"
+          />
+        </div>
+        <span class="form-hint">Press Enter or comma to add tags. Maximum 20 tags.</span>
+      </div>
+    </section>
+
+    <!-- Form Actions -->
+    <footer class="form-actions">
+      @if (autoSaveStatus() === 'saved' && lastSaved()) {
+        <span class="autosave-status">
+          Saved {{ lastSaved() | date:'shortTime' }}
+        </span>
+      }
+      @if (autoSaveStatus() === 'saving') {
+        <span class="autosave-status saving">Saving...</span>
+      }
+
+      <div class="action-buttons">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="onCancel()"
+          [disabled]="isSubmitting()"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="isSubmitting()"
+        >
+          @if (isSubmitting()) {
+            <span class="spinner"></span>
+            Saving...
+          } @else {
+            {{ mode === 'create' ? 'Create Customer' : 'Save Changes' }}
+          }
+        </button>
+      </div>
+    </footer>
+  </form>
+</section>
