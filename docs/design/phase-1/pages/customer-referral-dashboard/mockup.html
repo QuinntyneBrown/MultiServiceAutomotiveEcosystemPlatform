@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Referrals - AutoPro Network</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../shared-styles.css">
+  <style>
+    .customer-portal {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-color: var(--color-bg-secondary);
+    }
+
+    /* Customer Header */
+    .customer-header {
+      background-color: var(--color-bg-primary);
+      border-bottom: 1px solid var(--color-border-light);
+      position: sticky;
+      top: 0;
+      z-index: var(--z-sticky);
+    }
+
+    .customer-header__container {
+      max-width: var(--container-max-width);
+      margin: 0 auto;
+      padding: var(--spacing-4) var(--spacing-6);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .customer-header__brand {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+    }
+
+    .customer-header__logo {
+      width: 40px;
+      height: 40px;
+      background-color: var(--color-blue-700);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .customer-header__logo svg {
+      width: 24px;
+      height: 24px;
+      color: var(--color-text-inverse);
+    }
+
+    .customer-header__name {
+      font-family: var(--font-family-primary);
+      font-weight: var(--font-weight-bold);
+      font-size: var(--text-h5);
+      color: var(--color-blue-700);
+    }
+
+    .customer-header__nav {
+      display: flex;
+      gap: var(--spacing-6);
+    }
+
+    @media (max-width: 767px) {
+      .customer-header__nav {
+        display: none;
+      }
+    }
+
+    .customer-header__link {
+      font-size: var(--text-body-sm);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-gray-700);
+      text-decoration: none;
+      transition: color var(--transition-normal);
+      position: relative;
+      padding: var(--spacing-2) 0;
+    }
+
+    .customer-header__link:hover {
+      color: var(--color-blue-700);
+    }
+
+    .customer-header__link--active {
+      color: var(--color-blue-700);
+    }
+
+    .customer-header__link--active::after {
+      content: '';
+      position: absolute;
+      bottom: -17px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background-color: var(--color-blue-700);
+    }
+
+    .customer-header__user {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+    }
+
+    .customer-header__avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-full);
+      background-color: var(--color-blue-500);
+      color: var(--color-text-inverse);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: var(--font-weight-semibold);
+      font-size: var(--text-body-sm);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      padding: var(--spacing-2);
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    @media (max-width: 767px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      max-width: var(--container-max-width);
+      margin: 0 auto;
+      width: 100%;
+      padding: var(--spacing-8) var(--spacing-6);
+    }
+
+    @media (max-width: 767px) {
+      .main-content {
+        padding: var(--spacing-6) var(--spacing-4);
+      }
+    }
+
+    /* Page Header */
+    .page-header {
+      margin-bottom: var(--spacing-8);
+    }
+
+    .page-header__title {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-display-sm);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-gray-900);
+      margin-bottom: var(--spacing-2);
+    }
+
+    .page-header__subtitle {
+      font-size: var(--text-body-lg);
+      color: var(--color-gray-600);
+    }
+
+    /* Referral Code Card */
+    .referral-code-card {
+      background: linear-gradient(135deg, var(--color-blue-700) 0%, var(--color-blue-800) 100%);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-8);
+      color: var(--color-text-inverse);
+      margin-bottom: var(--spacing-6);
+      box-shadow: var(--shadow-lg);
+    }
+
+    @media (max-width: 767px) {
+      .referral-code-card {
+        padding: var(--spacing-6);
+      }
+    }
+
+    .referral-code-card__header {
+      text-align: center;
+      margin-bottom: var(--spacing-6);
+    }
+
+    .referral-code-card__title {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-h3);
+      font-weight: var(--font-weight-bold);
+      margin-bottom: var(--spacing-2);
+    }
+
+    .referral-code-card__subtitle {
+      font-size: var(--text-body-md);
+      opacity: 0.9;
+    }
+
+    .referral-code-card__content {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--spacing-6);
+      align-items: center;
+    }
+
+    @media (max-width: 991px) {
+      .referral-code-card__content {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+    }
+
+    .referral-code-card__code-section {
+      flex: 1;
+    }
+
+    .referral-code-display {
+      background-color: rgba(255, 255, 255, 0.15);
+      border: 2px dashed rgba(255, 255, 255, 0.3);
+      border-radius: var(--radius-md);
+      padding: var(--spacing-6);
+      text-align: center;
+      margin-bottom: var(--spacing-4);
+    }
+
+    .referral-code-display__label {
+      font-size: var(--text-caption);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.8;
+      margin-bottom: var(--spacing-2);
+    }
+
+    .referral-code-display__code {
+      font-family: var(--font-family-mono);
+      font-size: var(--text-display-sm);
+      font-weight: var(--font-weight-bold);
+      letter-spacing: 0.05em;
+      margin-bottom: var(--spacing-2);
+    }
+
+    @media (max-width: 575px) {
+      .referral-code-display__code {
+        font-size: var(--text-h2);
+      }
+    }
+
+    .referral-code-display__url {
+      font-size: var(--text-body-sm);
+      opacity: 0.7;
+      word-break: break-all;
+    }
+
+    .share-buttons {
+      display: flex;
+      gap: var(--spacing-3);
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    @media (max-width: 991px) {
+      .share-buttons {
+        justify-content: center;
+      }
+    }
+
+    .share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--spacing-2);
+      padding: var(--spacing-3) var(--spacing-5);
+      background-color: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: var(--radius-md);
+      color: var(--color-text-inverse);
+      font-size: var(--text-body-sm);
+      font-weight: var(--font-weight-medium);
+      cursor: pointer;
+      transition: all var(--transition-normal);
+    }
+
+    .share-btn:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .share-btn--primary {
+      background-color: var(--color-accent);
+      color: var(--color-blue-900);
+      border-color: var(--color-accent);
+    }
+
+    .share-btn--primary:hover {
+      background-color: var(--color-yellow-600);
+    }
+
+    .share-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .qr-code-section {
+      background-color: var(--color-bg-primary);
+      border-radius: var(--radius-md);
+      padding: var(--spacing-4);
+      text-align: center;
+    }
+
+    @media (max-width: 991px) {
+      .qr-code-section {
+        max-width: 200px;
+        margin: 0 auto;
+      }
+    }
+
+    .qr-code-placeholder {
+      width: 160px;
+      height: 160px;
+      background-color: var(--color-gray-100);
+      border-radius: var(--radius-sm);
+      margin: 0 auto var(--spacing-3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qr-code-placeholder svg {
+      width: 140px;
+      height: 140px;
+      color: var(--color-gray-400);
+    }
+
+    .qr-code-label {
+      font-size: var(--text-caption);
+      color: var(--color-gray-700);
+      font-weight: var(--font-weight-medium);
+    }
+
+    /* Statistics Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: var(--spacing-6);
+      margin-bottom: var(--spacing-8);
+    }
+
+    @media (max-width: 575px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .stat-card {
+      background-color: var(--color-bg-primary);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-6);
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition-normal);
+    }
+
+    .stat-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .stat-card__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: var(--spacing-4);
+    }
+
+    .stat-card__icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .stat-card__icon--blue {
+      background-color: var(--color-blue-100);
+      color: var(--color-blue-700);
+    }
+
+    .stat-card__icon--yellow {
+      background-color: var(--color-yellow-300);
+      color: var(--color-yellow-900);
+    }
+
+    .stat-card__icon--green {
+      background-color: var(--color-success-light);
+      color: var(--color-success);
+    }
+
+    .stat-card__icon--gray {
+      background-color: var(--color-gray-100);
+      color: var(--color-gray-700);
+    }
+
+    .stat-card__icon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .stat-card__value {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-display-sm);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-gray-900);
+      margin-bottom: var(--spacing-1);
+    }
+
+    .stat-card__label {
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-600);
+      margin-bottom: var(--spacing-3);
+    }
+
+    .stat-card__change {
+      font-size: var(--text-caption);
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-1);
+    }
+
+    .stat-card__change--positive {
+      color: var(--color-success);
+    }
+
+    .stat-card__change--neutral {
+      color: var(--color-gray-500);
+    }
+
+    /* Dashboard Grid */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: var(--spacing-6);
+      margin-bottom: var(--spacing-8);
+    }
+
+    @media (max-width: 991px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Section Card */
+    .section-card {
+      background-color: var(--color-bg-primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+
+    .section-card__header {
+      padding: var(--spacing-6);
+      border-bottom: 1px solid var(--color-border-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .section-card__title {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-h4);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-900);
+    }
+
+    .section-card__action {
+      font-size: var(--text-body-sm);
+      color: var(--color-blue-700);
+      text-decoration: none;
+      font-weight: var(--font-weight-medium);
+    }
+
+    .section-card__action:hover {
+      text-decoration: underline;
+    }
+
+    .section-card__content {
+      padding: var(--spacing-6);
+    }
+
+    .section-card__content--no-padding {
+      padding: 0;
+    }
+
+    /* Referral List */
+    .referral-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-4);
+    }
+
+    .referral-item {
+      padding: var(--spacing-5);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-md);
+      transition: all var(--transition-normal);
+      cursor: pointer;
+    }
+
+    .referral-item:hover {
+      border-color: var(--color-blue-700);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .referral-item__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: var(--spacing-3);
+    }
+
+    .referral-item__info {
+      flex: 1;
+    }
+
+    .referral-item__name {
+      font-weight: var(--font-weight-semibold);
+      font-size: var(--text-body-md);
+      color: var(--color-gray-900);
+      margin-bottom: var(--spacing-1);
+    }
+
+    .referral-item__email {
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-600);
+    }
+
+    .referral-item__status {
+      flex-shrink: 0;
+    }
+
+    .referral-item__meta {
+      display: flex;
+      gap: var(--spacing-4);
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-600);
+      margin-bottom: var(--spacing-3);
+    }
+
+    .referral-item__meta-item {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-1);
+    }
+
+    .referral-item__meta-item svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .referral-item__timeline {
+      margin-top: var(--spacing-3);
+      padding-top: var(--spacing-3);
+      border-top: 1px solid var(--color-border-light);
+    }
+
+    /* Status Timeline */
+    .status-timeline {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-2);
+      overflow-x: auto;
+      padding: var(--spacing-2) 0;
+    }
+
+    .status-timeline__step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--spacing-1);
+      flex: 1;
+      min-width: 80px;
+      position: relative;
+    }
+
+    .status-timeline__step::after {
+      content: '';
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      width: 100%;
+      height: 2px;
+      background-color: var(--color-gray-300);
+      z-index: 0;
+    }
+
+    .status-timeline__step:last-child::after {
+      display: none;
+    }
+
+    .status-timeline__circle {
+      width: 24px;
+      height: 24px;
+      border-radius: var(--radius-full);
+      background-color: var(--color-gray-300);
+      border: 3px solid var(--color-bg-primary);
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .status-timeline__step--completed .status-timeline__circle {
+      background-color: var(--color-success);
+    }
+
+    .status-timeline__step--completed::after {
+      background-color: var(--color-success);
+    }
+
+    .status-timeline__step--active .status-timeline__circle {
+      background-color: var(--color-blue-700);
+      box-shadow: 0 0 0 4px rgba(0, 82, 159, 0.2);
+    }
+
+    .status-timeline__circle svg {
+      width: 12px;
+      height: 12px;
+      color: var(--color-text-inverse);
+      display: none;
+    }
+
+    .status-timeline__step--completed .status-timeline__circle svg {
+      display: block;
+    }
+
+    .status-timeline__label {
+      font-size: var(--text-micro);
+      color: var(--color-gray-600);
+      text-align: center;
+      font-weight: var(--font-weight-medium);
+    }
+
+    .status-timeline__step--completed .status-timeline__label,
+    .status-timeline__step--active .status-timeline__label {
+      color: var(--color-gray-900);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    /* Status Badge */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--spacing-1);
+      padding: var(--spacing-1) var(--spacing-3);
+      border-radius: var(--radius-full);
+      font-size: var(--text-caption);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    .status-badge--pending {
+      background-color: var(--color-warning-light);
+      color: var(--color-warning);
+    }
+
+    .status-badge--converted {
+      background-color: var(--color-success-light);
+      color: var(--color-success);
+    }
+
+    .status-badge--rewarded {
+      background-color: var(--color-blue-100);
+      color: var(--color-blue-700);
+    }
+
+    .status-badge--expired {
+      background-color: var(--color-gray-100);
+      color: var(--color-gray-600);
+    }
+
+    .status-badge__dot {
+      width: 6px;
+      height: 6px;
+      border-radius: var(--radius-full);
+      background-color: currentColor;
+    }
+
+    /* Rewards Summary */
+    .rewards-summary {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-5);
+    }
+
+    .reward-amount {
+      text-align: center;
+      padding: var(--spacing-6);
+      background: linear-gradient(135deg, var(--color-yellow-200) 0%, var(--color-yellow-300) 100%);
+      border-radius: var(--radius-md);
+    }
+
+    .reward-amount__label {
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-700);
+      margin-bottom: var(--spacing-2);
+    }
+
+    .reward-amount__value {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-display-md);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-blue-900);
+      margin-bottom: var(--spacing-1);
+    }
+
+    .reward-amount__note {
+      font-size: var(--text-caption);
+      color: var(--color-gray-600);
+    }
+
+    .reward-breakdown {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-4);
+    }
+
+    .reward-breakdown__item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: var(--spacing-3);
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .reward-breakdown__item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .reward-breakdown__label {
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-700);
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-2);
+    }
+
+    .reward-breakdown__label svg {
+      width: 16px;
+      height: 16px;
+      color: var(--color-gray-500);
+    }
+
+    .reward-breakdown__value {
+      font-size: var(--text-body-md);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-900);
+    }
+
+    .reward-breakdown__value--pending {
+      color: var(--color-warning);
+    }
+
+    .cta-button {
+      width: 100%;
+      padding: var(--spacing-4);
+      background-color: var(--color-blue-700);
+      color: var(--color-text-inverse);
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: var(--text-body-md);
+      font-weight: var(--font-weight-semibold);
+      cursor: pointer;
+      transition: all var(--transition-normal);
+    }
+
+    .cta-button:hover {
+      background-color: var(--color-blue-800);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .cta-button:disabled {
+      background-color: var(--color-gray-300);
+      color: var(--color-gray-500);
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Invitation Form */
+    .invitation-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-5);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: var(--spacing-12) var(--spacing-6);
+      color: var(--color-gray-600);
+    }
+
+    .empty-state__icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto var(--spacing-4);
+      color: var(--color-gray-400);
+    }
+
+    .empty-state__title {
+      font-size: var(--text-h4);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-700);
+      margin-bottom: var(--spacing-2);
+    }
+
+    .empty-state__text {
+      font-size: var(--text-body-md);
+      margin-bottom: var(--spacing-6);
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: var(--spacing-6);
+      right: var(--spacing-6);
+      background-color: var(--color-gray-900);
+      color: var(--color-text-inverse);
+      padding: var(--spacing-4) var(--spacing-6);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-xl);
+      display: none;
+      align-items: center;
+      gap: var(--spacing-3);
+      z-index: var(--z-toast);
+      animation: slideIn 0.3s ease;
+    }
+
+    .toast--show {
+      display: flex;
+    }
+
+    .toast--success {
+      background-color: var(--color-success);
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .toast svg {
+      width: 20px;
+      height: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Customer Portal -->
+  <div class="customer-portal">
+
+    <!-- Customer Header -->
+    <header class="customer-header">
+      <div class="customer-header__container">
+        <div class="customer-header__brand">
+          <div class="customer-header__logo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+              <line x1="12" y1="22.08" x2="12" y2="12"/>
+            </svg>
+          </div>
+          <span class="customer-header__name">AutoPro Network</span>
+        </div>
+
+        <nav class="customer-header__nav">
+          <a href="#" class="customer-header__link">Dashboard</a>
+          <a href="#" class="customer-header__link">My Vehicles</a>
+          <a href="#" class="customer-header__link">Service History</a>
+          <a href="#" class="customer-header__link customer-header__link--active">Referrals</a>
+          <a href="#" class="customer-header__link">Rewards</a>
+        </nav>
+
+        <div class="customer-header__user">
+          <div class="customer-header__avatar">JD</div>
+          <button class="mobile-menu-btn" aria-label="Menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <h1 class="page-header__title">My Referrals</h1>
+        <p class="page-header__subtitle">Share your referral code and earn rewards when friends join AutoPro Network</p>
+      </div>
+
+      <!-- Referral Code Card -->
+      <div class="referral-code-card">
+        <div class="referral-code-card__header">
+          <h2 class="referral-code-card__title">Your Referral Code</h2>
+          <p class="referral-code-card__subtitle">Share this code with friends and family</p>
+        </div>
+
+        <div class="referral-code-card__content">
+          <div class="referral-code-card__code-section">
+            <div class="referral-code-display">
+              <div class="referral-code-display__label">Referral Code</div>
+              <div class="referral-code-display__code">JDOE2026</div>
+              <div class="referral-code-display__url">autopro.network/join/JDOE2026</div>
+            </div>
+
+            <div class="share-buttons">
+              <button class="share-btn share-btn--primary" onclick="copyLink()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                </svg>
+                Copy Link
+              </button>
+              <button class="share-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+                Email
+              </button>
+              <button class="share-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+                  <line x1="12" y1="18" x2="12.01" y2="18"/>
+                </svg>
+                SMS
+              </button>
+              <button class="share-btn">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+                Share
+              </button>
+            </div>
+          </div>
+
+          <div class="qr-code-section">
+            <div class="qr-code-placeholder">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <rect x="3" y="3" width="8" height="8" rx="1"/>
+                <rect x="3" y="13" width="8" height="8" rx="1"/>
+                <rect x="13" y="3" width="8" height="8" rx="1"/>
+                <rect x="13" y="13" width="3" height="3"/>
+                <rect x="18" y="13" width="3" height="3"/>
+                <rect x="13" y="18" width="3" height="3"/>
+                <rect x="18" y="18" width="3" height="3"/>
+              </svg>
+            </div>
+            <div class="qr-code-label">Scan to Share</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Statistics Grid -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-card__header">
+            <div>
+              <div class="stat-card__value">12</div>
+              <div class="stat-card__label">Total Referrals Sent</div>
+            </div>
+            <div class="stat-card__icon stat-card__icon--blue">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+          </div>
+          <div class="stat-card__change stat-card__change--positive">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
+              <polyline points="18 15 12 9 6 15"/>
+            </svg>
+            +3 this month
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card__header">
+            <div>
+              <div class="stat-card__value">7</div>
+              <div class="stat-card__label">Successful Conversions</div>
+            </div>
+            <div class="stat-card__icon stat-card__icon--green">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+            </div>
+          </div>
+          <div class="stat-card__change stat-card__change--positive">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
+              <polyline points="18 15 12 9 6 15"/>
+            </svg>
+            58% conversion rate
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card__header">
+            <div>
+              <div class="stat-card__value">3</div>
+              <div class="stat-card__label">Pending Referrals</div>
+            </div>
+            <div class="stat-card__icon stat-card__icon--gray">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+          </div>
+          <div class="stat-card__change stat-card__change--neutral">
+            Awaiting signup
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card__header">
+            <div>
+              <div class="stat-card__value">$350</div>
+              <div class="stat-card__label">Total Rewards Earned</div>
+            </div>
+            <div class="stat-card__icon stat-card__icon--yellow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="1" x2="12" y2="23"/>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+            </div>
+          </div>
+          <div class="stat-card__change stat-card__change--positive">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
+              <polyline points="18 15 12 9 6 15"/>
+            </svg>
+            +$100 this month
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard Grid -->
+      <div class="dashboard-grid">
+
+        <!-- Referral List Section -->
+        <div class="section-card">
+          <div class="section-card__header">
+            <h2 class="section-card__title">My Referrals</h2>
+            <a href="#" class="section-card__action">View All</a>
+          </div>
+          <div class="section-card__content">
+            <div class="referral-list">
+
+              <!-- Referral Item 1 - Converted -->
+              <div class="referral-item">
+                <div class="referral-item__header">
+                  <div class="referral-item__info">
+                    <div class="referral-item__name">Sarah Johnson</div>
+                    <div class="referral-item__email">sarah.j@email.com</div>
+                  </div>
+                  <div class="referral-item__status">
+                    <span class="status-badge status-badge--rewarded">
+                      <span class="status-badge__dot"></span>
+                      Rewarded
+                    </span>
+                  </div>
+                </div>
+
+                <div class="referral-item__meta">
+                  <div class="referral-item__meta-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                      <line x1="16" y1="2" x2="16" y2="6"/>
+                      <line x1="8" y1="2" x2="8" y2="6"/>
+                      <line x1="3" y1="10" x2="21" y2="10"/>
+                    </svg>
+                    Joined Dec 15, 2025
+                  </div>
+                  <div class="referral-item__meta-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <line x1="12" y1="1" x2="12" y2="23"/>
+                      <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                    </svg>
+                    $50 earned
+                  </div>
+                </div>
+
+                <div class="referral-item__timeline">
+                  <div class="status-timeline">
+                    <div class="status-timeline__step status-timeline__step--completed">
+                      <div class="status-timeline__circle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                          <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                      </div>
+                      <div class="status-timeline__label">Sent</div>
+                    </div>
+                    <div class="status-timeline__step status-timeline__step--completed">
+                      <div class="status-timeline__circle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                          <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                      </div>
+                      <div class="status-timeline__label">Opened</div>
+                    </div>
+                    <div class="status-timeline__step status-timeline__step--completed">
+                      <div class="status-timeline__circle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                          <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                      </div>
+                      <div class="status-timeline__label">Signed Up</div>
+                    </div>
+                    <div class="status-timeline__step status-timeline__step--completed">
+                      <div class="status-timeline__circle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                          <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                      </div>
+                      <div class="status-timeline__label">First Service</div>
+                    </div>
+                    <div class="status-timeline__step status-timeline__step--completed">
+                      <div class="status-timeline__circle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                          <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                      </div>
+                      <div class="status-timeline__label">Rewarded</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Referral Item 2 - Converted -->
+              <div class="referral-item">
+                <div class="referral-item__header">
+                  <div class="referral-item__info">
+                    <div class="referral-item__name">Mike Peterson</div>
+                    <div class="referral-item__email">mike.p@email.com</div>
+                  </div>
+                  <div class="referral-item__status">
+                    <span class="status-badge status-badge--converted">
+                      <span class="status-badge__dot"></span>
+                      Converted
+                    </span>
+                  </div>
+                </div>
+
+                <div class="referral-item__meta">
+                  <div class="referral-item__meta-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                      <line x1="16" y1="2" x2="16" y2="6"/>
+                      <line x1="8" y1="2" x2="8" y2="6"/>
+                      <line x1="3" y1="10" x2="21" y2="10"/>
+                    </svg>
+                    Joined Jan 2, 2026
+                  </div>
+                  <div class="referral-item__meta-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <line x1="12" y1="1" x2="12" y2="23"/>
+                      <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                    </svg>
+                    $50 pending
+                  </div>
+                </div>
+
+                <div class="referral-item__timeline">
+                  <div class="status-timeline">
+                    <div class="status-timeline__step status-timeline__step--completed">
+                      <div class="status-timeline__circle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                          <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                      </div>
+                      <div class="status-timeline__label">Sent</div>
+                    </div>
+                    <div class="status-timeline__step status-timeline__step--completed">
+                      <div class="status-timeline__circle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                          <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                      </div>
+                      <div class="status-timeline__label">Opened</div>
+                    </div>
+                    <div class="status-timeline__step status-timeline__step--completed">
+                      <div class="status-timeline__circle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                          <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                      </div>
+                      <div class="status-timeline__label">Signed Up</div>
+                    </div>
+                    <div class="status-timeline__step status-timeline__step--active">
+                      <div class="status-timeline__circle"></div>
+                      <div class="status-timeline__label">First Service</div>
+                    </div>
+                    <div class="status-timeline__step">
+                      <div class="status-timeline__circle"></div>
+                      <div class="status-timeline__label">Rewarded</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Referral Item 3 - Pending -->
+              <div class="referral-item">
+                <div class="referral-item__header">
+                  <div class="referral-item__info">
+                    <div class="referral-item__name">Lisa Anderson</div>
+                    <div class="referral-item__email">lisa.a@email.com</div>
+                  </div>
+                  <div class="referral-item__status">
+                    <span class="status-badge status-badge--pending">
+                      <span class="status-badge__dot"></span>
+                      Pending
+                    </span>
+                  </div>
+                </div>
+
+                <div class="referral-item__meta">
+                  <div class="referral-item__meta-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                      <line x1="16" y1="2" x2="16" y2="6"/>
+                      <line x1="8" y1="2" x2="8" y2="6"/>
+                      <line x1="3" y1="10" x2="21" y2="10"/>
+                    </svg>
+                    Sent Jan 5, 2026
+                  </div>
+                  <div class="referral-item__meta-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"/>
+                      <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                    Expires Feb 5
+                  </div>
+                </div>
+
+                <div class="referral-item__timeline">
+                  <div class="status-timeline">
+                    <div class="status-timeline__step status-timeline__step--completed">
+                      <div class="status-timeline__circle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                          <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                      </div>
+                      <div class="status-timeline__label">Sent</div>
+                    </div>
+                    <div class="status-timeline__step status-timeline__step--active">
+                      <div class="status-timeline__circle"></div>
+                      <div class="status-timeline__label">Opened</div>
+                    </div>
+                    <div class="status-timeline__step">
+                      <div class="status-timeline__circle"></div>
+                      <div class="status-timeline__label">Signed Up</div>
+                    </div>
+                    <div class="status-timeline__step">
+                      <div class="status-timeline__circle"></div>
+                      <div class="status-timeline__label">First Service</div>
+                    </div>
+                    <div class="status-timeline__step">
+                      <div class="status-timeline__circle"></div>
+                      <div class="status-timeline__label">Rewarded</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Rewards & Invite Section -->
+        <div style="display: flex; flex-direction: column; gap: var(--spacing-6);">
+
+          <!-- Rewards Summary -->
+          <div class="section-card">
+            <div class="section-card__header">
+              <h2 class="section-card__title">Rewards Summary</h2>
+            </div>
+            <div class="section-card__content">
+              <div class="rewards-summary">
+
+                <div class="reward-amount">
+                  <div class="reward-amount__label">Available Balance</div>
+                  <div class="reward-amount__value">$200</div>
+                  <div class="reward-amount__note">Ready to use</div>
+                </div>
+
+                <div class="reward-breakdown">
+                  <div class="reward-breakdown__item">
+                    <div class="reward-breakdown__label">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20 6 9 17 4 12"/>
+                      </svg>
+                      Earned
+                    </div>
+                    <div class="reward-breakdown__value">$350</div>
+                  </div>
+
+                  <div class="reward-breakdown__item">
+                    <div class="reward-breakdown__label">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 6 12 12 16 14"/>
+                      </svg>
+                      Pending
+                    </div>
+                    <div class="reward-breakdown__value reward-breakdown__value--pending">$150</div>
+                  </div>
+
+                  <div class="reward-breakdown__item">
+                    <div class="reward-breakdown__label">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                      </svg>
+                      Redeemed
+                    </div>
+                    <div class="reward-breakdown__value">$150</div>
+                  </div>
+                </div>
+
+                <button class="cta-button" disabled>
+                  Redeem Rewards (Phase 3)
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Invite Friend -->
+          <div class="section-card">
+            <div class="section-card__header">
+              <h2 class="section-card__title">Invite a Friend</h2>
+            </div>
+            <div class="section-card__content">
+              <form class="invitation-form" onsubmit="event.preventDefault(); sendInvite();">
+
+                <div class="text-field">
+                  <label class="text-field__label">Friend's Name *</label>
+                  <input type="text" class="text-field__input" required>
+                </div>
+
+                <div class="text-field">
+                  <label class="text-field__label">Friend's Email *</label>
+                  <input type="email" class="text-field__input" required>
+                </div>
+
+                <div class="text-field">
+                  <label class="text-field__label">Friend's Phone (optional)</label>
+                  <input type="tel" class="text-field__input" placeholder="+1 (555) 123-4567">
+                </div>
+
+                <div class="text-field">
+                  <label class="text-field__label">Personal Message (optional)</label>
+                  <textarea class="text-field__input" rows="3" placeholder="Add a personal note to your invitation..."></textarea>
+                </div>
+
+                <button type="submit" class="cta-button">
+                  Send Invitation
+                </button>
+              </form>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="20 6 9 17 4 12"/>
+    </svg>
+    <span id="toast-message">Link copied to clipboard!</span>
+  </div>
+
+  <script>
+    function copyLink() {
+      // Simulate copying to clipboard
+      const link = 'https://autopro.network/join/JDOE2026';
+
+      // Show success toast
+      const toast = document.getElementById('toast');
+      const message = document.getElementById('toast-message');
+      message.textContent = 'Referral link copied to clipboard!';
+      toast.classList.add('toast--show', 'toast--success');
+
+      // Hide after 3 seconds
+      setTimeout(() => {
+        toast.classList.remove('toast--show', 'toast--success');
+      }, 3000);
+    }
+
+    function sendInvite() {
+      // Simulate sending invitation
+      const toast = document.getElementById('toast');
+      const message = document.getElementById('toast-message');
+      message.textContent = 'Invitation sent successfully!';
+      toast.classList.add('toast--show', 'toast--success');
+
+      // Reset form
+      document.querySelector('.invitation-form').reset();
+
+      // Hide toast after 3 seconds
+      setTimeout(() => {
+        toast.classList.remove('toast--show', 'toast--success');
+      }, 3000);
+    }
+  </script>
+</body>
+</html>

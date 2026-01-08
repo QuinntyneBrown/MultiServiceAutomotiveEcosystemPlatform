@@ -1,0 +1,2317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Management - Professional Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../shared-styles.css">
+  <style>
+    .dashboard {
+      min-height: 100vh;
+      display: flex;
+      background-color: var(--color-bg-secondary);
+    }
+
+    /* Sidebar Navigation */
+    .sidebar {
+      width: 280px;
+      background-color: var(--color-blue-900);
+      color: var(--color-text-inverse);
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @media (max-width: 991px) {
+      .sidebar {
+        display: none;
+      }
+    }
+
+    .sidebar__header {
+      padding: var(--spacing-6);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar__logo {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+    }
+
+    .sidebar__logo-icon {
+      width: 40px;
+      height: 40px;
+      background-color: var(--color-accent);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sidebar__logo-text {
+      font-family: var(--font-family-primary);
+      font-weight: var(--font-weight-bold);
+      font-size: var(--text-body-lg);
+    }
+
+    .sidebar__nav {
+      flex: 1;
+      padding: var(--spacing-4);
+    }
+
+    .nav-section {
+      margin-bottom: var(--spacing-6);
+    }
+
+    .nav-section__title {
+      font-size: var(--text-caption);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(255, 255, 255, 0.5);
+      padding: var(--spacing-2) var(--spacing-3);
+      margin-bottom: var(--spacing-2);
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+      padding: var(--spacing-3);
+      border-radius: var(--radius-md);
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      font-size: var(--text-body-sm);
+      transition: all var(--transition-normal);
+    }
+
+    .nav-link:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: var(--color-text-inverse);
+    }
+
+    .nav-link--active {
+      background-color: var(--color-blue-700);
+      color: var(--color-text-inverse);
+    }
+
+    .nav-link__icon {
+      width: 20px;
+      height: 20px;
+      opacity: 0.8;
+    }
+
+    .nav-link--active .nav-link__icon {
+      opacity: 1;
+    }
+
+    .nav-link__badge {
+      margin-left: auto;
+      background-color: var(--color-accent);
+      color: var(--color-blue-900);
+      font-size: var(--text-micro);
+      font-weight: var(--font-weight-bold);
+      padding: 2px 6px;
+      border-radius: var(--radius-full);
+    }
+
+    .sidebar__footer {
+      padding: var(--spacing-4);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+      padding: var(--spacing-3);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: background-color var(--transition-normal);
+    }
+
+    .user-menu:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .user-menu__avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-full);
+      background-color: var(--color-blue-500);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: var(--font-weight-semibold);
+    }
+
+    .user-menu__info {
+      flex: 1;
+    }
+
+    .user-menu__name {
+      font-size: var(--text-body-sm);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .user-menu__role {
+      font-size: var(--text-caption);
+      opacity: 0.7;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--spacing-4) var(--spacing-6);
+      background-color: var(--color-bg-primary);
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      padding: var(--spacing-2);
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    @media (max-width: 991px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+    }
+
+    .mobile-menu-btn svg {
+      width: 24px;
+      height: 24px;
+      color: var(--color-gray-700);
+    }
+
+    .top-bar__search {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-2);
+      flex: 1;
+      max-width: 400px;
+      margin: 0 var(--spacing-4);
+    }
+
+    @media (max-width: 767px) {
+      .top-bar__search {
+        display: none;
+      }
+    }
+
+    .search-input {
+      flex: 1;
+      height: 40px;
+      padding: 0 var(--spacing-4);
+      padding-left: var(--spacing-10);
+      border: 1px solid var(--color-gray-300);
+      border-radius: var(--radius-full);
+      font-size: var(--text-body-sm);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: 12px center;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--color-blue-700);
+    }
+
+    .top-bar__actions {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-4);
+    }
+
+    .notification-btn {
+      position: relative;
+      padding: var(--spacing-2);
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .notification-btn svg {
+      width: 24px;
+      height: 24px;
+      color: var(--color-gray-600);
+    }
+
+    .notification-btn__badge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 18px;
+      height: 18px;
+      background-color: var(--color-error);
+      color: white;
+      font-size: 10px;
+      font-weight: var(--font-weight-bold);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Page Content */
+    .page-content {
+      flex: 1;
+      padding: var(--spacing-6);
+      overflow-y: auto;
+    }
+
+    @media (max-width: 575px) {
+      .page-content {
+        padding: var(--spacing-4);
+      }
+    }
+
+    .page-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: var(--spacing-6);
+      flex-wrap: wrap;
+      gap: var(--spacing-4);
+    }
+
+    .page-header__left h1 {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-h2);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-gray-900);
+      margin-bottom: var(--spacing-2);
+    }
+
+    .page-header__subtitle {
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-600);
+    }
+
+    .page-header__actions {
+      display: flex;
+      gap: var(--spacing-3);
+      align-items: center;
+    }
+
+    @media (max-width: 575px) {
+      .page-header__actions {
+        width: 100%;
+        flex-direction: column;
+      }
+    }
+
+    /* Profile Completion Alert */
+    .profile-completion-alert {
+      margin-bottom: var(--spacing-6);
+    }
+
+    .completion-progress {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-4);
+      margin-top: var(--spacing-3);
+    }
+
+    .completion-progress__bar {
+      flex: 1;
+      height: 8px;
+      background-color: var(--color-gray-200);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+    }
+
+    .completion-progress__fill {
+      height: 100%;
+      background-color: var(--color-accent);
+      border-radius: var(--radius-full);
+      transition: width var(--transition-slow);
+    }
+
+    .completion-progress__text {
+      font-size: var(--text-body-sm);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-700);
+      white-space: nowrap;
+    }
+
+    /* Form Tabs */
+    .form-tabs {
+      display: flex;
+      gap: var(--spacing-2);
+      margin-bottom: var(--spacing-6);
+      border-bottom: 2px solid var(--color-gray-200);
+      overflow-x: auto;
+    }
+
+    .form-tab {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-2);
+      padding: var(--spacing-3) var(--spacing-4);
+      font-size: var(--text-body-sm);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-gray-600);
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all var(--transition-normal);
+      margin-bottom: -2px;
+    }
+
+    .form-tab:hover {
+      color: var(--color-blue-700);
+      background-color: var(--color-blue-50);
+    }
+
+    .form-tab--active {
+      color: var(--color-blue-700);
+      border-bottom-color: var(--color-blue-700);
+    }
+
+    .form-tab__icon {
+      width: 16px;
+      height: 16px;
+    }
+
+    .form-tab__status {
+      width: 6px;
+      height: 6px;
+      background-color: var(--color-success);
+      border-radius: var(--radius-full);
+    }
+
+    .form-tab__status--incomplete {
+      background-color: var(--color-warning);
+    }
+
+    /* Form Container */
+    .form-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .form-card {
+      background-color: var(--color-bg-primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      padding: var(--spacing-8);
+      margin-bottom: var(--spacing-6);
+    }
+
+    @media (max-width: 575px) {
+      .form-card {
+        padding: var(--spacing-6);
+      }
+    }
+
+    .form-section {
+      margin-bottom: var(--spacing-8);
+    }
+
+    .form-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .form-section__header {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+      margin-bottom: var(--spacing-6);
+      padding-bottom: var(--spacing-4);
+      border-bottom: 2px solid var(--color-gray-200);
+    }
+
+    .form-section__icon {
+      width: 24px;
+      height: 24px;
+      color: var(--color-blue-700);
+    }
+
+    .form-section__title {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-h4);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-900);
+    }
+
+    .form-section__description {
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-600);
+      margin-top: var(--spacing-1);
+    }
+
+    .form-row {
+      display: grid;
+      gap: var(--spacing-6);
+      margin-bottom: var(--spacing-6);
+    }
+
+    .form-row--2col {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @media (max-width: 767px) {
+      .form-row--2col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Form Controls */
+    .form-field {
+      position: relative;
+    }
+
+    .form-field__label {
+      display: block;
+      margin-bottom: var(--spacing-2);
+      font-size: var(--text-body-sm);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-gray-700);
+    }
+
+    .form-field__label--required::after {
+      content: "*";
+      color: var(--color-error);
+      margin-left: var(--spacing-1);
+    }
+
+    .form-field__input,
+    .form-field__select,
+    .form-field__textarea {
+      width: 100%;
+      padding: var(--spacing-4);
+      font-size: var(--text-body-md);
+      font-family: var(--font-family-secondary);
+      color: var(--color-text-primary);
+      background-color: var(--color-bg-primary);
+      border: 1px solid var(--color-gray-400);
+      border-radius: var(--radius-md);
+      transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+    }
+
+    .form-field__input {
+      height: 56px;
+    }
+
+    .form-field__textarea {
+      min-height: 120px;
+      resize: vertical;
+      font-family: var(--font-family-secondary);
+    }
+
+    .form-field__input:focus,
+    .form-field__select:focus,
+    .form-field__textarea:focus {
+      outline: none;
+      border-color: var(--color-blue-700);
+      box-shadow: var(--shadow-focus);
+    }
+
+    .form-field__input--error,
+    .form-field__select--error,
+    .form-field__textarea--error {
+      border-color: var(--color-error);
+    }
+
+    .form-field__helper {
+      margin-top: var(--spacing-2);
+      font-size: var(--text-caption);
+      color: var(--color-gray-600);
+    }
+
+    .form-field__error {
+      display: none;
+      margin-top: var(--spacing-2);
+      font-size: var(--text-caption);
+      color: var(--color-error);
+    }
+
+    .form-field__error.show {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-1);
+    }
+
+    .form-field__error svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    .form-field__counter {
+      margin-top: var(--spacing-2);
+      font-size: var(--text-caption);
+      color: var(--color-gray-600);
+      text-align: right;
+    }
+
+    .form-field__counter--warning {
+      color: var(--color-warning);
+    }
+
+    .form-field__counter--error {
+      color: var(--color-error);
+    }
+
+    /* Rich Text Editor Mock */
+    .rich-text-editor {
+      border: 1px solid var(--color-gray-400);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+    }
+
+    .rich-text-editor:focus-within {
+      border-color: var(--color-blue-700);
+      box-shadow: var(--shadow-focus);
+    }
+
+    .rich-text-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-2);
+      padding: var(--spacing-3);
+      background-color: var(--color-gray-50);
+      border-bottom: 1px solid var(--color-gray-300);
+    }
+
+    .toolbar-btn {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      border-radius: var(--radius-sm);
+      color: var(--color-gray-700);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .toolbar-btn:hover {
+      background-color: var(--color-gray-200);
+      color: var(--color-gray-900);
+    }
+
+    .toolbar-btn--active {
+      background-color: var(--color-blue-100);
+      color: var(--color-blue-700);
+    }
+
+    .toolbar-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .toolbar-divider {
+      width: 1px;
+      background-color: var(--color-gray-300);
+      margin: 0 var(--spacing-1);
+    }
+
+    .rich-text-content {
+      min-height: 200px;
+      padding: var(--spacing-4);
+      font-size: var(--text-body-md);
+      line-height: var(--line-height-relaxed);
+      color: var(--color-text-primary);
+      outline: none;
+    }
+
+    .rich-text-content:empty:before {
+      content: attr(data-placeholder);
+      color: var(--color-gray-400);
+    }
+
+    /* Bio Preview */
+    .bio-preview {
+      margin-top: var(--spacing-4);
+      padding: var(--spacing-6);
+      background-color: var(--color-blue-50);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-blue-200);
+    }
+
+    .bio-preview__header {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-2);
+      margin-bottom: var(--spacing-4);
+      font-size: var(--text-body-sm);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-700);
+    }
+
+    .bio-preview__content {
+      font-size: var(--text-body-sm);
+      line-height: var(--line-height-relaxed);
+      color: var(--color-gray-700);
+    }
+
+    /* Image Upload */
+    .image-upload {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-4);
+    }
+
+    .image-upload-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--spacing-4);
+    }
+
+    .image-upload-item {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      border: 2px dashed var(--color-gray-400);
+      border-radius: var(--radius-md);
+      background-color: var(--color-gray-50);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all var(--transition-normal);
+      overflow: hidden;
+    }
+
+    .image-upload-item:hover {
+      border-color: var(--color-blue-700);
+      background-color: var(--color-blue-50);
+    }
+
+    .image-upload-item--profile {
+      aspect-ratio: 1;
+      max-width: 200px;
+    }
+
+    .image-upload-item--logo {
+      aspect-ratio: 1;
+      max-width: 150px;
+    }
+
+    .image-upload-item--cover {
+      aspect-ratio: 21 / 9;
+    }
+
+    .image-upload-item--has-image {
+      border-style: solid;
+      border-color: var(--color-gray-300);
+    }
+
+    .image-upload__preview {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .image-upload__placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--spacing-2);
+      padding: var(--spacing-4);
+      text-align: center;
+    }
+
+    .image-upload-item--has-image .image-upload__placeholder {
+      display: none;
+    }
+
+    .image-upload__icon {
+      width: 40px;
+      height: 40px;
+      color: var(--color-gray-400);
+    }
+
+    .image-upload__text {
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-600);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .image-upload__hint {
+      font-size: var(--text-caption);
+      color: var(--color-gray-500);
+    }
+
+    .image-upload__actions {
+      position: absolute;
+      top: var(--spacing-2);
+      right: var(--spacing-2);
+      display: none;
+      gap: var(--spacing-2);
+    }
+
+    .image-upload-item--has-image:hover .image-upload__actions {
+      display: flex;
+    }
+
+    .image-action-btn {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.6);
+      border: none;
+      border-radius: var(--radius-md);
+      color: white;
+      cursor: pointer;
+      transition: background-color var(--transition-fast);
+    }
+
+    .image-action-btn:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .image-action-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .image-upload-input {
+      display: none;
+    }
+
+    /* Service Radius Slider */
+    .radius-slider {
+      padding: var(--spacing-4) 0;
+    }
+
+    .radius-slider__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-4);
+    }
+
+    .radius-slider__value {
+      font-size: var(--text-h4);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-blue-700);
+    }
+
+    .radius-slider__input {
+      width: 100%;
+      height: 8px;
+      background: linear-gradient(to right,
+        var(--color-blue-700) 0%,
+        var(--color-blue-700) 50%,
+        var(--color-gray-300) 50%,
+        var(--color-gray-300) 100%);
+      border-radius: var(--radius-full);
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    .radius-slider__input::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 24px;
+      height: 24px;
+      background-color: var(--color-blue-700);
+      border: 3px solid white;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      box-shadow: var(--shadow-md);
+    }
+
+    .radius-slider__input::-moz-range-thumb {
+      width: 24px;
+      height: 24px;
+      background-color: var(--color-blue-700);
+      border: 3px solid white;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      box-shadow: var(--shadow-md);
+    }
+
+    .radius-slider__labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: var(--spacing-2);
+      font-size: var(--text-caption);
+      color: var(--color-gray-600);
+    }
+
+    /* Map Preview */
+    .map-preview {
+      width: 100%;
+      height: 300px;
+      background-color: var(--color-gray-200);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .map-preview__placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--spacing-3);
+      color: var(--color-gray-500);
+    }
+
+    .map-preview__placeholder svg {
+      width: 48px;
+      height: 48px;
+    }
+
+    /* Sticky Form Actions */
+    .sticky-actions {
+      position: sticky;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: var(--color-bg-primary);
+      border-top: 2px solid var(--color-border-light);
+      padding: var(--spacing-4) var(--spacing-6);
+      box-shadow: var(--shadow-lg);
+      z-index: var(--z-sticky);
+      margin: 0 calc(var(--spacing-6) * -1);
+      margin-top: var(--spacing-6);
+    }
+
+    @media (max-width: 575px) {
+      .sticky-actions {
+        margin: 0 calc(var(--spacing-4) * -1);
+      }
+    }
+
+    .sticky-actions__inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--spacing-4);
+    }
+
+    @media (max-width: 575px) {
+      .sticky-actions__inner {
+        flex-direction: column-reverse;
+        align-items: stretch;
+      }
+    }
+
+    .sticky-actions__left {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+    }
+
+    @media (max-width: 575px) {
+      .sticky-actions__left {
+        order: 1;
+      }
+    }
+
+    .save-status {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-2);
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-600);
+    }
+
+    .save-status__icon {
+      width: 16px;
+      height: 16px;
+    }
+
+    .save-status--saving {
+      color: var(--color-blue-700);
+    }
+
+    .save-status--saved {
+      color: var(--color-success);
+    }
+
+    .sticky-actions__right {
+      display: flex;
+      gap: var(--spacing-3);
+    }
+
+    @media (max-width: 575px) {
+      .sticky-actions__right {
+        flex-direction: column;
+      }
+    }
+
+    /* Image Cropper Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.75);
+      z-index: var(--z-modal);
+      align-items: center;
+      justify-content: center;
+      padding: var(--spacing-4);
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal__content {
+      background-color: var(--color-bg-primary);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 800px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--spacing-6);
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .modal__title {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-h4);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-900);
+    }
+
+    .modal__close {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      border-radius: var(--radius-md);
+      color: var(--color-gray-600);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .modal__close:hover {
+      background-color: var(--color-gray-100);
+      color: var(--color-gray-900);
+    }
+
+    .modal__close svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .modal__body {
+      padding: var(--spacing-6);
+    }
+
+    .modal__footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--spacing-3);
+      padding: var(--spacing-6);
+      border-top: 1px solid var(--color-border-light);
+    }
+
+    .cropper-container {
+      width: 100%;
+      height: 400px;
+      background-color: var(--color-gray-100);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--spacing-4);
+    }
+
+    .cropper-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--spacing-3);
+      color: var(--color-gray-500);
+    }
+
+    .cropper-placeholder svg {
+      width: 64px;
+      height: 64px;
+    }
+
+    .cropper-controls {
+      display: flex;
+      gap: var(--spacing-4);
+      align-items: center;
+    }
+
+    .cropper-controls__label {
+      font-size: var(--text-body-sm);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-gray-700);
+    }
+
+    .zoom-slider {
+      flex: 1;
+      height: 6px;
+      background-color: var(--color-gray-300);
+      border-radius: var(--radius-full);
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    .zoom-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      background-color: var(--color-blue-700);
+      border: 2px solid white;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .zoom-slider::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      background-color: var(--color-blue-700);
+      border: 2px solid white;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Phone Input with Multiple */
+    .phone-input-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-3);
+    }
+
+    .phone-input-item {
+      display: flex;
+      gap: var(--spacing-3);
+      align-items: flex-start;
+    }
+
+    .phone-input-wrapper {
+      flex: 1;
+      position: relative;
+    }
+
+    .phone-input-wrapper::before {
+      content: "+1";
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--color-gray-600);
+      font-size: var(--text-body-md);
+      pointer-events: none;
+    }
+
+    .phone-input-wrapper .form-field__input {
+      padding-left: 48px;
+    }
+
+    .phone-type-select {
+      width: 140px;
+    }
+
+    .remove-phone-btn {
+      width: 40px;
+      height: 56px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: 1px solid var(--color-gray-400);
+      border-radius: var(--radius-md);
+      color: var(--color-gray-600);
+      cursor: pointer;
+      transition: all var(--transition-normal);
+    }
+
+    .remove-phone-btn:hover {
+      border-color: var(--color-error);
+      color: var(--color-error);
+      background-color: var(--color-error-light);
+    }
+
+    .remove-phone-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .add-phone-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--spacing-2);
+      padding: var(--spacing-2) var(--spacing-3);
+      font-size: var(--text-body-sm);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-blue-700);
+      background: none;
+      border: none;
+      cursor: pointer;
+      border-radius: var(--radius-md);
+      transition: background-color var(--transition-normal);
+    }
+
+    .add-phone-btn:hover {
+      background-color: var(--color-blue-50);
+    }
+
+    .add-phone-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Tab Panels */
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    /* Unsaved Changes Warning */
+    .unsaved-warning {
+      display: none;
+      margin-bottom: var(--spacing-6);
+    }
+
+    .unsaved-warning.show {
+      display: flex;
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar__header">
+        <div class="sidebar__logo">
+          <div class="sidebar__logo-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+            </svg>
+          </div>
+          <span class="sidebar__logo-text">AutoPro</span>
+        </div>
+      </div>
+
+      <nav class="sidebar__nav">
+        <div class="nav-section">
+          <div class="nav-section__title">Main</div>
+          <a href="#" class="nav-link">
+            <svg class="nav-link__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+            Dashboard
+          </a>
+          <a href="#" class="nav-link">
+            <svg class="nav-link__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+            Customers
+            <span class="nav-link__badge">127</span>
+          </a>
+          <a href="#" class="nav-link">
+            <svg class="nav-link__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+            Services
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section__title">Referrals</div>
+          <a href="#" class="nav-link">
+            <svg class="nav-link__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="18" cy="5" r="3"/>
+              <circle cx="6" cy="12" r="3"/>
+              <circle cx="18" cy="19" r="3"/>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+            </svg>
+            Send Referrals
+          </a>
+          <a href="#" class="nav-link">
+            <svg class="nav-link__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Received
+            <span class="nav-link__badge">3</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section__title">Account</div>
+          <a href="#" class="nav-link nav-link--active">
+            <svg class="nav-link__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+            My Profile
+          </a>
+        </div>
+      </nav>
+
+      <div class="sidebar__footer">
+        <div class="user-menu">
+          <div class="user-menu__avatar">JS</div>
+          <div class="user-menu__info">
+            <div class="user-menu__name">John Smith</div>
+            <div class="user-menu__role">Mechanic</div>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Top Bar -->
+      <header class="top-bar">
+        <button class="mobile-menu-btn" aria-label="Open menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+
+        <div class="top-bar__search">
+          <input type="search" class="search-input" placeholder="Search customers...">
+        </div>
+
+        <div class="top-bar__actions">
+          <button class="notification-btn" aria-label="Notifications">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+            <span class="notification-btn__badge">3</span>
+          </button>
+          <div class="avatar avatar--md show-mobile-only">JS</div>
+        </div>
+      </header>
+
+      <!-- Page Content -->
+      <div class="page-content">
+        <!-- Page Header -->
+        <div class="page-header">
+          <div class="page-header__left">
+            <h1>Manage Your Profile</h1>
+            <p class="page-header__subtitle">Update your professional information and make it visible to potential customers</p>
+          </div>
+          <div class="page-header__actions">
+            <button type="button" class="btn btn--ghost">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+              Preview Profile
+            </button>
+            <button type="button" class="btn btn--secondary">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+                <polyline points="17 21 17 13 7 13 7 21"/>
+                <polyline points="7 3 7 8 15 8"/>
+              </svg>
+              Save Draft
+            </button>
+          </div>
+        </div>
+
+        <!-- Profile Completion Alert -->
+        <div class="alert alert--info profile-completion-alert">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 16v-4"/>
+            <path d="M12 8h.01"/>
+          </svg>
+          <div style="flex: 1;">
+            <strong>Complete your profile to get more visibility</strong>
+            <p style="margin-top: var(--spacing-1); font-size: var(--text-caption); color: var(--color-gray-600);">
+              A complete profile gets 3x more customer inquiries
+            </p>
+            <div class="completion-progress">
+              <div class="completion-progress__bar">
+                <div class="completion-progress__fill" style="width: 65%;"></div>
+              </div>
+              <span class="completion-progress__text">65% Complete</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Unsaved Changes Warning (hidden by default) -->
+        <div class="alert alert--warning unsaved-warning">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          <div>
+            <strong>You have unsaved changes</strong> - Don't forget to save your work before leaving this page.
+          </div>
+        </div>
+
+        <!-- Form Tabs -->
+        <div class="form-tabs">
+          <button class="form-tab form-tab--active" data-tab="basic">
+            <svg class="form-tab__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+            Basic Info
+            <span class="form-tab__status"></span>
+          </button>
+          <button class="form-tab" data-tab="about">
+            <svg class="form-tab__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+            </svg>
+            About & Bio
+            <span class="form-tab__status form-tab__status--incomplete"></span>
+          </button>
+          <button class="form-tab" data-tab="contact">
+            <svg class="form-tab__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            Contact Info
+            <span class="form-tab__status"></span>
+          </button>
+          <button class="form-tab" data-tab="location">
+            <svg class="form-tab__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            Location
+            <span class="form-tab__status form-tab__status--incomplete"></span>
+          </button>
+          <button class="form-tab" data-tab="media">
+            <svg class="form-tab__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+            Photos & Media
+            <span class="form-tab__status form-tab__status--incomplete"></span>
+          </button>
+        </div>
+
+        <!-- Form Container -->
+        <div class="form-container">
+          <form id="profileForm">
+
+            <!-- Tab 1: Basic Information -->
+            <div class="tab-panel active" id="tab-basic">
+              <div class="form-card">
+                <div class="form-section">
+                  <div class="form-section__header">
+                    <svg class="form-section__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                      <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                    <div>
+                      <h2 class="form-section__title">Basic Information</h2>
+                      <p class="form-section__description">Your primary business details visible to customers</p>
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-field">
+                      <label class="form-field__label form-field__label--required" for="businessName">
+                        Business Name
+                      </label>
+                      <input
+                        type="text"
+                        id="businessName"
+                        class="form-field__input"
+                        placeholder="Enter your business name"
+                        value="Smith's Auto Repair"
+                      >
+                      <p class="form-field__helper">This is the primary name customers will see</p>
+                    </div>
+                  </div>
+
+                  <div class="form-row form-row--2col">
+                    <div class="form-field">
+                      <label class="form-field__label form-field__label--required" for="firstName">
+                        First Name
+                      </label>
+                      <input
+                        type="text"
+                        id="firstName"
+                        class="form-field__input"
+                        placeholder="Enter first name"
+                        value="John"
+                      >
+                    </div>
+
+                    <div class="form-field">
+                      <label class="form-field__label form-field__label--required" for="lastName">
+                        Last Name
+                      </label>
+                      <input
+                        type="text"
+                        id="lastName"
+                        class="form-field__input"
+                        placeholder="Enter last name"
+                        value="Smith"
+                      >
+                    </div>
+                  </div>
+
+                  <div class="form-row form-row--2col">
+                    <div class="form-field">
+                      <label class="form-field__label" for="title">
+                        Professional Title
+                      </label>
+                      <input
+                        type="text"
+                        id="title"
+                        class="form-field__input"
+                        placeholder="e.g., Master Mechanic, Owner"
+                        value="Owner & Master Mechanic"
+                      >
+                      <p class="form-field__helper">Your role or certification</p>
+                    </div>
+
+                    <div class="form-field">
+                      <label class="form-field__label form-field__label--required" for="businessType">
+                        Business Type
+                      </label>
+                      <select id="businessType" class="form-field__select">
+                        <option value="">Select business type</option>
+                        <option value="mechanic" selected>Mechanic / Auto Repair</option>
+                        <option value="body-shop">Body Shop</option>
+                        <option value="detailing">Detailing Service</option>
+                        <option value="towing">Towing Service</option>
+                        <option value="tire-shop">Tire Shop</option>
+                        <option value="dealer">Dealership</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tab 2: About & Bio -->
+            <div class="tab-panel" id="tab-about">
+              <div class="form-card">
+                <div class="form-section">
+                  <div class="form-section__header">
+                    <svg class="form-section__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                      <polyline points="14 2 14 8 20 8"/>
+                      <line x1="16" y1="13" x2="8" y2="13"/>
+                      <line x1="16" y1="17" x2="8" y2="17"/>
+                    </svg>
+                    <div>
+                      <h2 class="form-section__title">About Your Business</h2>
+                      <p class="form-section__description">Tell customers what makes your business special</p>
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-field">
+                      <label class="form-field__label form-field__label--required">
+                        Business Description
+                      </label>
+                      <div class="rich-text-editor">
+                        <div class="rich-text-toolbar">
+                          <button type="button" class="toolbar-btn toolbar-btn--active" title="Bold" aria-label="Bold">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                              <path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/>
+                              <path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/>
+                            </svg>
+                          </button>
+                          <button type="button" class="toolbar-btn" title="Italic" aria-label="Italic">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                              <line x1="19" y1="4" x2="10" y2="4"/>
+                              <line x1="14" y1="20" x2="5" y2="20"/>
+                              <line x1="15" y1="4" x2="9" y2="20"/>
+                            </svg>
+                          </button>
+                          <button type="button" class="toolbar-btn" title="Underline" aria-label="Underline">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                              <path d="M6 3v7a6 6 0 0 0 6 6 6 6 0 0 0 6-6V3"/>
+                              <line x1="4" y1="21" x2="20" y2="21"/>
+                            </svg>
+                          </button>
+                          <div class="toolbar-divider"></div>
+                          <button type="button" class="toolbar-btn" title="Bullet List" aria-label="Bullet List">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                              <line x1="8" y1="6" x2="21" y2="6"/>
+                              <line x1="8" y1="12" x2="21" y2="12"/>
+                              <line x1="8" y1="18" x2="21" y2="18"/>
+                              <line x1="3" y1="6" x2="3.01" y2="6"/>
+                              <line x1="3" y1="12" x2="3.01" y2="12"/>
+                              <line x1="3" y1="18" x2="3.01" y2="18"/>
+                            </svg>
+                          </button>
+                          <button type="button" class="toolbar-btn" title="Numbered List" aria-label="Numbered List">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                              <line x1="10" y1="6" x2="21" y2="6"/>
+                              <line x1="10" y1="12" x2="21" y2="12"/>
+                              <line x1="10" y1="18" x2="21" y2="18"/>
+                              <path d="M4 6h1v4"/>
+                              <path d="M4 10h2"/>
+                              <path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/>
+                            </svg>
+                          </button>
+                          <div class="toolbar-divider"></div>
+                          <button type="button" class="toolbar-btn" title="Link" aria-label="Link">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                            </svg>
+                          </button>
+                        </div>
+                        <div
+                          class="rich-text-content"
+                          contenteditable="true"
+                          data-placeholder="Describe your business, services, and what sets you apart from competitors..."
+                          id="bioContent"
+                        >With over 25 years of experience, Smith's Auto Repair is your trusted partner for all automotive needs. We specialize in comprehensive diagnostics, engine repair, and routine maintenance for all makes and models.</div>
+                      </div>
+                      <div class="form-field__counter" id="bioCounter">
+                        <span id="bioCharCount">234</span> / 1000 characters
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-row form-row--2col">
+                    <div class="form-field">
+                      <label class="form-field__label" for="yearsInBusiness">
+                        Years in Business
+                      </label>
+                      <input
+                        type="number"
+                        id="yearsInBusiness"
+                        class="form-field__input"
+                        placeholder="0"
+                        value="25"
+                        min="0"
+                        max="100"
+                      >
+                    </div>
+
+                    <div class="form-field">
+                      <label class="form-field__label" for="employeeCount">
+                        Number of Employees
+                      </label>
+                      <select id="employeeCount" class="form-field__select">
+                        <option value="">Select range</option>
+                        <option value="1">Just me</option>
+                        <option value="2-5" selected>2-5</option>
+                        <option value="6-10">6-10</option>
+                        <option value="11-25">11-25</option>
+                        <option value="26-50">26-50</option>
+                        <option value="50+">50+</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Bio Preview -->
+                  <div class="bio-preview">
+                    <div class="bio-preview__header">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                      </svg>
+                      Preview - How customers will see your bio
+                    </div>
+                    <div class="bio-preview__content" id="bioPreview">
+                      With over 25 years of experience, Smith's Auto Repair is your trusted partner for all automotive needs. We specialize in comprehensive diagnostics, engine repair, and routine maintenance for all makes and models.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tab 3: Contact Information -->
+            <div class="tab-panel" id="tab-contact">
+              <div class="form-card">
+                <div class="form-section">
+                  <div class="form-section__header">
+                    <svg class="form-section__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                    </svg>
+                    <div>
+                      <h2 class="form-section__title">Contact Information</h2>
+                      <p class="form-section__description">How customers can reach you</p>
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-field">
+                      <label class="form-field__label form-field__label--required">
+                        Phone Numbers
+                      </label>
+                      <div class="phone-input-list">
+                        <div class="phone-input-item">
+                          <select class="form-field__select phone-type-select">
+                            <option value="mobile">Mobile</option>
+                            <option value="office" selected>Office</option>
+                            <option value="fax">Fax</option>
+                          </select>
+                          <div class="phone-input-wrapper">
+                            <input
+                              type="tel"
+                              class="form-field__input"
+                              placeholder="(555) 123-4567"
+                              value="(555) 234-5678"
+                            >
+                          </div>
+                          <button type="button" class="remove-phone-btn" aria-label="Remove phone number">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                              <line x1="18" y1="6" x2="6" y2="18"/>
+                              <line x1="6" y1="6" x2="18" y2="18"/>
+                            </svg>
+                          </button>
+                        </div>
+                        <div class="phone-input-item">
+                          <select class="form-field__select phone-type-select">
+                            <option value="mobile" selected>Mobile</option>
+                            <option value="office">Office</option>
+                            <option value="fax">Fax</option>
+                          </select>
+                          <div class="phone-input-wrapper">
+                            <input
+                              type="tel"
+                              class="form-field__input"
+                              placeholder="(555) 123-4567"
+                              value="(555) 987-6543"
+                            >
+                          </div>
+                          <button type="button" class="remove-phone-btn" aria-label="Remove phone number">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                              <line x1="18" y1="6" x2="6" y2="18"/>
+                              <line x1="6" y1="6" x2="18" y2="18"/>
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                      <button type="button" class="add-phone-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <line x1="12" y1="5" x2="12" y2="19"/>
+                          <line x1="5" y1="12" x2="19" y2="12"/>
+                        </svg>
+                        Add another phone number
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="form-row form-row--2col">
+                    <div class="form-field">
+                      <label class="form-field__label form-field__label--required" for="email">
+                        Email Address
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        class="form-field__input"
+                        placeholder="your@email.com"
+                        value="john@smithsautorepair.com"
+                      >
+                      <p class="form-field__helper">Primary email for customer inquiries</p>
+                    </div>
+
+                    <div class="form-field">
+                      <label class="form-field__label" for="website">
+                        Website
+                      </label>
+                      <input
+                        type="url"
+                        id="website"
+                        class="form-field__input"
+                        placeholder="https://yourwebsite.com"
+                        value="https://smithsautorepair.com"
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tab 4: Location -->
+            <div class="tab-panel" id="tab-location">
+              <div class="form-card">
+                <div class="form-section">
+                  <div class="form-section__header">
+                    <svg class="form-section__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                      <circle cx="12" cy="10" r="3"/>
+                    </svg>
+                    <div>
+                      <h2 class="form-section__title">Business Location</h2>
+                      <p class="form-section__description">Where customers can find you</p>
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-field">
+                      <label class="form-field__label form-field__label--required" for="street">
+                        Street Address
+                      </label>
+                      <input
+                        type="text"
+                        id="street"
+                        class="form-field__input"
+                        placeholder="123 Main Street"
+                        value="456 Oak Avenue"
+                      >
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-field">
+                      <label class="form-field__label" for="street2">
+                        Suite, Unit, Building (Optional)
+                      </label>
+                      <input
+                        type="text"
+                        id="street2"
+                        class="form-field__input"
+                        placeholder="Suite 100"
+                        value=""
+                      >
+                    </div>
+                  </div>
+
+                  <div class="form-row form-row--2col">
+                    <div class="form-field">
+                      <label class="form-field__label form-field__label--required" for="city">
+                        City
+                      </label>
+                      <input
+                        type="text"
+                        id="city"
+                        class="form-field__input"
+                        placeholder="City name"
+                        value="Springfield"
+                      >
+                    </div>
+
+                    <div class="form-field">
+                      <label class="form-field__label form-field__label--required" for="state">
+                        State
+                      </label>
+                      <select id="state" class="form-field__select">
+                        <option value="">Select state</option>
+                        <option value="AL">Alabama</option>
+                        <option value="AK">Alaska</option>
+                        <option value="AZ">Arizona</option>
+                        <option value="CA">California</option>
+                        <option value="IL" selected>Illinois</option>
+                        <option value="NY">New York</option>
+                        <option value="TX">Texas</option>
+                        <!-- More states... -->
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-row form-row--2col">
+                    <div class="form-field">
+                      <label class="form-field__label form-field__label--required" for="zipCode">
+                        ZIP Code
+                      </label>
+                      <input
+                        type="text"
+                        id="zipCode"
+                        class="form-field__input"
+                        placeholder="12345"
+                        value="62701"
+                        maxlength="5"
+                      >
+                    </div>
+
+                    <div class="form-field">
+                      <label class="form-field__label" for="country">
+                        Country
+                      </label>
+                      <select id="country" class="form-field__select">
+                        <option value="US" selected>United States</option>
+                        <option value="CA">Canada</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Map Preview -->
+                  <div class="form-row">
+                    <div>
+                      <label class="form-field__label">Location Preview</label>
+                      <div class="map-preview">
+                        <div class="map-preview__placeholder">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                          </svg>
+                          <div>Map will appear here after address is validated</div>
+                        </div>
+                      </div>
+                      <p class="form-field__helper">Ensure your address is correct for accurate map display</p>
+                    </div>
+                  </div>
+
+                  <!-- Service Radius -->
+                  <div class="form-row">
+                    <div class="form-field">
+                      <label class="form-field__label">
+                        Service Radius
+                      </label>
+                      <div class="radius-slider">
+                        <div class="radius-slider__header">
+                          <span style="font-size: var(--text-body-sm); color: var(--color-gray-700);">How far will you travel for service calls?</span>
+                          <span class="radius-slider__value" id="radiusValue">25 miles</span>
+                        </div>
+                        <input
+                          type="range"
+                          class="radius-slider__input"
+                          min="0"
+                          max="100"
+                          value="25"
+                          step="5"
+                          id="serviceRadius"
+                        >
+                        <div class="radius-slider__labels">
+                          <span>0 mi</span>
+                          <span>25 mi</span>
+                          <span>50 mi</span>
+                          <span>75 mi</span>
+                          <span>100+ mi</span>
+                        </div>
+                      </div>
+                      <p class="form-field__helper">Set to 0 if you only work at your shop location</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tab 5: Photos & Media -->
+            <div class="tab-panel" id="tab-media">
+              <div class="form-card">
+                <div class="form-section">
+                  <div class="form-section__header">
+                    <svg class="form-section__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                      <circle cx="8.5" cy="8.5" r="1.5"/>
+                      <polyline points="21 15 16 10 5 21"/>
+                    </svg>
+                    <div>
+                      <h2 class="form-section__title">Photos & Media</h2>
+                      <p class="form-section__description">Upload professional images to showcase your business</p>
+                    </div>
+                  </div>
+
+                  <!-- Profile Photo -->
+                  <div class="form-row">
+                    <div class="form-field">
+                      <label class="form-field__label form-field__label--required">
+                        Profile Photo
+                      </label>
+                      <div class="image-upload">
+                        <div class="image-upload-item image-upload-item--profile image-upload-item--has-image">
+                          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect fill='%2300529F' width='200' height='200'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='80' fill='white'%3EJS%3C/text%3E%3C/svg%3E" alt="Profile photo" class="image-upload__preview">
+                          <div class="image-upload__placeholder">
+                            <svg class="image-upload__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                              <circle cx="12" cy="7" r="4"/>
+                            </svg>
+                            <div class="image-upload__text">Click to upload</div>
+                            <div class="image-upload__hint">Square image, 400x400px min</div>
+                          </div>
+                          <div class="image-upload__actions">
+                            <button type="button" class="image-action-btn" aria-label="Edit photo">
+                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                              </svg>
+                            </button>
+                            <button type="button" class="image-action-btn" aria-label="Delete photo">
+                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="3 6 5 6 21 6"/>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                              </svg>
+                            </button>
+                          </div>
+                          <input type="file" class="image-upload-input" accept="image/*">
+                        </div>
+                      </div>
+                      <p class="form-field__helper">A professional headshot or business logo works best</p>
+                    </div>
+                  </div>
+
+                  <!-- Cover Photo -->
+                  <div class="form-row">
+                    <div class="form-field">
+                      <label class="form-field__label">
+                        Cover Photo
+                      </label>
+                      <div class="image-upload">
+                        <div class="image-upload-item image-upload-item--cover">
+                          <div class="image-upload__placeholder">
+                            <svg class="image-upload__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                              <circle cx="8.5" cy="8.5" r="1.5"/>
+                              <polyline points="21 15 16 10 5 21"/>
+                            </svg>
+                            <div class="image-upload__text">Click to upload cover photo</div>
+                            <div class="image-upload__hint">Wide image, 1920x720px recommended</div>
+                          </div>
+                          <input type="file" class="image-upload-input" accept="image/*">
+                        </div>
+                      </div>
+                      <p class="form-field__helper">Optional banner image displayed at the top of your profile</p>
+                    </div>
+                  </div>
+
+                  <!-- Business Logo -->
+                  <div class="form-row">
+                    <div class="form-field">
+                      <label class="form-field__label">
+                        Business Logo
+                      </label>
+                      <div class="image-upload">
+                        <div class="image-upload-item image-upload-item--logo">
+                          <div class="image-upload__placeholder">
+                            <svg class="image-upload__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                              <circle cx="12" cy="12" r="10"/>
+                              <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                              <line x1="9" y1="9" x2="9.01" y2="9"/>
+                              <line x1="15" y1="9" x2="15.01" y2="9"/>
+                            </svg>
+                            <div class="image-upload__text">Click to upload logo</div>
+                            <div class="image-upload__hint">Square, 300x300px min</div>
+                          </div>
+                          <input type="file" class="image-upload-input" accept="image/*">
+                        </div>
+                      </div>
+                      <p class="form-field__helper">Your company logo (if different from profile photo)</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </form>
+        </div>
+
+        <!-- Sticky Form Actions -->
+        <div class="sticky-actions">
+          <div class="sticky-actions__inner">
+            <div class="sticky-actions__left">
+              <div class="save-status save-status--saved">
+                <svg class="save-status__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                All changes saved
+              </div>
+            </div>
+            <div class="sticky-actions__right">
+              <button type="button" class="btn btn--ghost">
+                Cancel
+              </button>
+              <button type="button" class="btn btn--secondary">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+                  <polyline points="17 21 17 13 7 13 7 21"/>
+                  <polyline points="7 3 7 8 15 8"/>
+                </svg>
+                Save Draft
+              </button>
+              <button type="submit" class="btn btn--primary">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                Publish Changes
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Image Cropper Modal -->
+  <div class="modal" id="cropperModal">
+    <div class="modal__content">
+      <div class="modal__header">
+        <h2 class="modal__title">Crop & Adjust Image</h2>
+        <button class="modal__close" aria-label="Close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal__body">
+        <div class="cropper-container">
+          <div class="cropper-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+            <div>Image cropper will appear here</div>
+          </div>
+        </div>
+        <div class="cropper-controls">
+          <label class="cropper-controls__label">Zoom</label>
+          <input type="range" class="zoom-slider" min="1" max="3" step="0.1" value="1">
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button type="button" class="btn btn--ghost">Cancel</button>
+        <button type="button" class="btn btn--primary">Apply & Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Tab Switching
+    const tabs = document.querySelectorAll('.form-tab');
+    const tabPanels = document.querySelectorAll('.tab-panel');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const targetTab = tab.getAttribute('data-tab');
+
+        // Remove active class from all tabs and panels
+        tabs.forEach(t => t.classList.remove('form-tab--active'));
+        tabPanels.forEach(p => p.classList.remove('active'));
+
+        // Add active class to clicked tab and corresponding panel
+        tab.classList.add('form-tab--active');
+        document.getElementById(`tab-${targetTab}`).classList.add('active');
+      });
+    });
+
+    // Character Counter for Bio
+    const bioContent = document.getElementById('bioContent');
+    const bioCharCount = document.getElementById('bioCharCount');
+    const bioCounter = document.getElementById('bioCounter');
+    const bioPreview = document.getElementById('bioPreview');
+    const maxChars = 1000;
+
+    bioContent.addEventListener('input', function() {
+      const charCount = this.textContent.length;
+      bioCharCount.textContent = charCount;
+      bioPreview.textContent = this.textContent;
+
+      if (charCount > maxChars) {
+        bioCounter.classList.add('form-field__counter--error');
+      } else if (charCount > maxChars * 0.9) {
+        bioCounter.classList.remove('form-field__counter--error');
+        bioCounter.classList.add('form-field__counter--warning');
+      } else {
+        bioCounter.classList.remove('form-field__counter--error', 'form-field__counter--warning');
+      }
+    });
+
+    // Service Radius Slider
+    const radiusSlider = document.getElementById('serviceRadius');
+    const radiusValue = document.getElementById('radiusValue');
+
+    radiusSlider.addEventListener('input', function() {
+      const value = this.value;
+      radiusValue.textContent = value === '100' ? '100+ miles' : `${value} miles`;
+
+      // Update gradient
+      const percentage = (value / 100) * 100;
+      this.style.background = `linear-gradient(to right,
+        var(--color-blue-700) 0%,
+        var(--color-blue-700) ${percentage}%,
+        var(--color-gray-300) ${percentage}%,
+        var(--color-gray-300) 100%)`;
+    });
+
+    // Phone Number Formatting
+    document.querySelectorAll('.phone-input-wrapper input').forEach(input => {
+      input.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length > 0) {
+          if (value.length <= 3) {
+            value = '(' + value;
+          } else if (value.length <= 6) {
+            value = '(' + value.slice(0, 3) + ') ' + value.slice(3);
+          } else {
+            value = '(' + value.slice(0, 3) + ') ' + value.slice(3, 6) + '-' + value.slice(6, 10);
+          }
+        }
+        e.target.value = value;
+      });
+    });
+
+    // Add Phone Number
+    document.querySelector('.add-phone-btn').addEventListener('click', function() {
+      const phoneList = document.querySelector('.phone-input-list');
+      const newPhone = document.createElement('div');
+      newPhone.className = 'phone-input-item';
+      newPhone.innerHTML = `
+        <select class="form-field__select phone-type-select">
+          <option value="mobile">Mobile</option>
+          <option value="office">Office</option>
+          <option value="fax">Fax</option>
+        </select>
+        <div class="phone-input-wrapper">
+          <input type="tel" class="form-field__input" placeholder="(555) 123-4567">
+        </div>
+        <button type="button" class="remove-phone-btn" aria-label="Remove phone number">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      `;
+      phoneList.appendChild(newPhone);
+    });
+
+    // Remove Phone Number
+    document.addEventListener('click', function(e) {
+      if (e.target.closest('.remove-phone-btn')) {
+        const phoneList = document.querySelector('.phone-input-list');
+        if (phoneList.children.length > 1) {
+          e.target.closest('.phone-input-item').remove();
+        } else {
+          alert('You must have at least one phone number');
+        }
+      }
+    });
+
+    // Image Upload Click Handlers
+    document.querySelectorAll('.image-upload-item').forEach(item => {
+      item.addEventListener('click', function(e) {
+        if (!e.target.closest('.image-action-btn')) {
+          this.querySelector('.image-upload-input').click();
+        }
+      });
+
+      const fileInput = item.querySelector('.image-upload-input');
+      fileInput.addEventListener('change', function() {
+        if (this.files && this.files[0]) {
+          // In a real implementation, this would show the cropper modal
+          document.getElementById('cropperModal').classList.add('show');
+        }
+      });
+    });
+
+    // Image Action Buttons
+    document.addEventListener('click', function(e) {
+      if (e.target.closest('.image-action-btn')) {
+        const btn = e.target.closest('.image-action-btn');
+        const item = btn.closest('.image-upload-item');
+
+        if (btn.getAttribute('aria-label').includes('Edit')) {
+          document.getElementById('cropperModal').classList.add('show');
+        } else if (btn.getAttribute('aria-label').includes('Delete')) {
+          if (confirm('Are you sure you want to delete this image?')) {
+            item.classList.remove('image-upload-item--has-image');
+            item.querySelector('.image-upload__preview').src = '';
+          }
+        }
+      }
+    });
+
+    // Modal Close
+    document.querySelector('.modal__close').addEventListener('click', function() {
+      document.getElementById('cropperModal').classList.remove('show');
+    });
+
+    document.getElementById('cropperModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        this.classList.remove('show');
+      }
+    });
+
+    // Form Change Detection
+    const form = document.getElementById('profileForm');
+    let formChanged = false;
+
+    form.addEventListener('input', function() {
+      if (!formChanged) {
+        formChanged = true;
+        document.querySelector('.unsaved-warning').classList.add('show');
+        document.querySelector('.save-status').classList.remove('save-status--saved');
+        document.querySelector('.save-status').classList.add('save-status--saving');
+        document.querySelector('.save-status').innerHTML = `
+          <svg class="save-status__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+          </svg>
+          Unsaved changes
+        `;
+      }
+    });
+
+    // Form Submission
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Profile changes published successfully!');
+      formChanged = false;
+      document.querySelector('.unsaved-warning').classList.remove('show');
+    });
+
+    // Auto-save simulation
+    let saveTimeout;
+    form.addEventListener('input', function() {
+      clearTimeout(saveTimeout);
+      saveTimeout = setTimeout(() => {
+        document.querySelector('.save-status').classList.remove('save-status--saving');
+        document.querySelector('.save-status').classList.add('save-status--saved');
+        document.querySelector('.save-status').innerHTML = `
+          <svg class="save-status__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          All changes saved
+        `;
+      }, 2000);
+    });
+  </script>
+</body>
+</html>

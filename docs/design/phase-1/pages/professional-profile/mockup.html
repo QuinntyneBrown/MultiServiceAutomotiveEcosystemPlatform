@@ -1,0 +1,1534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoPro Mechanics - Professional Profile - AutoPro Network</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../shared-styles.css">
+  <style>
+    /* ==================== PUBLIC NAVBAR ==================== */
+    .public-navbar {
+      position: sticky;
+      top: 0;
+      z-index: var(--z-sticky);
+      background-color: var(--color-bg-primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .public-navbar__container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: var(--container-max-width);
+      margin: 0 auto;
+      padding: var(--spacing-4) var(--spacing-6);
+    }
+
+    .public-navbar__logo {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+      text-decoration: none;
+    }
+
+    .public-navbar__logo-icon {
+      width: 40px;
+      height: 40px;
+      background-color: var(--color-blue-700);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .public-navbar__logo-text {
+      font-family: var(--font-family-primary);
+      font-weight: var(--font-weight-bold);
+      font-size: var(--text-h5);
+      color: var(--color-blue-700);
+    }
+
+    .public-navbar__nav {
+      display: none;
+      gap: var(--spacing-8);
+    }
+
+    @media (min-width: 768px) {
+      .public-navbar__nav {
+        display: flex;
+      }
+    }
+
+    .public-navbar__link {
+      font-family: var(--font-family-secondary);
+      font-size: var(--text-body-md);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-gray-800);
+      text-decoration: none;
+      transition: color var(--transition-normal);
+    }
+
+    .public-navbar__link:hover {
+      color: var(--color-blue-700);
+    }
+
+    .public-navbar__link--active {
+      color: var(--color-blue-700);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    .public-navbar__actions {
+      display: flex;
+      gap: var(--spacing-3);
+      align-items: center;
+    }
+
+    .menu-toggle {
+      display: flex;
+      background: none;
+      border: none;
+      color: var(--color-gray-700);
+      padding: var(--spacing-2);
+      cursor: pointer;
+    }
+
+    @media (min-width: 768px) {
+      .menu-toggle {
+        display: none;
+      }
+    }
+
+    /* ==================== HERO SECTION ==================== */
+    .profile-hero {
+      position: relative;
+      background-color: var(--color-gray-100);
+    }
+
+    .profile-hero__cover {
+      width: 100%;
+      height: 300px;
+      background: linear-gradient(135deg, var(--color-blue-700) 0%, var(--color-blue-900) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .profile-hero__cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.3;
+    }
+
+    @media (max-width: 767px) {
+      .profile-hero__cover {
+        height: 200px;
+      }
+    }
+
+    .profile-hero__container {
+      max-width: var(--container-max-width);
+      margin: 0 auto;
+      padding: 0 var(--spacing-6);
+      position: relative;
+    }
+
+    .profile-hero__content {
+      display: flex;
+      gap: var(--spacing-6);
+      align-items: flex-end;
+      margin-top: -80px;
+      position: relative;
+      padding-bottom: var(--spacing-6);
+    }
+
+    @media (max-width: 767px) {
+      .profile-hero__content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin-top: -60px;
+      }
+    }
+
+    .profile-hero__avatar-wrapper {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .profile-hero__avatar {
+      width: 160px;
+      height: 160px;
+      border-radius: var(--radius-2xl);
+      border: 5px solid var(--color-bg-primary);
+      background-color: var(--color-bg-primary);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .profile-hero__avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @media (max-width: 767px) {
+      .profile-hero__avatar {
+        width: 120px;
+        height: 120px;
+      }
+    }
+
+    .profile-hero__verified-badge {
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      width: 40px;
+      height: 40px;
+      background-color: var(--color-blue-700);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid var(--color-bg-primary);
+      box-shadow: var(--shadow-md);
+    }
+
+    @media (max-width: 767px) {
+      .profile-hero__verified-badge {
+        width: 32px;
+        height: 32px;
+      }
+    }
+
+    .profile-hero__info {
+      flex: 1;
+      min-width: 0;
+      padding-top: var(--spacing-4);
+    }
+
+    .profile-hero__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: var(--spacing-4);
+      margin-bottom: var(--spacing-3);
+    }
+
+    @media (max-width: 767px) {
+      .profile-hero__header {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+    .profile-hero__title-group {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .profile-hero__business-name {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-display-sm);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-gray-900);
+      margin-bottom: var(--spacing-2);
+      line-height: 1.2;
+    }
+
+    @media (max-width: 767px) {
+      .profile-hero__business-name {
+        font-size: var(--text-h1);
+      }
+    }
+
+    .profile-hero__professional-name {
+      font-size: var(--text-body-lg);
+      color: var(--color-gray-600);
+      margin-bottom: var(--spacing-3);
+    }
+
+    .profile-hero__badges {
+      display: flex;
+      gap: var(--spacing-3);
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 767px) {
+      .profile-hero__badges {
+        justify-content: center;
+      }
+    }
+
+    .business-type-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--spacing-2);
+      padding: var(--spacing-2) var(--spacing-4);
+      font-size: var(--text-body-sm);
+      font-weight: var(--font-weight-semibold);
+      border-radius: var(--radius-full);
+      background-color: var(--color-blue-100);
+      color: var(--color-blue-700);
+    }
+
+    .verified-text-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--spacing-2);
+      padding: var(--spacing-2) var(--spacing-4);
+      font-size: var(--text-body-sm);
+      font-weight: var(--font-weight-semibold);
+      border-radius: var(--radius-full);
+      background-color: var(--color-success-light);
+      color: var(--color-success);
+    }
+
+    .profile-hero__rating {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+      margin-top: var(--spacing-3);
+    }
+
+    @media (max-width: 767px) {
+      .profile-hero__rating {
+        justify-content: center;
+      }
+    }
+
+    .rating-stars-large {
+      display: flex;
+      gap: 4px;
+    }
+
+    .rating-stars-large svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .rating-text {
+      font-size: var(--text-h5);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-gray-900);
+    }
+
+    .rating-count {
+      font-size: var(--text-body-md);
+      color: var(--color-gray-600);
+    }
+
+    .profile-hero__actions {
+      display: flex;
+      gap: var(--spacing-3);
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 767px) {
+      .profile-hero__actions {
+        width: 100%;
+      }
+    }
+
+    .action-button-group {
+      display: flex;
+      gap: var(--spacing-3);
+    }
+
+    @media (max-width: 767px) {
+      .action-button-group {
+        width: 100%;
+      }
+
+      .action-button-group .btn {
+        flex: 1;
+      }
+    }
+
+    .btn-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      padding: 0;
+      border-radius: var(--radius-md);
+      flex-shrink: 0;
+    }
+
+    /* ==================== MAIN CONTENT ==================== */
+    .profile-main {
+      background-color: var(--color-bg-secondary);
+      padding: var(--spacing-12) 0;
+    }
+
+    @media (max-width: 767px) {
+      .profile-main {
+        padding: var(--spacing-8) 0;
+      }
+    }
+
+    .profile-container {
+      max-width: var(--container-max-width);
+      margin: 0 auto;
+      padding: 0 var(--spacing-6);
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: var(--spacing-8);
+    }
+
+    @media (max-width: 991px) {
+      .profile-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .profile-content {
+      min-width: 0;
+    }
+
+    .profile-sidebar {
+      position: sticky;
+      top: calc(var(--spacing-16) + 64px);
+      height: fit-content;
+    }
+
+    @media (max-width: 991px) {
+      .profile-sidebar {
+        position: static;
+      }
+    }
+
+    /* ==================== CONTENT SECTIONS ==================== */
+    .content-section {
+      background-color: var(--color-bg-primary);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-8);
+      margin-bottom: var(--spacing-6);
+      box-shadow: var(--shadow-sm);
+    }
+
+    @media (max-width: 767px) {
+      .content-section {
+        padding: var(--spacing-6);
+      }
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+      margin-bottom: var(--spacing-6);
+      padding-bottom: var(--spacing-4);
+      border-bottom: 2px solid var(--color-gray-200);
+    }
+
+    .section-icon {
+      width: 32px;
+      height: 32px;
+      background-color: var(--color-blue-100);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-blue-700);
+    }
+
+    .section-title {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-h3);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-900);
+    }
+
+    /* About Section */
+    .about-content {
+      font-size: var(--text-body-lg);
+      line-height: var(--line-height-relaxed);
+      color: var(--color-gray-700);
+      margin-bottom: var(--spacing-6);
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--spacing-6);
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+    }
+
+    .stat-icon {
+      width: 48px;
+      height: 48px;
+      background-color: var(--color-blue-50);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-blue-700);
+      flex-shrink: 0;
+    }
+
+    .stat-content {
+      flex: 1;
+    }
+
+    .stat-label {
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-600);
+      margin-bottom: var(--spacing-1);
+    }
+
+    .stat-value {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-h5);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-900);
+    }
+
+    /* Specialties Section */
+    .specialties-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: var(--spacing-4);
+      margin-bottom: var(--spacing-8);
+    }
+
+    .specialty-item {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+      padding: var(--spacing-4);
+      background-color: var(--color-gray-50);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-gray-200);
+    }
+
+    .specialty-icon {
+      width: 40px;
+      height: 40px;
+      background-color: var(--color-blue-700);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-inverse);
+      flex-shrink: 0;
+    }
+
+    .specialty-name {
+      font-size: var(--text-body-md);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-gray-900);
+    }
+
+    .certifications-list {
+      display: grid;
+      gap: var(--spacing-4);
+    }
+
+    .certification-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--spacing-4);
+      padding: var(--spacing-4);
+      background-color: var(--color-success-light);
+      border-radius: var(--radius-md);
+      border-left: 4px solid var(--color-success);
+    }
+
+    .certification-badge {
+      width: 56px;
+      height: 56px;
+      background-color: var(--color-success);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-inverse);
+      flex-shrink: 0;
+    }
+
+    .certification-content {
+      flex: 1;
+    }
+
+    .certification-name {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-body-lg);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-900);
+      margin-bottom: var(--spacing-1);
+    }
+
+    .certification-org {
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-700);
+      margin-bottom: var(--spacing-1);
+    }
+
+    .certification-year {
+      font-size: var(--text-body-sm);
+      color: var(--color-success);
+      font-weight: var(--font-weight-medium);
+    }
+
+    /* Gallery Section */
+    .gallery-placeholder {
+      text-align: center;
+      padding: var(--spacing-12) var(--spacing-6);
+      background: linear-gradient(135deg, var(--color-blue-50) 0%, var(--color-gray-50) 100%);
+      border-radius: var(--radius-lg);
+      border: 2px dashed var(--color-gray-300);
+    }
+
+    .gallery-placeholder__icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto var(--spacing-4);
+      color: var(--color-gray-400);
+    }
+
+    .gallery-placeholder__title {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-h4);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-700);
+      margin-bottom: var(--spacing-2);
+    }
+
+    .gallery-placeholder__text {
+      font-size: var(--text-body-md);
+      color: var(--color-gray-600);
+    }
+
+    /* Reviews Section */
+    .reviews-placeholder {
+      text-align: center;
+      padding: var(--spacing-12) var(--spacing-6);
+      background: linear-gradient(135deg, var(--color-yellow-100) 0%, var(--color-gray-50) 100%);
+      border-radius: var(--radius-lg);
+      border: 2px dashed var(--color-gray-300);
+    }
+
+    .reviews-placeholder__icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto var(--spacing-4);
+      color: var(--color-gray-400);
+    }
+
+    .reviews-placeholder__title {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-h4);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-700);
+      margin-bottom: var(--spacing-2);
+    }
+
+    .reviews-placeholder__text {
+      font-size: var(--text-body-md);
+      color: var(--color-gray-600);
+    }
+
+    /* ==================== SIDEBAR ==================== */
+    .sidebar-card {
+      background-color: var(--color-bg-primary);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-6);
+      margin-bottom: var(--spacing-6);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .sidebar-card__title {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-h5);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-900);
+      margin-bottom: var(--spacing-4);
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-2);
+    }
+
+    /* Contact Information */
+    .contact-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-4);
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--spacing-3);
+    }
+
+    .contact-item__icon {
+      width: 20px;
+      height: 20px;
+      color: var(--color-blue-700);
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .contact-item__content {
+      flex: 1;
+    }
+
+    .contact-item__label {
+      font-size: var(--text-caption);
+      color: var(--color-gray-600);
+      margin-bottom: var(--spacing-1);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .contact-item__value {
+      font-size: var(--text-body-md);
+      color: var(--color-gray-900);
+      word-break: break-word;
+    }
+
+    .contact-item__value a {
+      color: var(--color-blue-700);
+      text-decoration: none;
+      font-weight: var(--font-weight-medium);
+    }
+
+    .contact-item__value a:hover {
+      text-decoration: underline;
+    }
+
+    /* Business Hours */
+    .hours-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-3);
+    }
+
+    .hours-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--spacing-2) 0;
+      border-bottom: 1px solid var(--color-gray-100);
+    }
+
+    .hours-item:last-child {
+      border-bottom: none;
+    }
+
+    .hours-day {
+      font-size: var(--text-body-sm);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-gray-700);
+    }
+
+    .hours-day--today {
+      color: var(--color-blue-700);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    .hours-time {
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-600);
+      text-align: right;
+    }
+
+    .hours-time--closed {
+      color: var(--color-error);
+    }
+
+    .hours-time--open-now {
+      color: var(--color-success);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    /* Location Map */
+    .location-map {
+      width: 100%;
+      height: 200px;
+      background-color: var(--color-gray-200);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--spacing-4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .location-map::before {
+      content: 'Map will load here';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: var(--color-gray-500);
+      font-size: var(--text-body-sm);
+    }
+
+    .location-address {
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-700);
+      line-height: var(--line-height-relaxed);
+    }
+
+    .location-directions {
+      margin-top: var(--spacing-4);
+    }
+
+    /* Contact Form */
+    .inquiry-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-4);
+    }
+
+    .inquiry-form .form-group {
+      margin-bottom: 0;
+    }
+
+    .inquiry-success {
+      display: none;
+      padding: var(--spacing-4);
+      background-color: var(--color-success-light);
+      border-radius: var(--radius-md);
+      border-left: 4px solid var(--color-success);
+      color: var(--color-success);
+      font-size: var(--text-body-sm);
+      margin-bottom: var(--spacing-4);
+    }
+
+    /* ==================== FOOTER ==================== */
+    .footer {
+      background-color: var(--color-blue-900);
+      color: var(--color-text-inverse);
+      padding: var(--spacing-12) 0 var(--spacing-6);
+    }
+
+    .footer__container {
+      max-width: var(--container-max-width);
+      margin: 0 auto;
+      padding: 0 var(--spacing-6);
+    }
+
+    .footer__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--spacing-8);
+      margin-bottom: var(--spacing-8);
+    }
+
+    .footer__section-title {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-body-lg);
+      font-weight: var(--font-weight-semibold);
+      margin-bottom: var(--spacing-4);
+      color: var(--color-text-inverse);
+    }
+
+    .footer__links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer__links li {
+      margin-bottom: var(--spacing-3);
+    }
+
+    .footer__link {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      font-size: var(--text-body-sm);
+      transition: color var(--transition-normal);
+    }
+
+    .footer__link:hover {
+      color: var(--color-accent);
+    }
+
+    .footer__bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: var(--spacing-6);
+      text-align: center;
+      font-size: var(--text-body-sm);
+      color: rgba(255, 255, 255, 0.7);
+    }
+  </style>
+</head>
+<body>
+  <!-- Public Navigation -->
+  <nav class="public-navbar">
+    <div class="public-navbar__container">
+      <a href="#" class="public-navbar__logo">
+        <div class="public-navbar__logo-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <span class="public-navbar__logo-text">AutoPro Network</span>
+      </a>
+
+      <div class="public-navbar__nav">
+        <a href="#" class="public-navbar__link public-navbar__link--active">Find Professionals</a>
+        <a href="#" class="public-navbar__link">How It Works</a>
+        <a href="#" class="public-navbar__link">About</a>
+        <a href="#" class="public-navbar__link">Contact</a>
+      </div>
+
+      <div class="public-navbar__actions">
+        <a href="#" class="btn btn--tertiary btn--sm show-desktop-only">Sign In</a>
+        <a href="#" class="btn btn--primary btn--sm">Join Network</a>
+        <button class="menu-toggle" aria-label="Toggle menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Profile Hero Section -->
+  <section class="profile-hero">
+    <!-- Cover Photo -->
+    <div class="profile-hero__cover">
+      <img src="https://placehold.co/1200x300/00529F/FFFFFF?text=Cover+Photo" alt="AutoPro Mechanics Cover">
+    </div>
+
+    <!-- Profile Header -->
+    <div class="profile-hero__container">
+      <div class="profile-hero__content">
+        <!-- Profile Avatar -->
+        <div class="profile-hero__avatar-wrapper">
+          <div class="profile-hero__avatar">
+            <img src="https://placehold.co/320x320/00529F/FFFFFF?text=AP" alt="AutoPro Mechanics">
+          </div>
+          <div class="profile-hero__verified-badge">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Profile Info -->
+        <div class="profile-hero__info">
+          <div class="profile-hero__header">
+            <div class="profile-hero__title-group">
+              <h1 class="profile-hero__business-name">AutoPro Mechanics</h1>
+              <p class="profile-hero__professional-name">John Smith, ASE Certified Master Technician</p>
+
+              <div class="profile-hero__badges">
+                <span class="business-type-badge">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                    <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+                  </svg>
+                  Mechanic/Repair Shop
+                </span>
+                <span class="verified-text-badge">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                    <polyline points="22 4 12 14.01 9 11.01"/>
+                  </svg>
+                  Verified Professional
+                </span>
+              </div>
+
+              <div class="profile-hero__rating">
+                <div class="rating-stars-large">
+                  <svg viewBox="0 0 24 24" fill="#FFD520">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                  </svg>
+                  <svg viewBox="0 0 24 24" fill="#FFD520">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                  </svg>
+                  <svg viewBox="0 0 24 24" fill="#FFD520">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                  </svg>
+                  <svg viewBox="0 0 24 24" fill="#FFD520">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                  </svg>
+                  <svg viewBox="0 0 24 24" fill="#FFD520">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                  </svg>
+                </div>
+                <span class="rating-text">5.0</span>
+                <span class="rating-count">(127 reviews)</span>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="profile-hero__actions">
+              <div class="action-button-group">
+                <button class="btn btn-icon btn--secondary" aria-label="Call">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                  </svg>
+                </button>
+                <button class="btn btn-icon btn--secondary" aria-label="Email">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                  </svg>
+                </button>
+                <button class="btn btn--accent btn--lg">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                  </svg>
+                  Send Inquiry
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="profile-main">
+    <div class="profile-container">
+      <!-- Main Content Column -->
+      <div class="profile-content">
+        <!-- About Section -->
+        <section class="content-section">
+          <div class="section-header">
+            <div class="section-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            <h2 class="section-title">About</h2>
+          </div>
+
+          <div class="about-content">
+            <p>
+              Welcome to AutoPro Mechanics, your trusted automotive repair partner for over 15 years. We specialize in comprehensive vehicle maintenance and repair services, from routine oil changes to complex engine diagnostics. Our ASE-certified technicians use state-of-the-art equipment to ensure your vehicle receives the highest quality care.
+            </p>
+            <p style="margin-top: var(--spacing-4);">
+              At AutoPro Mechanics, we believe in transparent communication and honest pricing. We'll always explain what your vehicle needs and why, providing you with options to make informed decisions about your automotive care. Our commitment to excellence and customer satisfaction has earned us a 5-star reputation in the community.
+            </p>
+          </div>
+
+          <div class="about-stats">
+            <div class="stat-item">
+              <div class="stat-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6"/>
+                  <line x1="8" y1="2" x2="8" y2="6"/>
+                  <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+              </div>
+              <div class="stat-content">
+                <div class="stat-label">Years in Business</div>
+                <div class="stat-value">15+ Years</div>
+              </div>
+            </div>
+
+            <div class="stat-item">
+              <div class="stat-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+              </div>
+              <div class="stat-content">
+                <div class="stat-label">Service Area</div>
+                <div class="stat-value">20 Mile Radius</div>
+              </div>
+            </div>
+
+            <div class="stat-item">
+              <div class="stat-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+              </div>
+              <div class="stat-content">
+                <div class="stat-label">Team Size</div>
+                <div class="stat-value">5 Technicians</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Specialties Section -->
+        <section class="content-section">
+          <div class="section-header">
+            <div class="section-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+              </svg>
+            </div>
+            <h2 class="section-title">Specialties & Services</h2>
+          </div>
+
+          <div class="specialties-grid">
+            <div class="specialty-item">
+              <div class="specialty-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/>
+                </svg>
+              </div>
+              <span class="specialty-name">Engine Repair</span>
+            </div>
+
+            <div class="specialty-item">
+              <div class="specialty-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M8 12h8"/>
+                </svg>
+              </div>
+              <span class="specialty-name">Transmission Service</span>
+            </div>
+
+            <div class="specialty-item">
+              <div class="specialty-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="3"/>
+                  <path d="M12 1v6m0 6v6"/>
+                </svg>
+              </div>
+              <span class="specialty-name">Brake Systems</span>
+            </div>
+
+            <div class="specialty-item">
+              <div class="specialty-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                </svg>
+              </div>
+              <span class="specialty-name">Diagnostics</span>
+            </div>
+
+            <div class="specialty-item">
+              <div class="specialty-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                </svg>
+              </div>
+              <span class="specialty-name">Electrical Systems</span>
+            </div>
+
+            <div class="specialty-item">
+              <div class="specialty-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>
+                </svg>
+              </div>
+              <span class="specialty-name">A/C & Heating</span>
+            </div>
+          </div>
+
+          <h3 style="font-family: var(--font-family-primary); font-size: var(--text-h5); font-weight: var(--font-weight-semibold); color: var(--color-gray-900); margin: var(--spacing-8) 0 var(--spacing-4);">
+            Certifications
+          </h3>
+
+          <div class="certifications-list">
+            <div class="certification-item">
+              <div class="certification-badge">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  <path d="M9 12l2 2 4-4"/>
+                </svg>
+              </div>
+              <div class="certification-content">
+                <div class="certification-name">ASE Master Technician Certification</div>
+                <div class="certification-org">National Institute for Automotive Service Excellence</div>
+                <div class="certification-year">Certified Since 2015</div>
+              </div>
+            </div>
+
+            <div class="certification-item">
+              <div class="certification-badge">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="8" r="7"/>
+                  <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+                </svg>
+              </div>
+              <div class="certification-content">
+                <div class="certification-name">State Emission Inspector</div>
+                <div class="certification-org">Department of Motor Vehicles</div>
+                <div class="certification-year">Licensed 2018 - Present</div>
+              </div>
+            </div>
+
+            <div class="certification-item">
+              <div class="certification-badge">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                  <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+              </div>
+              <div class="certification-content">
+                <div class="certification-name">Hybrid Vehicle Specialist</div>
+                <div class="certification-org">Automotive Training Institute</div>
+                <div class="certification-year">Certified Since 2020</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Photo Gallery Section (Placeholder for Phase 2) -->
+        <section class="content-section">
+          <div class="section-header">
+            <div class="section-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                <circle cx="8.5" cy="8.5" r="1.5"/>
+                <polyline points="21 15 16 10 5 21"/>
+              </svg>
+            </div>
+            <h2 class="section-title">Photo Gallery</h2>
+          </div>
+
+          <div class="gallery-placeholder">
+            <svg class="gallery-placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+            <h3 class="gallery-placeholder__title">Photo Gallery Coming Soon</h3>
+            <p class="gallery-placeholder__text">
+              Work portfolio and facility photos will be available in Phase 2
+            </p>
+          </div>
+        </section>
+
+        <!-- Reviews Section (Placeholder for Phase 3) -->
+        <section class="content-section">
+          <div class="section-header">
+            <div class="section-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+            </div>
+            <h2 class="section-title">Customer Reviews</h2>
+          </div>
+
+          <div class="reviews-placeholder">
+            <svg class="reviews-placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+            <h3 class="reviews-placeholder__title">Reviews Coming Soon</h3>
+            <p class="reviews-placeholder__text">
+              Customer reviews and ratings will be available in Phase 3
+            </p>
+          </div>
+        </section>
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="profile-sidebar">
+        <!-- Contact Information -->
+        <div class="sidebar-card">
+          <h3 class="sidebar-card__title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            Contact Information
+          </h3>
+
+          <div class="contact-list">
+            <div class="contact-item">
+              <svg class="contact-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+              <div class="contact-item__content">
+                <div class="contact-item__label">Phone</div>
+                <div class="contact-item__value">
+                  <a href="tel:+15551234567">(555) 123-4567</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <svg class="contact-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+              <div class="contact-item__content">
+                <div class="contact-item__label">Email</div>
+                <div class="contact-item__value">
+                  <a href="mailto:info@autopromechanics.com">info@autopromechanics.com</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <svg class="contact-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+              <div class="contact-item__content">
+                <div class="contact-item__label">Address</div>
+                <div class="contact-item__value">
+                  123 Main Street<br>
+                  Springfield, IL 62701
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <svg class="contact-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+              </svg>
+              <div class="contact-item__content">
+                <div class="contact-item__label">Website</div>
+                <div class="contact-item__value">
+                  <a href="https://www.autopromechanics.com" target="_blank" rel="noopener">autopromechanics.com</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Business Hours -->
+        <div class="sidebar-card">
+          <h3 class="sidebar-card__title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+            Business Hours
+          </h3>
+
+          <div class="hours-list">
+            <div class="hours-item">
+              <span class="hours-day hours-day--today">Monday</span>
+              <span class="hours-time hours-time--open-now">8:00 AM - 6:00 PM • Open Now</span>
+            </div>
+            <div class="hours-item">
+              <span class="hours-day">Tuesday</span>
+              <span class="hours-time">8:00 AM - 6:00 PM</span>
+            </div>
+            <div class="hours-item">
+              <span class="hours-day">Wednesday</span>
+              <span class="hours-time">8:00 AM - 6:00 PM</span>
+            </div>
+            <div class="hours-item">
+              <span class="hours-day">Thursday</span>
+              <span class="hours-time">8:00 AM - 6:00 PM</span>
+            </div>
+            <div class="hours-item">
+              <span class="hours-day">Friday</span>
+              <span class="hours-time">8:00 AM - 6:00 PM</span>
+            </div>
+            <div class="hours-item">
+              <span class="hours-day">Saturday</span>
+              <span class="hours-time">9:00 AM - 3:00 PM</span>
+            </div>
+            <div class="hours-item">
+              <span class="hours-day">Sunday</span>
+              <span class="hours-time hours-time--closed">Closed</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Location Map -->
+        <div class="sidebar-card">
+          <h3 class="sidebar-card__title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            Location
+          </h3>
+
+          <div class="location-map">
+            <!-- Map integration would go here -->
+          </div>
+
+          <div class="location-address">
+            123 Main Street<br>
+            Springfield, IL 62701
+          </div>
+
+          <a href="#" class="btn btn--secondary btn--sm btn--full location-directions">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/>
+              <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"/>
+            </svg>
+            Get Directions
+          </a>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="sidebar-card">
+          <h3 class="sidebar-card__title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+            Send an Inquiry
+          </h3>
+
+          <div class="inquiry-success" id="inquiry-success">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink: 0;">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+            Your inquiry has been sent successfully!
+          </div>
+
+          <form class="inquiry-form" id="inquiry-form">
+            <div class="form-group">
+              <label class="form-label" for="inquiry-name">Your Name</label>
+              <input type="text" id="inquiry-name" class="form-input" placeholder="Enter your name" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="inquiry-email">Email Address</label>
+              <input type="email" id="inquiry-email" class="form-input" placeholder="your@email.com" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="inquiry-phone">Phone Number</label>
+              <input type="tel" id="inquiry-phone" class="form-input" placeholder="(555) 123-4567">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="inquiry-message">Message</label>
+              <textarea id="inquiry-message" class="form-input" rows="4" placeholder="Describe your automotive needs..." required style="height: auto; min-height: 100px; resize: vertical;"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn--primary btn--full">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="22" y1="2" x2="11" y2="13"/>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+              </svg>
+              Send Inquiry
+            </button>
+          </form>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer__container">
+      <div class="footer__grid">
+        <div>
+          <h3 class="footer__section-title">AutoPro Network</h3>
+          <p style="color: rgba(255, 255, 255, 0.8); font-size: var(--text-body-sm); line-height: 1.6;">
+            Connecting automotive professionals with customers who need their services.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="footer__section-title">For Professionals</h3>
+          <ul class="footer__links">
+            <li><a href="#" class="footer__link">Join Network</a></li>
+            <li><a href="#" class="footer__link">Professional Dashboard</a></li>
+            <li><a href="#" class="footer__link">Pricing</a></li>
+            <li><a href="#" class="footer__link">Resources</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="footer__section-title">For Customers</h3>
+          <ul class="footer__links">
+            <li><a href="#" class="footer__link">Find Professionals</a></li>
+            <li><a href="#" class="footer__link">How It Works</a></li>
+            <li><a href="#" class="footer__link">Referral Program</a></li>
+            <li><a href="#" class="footer__link">FAQs</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="footer__section-title">Company</h3>
+          <ul class="footer__links">
+            <li><a href="#" class="footer__link">About Us</a></li>
+            <li><a href="#" class="footer__link">Contact</a></li>
+            <li><a href="#" class="footer__link">Privacy Policy</a></li>
+            <li><a href="#" class="footer__link">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        &copy; 2026 AutoPro Network. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Simple interactivity for demonstration
+    document.addEventListener('DOMContentLoaded', function() {
+      // Inquiry form submission
+      const inquiryForm = document.getElementById('inquiry-form');
+      const inquirySuccess = document.getElementById('inquiry-success');
+
+      if (inquiryForm) {
+        inquiryForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+
+          // Show success message
+          inquirySuccess.style.display = 'flex';
+
+          // Reset form
+          inquiryForm.reset();
+
+          // Hide success message after 5 seconds
+          setTimeout(function() {
+            inquirySuccess.style.display = 'none';
+          }, 5000);
+
+          // Scroll to success message
+          inquirySuccess.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+      }
+
+      // Click-to-call and email functionality
+      const callButton = document.querySelector('.btn-icon[aria-label="Call"]');
+      const emailButton = document.querySelector('.btn-icon[aria-label="Email"]');
+
+      if (callButton) {
+        callButton.addEventListener('click', function() {
+          window.location.href = 'tel:+15551234567';
+        });
+      }
+
+      if (emailButton) {
+        emailButton.addEventListener('click', function() {
+          window.location.href = 'mailto:info@autopromechanics.com';
+        });
+      }
+
+      // Send Inquiry button (scroll to form)
+      const inquiryButtons = document.querySelectorAll('.btn--accent');
+      inquiryButtons.forEach(function(button) {
+        if (button.textContent.includes('Send Inquiry')) {
+          button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const form = document.getElementById('inquiry-form');
+            if (form) {
+              form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              // Focus on first input after scroll
+              setTimeout(function() {
+                document.getElementById('inquiry-name').focus();
+              }, 500);
+            }
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Network Not Found - Multi-Service Automotive Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../shared-styles.css">
+  <style>
+    /* Page-specific styles */
+    .error-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(135deg, var(--color-blue-50) 0%, var(--color-bg-primary) 100%);
+    }
+
+    .error-page__header {
+      padding: var(--spacing-4) var(--spacing-6);
+      background-color: var(--color-bg-primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .error-page__logo {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-2);
+      text-decoration: none;
+    }
+
+    .error-page__logo-icon {
+      width: 40px;
+      height: 40px;
+      background-color: var(--color-blue-700);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .error-page__logo-text {
+      font-family: var(--font-family-primary);
+      font-weight: var(--font-weight-bold);
+      font-size: var(--text-h5);
+      color: var(--color-blue-700);
+    }
+
+    .error-page__content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: var(--spacing-8);
+      text-align: center;
+    }
+
+    .error-page__icon {
+      width: 120px;
+      height: 120px;
+      margin-bottom: var(--spacing-8);
+      background-color: var(--color-blue-100);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .error-page__icon svg {
+      width: 64px;
+      height: 64px;
+      color: var(--color-blue-700);
+    }
+
+    .error-page__title {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-display-sm);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-gray-900);
+      margin-bottom: var(--spacing-4);
+    }
+
+    .error-page__subtitle {
+      font-size: var(--text-body-lg);
+      color: var(--color-gray-600);
+      max-width: 480px;
+      margin-bottom: var(--spacing-8);
+    }
+
+    .error-page__actions {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-4);
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .error-page__card {
+      background-color: var(--color-bg-primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: var(--spacing-8);
+      margin-top: var(--spacing-8);
+      max-width: 480px;
+      width: 100%;
+    }
+
+    .error-page__card-title {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-h4);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-900);
+      margin-bottom: var(--spacing-4);
+    }
+
+    .error-page__card-text {
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-600);
+      margin-bottom: var(--spacing-4);
+    }
+
+    .error-page__code-input {
+      display: flex;
+      gap: var(--spacing-3);
+    }
+
+    .error-page__code-input .form-input {
+      flex: 1;
+    }
+
+    .error-page__footer {
+      padding: var(--spacing-6);
+      text-align: center;
+      color: var(--color-gray-500);
+      font-size: var(--text-body-sm);
+    }
+
+    .error-page__footer a {
+      color: var(--color-blue-700);
+      text-decoration: none;
+    }
+
+    .error-page__footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 575px) {
+      .error-page__content {
+        padding: var(--spacing-6);
+      }
+
+      .error-page__icon {
+        width: 96px;
+        height: 96px;
+        margin-bottom: var(--spacing-6);
+      }
+
+      .error-page__icon svg {
+        width: 48px;
+        height: 48px;
+      }
+
+      .error-page__title {
+        font-size: var(--text-h2);
+      }
+
+      .error-page__subtitle {
+        font-size: var(--text-body-md);
+      }
+
+      .error-page__card {
+        padding: var(--spacing-6);
+      }
+
+      .error-page__code-input {
+        flex-direction: column;
+      }
+    }
+
+    /* Tablet adjustments */
+    @media (min-width: 768px) and (max-width: 991px) {
+      .error-page__actions {
+        flex-direction: row;
+        max-width: 400px;
+      }
+    }
+
+    /* Desktop adjustments */
+    @media (min-width: 992px) {
+      .error-page__actions {
+        flex-direction: row;
+        max-width: 400px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="error-page">
+    <!-- Header -->
+    <header class="error-page__header">
+      <a href="#" class="error-page__logo">
+        <div class="error-page__logo-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+            <line x1="9" y1="9" x2="9.01" y2="9"/>
+            <line x1="15" y1="9" x2="15.01" y2="9"/>
+          </svg>
+        </div>
+        <span class="error-page__logo-text">AutoPro Network</span>
+      </a>
+    </header>
+
+    <!-- Main Content -->
+    <main class="error-page__content">
+      <div class="error-page__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="M21 21l-4.35-4.35"/>
+          <line x1="11" y1="8" x2="11" y2="14"/>
+          <line x1="8" y1="11" x2="14" y2="11"/>
+        </svg>
+      </div>
+
+      <h1 class="error-page__title">Network Not Found</h1>
+
+      <p class="error-page__subtitle">
+        The automotive service network you're looking for doesn't exist or may have moved.
+        Please check the URL or visit our main site.
+      </p>
+
+      <div class="error-page__actions">
+        <a href="#" class="btn btn--primary btn--lg btn--full">Visit Main Site</a>
+        <a href="#" class="btn btn--secondary btn--lg btn--full">Contact Support</a>
+      </div>
+
+      <!-- Optional: Direct network access card -->
+      <div class="error-page__card">
+        <h2 class="error-page__card-title">Know your network code?</h2>
+        <p class="error-page__card-text">
+          If you have a network code or referral link, enter it below to go directly to your service provider.
+        </p>
+        <div class="error-page__code-input">
+          <input type="text" class="form-input" placeholder="Enter network code" aria-label="Network code">
+          <button class="btn btn--primary">Go</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="error-page__footer">
+      <p>
+        Need help? <a href="#">Contact our support team</a> or call <a href="tel:1-800-555-0123">1-800-555-0123</a>
+      </p>
+      <p class="mt-2">
+        &copy; 2026 AutoPro Network. All rights reserved.
+      </p>
+    </footer>
+  </div>
+</body>
+</html>
