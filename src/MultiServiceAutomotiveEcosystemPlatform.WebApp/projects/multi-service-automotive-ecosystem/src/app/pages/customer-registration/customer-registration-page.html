@@ -1,0 +1,12 @@
+<div class="customer-registration-page">
+  <div class="customer-registration-page__container">
+    <div class="customer-registration-page__header">
+      <h1 class="customer-registration-page__title">Create Your Account</h1>
+      <p class="customer-registration-page__subtitle">Join our automotive community today</p>
+    </div>
+    <ms-customer-registration
+      (onRegister)="onRegister($event)"
+      (onError)="onError($event)"
+    ></ms-customer-registration>
+  </div>
+</div>

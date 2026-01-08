@@ -1,0 +1,79 @@
+<div class="professional-profile" *ngIf="profile$ | async as profile">
+  <div class="professional-profile__hero">
+    <img 
+      [src]="profile.coverPhotoUrl" 
+      [alt]="profile.businessName + ' cover'"
+      class="professional-profile__cover-photo"
+    />
+    <div class="professional-profile__hero-content">
+      <img 
+        [src]="profile.photoUrl" 
+        [alt]="profile.businessName"
+        class="professional-profile__photo"
+      />
+      <div class="professional-profile__hero-text">
+        <h1 class="professional-profile__business-name">{{ profile.businessName }}</h1>
+        <p class="professional-profile__professional-name">{{ profile.professionalName }}</p>
+        <span class="professional-profile__type">{{ profile.businessType }}</span>
+        <div class="professional-profile__rating" *ngIf="profile.verified">
+          <span class="professional-profile__badge">✓ Verified</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="professional-profile__container">
+    <div class="professional-profile__content">
+      <section class="professional-profile__section">
+        <h2 class="professional-profile__section-title">About</h2>
+        <p class="professional-profile__bio">{{ profile.bio }}</p>
+        <div class="professional-profile__info-grid">
+          <div class="professional-profile__info-item">
+            <span class="professional-profile__info-label">Years in Business</span>
+            <span class="professional-profile__info-value">{{ profile.yearsInBusiness }}</span>
+          </div>
+          <div class="professional-profile__info-item">
+            <span class="professional-profile__info-label">Service Area</span>
+            <span class="professional-profile__info-value">{{ profile.serviceArea }}</span>
+          </div>
+          <div class="professional-profile__info-item">
+            <span class="professional-profile__info-label">Rating</span>
+            <span class="professional-profile__info-value">★ {{ profile.rating }} ({{ profile.reviewCount }} reviews)</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="professional-profile__section">
+        <h2 class="professional-profile__section-title">Specialties</h2>
+        <div class="professional-profile__specialties">
+          <span 
+            class="professional-profile__specialty" 
+            *ngFor="let specialty of profile.specialties"
+          >
+            {{ specialty }}
+          </span>
+        </div>
+      </section>
+
+      <section class="professional-profile__section">
+        <h2 class="professional-profile__section-title">Contact</h2>
+        <div class="professional-profile__contact">
+          <div class="professional-profile__contact-item">
+            <strong>Phone:</strong> {{ profile.phone }}
+          </div>
+          <div class="professional-profile__contact-item">
+            <strong>Email:</strong> {{ profile.email }}
+          </div>
+        </div>
+        <div class="professional-profile__actions">
+          <button class="professional-profile__action-btn professional-profile__action-btn--primary">
+            Contact Professional
+          </button>
+          <button class="professional-profile__action-btn professional-profile__action-btn--secondary">
+            Request Quote
+          </button>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
