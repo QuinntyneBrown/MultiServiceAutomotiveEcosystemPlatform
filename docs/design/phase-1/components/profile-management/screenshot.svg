@@ -1,0 +1,131 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="900" fill="#FAFAFA"/>
+
+  <!-- Page Header Card -->
+  <rect x="40" y="40" width="1120" height="100" rx="12" fill="#FFFFFF" filter="url(#shadow)"/>
+  <text x="72" y="85" font-family="Montserrat, sans-serif" font-size="32" font-weight="700" fill="#1A1A1A">Profile Management</text>
+  <text x="72" y="115" font-family="Lato, sans-serif" font-size="16" fill="#666666">Manage your business profile information and settings</text>
+
+  <!-- Tab Navigation Card -->
+  <rect x="40" y="160" width="1120" height="60" rx="12" fill="#FFFFFF" filter="url(#shadow)"/>
+
+  <!-- Tabs -->
+  <g id="tabs">
+    <!-- Active Tab -->
+    <text x="72" y="197" font-family="Lato, sans-serif" font-size="16" font-weight="600" fill="#00529F">Basic Information</text>
+    <rect x="72" y="205" width="140" height="3" rx="1.5" fill="#00529F"/>
+
+    <!-- Inactive Tabs -->
+    <text x="240" y="197" font-family="Lato, sans-serif" font-size="16" font-weight="600" fill="#666666">About &amp; Bio</text>
+    <text x="370" y="197" font-family="Lato, sans-serif" font-size="16" font-weight="600" fill="#666666">Contact Information</text>
+    <text x="560" y="197" font-family="Lato, sans-serif" font-size="16" font-weight="600" fill="#666666">Location</text>
+    <text x="670" y="197" font-family="Lato, sans-serif" font-size="16" font-weight="600" fill="#666666">Media</text>
+  </g>
+
+  <!-- Tab underline -->
+  <line x1="72" y1="208" x2="1128" y2="208" stroke="#E5E5E5" stroke-width="2"/>
+
+  <!-- Main Form Card -->
+  <rect x="40" y="240" width="1120" height="620" rx="12" fill="#FFFFFF" filter="url(#shadow)"/>
+
+  <!-- Info Alert -->
+  <rect x="72" y="272" width="1056" height="60" rx="8" fill="#E1F5FE"/>
+  <rect x="72" y="272" width="4" height="60" rx="2" fill="#0288D1"/>
+
+  <!-- Info Icon -->
+  <circle cx="96" cy="302" r="10" fill="#0288D1"/>
+  <text x="92" y="308" font-family="sans-serif" font-size="14" font-weight="700" fill="#FFFFFF">i</text>
+
+  <text x="120" y="307" font-family="Lato, sans-serif" font-size="14" fill="#333333">All fields marked with an asterisk (*) are required. Your profile will be visible to customers once published.</text>
+
+  <!-- Section Title -->
+  <text x="72" y="370" font-family="Montserrat, sans-serif" font-size="24" font-weight="700" fill="#1A1A1A">Basic Information</text>
+  <text x="72" y="395" font-family="Lato, sans-serif" font-size="14" fill="#666666">Provide your basic business and personal information</text>
+
+  <!-- Form Row 1 -->
+  <g id="form-row-1">
+    <!-- Business Name Field -->
+    <text x="72" y="435" font-family="Lato, sans-serif" font-size="14" font-weight="600" fill="#333333">Business Name</text>
+    <text x="180" y="435" font-family="Lato, sans-serif" font-size="14" fill="#D32F2F">*</text>
+    <rect x="72" y="445" width="500" height="44" rx="8" fill="#FFFFFF" stroke="#999999" stroke-width="1"/>
+    <text x="88" y="472" font-family="Lato, sans-serif" font-size="16" fill="#333333">Mike's Auto Repair</text>
+    <text x="72" y="505" font-family="Lato, sans-serif" font-size="12" fill="#666666">This is the name customers will see</text>
+
+    <!-- Business Type Field -->
+    <text x="604" y="435" font-family="Lato, sans-serif" font-size="14" font-weight="600" fill="#333333">Business Type</text>
+    <text x="705" y="435" font-family="Lato, sans-serif" font-size="14" fill="#D32F2F">*</text>
+    <rect x="604" y="445" width="500" height="44" rx="8" fill="#FFFFFF" stroke="#999999" stroke-width="1"/>
+    <text x="620" y="472" font-family="Lato, sans-serif" font-size="16" fill="#333333">Auto Repair Shop</text>
+    <!-- Dropdown Arrow -->
+    <path d="M1080 463 L1088 471 L1096 463" stroke="#666666" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Form Row 2 -->
+  <g id="form-row-2">
+    <!-- Your Full Name Field -->
+    <text x="72" y="545" font-family="Lato, sans-serif" font-size="14" font-weight="600" fill="#333333">Your Full Name</text>
+    <text x="185" y="545" font-family="Lato, sans-serif" font-size="14" fill="#D32F2F">*</text>
+    <rect x="72" y="555" width="500" height="44" rx="8" fill="#FFFFFF" stroke="#999999" stroke-width="1"/>
+    <text x="88" y="582" font-family="Lato, sans-serif" font-size="16" fill="#333333">Michael Anderson</text>
+
+    <!-- Professional Title Field -->
+    <text x="604" y="545" font-family="Lato, sans-serif" font-size="14" font-weight="600" fill="#333333">Professional Title</text>
+    <rect x="604" y="555" width="500" height="44" rx="8" fill="#FFFFFF" stroke="#999999" stroke-width="1"/>
+    <text x="620" y="582" font-family="Lato, sans-serif" font-size="16" fill="#333333">Master Technician</text>
+  </g>
+
+  <!-- Section: About & Bio (Partial Preview) -->
+  <text x="72" y="660" font-family="Montserrat, sans-serif" font-size="24" font-weight="700" fill="#1A1A1A">About &amp; Bio</text>
+  <text x="72" y="685" font-family="Lato, sans-serif" font-size="14" fill="#666666">Tell customers about your business, experience, and what makes you unique</text>
+
+  <!-- Business Description Textarea -->
+  <text x="72" y="725" font-family="Lato, sans-serif" font-size="14" font-weight="600" fill="#333333">Business Description</text>
+  <text x="230" y="725" font-family="Lato, sans-serif" font-size="14" fill="#D32F2F">*</text>
+  <rect x="72" y="735" width="1032" height="80" rx="8" fill="#FFFFFF" stroke="#999999" stroke-width="1"/>
+  <text x="88" y="757" font-family="Lato, sans-serif" font-size="14" fill="#333333">Mike's Auto Repair has been serving the greater Portland area for over 25 years.</text>
+  <text x="88" y="777" font-family="Lato, sans-serif" font-size="14" fill="#333333">We specialize in comprehensive automotive services, from routine maintenance to</text>
+  <text x="88" y="797" font-family="Lato, sans-serif" font-size="14" fill="#333333">complex engine diagnostics and repairs...</text>
+
+  <!-- Character Counter -->
+  <text x="1080" y="830" font-family="Lato, sans-serif" font-size="12" fill="#666666" text-anchor="end">311 / 2000 characters</text>
+
+  <!-- Action Buttons -->
+  <g id="action-buttons">
+    <!-- Divider Line -->
+    <line x1="72" y1="840" x2="1104" y2="840" stroke="#F2F2F2" stroke-width="2"/>
+
+    <!-- Preview Button -->
+    <rect x="854" y="848" width="110" height="40" rx="8" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="2"/>
+    <circle cx="883" cy="868" r="6" fill="none" stroke="#4D4D4D" stroke-width="1.5"/>
+    <circle cx="883" cy="868" r="3" fill="none" stroke="#4D4D4D" stroke-width="1.5"/>
+    <text x="896" y="873" font-family="Lato, sans-serif" font-size="16" font-weight="600" fill="#4D4D4D">Preview</text>
+
+    <!-- Save Draft Button -->
+    <rect x="980" y="848" width="120" height="40" rx="8" fill="#FFFFFF" stroke="#00529F" stroke-width="2"/>
+    <rect x="995" y="862" width="8" height="12" fill="none" stroke="#00529F" stroke-width="1.5"/>
+    <line x1="995" y1="866" x2="1003" y2="866" stroke="#00529F" stroke-width="1.5"/>
+    <text x="1010" y="873" font-family="Lato, sans-serif" font-size="16" font-weight="600" fill="#00529F">Save Draft</text>
+
+    <!-- Publish Button -->
+    <rect x="1116" y="848" width="140" height="40" rx="8" fill="#00529F"/>
+    <circle cx="1138" cy="868" r="8" fill="none" stroke="#FFFFFF" stroke-width="2"/>
+    <path d="M1133 868 L1137 872 L1143 863" stroke="#FFFFFF" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="1152" y="873" font-family="Lato, sans-serif" font-size="16" font-weight="600" fill="#FFFFFF">Publish Profile</text>
+  </g>
+
+  <!-- Shadow Filter Definition -->
+  <defs>
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+      <feOffset dx="0" dy="1" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.1"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+</svg>

@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Management - Multi-Service Automotive Platform</title>
+    <style>
+        /* CSS Variables - Platform Style Guide */
+        :root {
+            /* Colors */
+            --color-primary: #00529F;
+            --color-primary-dark: #003366;
+            --color-primary-light: #0066CC;
+            --color-accent: #FFD520;
+            --color-accent-dark: #DAA520;
+            --color-white: #FFFFFF;
+            --color-gray-900: #1A1A1A;
+            --color-gray-800: #333333;
+            --color-gray-700: #4D4D4D;
+            --color-gray-600: #666666;
+            --color-gray-500: #808080;
+            --color-gray-400: #999999;
+            --color-gray-300: #CCCCCC;
+            --color-gray-200: #E5E5E5;
+            --color-gray-100: #F2F2F2;
+            --color-gray-50: #FAFAFA;
+            --color-success: #2E7D32;
+            --color-success-light: #E8F5E9;
+            --color-error: #D32F2F;
+            --color-error-light: #FFEBEE;
+            --color-info: #0288D1;
+            --color-info-light: #E1F5FE;
+
+            /* Typography */
+            --font-primary: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-secondary: 'Lato', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+            /* Spacing */
+            --spacing-1: 4px;
+            --spacing-2: 8px;
+            --spacing-3: 12px;
+            --spacing-4: 16px;
+            --spacing-5: 20px;
+            --spacing-6: 24px;
+            --spacing-8: 32px;
+            --spacing-10: 40px;
+            --spacing-12: 48px;
+
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-full: 9999px;
+
+            /* Shadows */
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+            --shadow-focus: 0 0 0 3px rgba(0, 82, 159, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            color: var(--color-gray-800);
+            background-color: var(--color-gray-50);
+            line-height: 1.6;
+            padding: var(--spacing-6);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            background: var(--color-white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: var(--spacing-6);
+            margin-bottom: var(--spacing-6);
+        }
+
+        .page-title {
+            font-family: var(--font-primary);
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--color-gray-900);
+            margin-bottom: var(--spacing-2);
+        }
+
+        .page-subtitle {
+            font-size: 16px;
+            color: var(--color-gray-600);
+        }
+
+        /* Tab Navigation */
+        .tab-navigation {
+            background: var(--color-white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: var(--spacing-4) var(--spacing-6);
+            margin-bottom: var(--spacing-6);
+            overflow-x: auto;
+        }
+
+        .tab-list {
+            display: flex;
+            gap: var(--spacing-4);
+            border-bottom: 2px solid var(--color-gray-200);
+        }
+
+        .tab-button {
+            font-family: var(--font-secondary);
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-gray-600);
+            background: none;
+            border: none;
+            padding: var(--spacing-3) var(--spacing-4);
+            cursor: pointer;
+            position: relative;
+            white-space: nowrap;
+            transition: color 0.2s ease;
+        }
+
+        .tab-button:hover {
+            color: var(--color-primary);
+        }
+
+        .tab-button.active {
+            color: var(--color-primary);
+        }
+
+        .tab-button.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--color-primary);
+            border-radius: 3px 3px 0 0;
+        }
+
+        /* Form Container */
+        .form-container {
+            background: var(--color-white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: var(--spacing-8);
+        }
+
+        .section-title {
+            font-family: var(--font-primary);
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--color-gray-900);
+            margin-bottom: var(--spacing-2);
+        }
+
+        .section-description {
+            font-size: 14px;
+            color: var(--color-gray-600);
+            margin-bottom: var(--spacing-6);
+        }
+
+        /* Form Fields */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-6);
+            margin-bottom: var(--spacing-6);
+        }
+
+        .form-row.single {
+            grid-template-columns: 1fr;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-gray-800);
+            margin-bottom: var(--spacing-2);
+        }
+
+        .form-label.required::after {
+            content: '*';
+            color: var(--color-error);
+            margin-left: 4px;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            font-family: var(--font-secondary);
+            font-size: 16px;
+            color: var(--color-gray-800);
+            background: var(--color-white);
+            border: 1px solid var(--color-gray-400);
+            border-radius: var(--radius-md);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: var(--shadow-focus);
+        }
+
+        .form-input::placeholder {
+            color: var(--color-gray-500);
+        }
+
+        .form-select {
+            appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="%23666666"><path d="M5 8l5 5 5-5H5z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 40px;
+            cursor: pointer;
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+            font-family: var(--font-secondary);
+        }
+
+        .form-helper {
+            font-size: 12px;
+            color: var(--color-gray-600);
+            margin-top: var(--spacing-1);
+        }
+
+        .char-counter {
+            font-size: 12px;
+            color: var(--color-gray-600);
+            margin-top: var(--spacing-1);
+            text-align: right;
+        }
+
+        .char-counter.warning {
+            color: var(--color-accent-dark);
+        }
+
+        .char-counter.error {
+            color: var(--color-error);
+        }
+
+        /* Upload Areas */
+        .upload-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-6);
+            margin-bottom: var(--spacing-6);
+        }
+
+        .upload-area {
+            border: 2px dashed var(--color-gray-300);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-6);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: var(--color-gray-50);
+        }
+
+        .upload-area:hover {
+            border-color: var(--color-primary);
+            background: var(--color-white);
+        }
+
+        .upload-area.has-image {
+            border-style: solid;
+            border-color: var(--color-primary);
+            background: var(--color-white);
+        }
+
+        .upload-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto var(--spacing-3);
+            color: var(--color-gray-400);
+        }
+
+        .upload-area:hover .upload-icon {
+            color: var(--color-primary);
+        }
+
+        .upload-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-gray-800);
+            margin-bottom: var(--spacing-1);
+        }
+
+        .upload-subtitle {
+            font-size: 12px;
+            color: var(--color-gray-600);
+        }
+
+        .upload-preview {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-3);
+            background: var(--color-gray-100);
+        }
+
+        .upload-preview.profile {
+            border-radius: var(--radius-full);
+            width: 120px;
+            height: 120px;
+            margin: 0 auto var(--spacing-3);
+        }
+
+        /* Multi-input fields */
+        .multi-input-group {
+            margin-bottom: var(--spacing-6);
+        }
+
+        .multi-input-item {
+            display: flex;
+            gap: var(--spacing-3);
+            margin-bottom: var(--spacing-3);
+            align-items: flex-start;
+        }
+
+        .multi-input-item .form-input {
+            flex: 1;
+        }
+
+        .multi-input-item .form-select {
+            width: 150px;
+        }
+
+        .btn-icon {
+            width: 44px;
+            height: 44px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-md);
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-icon.remove {
+            background: var(--color-error-light);
+            color: var(--color-error);
+        }
+
+        .btn-icon.remove:hover {
+            background: var(--color-error);
+            color: var(--color-white);
+        }
+
+        .btn-add {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-2);
+            padding: var(--spacing-2) var(--spacing-4);
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-primary);
+            background: var(--color-white);
+            border: 1px solid var(--color-primary);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-add:hover {
+            background: var(--color-primary);
+            color: var(--color-white);
+        }
+
+        /* Address form */
+        .address-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-4);
+        }
+
+        .address-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: var(--spacing-4);
+        }
+
+        .address-row-three {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: var(--spacing-4);
+        }
+
+        /* Service Radius */
+        .radius-input-group {
+            display: flex;
+            gap: var(--spacing-3);
+            align-items: flex-start;
+        }
+
+        .radius-input-group .form-input {
+            width: 120px;
+        }
+
+        .radius-input-group .form-select {
+            width: 100px;
+        }
+
+        /* Info Alert */
+        .info-alert {
+            display: flex;
+            gap: var(--spacing-3);
+            padding: var(--spacing-4);
+            background: var(--color-info-light);
+            border-left: 4px solid var(--color-info);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-6);
+        }
+
+        .info-alert-icon {
+            width: 20px;
+            height: 20px;
+            color: var(--color-info);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .info-alert-text {
+            font-size: 14px;
+            color: var(--color-gray-800);
+        }
+
+        /* Action Buttons */
+        .form-actions {
+            display: flex;
+            gap: var(--spacing-3);
+            justify-content: flex-end;
+            padding-top: var(--spacing-6);
+            border-top: 2px solid var(--color-gray-100);
+            margin-top: var(--spacing-8);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-2);
+            padding: 12px 24px;
+            font-family: var(--font-secondary);
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: var(--radius-md);
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: var(--color-white);
+        }
+
+        .btn-primary:hover {
+            background: var(--color-primary-dark);
+        }
+
+        .btn-secondary {
+            background: var(--color-white);
+            color: var(--color-gray-700);
+            border: 2px solid var(--color-gray-300);
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-gray-50);
+            border-color: var(--color-gray-400);
+        }
+
+        .btn-outline {
+            background: var(--color-white);
+            color: var(--color-primary);
+            border: 2px solid var(--color-primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--color-primary);
+            color: var(--color-white);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .upload-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .address-row,
+            .address-row-three {
+                grid-template-columns: 1fr;
+            }
+
+            .form-actions {
+                flex-direction: column-reverse;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .tab-list {
+                overflow-x: auto;
+            }
+        }
+    </style>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Profile Management</h1>
+            <p class="page-subtitle">Manage your business profile information and settings</p>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="tab-navigation">
+            <div class="tab-list">
+                <button class="tab-button active">Basic Information</button>
+                <button class="tab-button">About & Bio</button>
+                <button class="tab-button">Contact Information</button>
+                <button class="tab-button">Location</button>
+                <button class="tab-button">Media</button>
+            </div>
+        </div>
+
+        <!-- Form Container -->
+        <form class="form-container">
+            <!-- Info Alert -->
+            <div class="info-alert">
+                <svg class="info-alert-icon" viewBox="0 0 20 20" fill="none">
+                    <path d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM11 15H9V9H11V15ZM11 7H9V5H11V7Z" fill="currentColor"/>
+                </svg>
+                <div class="info-alert-text">
+                    All fields marked with an asterisk (*) are required. Your profile will be visible to customers once published.
+                </div>
+            </div>
+
+            <!-- Basic Information Section -->
+            <section id="basic-info">
+                <h2 class="section-title">Basic Information</h2>
+                <p class="section-description">Provide your basic business and personal information</p>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label required" for="business-name">Business Name</label>
+                        <input
+                            type="text"
+                            id="business-name"
+                            class="form-input"
+                            placeholder="e.g., Mike's Auto Repair"
+                            value="Mike's Auto Repair"
+                        />
+                        <span class="form-helper">This is the name customers will see</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label required" for="business-type">Business Type</label>
+                        <select id="business-type" class="form-select">
+                            <option value="">Select business type</option>
+                            <option value="auto-repair" selected>Auto Repair Shop</option>
+                            <option value="body-shop">Body Shop</option>
+                            <option value="detailing">Detailing Service</option>
+                            <option value="towing">Towing Service</option>
+                            <option value="tire-shop">Tire Shop</option>
+                            <option value="parts-supplier">Parts Supplier</option>
+                            <option value="dealer">Dealership</option>
+                            <option value="mobile-mechanic">Mobile Mechanic</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label required" for="personal-name">Your Full Name</label>
+                        <input
+                            type="text"
+                            id="personal-name"
+                            class="form-input"
+                            placeholder="e.g., Michael Anderson"
+                            value="Michael Anderson"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="title">Professional Title</label>
+                        <input
+                            type="text"
+                            id="title"
+                            class="form-input"
+                            placeholder="e.g., Master Technician, Owner"
+                            value="Master Technician"
+                        />
+                    </div>
+                </div>
+            </section>
+
+            <!-- About & Bio Section -->
+            <section id="about-bio" style="margin-top: 48px;">
+                <h2 class="section-title">About & Bio</h2>
+                <p class="section-description">Tell customers about your business, experience, and what makes you unique</p>
+
+                <div class="form-row single">
+                    <div class="form-group">
+                        <label class="form-label required" for="bio">Business Description</label>
+                        <textarea
+                            id="bio"
+                            class="form-textarea"
+                            placeholder="Describe your business, services, expertise, and what sets you apart..."
+                            maxlength="2000"
+                            oninput="updateCharCount(this, 'bio-count', 2000)"
+                        >Mike's Auto Repair has been serving the greater Portland area for over 25 years. We specialize in comprehensive automotive services, from routine maintenance to complex engine diagnostics and repairs. Our team of ASE-certified technicians is committed to providing honest, reliable service at fair prices.
+
+We pride ourselves on transparency and customer education. We'll always explain what needs to be done, why it needs to be done, and provide you with options. Your satisfaction and safety are our top priorities.</textarea>
+                        <div id="bio-count" class="char-counter">311 / 2000 characters</div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="years-in-business">Years in Business</label>
+                        <input
+                            type="number"
+                            id="years-in-business"
+                            class="form-input"
+                            placeholder="e.g., 25"
+                            value="25"
+                            min="0"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="employees">Number of Employees</label>
+                        <input
+                            type="number"
+                            id="employees"
+                            class="form-input"
+                            placeholder="e.g., 5"
+                            value="8"
+                            min="1"
+                        />
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Information Section -->
+            <section id="contact-info" style="margin-top: 48px;">
+                <h2 class="section-title">Contact Information</h2>
+                <p class="section-description">Provide multiple ways for customers to reach you</p>
+
+                <!-- Phone Numbers -->
+                <div class="multi-input-group">
+                    <label class="form-label required">Phone Numbers</label>
+                    <div class="multi-input-item">
+                        <select class="form-select">
+                            <option value="mobile">Mobile</option>
+                            <option value="business" selected>Business</option>
+                            <option value="fax">Fax</option>
+                        </select>
+                        <input type="tel" class="form-input" placeholder="(555) 123-4567" value="(503) 555-1234" />
+                        <button type="button" class="btn-icon remove" title="Remove">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <button type="button" class="btn-add">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M8 1V15M1 8H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        Add Phone Number
+                    </button>
+                </div>
+
+                <!-- Email Addresses -->
+                <div class="multi-input-group">
+                    <label class="form-label required">Email Addresses</label>
+                    <div class="multi-input-item">
+                        <select class="form-select">
+                            <option value="primary" selected>Primary</option>
+                            <option value="billing">Billing</option>
+                            <option value="support">Support</option>
+                        </select>
+                        <input type="email" class="form-input" placeholder="email@example.com" value="info@mikesautorepair.com" />
+                        <button type="button" class="btn-icon remove" title="Remove">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <button type="button" class="btn-add">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M8 1V15M1 8H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        Add Email Address
+                    </button>
+                </div>
+
+                <!-- Website -->
+                <div class="form-row single">
+                    <div class="form-group">
+                        <label class="form-label" for="website">Website</label>
+                        <input
+                            type="url"
+                            id="website"
+                            class="form-input"
+                            placeholder="https://www.example.com"
+                            value="https://www.mikesautorepair.com"
+                        />
+                    </div>
+                </div>
+            </section>
+
+            <!-- Location Section -->
+            <section id="location" style="margin-top: 48px;">
+                <h2 class="section-title">Location</h2>
+                <p class="section-description">Provide your business address and service area</p>
+
+                <div class="address-grid">
+                    <div class="form-group">
+                        <label class="form-label required" for="street-address">Street Address</label>
+                        <input
+                            type="text"
+                            id="street-address"
+                            class="form-input"
+                            placeholder="1234 Main Street"
+                            value="1234 Main Street"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="address-line-2">Address Line 2</label>
+                        <input
+                            type="text"
+                            id="address-line-2"
+                            class="form-input"
+                            placeholder="Suite, Unit, Building (optional)"
+                        />
+                    </div>
+
+                    <div class="address-row-three">
+                        <div class="form-group">
+                            <label class="form-label required" for="city">City</label>
+                            <input
+                                type="text"
+                                id="city"
+                                class="form-input"
+                                placeholder="Portland"
+                                value="Portland"
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label required" for="state">State</label>
+                            <select id="state" class="form-select">
+                                <option value="">Select state</option>
+                                <option value="OR" selected>Oregon</option>
+                                <option value="WA">Washington</option>
+                                <option value="CA">California</option>
+                                <!-- Add more states as needed -->
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label required" for="zip">ZIP Code</label>
+                            <input
+                                type="text"
+                                id="zip"
+                                class="form-input"
+                                placeholder="97201"
+                                value="97201"
+                                maxlength="10"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Radius -->
+                <div class="form-group" style="margin-top: 24px;">
+                    <label class="form-label" for="service-radius">Service Radius</label>
+                    <div class="radius-input-group">
+                        <input
+                            type="number"
+                            id="service-radius"
+                            class="form-input"
+                            placeholder="25"
+                            value="30"
+                            min="0"
+                        />
+                        <select class="form-select">
+                            <option value="miles" selected>Miles</option>
+                            <option value="km">Kilometers</option>
+                        </select>
+                        <span class="form-helper" style="align-self: center;">from your business location</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Media Section -->
+            <section id="media" style="margin-top: 48px;">
+                <h2 class="section-title">Media</h2>
+                <p class="section-description">Upload images to make your profile stand out</p>
+
+                <div class="upload-grid">
+                    <!-- Profile Photo -->
+                    <div class="upload-area has-image">
+                        <div class="upload-preview profile" style="background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%); display: flex; align-items: center; justify-content: center; font-size: 36px; font-weight: 700; color: #00529F;">
+                            MA
+                        </div>
+                        <div class="upload-title">Profile Photo</div>
+                        <div class="upload-subtitle">Square image, min 400x400px</div>
+                        <input type="file" id="profile-photo" accept="image/*" style="display: none;">
+                    </div>
+
+                    <!-- Cover Photo -->
+                    <div class="upload-area">
+                        <svg class="upload-icon" viewBox="0 0 48 48" fill="none">
+                            <path d="M42 38V14C42 12.9 41.1 12 40 12H8C6.9 12 6 12.9 6 14V38C6 39.1 6.9 40 8 40H40C41.1 40 42 39.1 42 38ZM17 29L22 35.01L29 26L38 38H10L17 29Z" fill="currentColor"/>
+                        </svg>
+                        <div class="upload-title">Cover Photo</div>
+                        <div class="upload-subtitle">1200x400px recommended</div>
+                        <input type="file" id="cover-photo" accept="image/*" style="display: none;">
+                    </div>
+
+                    <!-- Logo -->
+                    <div class="upload-area">
+                        <svg class="upload-icon" viewBox="0 0 48 48" fill="none">
+                            <path d="M42 38V14C42 12.9 41.1 12 40 12H8C6.9 12 6 12.9 6 14V38C6 39.1 6.9 40 8 40H40C41.1 40 42 39.1 42 38ZM17 29L22 35.01L29 26L38 38H10L17 29Z" fill="currentColor"/>
+                        </svg>
+                        <div class="upload-title">Business Logo</div>
+                        <div class="upload-subtitle">Square, min 200x200px</div>
+                        <input type="file" id="logo" accept="image/*" style="display: none;">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Form Actions -->
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M15 10C15 12.7614 12.7614 15 10 15C7.23858 15 5 12.7614 5 10C5 7.23858 7.23858 5 10 5C12.7614 5 15 7.23858 15 10Z" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M2 10C2 10 5 4 10 4C15 4 18 10 18 10C18 10 15 16 10 16C5 16 2 10 2 10Z" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                    Preview
+                </button>
+                <button type="button" class="btn btn-outline">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M15 7V3H5V7M15 7V17H5V7M15 7H19M5 7H1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        <path d="M8 11H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                    Save Draft
+                </button>
+                <button type="submit" class="btn btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M16.5 9.5L9.5 16.5L5.5 12.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    Publish Profile
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function updateCharCount(textarea, counterId, maxLength) {
+            const counter = document.getElementById(counterId);
+            const length = textarea.value.length;
+            counter.textContent = `${length} / ${maxLength} characters`;
+
+            counter.classList.remove('warning', 'error');
+            if (length > maxLength * 0.9) {
+                counter.classList.add('warning');
+            }
+            if (length >= maxLength) {
+                counter.classList.add('error');
+            }
+        }
+
+        // Initialize character count
+        document.addEventListener('DOMContentLoaded', function() {
+            const bioTextarea = document.getElementById('bio');
+            updateCharCount(bioTextarea, 'bio-count', 2000);
+        });
+    </script>
+</body>
+</html>

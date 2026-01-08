@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+  <defs>
+    <style>
+      .bg { fill: #FAFAFA; }
+      .header-bg { fill: #FFFFFF; }
+      .card-bg { fill: #FFFFFF; }
+      .primary { fill: #00529F; }
+      .primary-text { fill: #00529F; }
+      .accent { fill: #FFD520; }
+      .text-dark { fill: #1A1A1A; }
+      .text-medium { fill: #666666; }
+      .text-light { fill: #999999; }
+      .icon-bg { fill: #E1F5FE; }
+      .icon-stroke { stroke: #0288D1; fill: none; stroke-width: 2; }
+      .btn-primary { fill: #00529F; }
+      .btn-secondary { fill: none; stroke: #00529F; stroke-width: 2; }
+      .divider { stroke: #E5E5E5; }
+      .shadow { filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
+      .font-primary { font-family: 'Montserrat', Arial, sans-serif; }
+      .font-secondary { font-family: 'Lato', Arial, sans-serif; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect class="bg" width="1200" height="800"/>
+
+  <!-- Header -->
+  <rect class="header-bg shadow" x="0" y="0" width="1200" height="72"/>
+
+  <!-- Logo -->
+  <rect class="primary" x="520" y="16" width="40" height="40" rx="8"/>
+  <text x="520" y="42" fill="white" font-size="18" font-weight="bold" text-anchor="middle">
+    <tspan dx="20">A</tspan>
+  </text>
+  <text class="font-primary primary-text" x="570" y="42" font-size="18" font-weight="700">AutoService Platform</text>
+
+  <!-- Main Card -->
+  <rect class="card-bg shadow" x="320" y="120" width="560" height="560" rx="12"/>
+
+  <!-- Error Icon Circle -->
+  <circle class="icon-bg" cx="600" cy="220" r="60"/>
+
+  <!-- Question Mark Icon -->
+  <circle class="icon-stroke" cx="600" cy="220" r="40" stroke-width="3"/>
+  <path class="icon-stroke" d="M588 208 a12 12 0 1 1 18 10 c0 8 -6 10 -6 16" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="600" cy="244" r="2" fill="#0288D1"/>
+
+  <!-- Error Code -->
+  <text class="font-primary text-medium" x="600" y="310" font-size="12" font-weight="600" text-anchor="middle" letter-spacing="2">ERROR 404</text>
+
+  <!-- Error Title -->
+  <text class="font-primary text-dark" x="600" y="350" font-size="28" font-weight="700" text-anchor="middle">Network Not Found</text>
+
+  <!-- Error Description -->
+  <text class="font-secondary text-medium" x="600" y="390" font-size="14" text-anchor="middle">The service network you're looking for doesn't exist</text>
+  <text class="font-secondary text-medium" x="600" y="412" font-size="14" text-anchor="middle">or may have been moved. Please check the URL.</text>
+
+  <!-- Primary Button -->
+  <rect class="btn-primary" x="420" y="450" width="360" height="48" rx="8"/>
+  <text x="600" y="480" fill="white" font-size="16" font-weight="600" text-anchor="middle" class="font-secondary">Go to Main Platform</text>
+
+  <!-- Secondary Button -->
+  <rect class="btn-secondary" x="470" y="515" width="260" height="44" rx="8"/>
+  <text class="primary-text font-secondary" x="600" y="543" font-size="14" font-weight="600" text-anchor="middle">Contact Support</text>
+
+  <!-- Help Section Divider -->
+  <line class="divider" x1="380" y1="580" x2="820" y2="580"/>
+
+  <!-- Help Title -->
+  <text class="font-primary text-dark" x="600" y="615" font-size="13" font-weight="600" text-anchor="middle">This might have happened because:</text>
+
+  <!-- Help List -->
+  <circle cx="420" cy="645" r="3" fill="#CCCCCC"/>
+  <text class="font-secondary text-medium" x="435" y="649" font-size="13">The network URL was mistyped</text>
+
+  <circle cx="420" cy="670" r="3" fill="#CCCCCC"/>
+  <text class="font-secondary text-medium" x="435" y="674" font-size="13">The network has been deactivated</text>
+
+  <circle cx="420" cy="695" r="3" fill="#CCCCCC"/>
+  <text class="font-secondary text-medium" x="435" y="699" font-size="13">The link you followed is outdated</text>
+
+  <!-- Footer -->
+  <rect class="header-bg" x="0" y="730" width="1200" height="70"/>
+  <line class="divider" x1="0" y1="730" x2="1200" y2="730"/>
+  <text class="font-secondary text-medium" x="600" y="770" font-size="13" text-anchor="middle">
+    Need help? Contact us  |  Privacy Policy  |  Terms of Service
+  </text>
+</svg>

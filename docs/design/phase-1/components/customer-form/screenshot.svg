@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+  <defs>
+    <style>
+      .bg { fill: #FAFAFA; }
+      .header-bg { fill: #FFFFFF; }
+      .card-bg { fill: #FFFFFF; }
+      .primary { fill: #00529F; }
+      .primary-text { fill: #00529F; }
+      .info-bg { fill: #E1F5FE; }
+      .info-border { fill: #0288D1; }
+      .tag-bg { fill: #E3F2FD; }
+      .text-dark { fill: #1A1A1A; }
+      .text-medium { fill: #666666; }
+      .text-light { fill: #999999; }
+      .text-error { fill: #D32F2F; }
+      .border { fill: none; stroke: #CCCCCC; }
+      .divider { stroke: #E5E5E5; }
+      .shadow { filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
+      .font-primary { font-family: 'Montserrat', Arial, sans-serif; }
+      .font-secondary { font-family: 'Lato', Arial, sans-serif; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect class="bg" width="1200" height="800"/>
+
+  <!-- Header -->
+  <rect class="header-bg shadow" x="0" y="0" width="1200" height="72"/>
+
+  <!-- Logo -->
+  <rect class="primary" x="60" y="16" width="40" height="40" rx="8"/>
+  <text x="80" y="42" fill="white" font-size="18" font-weight="bold" text-anchor="middle">A</text>
+  <text class="font-primary primary-text" x="110" y="42" font-size="18" font-weight="700">AutoService Platform</text>
+
+  <!-- Breadcrumb -->
+  <text class="font-secondary text-medium" x="1000" y="42" font-size="13" text-anchor="end">Dashboard / Customers / </text>
+  <text class="font-secondary text-dark" x="1135" y="42" font-size="13" text-anchor="end">New Customer</text>
+
+  <!-- Page Title -->
+  <text class="font-primary text-dark" x="120" y="135" font-size="28" font-weight="700">Add New Customer</text>
+  <text class="font-secondary text-medium" x="120" y="160" font-size="14">Create a new customer record to track services and manage relationships</text>
+
+  <!-- Info Banner -->
+  <rect class="info-bg" x="120" y="180" width="960" height="56" rx="8"/>
+  <rect class="info-border" x="120" y="180" width="4" height="56" rx="2"/>
+  <circle class="info-border" cx="145" cy="208" r="10"/>
+  <text class="font-secondary text-dark" x="165" y="213" font-size="13">All fields marked with an asterisk (*) are required. Customer information is confidential.</text>
+
+  <!-- Form Card -->
+  <rect class="card-bg shadow" x="120" y="260" width="960" height="480" rx="12"/>
+
+  <!-- Contact Information Section -->
+  <text class="font-primary text-dark" x="152" y="295" font-size="18" font-weight="600">Contact Information</text>
+  <text class="font-secondary text-medium" x="152" y="315" font-size="12">Basic contact details for the customer</text>
+
+  <!-- First Name -->
+  <text class="font-secondary text-dark" x="152" y="345" font-size="12" font-weight="600">First Name</text>
+  <text class="text-error" x="218" y="345" font-size="12">*</text>
+  <rect class="border" x="152" y="352" width="440" height="44" rx="8"/>
+  <text class="font-secondary text-light" x="167" y="378" font-size="14">John</text>
+
+  <!-- Last Name -->
+  <text class="font-secondary text-dark" x="618" y="345" font-size="12" font-weight="600">Last Name</text>
+  <text class="text-error" x="679" y="345" font-size="12">*</text>
+  <rect class="border" x="618" y="352" width="440" height="44" rx="8"/>
+  <text class="font-secondary text-light" x="633" y="378" font-size="14">Doe</text>
+
+  <!-- Email -->
+  <text class="font-secondary text-dark" x="152" y="420" font-size="12" font-weight="600">Email Address</text>
+  <text class="text-error" x="236" y="420" font-size="12">*</text>
+  <rect class="border" x="152" y="427" width="440" height="44" rx="8"/>
+  <text class="font-secondary text-light" x="167" y="453" font-size="14">john.doe@example.com</text>
+
+  <!-- Phone -->
+  <text class="font-secondary text-dark" x="618" y="420" font-size="12" font-weight="600">Phone Number</text>
+  <text class="text-error" x="710" y="420" font-size="12">*</text>
+  <rect class="border" x="618" y="427" width="440" height="44" rx="8"/>
+  <text class="font-secondary text-light" x="633" y="453" font-size="14">(555) 123-4567</text>
+
+  <!-- Section Divider -->
+  <line class="divider" x1="152" y1="495" x2="1048" y2="495" stroke-width="1"/>
+
+  <!-- Address Section -->
+  <text class="font-primary text-dark" x="152" y="525" font-size="18" font-weight="600">Address</text>
+  <text class="font-secondary text-medium" x="152" y="545" font-size="12">Customer's primary address for service delivery</text>
+
+  <!-- Street Address -->
+  <text class="font-secondary text-dark" x="152" y="575" font-size="12" font-weight="600">Street Address</text>
+  <text class="text-error" x="244" y="575" font-size="12">*</text>
+  <rect class="border" x="152" y="582" width="906" height="44" rx="8"/>
+  <text class="font-secondary text-light" x="167" y="608" font-size="14">123 Main Street</text>
+
+  <!-- City and State -->
+  <text class="font-secondary text-dark" x="152" y="650" font-size="12" font-weight="600">City</text>
+  <text class="text-error" x="177" y="650" font-size="12">*</text>
+  <rect class="border" x="152" y="657" width="440" height="44" rx="8"/>
+  <text class="font-secondary text-light" x="167" y="683" font-size="14">Springfield</text>
+
+  <text class="font-secondary text-dark" x="618" y="650" font-size="12" font-weight="600">State</text>
+  <text class="text-error" x="649" y="650" font-size="12">*</text>
+  <rect class="border" x="618" y="657" width="440" height="44" rx="8"/>
+  <text class="font-secondary text-dark" x="633" y="683" font-size="14">Select State</text>
+  <path class="text-dark" d="M1038 675 l-8 8 l-8 -8" stroke="#666666" stroke-width="2" fill="none"/>
+
+  <!-- Section Divider -->
+  <line class="divider" x1="152" y1="715" x2="1048" y2="715" stroke-width="1"/>
+
+  <!-- Footer area with buttons visible -->
+
+  <!-- Cancel Button -->
+  <rect class="border" x="840" y="765" width="110" height="48" rx="8"/>
+  <text class="font-secondary text-dark" x="895" y="793" font-size="15" font-weight="600" text-anchor="middle">Cancel</text>
+
+  <!-- Save Button -->
+  <rect class="primary" x="970" y="765" width="160" height="48" rx="8"/>
+  <text x="1050" y="793" fill="white" font-size="15" font-weight="600" text-anchor="middle" class="font-secondary">Save Customer</text>
+</svg>

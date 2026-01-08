@@ -1,0 +1,149 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 900" width="1400" height="900">
+  <defs>
+    <style>
+      .bg { fill: #FAFAFA; }
+      .card-bg { fill: #FFFFFF; }
+      .primary { fill: #00529F; }
+      .primary-light { fill: #E3F2FD; }
+      .success { fill: #2E7D32; }
+      .success-light { fill: #E8F5E9; }
+      .info { fill: #0288D1; }
+      .info-light { fill: #E1F5FE; }
+      .text-dark { fill: #1A1A1A; }
+      .text-medium { fill: #666666; }
+      .text-light { fill: #999999; }
+      .border { stroke: #E5E5E5; fill: none; }
+      .shadow { filter: drop-shadow(0 2px 4px rgba(0,0,0,0.08)); }
+      .font-primary { font-family: 'Montserrat', Arial, sans-serif; }
+      .font-secondary { font-family: 'Lato', Arial, sans-serif; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect class="bg" width="1400" height="900"/>
+
+  <!-- Sidebar -->
+  <rect class="card-bg" x="0" y="0" width="260" height="900"/>
+  <line class="border" x1="260" y1="0" x2="260" y2="900"/>
+  <rect class="primary" x="24" y="24" width="40" height="40" rx="8"/>
+  <text x="44" y="50" fill="white" font-size="16" font-weight="bold" text-anchor="middle">A</text>
+  <text class="font-primary" x="74" y="50" font-size="14" font-weight="700" fill="#00529F">AutoService</text>
+
+  <!-- Header -->
+  <rect class="card-bg" x="260" y="0" width="1140" height="120"/>
+  <line class="border" x1="260" y1="120" x2="1400" y2="120"/>
+
+  <!-- Breadcrumb -->
+  <text class="font-secondary primary" x="300" y="35" font-size="13" fill="#00529F">Customers</text>
+  <text class="font-secondary text-medium" x="365" y="35" font-size="13"> / John Doe</text>
+
+  <!-- Avatar and Name -->
+  <circle class="primary-light" cx="332" cy="75" r="32"/>
+  <text class="font-primary" x="332" y="82" font-size="18" font-weight="600" text-anchor="middle" fill="#00529F">JD</text>
+  <text class="font-primary text-dark" x="380" y="65" font-size="20" font-weight="700">John Doe</text>
+
+  <!-- Badges -->
+  <rect class="success-light" x="380" y="78" width="85" height="22" rx="11"/>
+  <text class="font-secondary success" x="422" y="93" font-size="10" font-weight="600" text-anchor="middle">My Customer</text>
+  <rect class="success-light" x="475" y="78" width="50" height="22" rx="11"/>
+  <text class="font-secondary success" x="500" y="93" font-size="10" font-weight="600" text-anchor="middle">Active</text>
+  <text class="font-secondary text-medium" x="540" y="93" font-size="12">Customer since Jan 2024</text>
+
+  <!-- Action Buttons -->
+  <rect fill="white" stroke="#CCCCCC" x="1050" y="55" width="90" height="36" rx="8"/>
+  <text class="font-secondary text-dark" x="1095" y="78" font-size="12" text-anchor="middle">Message</text>
+  <rect fill="white" stroke="#CCCCCC" x="1150" y="55" width="70" height="36" rx="8"/>
+  <text class="font-secondary text-dark" x="1185" y="78" font-size="12" text-anchor="middle">Refer</text>
+  <rect class="primary" x="1230" y="55" width="70" height="36" rx="8"/>
+  <text x="1265" y="78" fill="white" font-size="12" font-weight="600" text-anchor="middle" class="font-secondary">Edit</text>
+
+  <!-- Contact Information Card -->
+  <rect class="card-bg shadow" x="300" y="145" width="520" height="200" rx="12"/>
+  <text class="font-primary text-dark" x="324" y="180" font-size="14" font-weight="600">Contact Information</text>
+  <text class="font-secondary primary" x="796" y="180" font-size="12" text-anchor="end">Edit</text>
+
+  <text class="font-secondary text-medium" x="324" y="220" font-size="10" font-weight="600" letter-spacing="0.5">EMAIL</text>
+  <text class="font-secondary primary" x="324" y="238" font-size="13">john.doe@email.com</text>
+
+  <text class="font-secondary text-medium" x="524" y="220" font-size="10" font-weight="600" letter-spacing="0.5">PHONE</text>
+  <text class="font-secondary primary" x="524" y="238" font-size="13">(555) 123-4567</text>
+
+  <text class="font-secondary text-medium" x="324" y="280" font-size="10" font-weight="600" letter-spacing="0.5">ADDRESS</text>
+  <text class="font-secondary text-dark" x="324" y="298" font-size="13">123 Main Street</text>
+  <text class="font-secondary text-dark" x="324" y="316" font-size="13">Springfield, IL 62701</text>
+
+  <!-- Ownership Card -->
+  <rect class="card-bg shadow" x="840" y="145" width="260" height="200" rx="12"/>
+  <text class="font-primary text-dark" x="864" y="180" font-size="14" font-weight="600">Ownership</text>
+
+  <rect fill="#FAFAFA" x="864" y="200" width="212" height="56" rx="8"/>
+  <circle class="primary-light" cx="892" cy="228" r="18"/>
+  <text class="font-secondary" x="892" y="233" font-size="11" font-weight="600" text-anchor="middle" fill="#00529F">MS</text>
+  <text class="font-secondary text-dark" x="920" y="222" font-size="12" font-weight="600">Mike's Auto Repair</text>
+  <text class="font-secondary text-medium" x="920" y="238" font-size="10">Primary Owner</text>
+
+  <text class="font-secondary text-medium" x="864" y="285" font-size="10" font-weight="600" letter-spacing="0.5">SINCE</text>
+  <text class="font-secondary text-dark" x="864" y="303" font-size="12">January 15, 2024</text>
+  <text class="font-secondary text-medium" x="970" y="285" font-size="10" font-weight="600" letter-spacing="0.5">SOURCE</text>
+  <text class="font-secondary text-dark" x="970" y="303" font-size="12">Walk-in Customer</text>
+
+  <!-- Vehicles Card -->
+  <rect class="card-bg shadow" x="300" y="365" width="520" height="180" rx="12"/>
+  <text class="font-primary text-dark" x="324" y="400" font-size="14" font-weight="600">Vehicles</text>
+  <text class="font-secondary primary" x="796" y="400" font-size="12" text-anchor="end">Add Vehicle</text>
+
+  <!-- Vehicle 1 -->
+  <rect fill="#F2F2F2" x="324" y="420" width="48" height="48" rx="8"/>
+  <text class="font-secondary text-dark" x="390" y="440" font-size="13" font-weight="600">2021 BMW 330i</text>
+  <text class="font-secondary text-medium" x="390" y="458" font-size="11">VIN: WBA5R1C55M...  |  45,230 miles</text>
+  <rect class="primary-light" x="740" y="430" width="55" height="20" rx="10"/>
+  <text class="font-secondary primary" x="767" y="444" font-size="9" font-weight="600" text-anchor="middle">PRIMARY</text>
+
+  <!-- Vehicle 2 -->
+  <rect fill="#F2F2F2" x="324" y="480" width="48" height="48" rx="8"/>
+  <text class="font-secondary text-dark" x="390" y="500" font-size="13" font-weight="600">2019 Honda Accord</text>
+  <text class="font-secondary text-medium" x="390" y="518" font-size="11">VIN: 1HGCV1F33K...  |  62,100 miles</text>
+
+  <!-- Referral History Card -->
+  <rect class="card-bg shadow" x="840" y="365" width="260" height="180" rx="12"/>
+  <text class="font-primary text-dark" x="864" y="400" font-size="14" font-weight="600">Referral History</text>
+
+  <!-- Referral 1 -->
+  <rect class="info-light" x="864" y="420" width="212" height="48" rx="8"/>
+  <circle class="info" cx="892" cy="444" r="14"/>
+  <text class="font-secondary text-dark" x="916" y="438" font-size="11" font-weight="600">Referred to Body Shop Pro</text>
+  <text class="font-secondary text-medium" x="916" y="452" font-size="9">Collision repair</text>
+  <text class="font-secondary text-medium" x="1060" y="445" font-size="9" text-anchor="end">Mar 15</text>
+
+  <!-- Referral 2 -->
+  <rect class="success-light" x="864" y="478" width="212" height="48" rx="8"/>
+  <circle class="success" cx="892" cy="502" r="14"/>
+  <text class="font-secondary text-dark" x="916" y="496" font-size="11" font-weight="600">Referred Sarah Miller</text>
+  <text class="font-secondary text-medium" x="916" y="510" font-size="9">Earned $25 reward</text>
+  <text class="font-secondary text-medium" x="1060" y="503" font-size="9" text-anchor="end">Feb 20</text>
+
+  <!-- Activity Timeline Card -->
+  <rect class="card-bg shadow" x="300" y="565" width="800" height="260" rx="12"/>
+  <text class="font-primary text-dark" x="324" y="600" font-size="14" font-weight="600">Recent Activity</text>
+  <text class="font-secondary primary" x="1076" y="600" font-size="12" text-anchor="end">View All</text>
+
+  <!-- Timeline Line -->
+  <line stroke="#E5E5E5" stroke-width="2" x1="344" y1="630" x2="344" y2="790"/>
+
+  <!-- Timeline Item 1 -->
+  <circle class="success" cx="344" cy="650" r="10"/>
+  <text class="font-secondary text-dark" x="370" y="648" font-size="12" font-weight="600">Service Completed</text>
+  <text class="font-secondary text-medium" x="370" y="666" font-size="11">Oil change and tire rotation completed at Mike's Auto Repair</text>
+  <text class="font-secondary text-light" x="370" y="682" font-size="10">Today, 2:30 PM</text>
+
+  <!-- Timeline Item 2 -->
+  <circle class="info" cx="344" cy="720" r="10"/>
+  <text class="font-secondary text-dark" x="370" y="718" font-size="12" font-weight="600">Inquiry Submitted</text>
+  <text class="font-secondary text-medium" x="370" y="736" font-size="11">Customer submitted inquiry for brake inspection</text>
+  <text class="font-secondary text-light" x="370" y="752" font-size="10">Mar 20, 2024</text>
+
+  <!-- Timeline Item 3 -->
+  <circle class="primary" cx="344" cy="790" r="10"/>
+  <text class="font-secondary text-dark" x="370" y="788" font-size="12" font-weight="600">Referral Sent</text>
+  <text class="font-secondary text-medium" x="370" y="806" font-size="11">Referred to Body Shop Pro for collision repair</text>
+</svg>

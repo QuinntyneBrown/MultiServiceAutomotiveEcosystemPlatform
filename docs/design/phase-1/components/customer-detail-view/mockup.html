@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>John Doe - Customer Detail</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Lato:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-primary: #00529F;
+      --color-primary-dark: #003366;
+      --color-primary-light: #E3F2FD;
+      --color-accent: #FFD520;
+      --color-gray-50: #FAFAFA;
+      --color-gray-100: #F2F2F2;
+      --color-gray-200: #E5E5E5;
+      --color-gray-300: #CCCCCC;
+      --color-gray-400: #999999;
+      --color-gray-600: #666666;
+      --color-gray-800: #333333;
+      --color-gray-900: #1A1A1A;
+      --color-white: #FFFFFF;
+      --color-success: #2E7D32;
+      --color-success-light: #E8F5E9;
+      --color-info: #0288D1;
+      --color-info-light: #E1F5FE;
+      --color-warning: #ED6C02;
+      --color-warning-light: #FFF3E0;
+
+      --font-family-primary: 'Montserrat', sans-serif;
+      --font-family-secondary: 'Lato', sans-serif;
+      --spacing-1: 0.25rem; --spacing-2: 0.5rem; --spacing-3: 0.75rem;
+      --spacing-4: 1rem; --spacing-6: 1.5rem; --spacing-8: 2rem;
+      --radius-sm: 0.25rem; --radius-md: 0.5rem; --radius-lg: 0.75rem; --radius-full: 9999px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.1); --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: var(--font-family-secondary); background-color: var(--color-gray-50); color: var(--color-gray-800); min-height: 100vh; }
+
+    .layout { display: flex; min-height: 100vh; }
+    .sidebar { width: 260px; background-color: var(--color-white); border-right: 1px solid var(--color-gray-200); padding: var(--spacing-6); }
+    .sidebar__logo { display: flex; align-items: center; gap: var(--spacing-3); margin-bottom: var(--spacing-8); text-decoration: none; }
+    .sidebar__logo-icon { width: 40px; height: 40px; background-color: var(--color-primary); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; }
+    .sidebar__logo-icon svg { width: 24px; height: 24px; fill: var(--color-white); }
+    .sidebar__logo-text { font-family: var(--font-family-primary); font-size: 1rem; font-weight: 700; color: var(--color-primary); }
+
+    .main { flex: 1; display: flex; flex-direction: column; }
+
+    .header { background-color: var(--color-white); border-bottom: 1px solid var(--color-gray-200); padding: var(--spacing-4) var(--spacing-8); }
+    .header__breadcrumb { font-size: 0.875rem; color: var(--color-gray-600); margin-bottom: var(--spacing-2); }
+    .header__breadcrumb a { color: var(--color-primary); text-decoration: none; }
+    .header__breadcrumb a:hover { text-decoration: underline; }
+    .header__content { display: flex; align-items: center; justify-content: space-between; }
+    .header__info { display: flex; align-items: center; gap: var(--spacing-4); }
+    .header__avatar { width: 64px; height: 64px; border-radius: var(--radius-full); background-color: var(--color-primary-light); display: flex; align-items: center; justify-content: center; font-family: var(--font-family-primary); font-size: 1.5rem; font-weight: 600; color: var(--color-primary); }
+    .header__name { font-family: var(--font-family-primary); font-size: 1.5rem; font-weight: 700; color: var(--color-gray-900); margin-bottom: var(--spacing-1); }
+    .header__meta { display: flex; align-items: center; gap: var(--spacing-4); }
+    .header__meta span { font-size: 0.875rem; color: var(--color-gray-600); display: flex; align-items: center; gap: var(--spacing-1); }
+    .header__meta svg { width: 16px; height: 16px; fill: currentColor; }
+    .header__actions { display: flex; gap: var(--spacing-3); }
+
+    .badge { display: inline-flex; align-items: center; padding: var(--spacing-1) var(--spacing-3); font-size: 0.75rem; font-weight: 600; border-radius: var(--radius-full); }
+    .badge--owned { background-color: var(--color-success-light); color: var(--color-success); }
+    .badge--active { background-color: var(--color-success-light); color: var(--color-success); }
+
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--spacing-2); padding: var(--spacing-3) var(--spacing-6); font-family: var(--font-family-secondary); font-size: 0.875rem; font-weight: 600; text-decoration: none; border-radius: var(--radius-md); transition: all 0.2s; cursor: pointer; border: none; }
+    .btn--primary { background-color: var(--color-primary); color: var(--color-white); }
+    .btn--primary:hover { background-color: var(--color-primary-dark); }
+    .btn--secondary { background-color: var(--color-white); color: var(--color-gray-800); border: 1px solid var(--color-gray-300); }
+    .btn--secondary:hover { background-color: var(--color-gray-50); }
+    .btn svg { width: 18px; height: 18px; }
+
+    .content { flex: 1; padding: var(--spacing-8); }
+    .content-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--spacing-6); }
+    .content-grid--main { grid-column: 1 / 3; }
+
+    .card { background-color: var(--color-white); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); overflow: hidden; }
+    .card__header { padding: var(--spacing-6); border-bottom: 1px solid var(--color-gray-100); display: flex; align-items: center; justify-content: space-between; }
+    .card__title { font-family: var(--font-family-primary); font-size: 1rem; font-weight: 600; color: var(--color-gray-900); }
+    .card__body { padding: var(--spacing-6); }
+    .card__action { font-size: 0.875rem; color: var(--color-primary); text-decoration: none; font-weight: 500; }
+    .card__action:hover { text-decoration: underline; }
+
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-4); }
+    .info-item { margin-bottom: var(--spacing-4); }
+    .info-item:last-child { margin-bottom: 0; }
+    .info-label { font-size: 0.75rem; font-weight: 600; color: var(--color-gray-600); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--spacing-1); }
+    .info-value { font-size: 0.875rem; color: var(--color-gray-900); }
+    .info-value a { color: var(--color-primary); text-decoration: none; }
+    .info-value a:hover { text-decoration: underline; }
+
+    .ownership-info { display: flex; align-items: center; gap: var(--spacing-3); padding: var(--spacing-4); background-color: var(--color-gray-50); border-radius: var(--radius-md); }
+    .ownership-avatar { width: 40px; height: 40px; border-radius: var(--radius-full); background-color: var(--color-primary-light); display: flex; align-items: center; justify-content: center; font-size: 0.875rem; font-weight: 600; color: var(--color-primary); }
+    .ownership-details { flex: 1; }
+    .ownership-name { font-size: 0.875rem; font-weight: 600; color: var(--color-gray-900); }
+    .ownership-role { font-size: 0.75rem; color: var(--color-gray-600); }
+
+    .referral-card { display: flex; align-items: center; gap: var(--spacing-3); padding: var(--spacing-4); background-color: var(--color-info-light); border-radius: var(--radius-md); margin-bottom: var(--spacing-3); }
+    .referral-card:last-child { margin-bottom: 0; }
+    .referral-icon { width: 36px; height: 36px; border-radius: var(--radius-full); background-color: var(--color-info); display: flex; align-items: center; justify-content: center; }
+    .referral-icon svg { width: 18px; height: 18px; fill: var(--color-white); }
+    .referral-info { flex: 1; }
+    .referral-title { font-size: 0.875rem; font-weight: 600; color: var(--color-gray-900); }
+    .referral-subtitle { font-size: 0.75rem; color: var(--color-gray-600); }
+    .referral-date { font-size: 0.75rem; color: var(--color-gray-600); }
+
+    .timeline { position: relative; padding-left: var(--spacing-8); }
+    .timeline::before { content: ""; position: absolute; left: 14px; top: 0; bottom: 0; width: 2px; background-color: var(--color-gray-200); }
+    .timeline-item { position: relative; padding-bottom: var(--spacing-6); }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-icon { position: absolute; left: calc(-1 * var(--spacing-8) + 6px); width: 20px; height: 20px; border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; }
+    .timeline-icon--primary { background-color: var(--color-primary); }
+    .timeline-icon--success { background-color: var(--color-success); }
+    .timeline-icon--info { background-color: var(--color-info); }
+    .timeline-icon svg { width: 12px; height: 12px; fill: var(--color-white); }
+    .timeline-content { }
+    .timeline-title { font-size: 0.875rem; font-weight: 600; color: var(--color-gray-900); margin-bottom: var(--spacing-1); }
+    .timeline-desc { font-size: 0.75rem; color: var(--color-gray-600); margin-bottom: var(--spacing-1); }
+    .timeline-date { font-size: 0.75rem; color: var(--color-gray-400); }
+
+    .vehicle-card { display: flex; align-items: center; gap: var(--spacing-4); padding: var(--spacing-4); border: 1px solid var(--color-gray-200); border-radius: var(--radius-md); }
+    .vehicle-icon { width: 48px; height: 48px; background-color: var(--color-gray-100); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; }
+    .vehicle-icon svg { width: 28px; height: 28px; fill: var(--color-gray-600); }
+    .vehicle-info { flex: 1; }
+    .vehicle-make { font-size: 0.875rem; font-weight: 600; color: var(--color-gray-900); }
+    .vehicle-details { font-size: 0.75rem; color: var(--color-gray-600); }
+    .vehicle-badge { font-size: 0.625rem; font-weight: 600; color: var(--color-primary); background-color: var(--color-primary-light); padding: 2px 8px; border-radius: var(--radius-full); }
+
+    @media (max-width: 1200px) {
+      .content-grid { grid-template-columns: 1fr 1fr; }
+      .content-grid--main { grid-column: 1 / 2; }
+    }
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .content-grid { grid-template-columns: 1fr; }
+      .content-grid--main { grid-column: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <a href="/" class="sidebar__logo">
+        <div class="sidebar__logo-icon">
+          <svg viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99z"/></svg>
+        </div>
+        <span class="sidebar__logo-text">AutoService</span>
+      </a>
+    </aside>
+
+    <main class="main">
+      <header class="header">
+        <nav class="header__breadcrumb">
+          <a href="/customers">Customers</a> / John Doe
+        </nav>
+        <div class="header__content">
+          <div class="header__info">
+            <div class="header__avatar">JD</div>
+            <div>
+              <h1 class="header__name">John Doe</h1>
+              <div class="header__meta">
+                <span class="badge badge--owned">My Customer</span>
+                <span class="badge badge--active">Active</span>
+                <span>Customer since Jan 2024</span>
+              </div>
+            </div>
+          </div>
+          <div class="header__actions">
+            <button class="btn btn--secondary">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+              Message
+            </button>
+            <button class="btn btn--secondary">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+              Refer
+            </button>
+            <button class="btn btn--primary">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+              Edit
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <div class="content">
+        <div class="content-grid">
+          <!-- Contact Information -->
+          <div class="card content-grid--main">
+            <div class="card__header">
+              <h2 class="card__title">Contact Information</h2>
+              <a href="#" class="card__action">Edit</a>
+            </div>
+            <div class="card__body">
+              <div class="info-grid">
+                <div class="info-item">
+                  <p class="info-label">Email</p>
+                  <p class="info-value"><a href="mailto:john.doe@email.com">john.doe@email.com</a></p>
+                </div>
+                <div class="info-item">
+                  <p class="info-label">Phone</p>
+                  <p class="info-value"><a href="tel:+15551234567">(555) 123-4567</a></p>
+                </div>
+                <div class="info-item">
+                  <p class="info-label">Address</p>
+                  <p class="info-value">123 Main Street<br>Springfield, IL 62701</p>
+                </div>
+                <div class="info-item">
+                  <p class="info-label">Preferred Contact</p>
+                  <p class="info-value">Phone</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ownership Card -->
+          <div class="card">
+            <div class="card__header">
+              <h2 class="card__title">Ownership</h2>
+            </div>
+            <div class="card__body">
+              <div class="ownership-info">
+                <div class="ownership-avatar">MS</div>
+                <div class="ownership-details">
+                  <p class="ownership-name">Mike's Auto Repair</p>
+                  <p class="ownership-role">Primary Owner</p>
+                </div>
+              </div>
+              <div style="margin-top: var(--spacing-4);">
+                <div class="info-item">
+                  <p class="info-label">Since</p>
+                  <p class="info-value">January 15, 2024</p>
+                </div>
+                <div class="info-item">
+                  <p class="info-label">Source</p>
+                  <p class="info-value">Walk-in Customer</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Vehicle Information -->
+          <div class="card content-grid--main">
+            <div class="card__header">
+              <h2 class="card__title">Vehicles</h2>
+              <a href="#" class="card__action">Add Vehicle</a>
+            </div>
+            <div class="card__body">
+              <div class="vehicle-card" style="margin-bottom: var(--spacing-3);">
+                <div class="vehicle-icon">
+                  <svg viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+                </div>
+                <div class="vehicle-info">
+                  <p class="vehicle-make">2021 BMW 330i</p>
+                  <p class="vehicle-details">VIN: WBA5R1C55M...  &bull;  45,230 miles</p>
+                </div>
+                <span class="vehicle-badge">PRIMARY</span>
+              </div>
+              <div class="vehicle-card">
+                <div class="vehicle-icon">
+                  <svg viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99z"/></svg>
+                </div>
+                <div class="vehicle-info">
+                  <p class="vehicle-make">2019 Honda Accord</p>
+                  <p class="vehicle-details">VIN: 1HGCV1F33K...  &bull;  62,100 miles</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Referral History -->
+          <div class="card">
+            <div class="card__header">
+              <h2 class="card__title">Referral History</h2>
+            </div>
+            <div class="card__body">
+              <div class="referral-card">
+                <div class="referral-icon">
+                  <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+                </div>
+                <div class="referral-info">
+                  <p class="referral-title">Referred to Body Shop Pro</p>
+                  <p class="referral-subtitle">Collision repair needed</p>
+                </div>
+                <span class="referral-date">Mar 15, 2024</span>
+              </div>
+              <div class="referral-card" style="background-color: var(--color-success-light);">
+                <div class="referral-icon" style="background-color: var(--color-success);">
+                  <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                </div>
+                <div class="referral-info">
+                  <p class="referral-title">Referred Sarah Miller</p>
+                  <p class="referral-subtitle">Earned $25 reward</p>
+                </div>
+                <span class="referral-date">Feb 20, 2024</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Activity Timeline -->
+          <div class="card" style="grid-column: 1 / -1;">
+            <div class="card__header">
+              <h2 class="card__title">Recent Activity</h2>
+              <a href="#" class="card__action">View All</a>
+            </div>
+            <div class="card__body">
+              <div class="timeline">
+                <div class="timeline-item">
+                  <div class="timeline-icon timeline-icon--success">
+                    <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                  </div>
+                  <div class="timeline-content">
+                    <p class="timeline-title">Service Completed</p>
+                    <p class="timeline-desc">Oil change and tire rotation completed at Mike's Auto Repair</p>
+                    <p class="timeline-date">Today, 2:30 PM</p>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="timeline-icon timeline-icon--info">
+                    <svg viewBox="0 0 24 24"><path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1z"/></svg>
+                  </div>
+                  <div class="timeline-content">
+                    <p class="timeline-title">Inquiry Submitted</p>
+                    <p class="timeline-desc">Customer submitted inquiry for brake inspection</p>
+                    <p class="timeline-date">Mar 20, 2024</p>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="timeline-icon timeline-icon--primary">
+                    <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92z"/></svg>
+                  </div>
+                  <div class="timeline-content">
+                    <p class="timeline-title">Referral Sent</p>
+                    <p class="timeline-desc">Referred to Body Shop Pro for collision repair</p>
+                    <p class="timeline-date">Mar 15, 2024</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

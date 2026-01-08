@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Professional Dashboard - Multi-Service Automotive Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Lato:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      /* Primary Colors */
+      --color-primary: #00529F;
+      --color-primary-dark: #003366;
+      --color-primary-light: #0066CC;
+      --color-accent: #FFD520;
+
+      /* Blue Scale */
+      --color-blue-50: #F5F9FF;
+      --color-blue-100: #E3F2FD;
+      --color-blue-200: #BBDEFB;
+      --color-blue-700: #00529F;
+      --color-blue-800: #003366;
+
+      /* Gray Scale */
+      --color-gray-50: #FAFAFA;
+      --color-gray-100: #F2F2F2;
+      --color-gray-200: #E5E5E5;
+      --color-gray-300: #CCCCCC;
+      --color-gray-400: #999999;
+      --color-gray-600: #666666;
+      --color-gray-700: #4D4D4D;
+      --color-gray-800: #333333;
+      --color-gray-900: #1A1A1A;
+
+      /* Semantic Colors */
+      --color-success: #2E7D32;
+      --color-success-light: #E8F5E9;
+      --color-warning: #ED6C02;
+      --color-info: #0288D1;
+      --color-info-light: #E1F5FE;
+
+      /* Spacing */
+      --spacing-2: 8px;
+      --spacing-3: 12px;
+      --spacing-4: 16px;
+      --spacing-5: 20px;
+      --spacing-6: 24px;
+      --spacing-8: 32px;
+
+      /* Border Radius */
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-full: 9999px;
+
+      /* Shadows */
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+      --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+
+      /* Typography */
+      --font-primary: 'Montserrat', sans-serif;
+      --font-secondary: 'Lato', sans-serif;
+    }
+
+    body {
+      font-family: var(--font-secondary);
+      background-color: var(--color-gray-50);
+      color: var(--color-gray-900);
+      line-height: 1.6;
+    }
+
+    /* Layout */
+    .dashboard-container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 260px;
+      background: linear-gradient(180deg, var(--color-blue-700) 0%, var(--color-blue-800) 100%);
+      color: white;
+      padding: var(--spacing-6);
+      display: flex;
+      flex-direction: column;
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar-header {
+      margin-bottom: var(--spacing-8);
+    }
+
+    .logo {
+      font-family: var(--font-primary);
+      font-size: 20px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background-color: var(--color-accent);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: var(--color-blue-700);
+    }
+
+    .nav-menu {
+      list-style: none;
+      flex: 1;
+    }
+
+    .nav-item {
+      margin-bottom: var(--spacing-2);
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+      padding: var(--spacing-3) var(--spacing-4);
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      border-radius: var(--radius-md);
+      transition: all 0.2s ease;
+      font-weight: 500;
+      font-size: 15px;
+    }
+
+    .nav-link:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+
+    .nav-link.active {
+      background-color: rgba(255, 255, 255, 0.15);
+      color: white;
+      font-weight: 600;
+    }
+
+    .nav-icon {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      background-color: white;
+      padding: var(--spacing-4) var(--spacing-6);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .top-bar-left h1 {
+      font-family: var(--font-primary);
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--color-gray-900);
+    }
+
+    .top-bar-right {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-4);
+    }
+
+    .notification-icon {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-full);
+      background-color: var(--color-gray-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .notification-icon:hover {
+      background-color: var(--color-gray-200);
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 8px;
+      height: 8px;
+      background-color: #D32F2F;
+      border-radius: 50%;
+      border: 2px solid white;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+      padding: var(--spacing-2) var(--spacing-3);
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .user-profile:hover {
+      background-color: var(--color-gray-50);
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-full);
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .user-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .user-name {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--color-gray-900);
+    }
+
+    .user-role {
+      font-size: 12px;
+      color: var(--color-gray-600);
+    }
+
+    /* Dashboard Content */
+    .dashboard-content {
+      padding: var(--spacing-6);
+      max-width: 1400px;
+    }
+
+    /* Welcome Banner */
+    .welcome-banner {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+      color: white;
+      padding: var(--spacing-6);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--spacing-6);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .welcome-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .welcome-text h2 {
+      font-family: var(--font-primary);
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: var(--spacing-2);
+    }
+
+    .welcome-text p {
+      font-size: 15px;
+      opacity: 0.95;
+    }
+
+    .profile-completion {
+      background-color: rgba(255, 255, 255, 0.15);
+      padding: var(--spacing-4);
+      border-radius: var(--radius-md);
+      min-width: 200px;
+    }
+
+    .completion-label {
+      font-size: 13px;
+      margin-bottom: var(--spacing-2);
+      opacity: 0.9;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+      margin-bottom: var(--spacing-2);
+    }
+
+    .progress-fill {
+      height: 100%;
+      background-color: var(--color-accent);
+      width: 75%;
+      border-radius: var(--radius-full);
+      transition: width 0.3s ease;
+    }
+
+    .completion-text {
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    .completion-link {
+      color: var(--color-accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--spacing-6);
+      margin-bottom: var(--spacing-6);
+    }
+
+    .stat-card {
+      background-color: white;
+      padding: var(--spacing-6);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+
+    .stat-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .stat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: var(--spacing-4);
+    }
+
+    .stat-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    .stat-icon.blue {
+      background-color: var(--color-blue-100);
+      color: var(--color-primary);
+    }
+
+    .stat-icon.green {
+      background-color: var(--color-success-light);
+      color: var(--color-success);
+    }
+
+    .stat-icon.orange {
+      background-color: #FFF3E0;
+      color: var(--color-warning);
+    }
+
+    .stat-icon.purple {
+      background-color: #F3E5F5;
+      color: #7B1FA2;
+    }
+
+    .stat-value {
+      font-family: var(--font-primary);
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--color-gray-900);
+      margin-bottom: var(--spacing-2);
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: var(--color-gray-600);
+      margin-bottom: var(--spacing-3);
+    }
+
+    .stat-change {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-2);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .stat-change.positive {
+      color: var(--color-success);
+    }
+
+    .stat-change.negative {
+      color: #D32F2F;
+    }
+
+    /* Content Grid */
+    .content-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: var(--spacing-6);
+    }
+
+    /* Activity Feed */
+    .activity-feed {
+      background-color: white;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      padding: var(--spacing-6);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-5);
+    }
+
+    .section-title {
+      font-family: var(--font-primary);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--color-gray-900);
+    }
+
+    .view-all-link {
+      font-size: 14px;
+      color: var(--color-primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .view-all-link:hover {
+      color: var(--color-primary-dark);
+    }
+
+    .activity-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-4);
+    }
+
+    .activity-item {
+      display: flex;
+      gap: var(--spacing-4);
+      padding: var(--spacing-4);
+      border-radius: var(--radius-md);
+      transition: background-color 0.2s;
+    }
+
+    .activity-item:hover {
+      background-color: var(--color-gray-50);
+    }
+
+    .activity-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .activity-icon.customer {
+      background-color: var(--color-blue-100);
+      color: var(--color-primary);
+    }
+
+    .activity-icon.inquiry {
+      background-color: var(--color-info-light);
+      color: var(--color-info);
+    }
+
+    .activity-icon.referral {
+      background-color: #F3E5F5;
+      color: #7B1FA2;
+    }
+
+    .activity-content {
+      flex: 1;
+    }
+
+    .activity-title {
+      font-weight: 600;
+      color: var(--color-gray-900);
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    .activity-description {
+      font-size: 13px;
+      color: var(--color-gray-600);
+      margin-bottom: 4px;
+    }
+
+    .activity-time {
+      font-size: 12px;
+      color: var(--color-gray-400);
+    }
+
+    .activity-badge {
+      padding: 4px 8px;
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      font-weight: 600;
+      align-self: flex-start;
+    }
+
+    .activity-badge.new {
+      background-color: var(--color-success-light);
+      color: var(--color-success);
+    }
+
+    .activity-badge.pending {
+      background-color: #FFF3E0;
+      color: var(--color-warning);
+    }
+
+    /* Quick Actions */
+    .quick-actions {
+      background-color: white;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      padding: var(--spacing-6);
+    }
+
+    .action-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-3);
+    }
+
+    .action-button {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+      padding: var(--spacing-4);
+      border: 2px solid var(--color-gray-200);
+      border-radius: var(--radius-lg);
+      background-color: white;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      color: var(--color-gray-900);
+    }
+
+    .action-button:hover {
+      border-color: var(--color-primary);
+      background-color: var(--color-blue-50);
+      transform: translateX(4px);
+    }
+
+    .action-button-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      background-color: var(--color-blue-100);
+      color: var(--color-primary);
+    }
+
+    .action-button-content {
+      flex: 1;
+    }
+
+    .action-button-title {
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 2px;
+    }
+
+    .action-button-description {
+      font-size: 12px;
+      color: var(--color-gray-600);
+    }
+
+    .action-arrow {
+      color: var(--color-gray-400);
+      transition: color 0.2s;
+    }
+
+    .action-button:hover .action-arrow {
+      color: var(--color-primary);
+    }
+
+    /* Icons (using Unicode characters) */
+    .icon-dashboard::before { content: "📊"; }
+    .icon-customers::before { content: "👥"; }
+    .icon-referrals::before { content: "🤝"; }
+    .icon-inquiries::before { content: "💬"; }
+    .icon-profile::before { content: "👤"; }
+    .icon-bell::before { content: "🔔"; }
+    .icon-add::before { content: "➕"; }
+    .icon-send::before { content: "📤"; }
+    .icon-view::before { content: "👁️"; }
+    .icon-edit::before { content: "✏️"; }
+    .icon-arrow::before { content: "→"; }
+    .icon-trending-up::before { content: "📈"; }
+    .icon-trending-down::before { content: "📉"; }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-container {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        padding: var(--spacing-4);
+      }
+
+      .nav-menu {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-2);
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .welcome-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-4);
+      }
+
+      .profile-completion {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="#" class="logo">
+          <div class="logo-icon">A</div>
+          <span>AutoPro</span>
+        </a>
+      </div>
+
+      <nav>
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="#" class="nav-link active">
+              <span class="nav-icon icon-dashboard"></span>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <span class="nav-icon icon-customers"></span>
+              <span>Customers</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <span class="nav-icon icon-referrals"></span>
+              <span>Referrals</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <span class="nav-icon icon-inquiries"></span>
+              <span>Inquiries</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <span class="nav-icon icon-profile"></span>
+              <span>My Profile</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Top Bar -->
+      <div class="top-bar">
+        <div class="top-bar-left">
+          <h1>Dashboard</h1>
+        </div>
+        <div class="top-bar-right">
+          <div class="notification-icon">
+            <span class="icon-bell"></span>
+            <span class="notification-badge"></span>
+          </div>
+          <div class="user-profile">
+            <div class="user-avatar">JD</div>
+            <div class="user-info">
+              <div class="user-name">John Doe</div>
+              <div class="user-role">Auto Mechanic</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard Content -->
+      <div class="dashboard-content">
+        <!-- Welcome Banner -->
+        <div class="welcome-banner">
+          <div class="welcome-content">
+            <div class="welcome-text">
+              <h2>Welcome back, John!</h2>
+              <p>Here's what's happening with your business today.</p>
+            </div>
+            <div class="profile-completion">
+              <div class="completion-label">Profile Completion</div>
+              <div class="progress-bar">
+                <div class="progress-fill"></div>
+              </div>
+              <div class="completion-text">
+                75% complete - <a href="#" class="completion-link">Complete now</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-header">
+              <div class="stat-icon blue">
+                <span class="icon-customers"></span>
+              </div>
+            </div>
+            <div class="stat-value">142</div>
+            <div class="stat-label">Total Customers</div>
+            <div class="stat-change positive">
+              <span class="icon-trending-up"></span>
+              <span>+12% from last month</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <div class="stat-icon green">
+                <span class="icon-inquiries"></span>
+              </div>
+            </div>
+            <div class="stat-value">8</div>
+            <div class="stat-label">New Inquiries</div>
+            <div class="stat-change positive">
+              <span class="icon-trending-up"></span>
+              <span>+3 this week</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <div class="stat-icon orange">
+                <span class="icon-referrals"></span>
+              </div>
+            </div>
+            <div class="stat-value">5</div>
+            <div class="stat-label">Pending Referrals</div>
+            <div class="stat-change">
+              <span>Awaiting response</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <div class="stat-icon purple">
+                <span class="icon-send"></span>
+              </div>
+            </div>
+            <div class="stat-value">23</div>
+            <div class="stat-label">This Month's Referrals</div>
+            <div class="stat-change positive">
+              <span class="icon-trending-up"></span>
+              <span>+8% from last month</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="content-grid">
+          <!-- Activity Feed -->
+          <div class="activity-feed">
+            <div class="section-header">
+              <h3 class="section-title">Recent Activity</h3>
+              <a href="#" class="view-all-link">View All</a>
+            </div>
+
+            <div class="activity-list">
+              <div class="activity-item">
+                <div class="activity-icon customer">
+                  <span class="icon-customers"></span>
+                </div>
+                <div class="activity-content">
+                  <div class="activity-title">New customer added</div>
+                  <div class="activity-description">Sarah Johnson requested brake service</div>
+                  <div class="activity-time">2 hours ago</div>
+                </div>
+                <div class="activity-badge new">New</div>
+              </div>
+
+              <div class="activity-item">
+                <div class="activity-icon inquiry">
+                  <span class="icon-inquiries"></span>
+                </div>
+                <div class="activity-content">
+                  <div class="activity-title">New inquiry received</div>
+                  <div class="activity-description">Mike Chen asking about transmission repair</div>
+                  <div class="activity-time">5 hours ago</div>
+                </div>
+                <div class="activity-badge new">New</div>
+              </div>
+
+              <div class="activity-item">
+                <div class="activity-icon referral">
+                  <span class="icon-referrals"></span>
+                </div>
+                <div class="activity-content">
+                  <div class="activity-title">Referral update</div>
+                  <div class="activity-description">Tom Wilson accepted your body shop referral</div>
+                  <div class="activity-time">1 day ago</div>
+                </div>
+              </div>
+
+              <div class="activity-item">
+                <div class="activity-icon customer">
+                  <span class="icon-customers"></span>
+                </div>
+                <div class="activity-content">
+                  <div class="activity-title">Customer review</div>
+                  <div class="activity-description">Emily Davis left a 5-star review</div>
+                  <div class="activity-time">2 days ago</div>
+                </div>
+              </div>
+
+              <div class="activity-item">
+                <div class="activity-icon referral">
+                  <span class="icon-referrals"></span>
+                </div>
+                <div class="activity-content">
+                  <div class="activity-title">Referral pending</div>
+                  <div class="activity-description">Detailing referral for James Brown needs response</div>
+                  <div class="activity-time">3 days ago</div>
+                </div>
+                <div class="activity-badge pending">Pending</div>
+              </div>
+
+              <div class="activity-item">
+                <div class="activity-icon inquiry">
+                  <span class="icon-inquiries"></span>
+                </div>
+                <div class="activity-content">
+                  <div class="activity-title">Inquiry responded</div>
+                  <div class="activity-description">You responded to Lisa Martinez's tire inquiry</div>
+                  <div class="activity-time">4 days ago</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="quick-actions">
+            <div class="section-header">
+              <h3 class="section-title">Quick Actions</h3>
+            </div>
+
+            <div class="action-buttons">
+              <a href="#" class="action-button">
+                <div class="action-button-icon">
+                  <span class="icon-add"></span>
+                </div>
+                <div class="action-button-content">
+                  <div class="action-button-title">Add Customer</div>
+                  <div class="action-button-description">Register a new customer</div>
+                </div>
+                <span class="action-arrow icon-arrow"></span>
+              </a>
+
+              <a href="#" class="action-button">
+                <div class="action-button-icon">
+                  <span class="icon-send"></span>
+                </div>
+                <div class="action-button-content">
+                  <div class="action-button-title">Send Referral</div>
+                  <div class="action-button-description">Refer to another professional</div>
+                </div>
+                <span class="action-arrow icon-arrow"></span>
+              </a>
+
+              <a href="#" class="action-button">
+                <div class="action-button-icon">
+                  <span class="icon-view"></span>
+                </div>
+                <div class="action-button-content">
+                  <div class="action-button-title">View Inquiries</div>
+                  <div class="action-button-description">Check pending inquiries</div>
+                </div>
+                <span class="action-arrow icon-arrow"></span>
+              </a>
+
+              <a href="#" class="action-button">
+                <div class="action-button-icon">
+                  <span class="icon-edit"></span>
+                </div>
+                <div class="action-button-content">
+                  <div class="action-button-title">Update Profile</div>
+                  <div class="action-button-description">Edit your business info</div>
+                </div>
+                <span class="action-arrow icon-arrow"></span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

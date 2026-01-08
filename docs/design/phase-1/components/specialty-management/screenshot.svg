@@ -1,0 +1,245 @@
+<svg viewBox="0 0 1200 700" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .bg { fill: #FAFAFA; }
+      .card-bg { fill: #FFFFFF; }
+      .primary { fill: #00529F; }
+      .primary-light { fill: #E3F2FD; }
+      .primary-text { fill: #00529F; }
+      .gray-900 { fill: #1A1A1A; }
+      .gray-800 { fill: #333333; }
+      .gray-700 { fill: #4D4D4D; }
+      .gray-600 { fill: #666666; }
+      .gray-500 { fill: #808080; }
+      .gray-400 { fill: #999999; }
+      .gray-300 { fill: #CCCCCC; }
+      .gray-200 { fill: #E5E5E5; }
+      .gray-100 { fill: #F2F2F2; }
+      .gray-50 { fill: #FAFAFA; }
+      .success { fill: #2E7D32; }
+      .border { stroke: #E5E5E5; stroke-width: 1; fill: none; }
+      .border-gray { stroke: #CCCCCC; stroke-width: 1; }
+      .text-sm { font-size: 12px; font-family: 'Lato', 'Roboto', Arial, sans-serif; }
+      .text-md { font-size: 14px; font-family: 'Lato', 'Roboto', Arial, sans-serif; }
+      .text-lg { font-size: 16px; font-family: 'Lato', 'Roboto', Arial, sans-serif; }
+      .text-xl { font-size: 20px; font-family: 'Montserrat', Arial, sans-serif; font-weight: 600; }
+      .text-2xl { font-size: 28px; font-family: 'Montserrat', Arial, sans-serif; font-weight: 700; }
+      .text-bold { font-weight: 600; }
+      .shadow { filter: drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.1)); }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect class="bg" width="1200" height="700"/>
+
+  <!-- Main Container -->
+  <g class="shadow">
+    <rect class="card-bg" x="150" y="40" width="900" height="620" rx="12"/>
+  </g>
+
+  <!-- Header -->
+  <text class="text-2xl gray-900" x="182" y="90">Manage Specialties</text>
+  <text class="text-md gray-600" x="182" y="115">Add, remove, and organize your automotive specialties and certifications</text>
+
+  <!-- Section Header -->
+  <text class="text-xl gray-900" x="182" y="165">Your Specialties</text>
+
+  <!-- Add Specialty Button -->
+  <g>
+    <rect class="primary" x="870" y="145" width="150" height="40" rx="8"/>
+    <text class="text-md card-bg text-bold" x="905" y="170">+ Add Specialty</text>
+  </g>
+
+  <!-- Specialty Item 1 -->
+  <g>
+    <rect class="card-bg border" x="182" y="200" width="836" height="68" rx="8"/>
+
+    <!-- Drag Handle -->
+    <text class="gray-400 text-xl" x="195" y="240">☰</text>
+
+    <!-- Icon -->
+    <rect class="primary-light" x="235" y="210" width="48" height="48" rx="8"/>
+    <text class="primary-text" x="251" y="243" style="font-size: 24px;">🔧</text>
+
+    <!-- Info -->
+    <text class="text-lg gray-900 text-bold" x="300" y="232">Engine Repair &amp; Diagnostics</text>
+    <text class="text-sm gray-600" x="300" y="250">12 years of experience</text>
+
+    <!-- Remove Button -->
+    <rect class="card-bg border-gray" x="975" y="223" width="32" height="24" rx="4"/>
+    <text class="gray-600 text-md" x="985" y="240">✕</text>
+  </g>
+
+  <!-- Specialty Item 2 -->
+  <g>
+    <rect class="card-bg border" x="182" y="280" width="836" height="68" rx="8"/>
+
+    <!-- Drag Handle -->
+    <text class="gray-400 text-xl" x="195" y="320">☰</text>
+
+    <!-- Icon -->
+    <rect class="primary-light" x="235" y="290" width="48" height="48" rx="8"/>
+    <text class="primary-text" x="251" y="323" style="font-size: 24px;">🔩</text>
+
+    <!-- Info -->
+    <text class="text-lg gray-900 text-bold" x="300" y="312">Transmission Services</text>
+    <text class="text-sm gray-600" x="300" y="330">8 years of experience</text>
+
+    <!-- Remove Button -->
+    <rect class="card-bg border-gray" x="975" y="303" width="32" height="24" rx="4"/>
+    <text class="gray-600 text-md" x="985" y="320">✕</text>
+  </g>
+
+  <!-- Specialty Item 3 -->
+  <g>
+    <rect class="card-bg border" x="182" y="360" width="836" height="68" rx="8"/>
+
+    <!-- Drag Handle -->
+    <text class="gray-400 text-xl" x="195" y="400">☰</text>
+
+    <!-- Icon -->
+    <rect class="primary-light" x="235" y="370" width="48" height="48" rx="8"/>
+    <text class="primary-text" x="251" y="403" style="font-size: 24px;">🛞</text>
+
+    <!-- Info -->
+    <text class="text-lg gray-900 text-bold" x="300" y="392">Brake Systems</text>
+    <text class="text-sm gray-600" x="300" y="410">10 years of experience</text>
+
+    <!-- Remove Button -->
+    <rect class="card-bg border-gray" x="975" y="383" width="32" height="24" rx="4"/>
+    <text class="gray-600 text-md" x="985" y="400">✕</text>
+  </g>
+
+  <!-- Specialty Item 4 -->
+  <g>
+    <rect class="card-bg border" x="182" y="440" width="836" height="68" rx="8"/>
+
+    <!-- Drag Handle -->
+    <text class="gray-400 text-xl" x="195" y="480">☰</text>
+
+    <!-- Icon -->
+    <rect class="primary-light" x="235" y="450" width="48" height="48" rx="8"/>
+    <text class="primary-text" x="251" y="483" style="font-size: 24px;">🔋</text>
+
+    <!-- Info -->
+    <text class="text-lg gray-900 text-bold" x="300" y="472">Electrical Systems</text>
+    <text class="text-sm gray-600" x="300" y="490">6 years of experience</text>
+
+    <!-- Remove Button -->
+    <rect class="card-bg border-gray" x="975" y="463" width="32" height="24" rx="4"/>
+    <text class="gray-600 text-md" x="985" y="480">✕</text>
+  </g>
+
+  <!-- Divider Line -->
+  <line x1="182" y1="535" x2="1018" y2="535" stroke="#E5E5E5" stroke-width="1"/>
+
+  <!-- Certifications Section Header -->
+  <text class="text-xl gray-900" x="182" y="575">Certifications</text>
+
+  <!-- Certification Card 1 -->
+  <g>
+    <rect class="gray-50 border" x="182" y="595" width="400" height="60" rx="8"/>
+
+    <!-- Icon -->
+    <rect class="success" x="194" y="605" width="40" height="40" rx="8"/>
+    <text class="card-bg" x="207" y="632" style="font-size: 20px;">✓</text>
+
+    <!-- Info -->
+    <text class="text-md gray-900 text-bold" x="250" y="620">ASE Master Technician</text>
+    <text class="text-sm gray-600" x="250" y="640">ase-master-cert.pdf</text>
+
+    <!-- Remove Button -->
+    <rect class="card-bg border-gray" x="540" y="618" width="32" height="24" rx="4"/>
+    <text class="gray-600 text-md" x="550" y="635">✕</text>
+  </g>
+
+  <!-- Certification Card 2 -->
+  <g>
+    <rect class="gray-50 border" x="598" y="595" width="420" height="60" rx="8"/>
+
+    <!-- Icon -->
+    <rect class="success" x="610" y="605" width="40" height="40" rx="8"/>
+    <text class="card-bg" x="623" y="632" style="font-size: 20px;">✓</text>
+
+    <!-- Info -->
+    <text class="text-md gray-900 text-bold" x="666" y="620">Automotive Service Excellence</text>
+    <text class="text-sm gray-600" x="666" y="640">ase-certification.pdf</text>
+
+    <!-- Remove Button -->
+    <rect class="card-bg border-gray" x="976" y="618" width="32" height="24" rx="4"/>
+    <text class="gray-600 text-md" x="986" y="635">✕</text>
+  </g>
+
+  <!-- Modal Overlay (Semi-transparent background) -->
+  <rect x="0" y="0" width="1200" height="700" fill="rgba(0, 0, 0, 0.5)"/>
+
+  <!-- Modal -->
+  <g class="shadow">
+    <rect class="card-bg" x="250" y="80" width="700" height="540" rx="12"/>
+  </g>
+
+  <!-- Modal Header -->
+  <rect class="card-bg" x="250" y="80" width="700" height="60" rx="12"/>
+  <line x1="250" y1="140" x2="950" y2="140" stroke="#E5E5E5" stroke-width="1"/>
+  <text class="text-xl gray-900" x="274" y="118">Add Specialties</text>
+  <text class="gray-500" x="920" y="125" style="font-size: 32px; cursor: pointer;">×</text>
+
+  <!-- Search Box -->
+  <rect class="card-bg border-gray" x="274" y="160" width="652" height="44" rx="8"/>
+  <text class="gray-400" x="290" y="187" style="font-size: 18px;">🔍</text>
+  <text class="text-md gray-600" x="324" y="187">Search specialties...</text>
+
+  <!-- Catalog Items -->
+  <!-- Item 1 -->
+  <g>
+    <rect class="card-bg border" x="274" y="220" width="652" height="68" rx="8"/>
+    <rect class="primary-light" x="286" y="230" width="40" height="40" rx="8"/>
+    <text class="primary-text" x="298" y="258" style="font-size: 20px;">🚗</text>
+    <text class="text-md gray-900 text-bold" x="342" y="245">Air Conditioning &amp; Heating</text>
+    <text class="text-sm gray-600" x="342" y="263">HVAC systems, climate control repair</text>
+    <rect class="card-bg border-gray" x="894" y="244" width="24" height="24" rx="4"/>
+  </g>
+
+  <!-- Item 2 -->
+  <g>
+    <rect class="card-bg border" x="274" y="300" width="652" height="68" rx="8"/>
+    <rect class="primary-light" x="286" y="310" width="40" height="40" rx="8"/>
+    <text class="primary-text" x="298" y="338" style="font-size: 20px;">⚙️</text>
+    <text class="text-md gray-900 text-bold" x="342" y="325">Suspension &amp; Steering</text>
+    <text class="text-sm gray-600" x="342" y="343">Alignment, shock absorbers, steering systems</text>
+    <rect class="card-bg border-gray" x="894" y="324" width="24" height="24" rx="4"/>
+  </g>
+
+  <!-- Item 3 (Selected) -->
+  <g>
+    <rect fill="#E3F2FD" stroke="#00529F" stroke-width="2" x="274" y="380" width="652" height="68" rx="8"/>
+    <rect class="primary-light" x="286" y="390" width="40" height="40" rx="8"/>
+    <text class="primary-text" x="298" y="418" style="font-size: 20px;">💨</text>
+    <text class="text-md gray-900 text-bold" x="342" y="405">Exhaust Systems</text>
+    <text class="text-sm gray-600" x="342" y="423">Mufflers, catalytic converters, emissions</text>
+    <rect class="primary" x="894" y="404" width="24" height="24" rx="4"/>
+    <text class="card-bg" x="899" y="420" style="font-size: 16px;">✓</text>
+  </g>
+
+  <!-- Divider Line in Modal -->
+  <line x1="274" y1="470" x2="926" y2="470" stroke="#E5E5E5" stroke-width="1"/>
+
+  <!-- Custom Specialty Section -->
+  <text class="text-md gray-900 text-bold" x="274" y="495">Add Custom Specialty</text>
+
+  <!-- Custom Name Input -->
+  <text class="text-sm gray-700 text-bold" x="274" y="520">Specialty Name</text>
+  <rect class="card-bg border-gray" x="274" y="528" width="300" height="40" rx="8"/>
+  <text class="text-md gray-600" x="290" y="552">e.g., Classic Car Restoration</text>
+
+  <!-- Modal Footer -->
+  <line x1="250" y1="578" x2="950" y2="578" stroke="#E5E5E5" stroke-width="1"/>
+
+  <!-- Cancel Button -->
+  <rect class="card-bg" stroke="#00529F" stroke-width="2" x="720" y="590" width="100" height="40" rx="8"/>
+  <text class="primary-text text-md text-bold" x="748" y="615">Cancel</text>
+
+  <!-- Add Selected Button -->
+  <rect class="primary" x="834" y="590" width="120" height="40" rx="8"/>
+  <text class="card-bg text-md text-bold" x="848" y="615">Add Selected</text>
+</svg>

@@ -1,0 +1,345 @@
+<svg width="1400" height="900" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1400" height="900" fill="#F5F5F5"/>
+
+  <!-- Header -->
+  <rect width="1400" height="80" fill="#00529F"/>
+  <text x="60" y="50" font-family="Montserrat, sans-serif" font-size="24" font-weight="700" fill="#FFFFFF">Automotive Platform</text>
+
+  <!-- Search Bar -->
+  <rect x="350" y="25" width="500" height="50" rx="8" fill="#FFFFFF"/>
+  <text x="370" y="54" font-family="Lato, sans-serif" font-size="14" fill="#999999">Search professionals, businesses, or specialties...</text>
+  <rect x="795" y="33" width="45" height="34" rx="6" fill="#FFD520"/>
+  <text x="805" y="54" font-family="Montserrat, sans-serif" font-size="12" font-weight="600" fill="#333333">🔍</text>
+
+  <!-- Main Content Container -->
+  <!-- Sidebar -->
+  <rect x="60" y="120" width="280" height="700" rx="12" fill="#FFFFFF" filter="url(#shadow)"/>
+
+  <!-- Filters Title -->
+  <text x="80" y="155" font-family="Montserrat, sans-serif" font-size="18" font-weight="600" fill="#00529F">Filters</text>
+
+  <!-- Business Type Section -->
+  <text x="80" y="185" font-family="Montserrat, sans-serif" font-size="11" font-weight="600" fill="#666666">BUSINESS TYPE</text>
+
+  <!-- Checkboxes - Business Type -->
+  <rect x="80" y="200" width="16" height="16" rx="3" fill="#00529F" stroke="#00529F" stroke-width="2"/>
+  <text x="105" y="212" font-family="Lato, sans-serif" font-size="14" fill="#333333">Auto Repair Shop</text>
+  <text x="290" y="212" font-family="Lato, sans-serif" font-size="13" fill="#666666">(24)</text>
+
+  <rect x="80" y="230" width="16" height="16" rx="3" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="2"/>
+  <text x="105" y="242" font-family="Lato, sans-serif" font-size="14" fill="#333333">Body Shop</text>
+  <text x="290" y="242" font-family="Lato, sans-serif" font-size="13" fill="#666666">(18)</text>
+
+  <rect x="80" y="260" width="16" height="16" rx="3" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="2"/>
+  <text x="105" y="272" font-family="Lato, sans-serif" font-size="14" fill="#333333">Dealership</text>
+  <text x="290" y="272" font-family="Lato, sans-serif" font-size="13" fill="#666666">(12)</text>
+
+  <rect x="80" y="290" width="16" height="16" rx="3" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="2"/>
+  <text x="105" y="302" font-family="Lato, sans-serif" font-size="14" fill="#333333">Detailing Service</text>
+  <text x="290" y="302" font-family="Lato, sans-serif" font-size="13" fill="#666666">(15)</text>
+
+  <rect x="80" y="320" width="16" height="16" rx="3" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="2"/>
+  <text x="105" y="332" font-family="Lato, sans-serif" font-size="14" fill="#333333">Tire Service</text>
+  <text x="290" y="332" font-family="Lato, sans-serif" font-size="13" fill="#666666">(10)</text>
+
+  <!-- Specialties Section -->
+  <text x="80" y="375" font-family="Montserrat, sans-serif" font-size="11" font-weight="600" fill="#666666">SPECIALTIES</text>
+
+  <!-- Checkboxes - Specialties -->
+  <rect x="80" y="390" width="16" height="16" rx="3" fill="#00529F" stroke="#00529F" stroke-width="2"/>
+  <text x="105" y="402" font-family="Lato, sans-serif" font-size="14" fill="#333333">Brake Service</text>
+  <text x="290" y="402" font-family="Lato, sans-serif" font-size="13" fill="#666666">(32)</text>
+
+  <rect x="80" y="420" width="16" height="16" rx="3" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="2"/>
+  <text x="105" y="432" font-family="Lato, sans-serif" font-size="14" fill="#333333">Engine Repair</text>
+  <text x="290" y="432" font-family="Lato, sans-serif" font-size="13" fill="#666666">(28)</text>
+
+  <rect x="80" y="450" width="16" height="16" rx="3" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="2"/>
+  <text x="105" y="462" font-family="Lato, sans-serif" font-size="14" fill="#333333">Transmission</text>
+  <text x="290" y="462" font-family="Lato, sans-serif" font-size="13" fill="#666666">(20)</text>
+
+  <rect x="80" y="480" width="16" height="16" rx="3" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="2"/>
+  <text x="105" y="492" font-family="Lato, sans-serif" font-size="14" fill="#333333">Electrical Systems</text>
+  <text x="290" y="492" font-family="Lato, sans-serif" font-size="13" fill="#666666">(25)</text>
+
+  <!-- Clear Filters Button -->
+  <rect x="80" y="530" width="240" height="40" rx="8" fill="transparent" stroke="#00529F" stroke-width="2"/>
+  <text x="133" y="555" font-family="Montserrat, sans-serif" font-size="14" font-weight="600" fill="#00529F">Clear All Filters</text>
+
+  <!-- Directory Content Area -->
+  <!-- Results Count and View Controls -->
+  <text x="380" y="145" font-family="Lato, sans-serif" font-size="16" fill="#333333">Showing <tspan font-weight="700" fill="#00529F">24 professionals</tspan></text>
+
+  <!-- View Toggle -->
+  <rect x="1050" y="125" width="140" height="40" rx="8" fill="#FFFFFF" filter="url(#shadow)"/>
+  <rect x="1050" y="125" width="70" height="40" rx="8" fill="#00529F"/>
+  <text x="1065" y="150" font-family="Montserrat, sans-serif" font-size="13" font-weight="500" fill="#FFFFFF">⊞ Grid</text>
+  <text x="1135" y="150" font-family="Montserrat, sans-serif" font-size="13" font-weight="500" fill="#666666">☰ List</text>
+
+  <!-- Sort Dropdown -->
+  <rect x="1210" y="125" width="170" height="40" rx="8" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+  <text x="1225" y="150" font-family="Lato, sans-serif" font-size="14" fill="#333333">Sort by: Relevance</text>
+
+  <!-- Professional Cards Grid -->
+
+  <!-- Card 1 -->
+  <rect x="380" y="185" width="320" height="220" rx="12" fill="#FFFFFF" filter="url(#shadow)"/>
+  <!-- Photo Circle -->
+  <circle cx="435" cy="235" r="40" fill="url(#gradient1)"/>
+  <text x="420" y="248" font-family="Montserrat, sans-serif" font-size="24" font-weight="700" fill="#FFFFFF">JS</text>
+  <!-- Business Info -->
+  <text x="495" y="220" font-family="Montserrat, sans-serif" font-size="15" font-weight="700" fill="#333333">Smith's Auto Repair</text>
+  <rect x="495" y="225" width="75" height="18" rx="10" fill="#FFD520"/>
+  <text x="503" y="238" font-family="Lato, sans-serif" font-size="10" font-weight="600" fill="#333333">✓ Verified</text>
+  <text x="495" y="260" font-family="Lato, sans-serif" font-size="13" fill="#666666">John Smith</text>
+  <rect x="495" y="268" width="130" height="22" rx="6" fill="#00529F"/>
+  <text x="505" y="283" font-family="Montserrat, sans-serif" font-size="11" font-weight="600" fill="#FFFFFF">Auto Repair Shop</text>
+
+  <!-- Specialties -->
+  <rect x="395" y="310" width="95" height="24" rx="6" fill="#F5F5F5" stroke="#E0E0E0" stroke-width="1"/>
+  <text x="405" y="326" font-family="Lato, sans-serif" font-size="11" fill="#333333">Brake Service</text>
+  <rect x="500" y="310" width="100" height="24" rx="6" fill="#F5F5F5" stroke="#E0E0E0" stroke-width="1"/>
+  <text x="510" y="326" font-family="Lato, sans-serif" font-size="11" fill="#333333">Engine Repair</text>
+  <rect x="610" y="310" width="75" height="24" rx="6" fill="#F5F5F5" stroke="#E0E0E0" stroke-width="1"/>
+  <text x="620" y="326" font-family="Lato, sans-serif" font-size="11" fill="#333333">Diagnostics</text>
+
+  <!-- Divider -->
+  <line x1="395" y1="350" x2="685" y2="350" stroke="#E0E0E0" stroke-width="1"/>
+
+  <!-- Rating -->
+  <text x="395" y="375" font-family="Lato, sans-serif" font-size="14" fill="#FFD520">★★★★★</text>
+  <text x="475" y="375" font-family="Lato, sans-serif" font-size="14" font-weight="600" fill="#333333">4.9</text>
+  <text x="505" y="375" font-family="Lato, sans-serif" font-size="12" fill="#666666">(127)</text>
+
+  <!-- View Profile Button -->
+  <rect x="570" y="359" width="110" height="32" rx="8" fill="#00529F"/>
+  <text x="583" y="381" font-family="Montserrat, sans-serif" font-size="12" font-weight="600" fill="#FFFFFF">View Profile</text>
+
+  <!-- Card 2 -->
+  <rect x="720" y="185" width="320" height="220" rx="12" fill="#FFFFFF" filter="url(#shadow)"/>
+  <!-- Photo Circle -->
+  <circle cx="775" cy="235" r="40" fill="url(#gradient2)"/>
+  <text x="758" y="248" font-family="Montserrat, sans-serif" font-size="24" font-weight="700" fill="#FFFFFF">ML</text>
+  <!-- Business Info -->
+  <text x="835" y="220" font-family="Montserrat, sans-serif" font-size="15" font-weight="700" fill="#333333">Lopez Body Works</text>
+  <rect x="835" y="225" width="75" height="18" rx="10" fill="#FFD520"/>
+  <text x="843" y="238" font-family="Lato, sans-serif" font-size="10" font-weight="600" fill="#333333">✓ Verified</text>
+  <text x="835" y="260" font-family="Lato, sans-serif" font-size="13" fill="#666666">Maria Lopez</text>
+  <rect x="835" y="268" width="85" height="22" rx="6" fill="#00529F"/>
+  <text x="845" y="283" font-family="Montserrat, sans-serif" font-size="11" font-weight="600" fill="#FFFFFF">Body Shop</text>
+
+  <!-- Specialties -->
+  <rect x="735" y="310" width="100" height="24" rx="6" fill="#F5F5F5" stroke="#E0E0E0" stroke-width="1"/>
+  <text x="745" y="326" font-family="Lato, sans-serif" font-size="11" fill="#333333">Collision Repair</text>
+  <rect x="845" y="310" width="120" height="24" rx="6" fill="#F5F5F5" stroke="#E0E0E0" stroke-width="1"/>
+  <text x="855" y="326" font-family="Lato, sans-serif" font-size="11" fill="#333333">Paint & Refinishing</text>
+
+  <!-- Divider -->
+  <line x1="735" y1="350" x2="1025" y2="350" stroke="#E0E0E0" stroke-width="1"/>
+
+  <!-- Rating -->
+  <text x="735" y="375" font-family="Lato, sans-serif" font-size="14" fill="#FFD520">★★★★★</text>
+  <text x="815" y="375" font-family="Lato, sans-serif" font-size="14" font-weight="600" fill="#333333">4.8</text>
+  <text x="845" y="375" font-family="Lato, sans-serif" font-size="12" fill="#666666">(93)</text>
+
+  <!-- View Profile Button -->
+  <rect x="910" y="359" width="110" height="32" rx="8" fill="#00529F"/>
+  <text x="923" y="381" font-family="Montserrat, sans-serif" font-size="12" font-weight="600" fill="#FFFFFF">View Profile</text>
+
+  <!-- Card 3 -->
+  <rect x="1060" y="185" width="320" height="220" rx="12" fill="#FFFFFF" filter="url(#shadow)"/>
+  <!-- Photo Circle -->
+  <circle cx="1115" cy="235" r="40" fill="url(#gradient3)"/>
+  <text x="1099" y="248" font-family="Montserrat, sans-serif" font-size="24" font-weight="700" fill="#FFFFFF">RT</text>
+  <!-- Business Info -->
+  <text x="1175" y="220" font-family="Montserrat, sans-serif" font-size="14" font-weight="700" fill="#333333">Thompson Tire & Service</text>
+  <text x="1175" y="250" font-family="Lato, sans-serif" font-size="13" fill="#666666">Robert Thompson</text>
+  <rect x="1175" y="258" width="90" height="22" rx="6" fill="#00529F"/>
+  <text x="1185" y="273" font-family="Montserrat, sans-serif" font-size="11" font-weight="600" fill="#FFFFFF">Tire Service</text>
+
+  <!-- Specialties -->
+  <rect x="1075" y="310" width="100" height="24" rx="6" fill="#F5F5F5" stroke="#E0E0E0" stroke-width="1"/>
+  <text x="1085" y="326" font-family="Lato, sans-serif" font-size="11" fill="#333333">Tire Installation</text>
+  <rect x="1185" y="310" width="110" height="24" rx="6" fill="#F5F5F5" stroke="#E0E0E0" stroke-width="1"/>
+  <text x="1195" y="326" font-family="Lato, sans-serif" font-size="11" fill="#333333">Wheel Alignment</text>
+
+  <!-- Divider -->
+  <line x1="1075" y1="350" x2="1365" y2="350" stroke="#E0E0E0" stroke-width="1"/>
+
+  <!-- Rating -->
+  <text x="1075" y="375" font-family="Lato, sans-serif" font-size="14" fill="#FFD520">★★★★</text>
+  <text x="1135" y="375" font-family="Lato, sans-serif" font-size="14" fill="#CCCCCC">☆</text>
+  <text x="1155" y="375" font-family="Lato, sans-serif" font-size="14" font-weight="600" fill="#333333">4.6</text>
+  <text x="1185" y="375" font-family="Lato, sans-serif" font-size="12" fill="#666666">(68)</text>
+
+  <!-- View Profile Button -->
+  <rect x="1250" y="359" width="110" height="32" rx="8" fill="#00529F"/>
+  <text x="1263" y="381" font-family="Montserrat, sans-serif" font-size="12" font-weight="600" fill="#FFFFFF">View Profile</text>
+
+  <!-- Card 4 -->
+  <rect x="380" y="425" width="320" height="220" rx="12" fill="#FFFFFF" filter="url(#shadow)"/>
+  <!-- Photo Circle -->
+  <circle cx="435" cy="475" r="40" fill="url(#gradient4)"/>
+  <text x="418" y="488" font-family="Montserrat, sans-serif" font-size="24" font-weight="700" fill="#FFFFFF">SC</text>
+  <!-- Business Info -->
+  <text x="495" y="460" font-family="Montserrat, sans-serif" font-size="14" font-weight="700" fill="#333333">Chen's Auto Detailing</text>
+  <rect x="495" y="465" width="75" height="18" rx="10" fill="#FFD520"/>
+  <text x="503" y="478" font-family="Lato, sans-serif" font-size="10" font-weight="600" fill="#333333">✓ Verified</text>
+  <text x="495" y="500" font-family="Lato, sans-serif" font-size="13" fill="#666666">Sarah Chen</text>
+  <rect x="495" y="508" width="120" height="22" rx="6" fill="#00529F"/>
+  <text x="505" y="523" font-family="Montserrat, sans-serif" font-size="11" font-weight="600" fill="#FFFFFF">Detailing Service</text>
+
+  <!-- Specialties -->
+  <rect x="395" y="550" width="105" height="24" rx="6" fill="#F5F5F5" stroke="#E0E0E0" stroke-width="1"/>
+  <text x="405" y="566" font-family="Lato, sans-serif" font-size="11" fill="#333333">Interior Detailing</text>
+  <rect x="510" y="550" width="110" height="24" rx="6" fill="#F5F5F5" stroke="#E0E0E0" stroke-width="1"/>
+  <text x="520" y="566" font-family="Lato, sans-serif" font-size="11" fill="#333333">Exterior Detailing</text>
+
+  <!-- Divider -->
+  <line x1="395" y1="590" x2="685" y2="590" stroke="#E0E0E0" stroke-width="1"/>
+
+  <!-- Rating -->
+  <text x="395" y="615" font-family="Lato, sans-serif" font-size="14" fill="#FFD520">★★★★★</text>
+  <text x="475" y="615" font-family="Lato, sans-serif" font-size="14" font-weight="600" fill="#333333">5.0</text>
+  <text x="505" y="615" font-family="Lato, sans-serif" font-size="12" fill="#666666">(145)</text>
+
+  <!-- View Profile Button -->
+  <rect x="570" y="599" width="110" height="32" rx="8" fill="#00529F"/>
+  <text x="583" y="621" font-family="Montserrat, sans-serif" font-size="12" font-weight="600" fill="#FFFFFF">View Profile</text>
+
+  <!-- Card 5 -->
+  <rect x="720" y="425" width="320" height="220" rx="12" fill="#FFFFFF" filter="url(#shadow)"/>
+  <!-- Photo Circle -->
+  <circle cx="775" cy="475" r="40" fill="url(#gradient5)"/>
+  <text x="758" y="488" font-family="Montserrat, sans-serif" font-size="24" font-weight="700" fill="#FFFFFF">DW</text>
+  <!-- Business Info -->
+  <text x="835" y="460" font-family="Montserrat, sans-serif" font-size="15" font-weight="700" fill="#333333">Williams Transmission</text>
+  <text x="835" y="490" font-family="Lato, sans-serif" font-size="13" fill="#666666">David Williams</text>
+  <rect x="835" y="498" width="130" height="22" rx="6" fill="#00529F"/>
+  <text x="845" y="513" font-family="Montserrat, sans-serif" font-size="11" font-weight="600" fill="#FFFFFF">Auto Repair Shop</text>
+
+  <!-- Specialties -->
+  <rect x="735" y="550" width="90" height="24" rx="6" fill="#F5F5F5" stroke="#E0E0E0" stroke-width="1"/>
+  <text x="745" y="566" font-family="Lato, sans-serif" font-size="11" fill="#333333">Transmission</text>
+  <rect x="835" y="550" width="90" height="24" rx="6" fill="#F5F5F5" stroke="#E0E0E0" stroke-width="1"/>
+  <text x="845" y="566" font-family="Lato, sans-serif" font-size="11" fill="#333333">Clutch Repair</text>
+
+  <!-- Divider -->
+  <line x1="735" y1="590" x2="1025" y2="590" stroke="#E0E0E0" stroke-width="1"/>
+
+  <!-- Rating -->
+  <text x="735" y="615" font-family="Lato, sans-serif" font-size="14" fill="#FFD520">★★★★</text>
+  <text x="795" y="615" font-family="Lato, sans-serif" font-size="14" fill="#CCCCCC">☆</text>
+  <text x="815" y="615" font-family="Lato, sans-serif" font-size="14" font-weight="600" fill="#333333">4.7</text>
+  <text x="845" y="615" font-family="Lato, sans-serif" font-size="12" fill="#666666">(82)</text>
+
+  <!-- View Profile Button -->
+  <rect x="910" y="599" width="110" height="32" rx="8" fill="#00529F"/>
+  <text x="923" y="621" font-family="Montserrat, sans-serif" font-size="12" font-weight="600" fill="#FFFFFF">View Profile</text>
+
+  <!-- Card 6 -->
+  <rect x="1060" y="425" width="320" height="220" rx="12" fill="#FFFFFF" filter="url(#shadow)"/>
+  <!-- Photo Circle -->
+  <circle cx="1115" cy="475" r="40" fill="url(#gradient6)"/>
+  <text x="1099" y="488" font-family="Montserrat, sans-serif" font-size="24" font-weight="700" fill="#FFFFFF">AP</text>
+  <!-- Business Info -->
+  <text x="1175" y="460" font-family="Montserrat, sans-serif" font-size="14" font-weight="700" fill="#333333">Patel's Quick Lube</text>
+  <rect x="1175" y="465" width="75" height="18" rx="10" fill="#FFD520"/>
+  <text x="1183" y="478" font-family="Lato, sans-serif" font-size="10" font-weight="600" fill="#333333">✓ Verified</text>
+  <text x="1175" y="500" font-family="Lato, sans-serif" font-size="13" fill="#666666">Anjali Patel</text>
+  <rect x="1175" y="508" width="130" height="22" rx="6" fill="#00529F"/>
+  <text x="1185" y="523" font-family="Montserrat, sans-serif" font-size="11" font-weight="600" fill="#FFFFFF">Auto Repair Shop</text>
+
+  <!-- Specialties -->
+  <rect x="1075" y="550" width="85" height="24" rx="6" fill="#F5F5F5" stroke="#E0E0E0" stroke-width="1"/>
+  <text x="1085" y="566" font-family="Lato, sans-serif" font-size="11" fill="#333333">Oil Changes</text>
+  <rect x="1170" y="550" width="95" height="24" rx="6" fill="#F5F5F5" stroke="#E0E0E0" stroke-width="1"/>
+  <text x="1180" y="566" font-family="Lato, sans-serif" font-size="11" fill="#333333">Brake Service</text>
+
+  <!-- Divider -->
+  <line x1="1075" y1="590" x2="1365" y2="590" stroke="#E0E0E0" stroke-width="1"/>
+
+  <!-- Rating -->
+  <text x="1075" y="615" font-family="Lato, sans-serif" font-size="14" fill="#FFD520">★★★★★</text>
+  <text x="1155" y="615" font-family="Lato, sans-serif" font-size="14" font-weight="600" fill="#333333">4.9</text>
+  <text x="1185" y="615" font-family="Lato, sans-serif" font-size="12" fill="#666666">(201)</text>
+
+  <!-- View Profile Button -->
+  <rect x="1250" y="599" width="110" height="32" rx="8" fill="#00529F"/>
+  <text x="1263" y="621" font-family="Montserrat, sans-serif" font-size="12" font-weight="600" fill="#FFFFFF">View Profile</text>
+
+  <!-- Pagination -->
+  <rect x="380" y="680" width="1000" height="60" rx="12" fill="#FFFFFF" filter="url(#shadow)"/>
+
+  <!-- Pagination Buttons -->
+  <rect x="490" y="695" width="90" height="30" rx="6" fill="#E0E0E0" stroke="#E0E0E0" stroke-width="1" opacity="0.5"/>
+  <text x="508" y="716" font-family="Montserrat, sans-serif" font-size="13" font-weight="500" fill="#999999">← Previous</text>
+
+  <rect x="595" y="695" width="35" height="30" rx="6" fill="#00529F"/>
+  <text x="609" y="716" font-family="Montserrat, sans-serif" font-size="13" font-weight="500" fill="#FFFFFF">1</text>
+
+  <rect x="645" y="695" width="35" height="30" rx="6" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+  <text x="659" y="716" font-family="Montserrat, sans-serif" font-size="13" font-weight="500" fill="#333333">2</text>
+
+  <rect x="695" y="695" width="35" height="30" rx="6" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+  <text x="709" y="716" font-family="Montserrat, sans-serif" font-size="13" font-weight="500" fill="#333333">3</text>
+
+  <rect x="745" y="695" width="35" height="30" rx="6" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+  <text x="759" y="716" font-family="Montserrat, sans-serif" font-size="13" font-weight="500" fill="#333333">4</text>
+
+  <text x="795" y="716" font-family="Montserrat, sans-serif" font-size="13" fill="#666666">...</text>
+
+  <rect x="825" y="695" width="35" height="30" rx="6" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+  <text x="839" y="716" font-family="Montserrat, sans-serif" font-size="13" font-weight="500" fill="#333333">8</text>
+
+  <rect x="875" y="695" width="75" height="30" rx="6" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+  <text x="893" y="716" font-family="Montserrat, sans-serif" font-size="13" font-weight="500" fill="#333333">Next →</text>
+
+  <!-- Filters/Definitions -->
+  <defs>
+    <!-- Shadow Filter -->
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+      <feOffset dx="0" dy="2" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.1"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Gradients for avatars -->
+    <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00529F;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0077CC;stop-opacity:1" />
+    </linearGradient>
+
+    <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00529F;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0077CC;stop-opacity:1" />
+    </linearGradient>
+
+    <linearGradient id="gradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00529F;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0077CC;stop-opacity:1" />
+    </linearGradient>
+
+    <linearGradient id="gradient4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00529F;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0077CC;stop-opacity:1" />
+    </linearGradient>
+
+    <linearGradient id="gradient5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00529F;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0077CC;stop-opacity:1" />
+    </linearGradient>
+
+    <linearGradient id="gradient6" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00529F;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0077CC;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+</svg>
