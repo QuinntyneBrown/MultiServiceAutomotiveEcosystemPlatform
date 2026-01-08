@@ -1,0 +1,195 @@
+.referral-code-entry {
+  margin-bottom: var(--spacing-6, 1.5rem);
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-3, 0.75rem);
+  }
+
+  &__label {
+    font-size: var(--text-body-md, 1rem);
+    font-weight: var(--font-weight-semibold, 600);
+    color: var(--color-gray-900, #1A1A1A);
+  }
+
+  &__required {
+    color: var(--color-error, #E53E3E);
+  }
+
+  &__toggle {
+    background: none;
+    border: none;
+    color: var(--color-blue-700, #00529F);
+    font-size: var(--text-body-sm, 0.875rem);
+    font-weight: var(--font-weight-semibold, 600);
+    cursor: pointer;
+    text-decoration: underline;
+
+    &:hover {
+      color: var(--color-blue-900, #001F3F);
+    }
+  }
+
+  &__input-wrapper {
+    position: relative;
+  }
+
+  &__input {
+    width: 100%;
+    padding: var(--spacing-3, 0.75rem);
+    padding-right: var(--spacing-10, 2.5rem);
+    border: 2px solid var(--color-gray-300, #D1D5DB);
+    border-radius: var(--radius-md, 0.5rem);
+    font-size: var(--text-body-md, 1rem);
+    transition: border-color 0.2s ease;
+    text-transform: uppercase;
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-blue-700, #00529F);
+      box-shadow: 0 0 0 3px rgba(0, 82, 159, 0.1);
+    }
+
+    &--valid {
+      border-color: var(--color-success, #10B981);
+      background-color: #F0FDF4;
+    }
+
+    &--invalid {
+      border-color: var(--color-error, #E53E3E);
+      background-color: #FEF2F2;
+    }
+  }
+
+  &__clear {
+    position: absolute;
+    right: var(--spacing-3, 0.75rem);
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--color-gray-500, #808080);
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      color: var(--color-gray-900, #1A1A1A);
+    }
+  }
+
+  &__spinner {
+    position: absolute;
+    right: var(--spacing-3, 0.75rem);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--color-gray-300, #D1D5DB);
+    border-top-color: var(--color-blue-700, #00529F);
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: translateY(-50%) rotate(360deg);
+    }
+  }
+
+  &__message {
+    margin-top: var(--spacing-3, 0.75rem);
+    padding: var(--spacing-3, 0.75rem);
+    border-radius: var(--radius-md, 0.5rem);
+    font-size: var(--text-body-sm, 0.875rem);
+
+    &--success {
+      background-color: #F0FDF4;
+      border: 1px solid var(--color-success, #10B981);
+      color: #065F46;
+    }
+
+    &--error {
+      background-color: #FEF2F2;
+      border: 1px solid var(--color-error, #E53E3E);
+      color: #991B1B;
+    }
+  }
+
+  &__success {
+    display: flex;
+    gap: var(--spacing-3, 0.75rem);
+  }
+
+  &__success-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    background-color: var(--color-success, #10B981);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.75rem;
+  }
+
+  &__success-content {
+    flex: 1;
+  }
+
+  &__referrer {
+    margin-top: var(--spacing-1, 0.25rem);
+    font-size: var(--text-body-sm, 0.875rem);
+  }
+
+  &__discount {
+    margin-top: var(--spacing-1, 0.25rem);
+    font-size: var(--text-body-sm, 0.875rem);
+    font-weight: var(--font-weight-semibold, 600);
+    color: var(--color-success, #10B981);
+  }
+
+  &__error {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2, 0.5rem);
+  }
+
+  &__error-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    background-color: var(--color-error, #E53E3E);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.75rem;
+  }
+
+  &__skip {
+    margin-top: var(--spacing-3, 0.75rem);
+    background: none;
+    border: none;
+    color: var(--color-gray-600, #666666);
+    font-size: var(--text-body-sm, 0.875rem);
+    cursor: pointer;
+    text-decoration: underline;
+
+    &:hover {
+      color: var(--color-gray-900, #1A1A1A);
+    }
+  }
+}

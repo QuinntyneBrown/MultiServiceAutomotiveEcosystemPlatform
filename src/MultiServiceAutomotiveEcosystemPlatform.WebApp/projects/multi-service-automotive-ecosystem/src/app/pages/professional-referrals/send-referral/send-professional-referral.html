@@ -1,0 +1,250 @@
+<div class="send-professional-referral">
+  <div class="send-professional-referral__header">
+    <h1 class="send-professional-referral__title">Send Professional Referral</h1>
+    <p class="send-professional-referral__subtitle">Refer a customer to another professional</p>
+  </div>
+
+  <div class="send-professional-referral__container">
+    <form [formGroup]="referralForm" (ngSubmit)="submitReferral()" class="send-professional-referral__form">
+      
+      <!-- Target Professional -->
+      <div class="send-professional-referral__section">
+        <h2 class="send-professional-referral__section-title">Select Target Professional</h2>
+        
+        <div class="send-professional-referral__field">
+          <label for="targetProfessional" class="send-professional-referral__label">
+            Professional <span class="send-professional-referral__required">*</span>
+          </label>
+          <select
+            id="targetProfessional"
+            formControlName="targetProfessionalId"
+            class="send-professional-referral__select"
+            [class.send-professional-referral__select--error]="getFieldError('targetProfessionalId')"
+          >
+            <option value="">-- Select a professional --</option>
+            <ng-container *ngIf="professionals$ | async as professionals">
+              <option *ngFor="let pro of professionals" [value]="pro.id">
+                {{ pro.name }} - {{ pro.businessType }}
+              </option>
+            </ng-container>
+          </select>
+          @if (getFieldError('targetProfessionalId')) {
+            <span class="send-professional-referral__error">{{ getFieldError('targetProfessionalId') }}</span>
+          }
+        </div>
+      </div>
+
+      <!-- Customer Selection -->
+      <div class="send-professional-referral__section">
+        <h2 class="send-professional-referral__section-title">Select Customer</h2>
+        
+        <div class="send-professional-referral__field">
+          <label for="customer" class="send-professional-referral__label">
+            Customer <span class="send-professional-referral__required">*</span>
+          </label>
+          <select
+            id="customer"
+            formControlName="customerId"
+            class="send-professional-referral__select"
+            [class.send-professional-referral__select--error]="getFieldError('customerId')"
+          >
+            <option value="">-- Select a customer --</option>
+            <ng-container *ngIf="customers$ | async as customers">
+              <option *ngFor="let customer of customers" [value]="customer.id">
+                {{ customer.name }} ({{ customer.email }})
+              </option>
+            </ng-container>
+          </select>
+          @if (getFieldError('customerId')) {
+            <span class="send-professional-referral__error">{{ getFieldError('customerId') }}</span>
+          }
+        </div>
+      </div>
+
+      <!-- Referral Details -->
+      <div class="send-professional-referral__section">
+        <h2 class="send-professional-referral__section-title">Referral Details</h2>
+        
+        <div class="send-professional-referral__field">
+          <label for="serviceNeeded" class="send-professional-referral__label">
+            Service Needed <span class="send-professional-referral__required">*</span>
+          </label>
+          <input
+            id="serviceNeeded"
+            type="text"
+            formControlName="serviceNeeded"
+            class="send-professional-referral__input"
+            [class.send-professional-referral__input--error]="getFieldError('serviceNeeded')"
+            placeholder="e.g., Tire Replacement, Paint Job"
+          />
+          @if (getFieldError('serviceNeeded')) {
+            <span class="send-professional-referral__error">{{ getFieldError('serviceNeeded') }}</span>
+          }
+        </div>
+
+        <div class="send-professional-referral__field">
+          <label for="reasonForReferral" class="send-professional-referral__label">
+            Reason for Referral <span class="send-professional-referral__required">*</span>
+          </label>
+          <textarea
+            id="reasonForReferral"
+            formControlName="reasonForReferral"
+            class="send-professional-referral__textarea"
+            [class.send-professional-referral__textarea--error]="getFieldError('reasonForReferral')"
+            placeholder="Explain why you're referring this customer..."
+            rows="4"
+          ></textarea>
+          @if (getFieldError('reasonForReferral')) {
+            <span class="send-professional-referral__error">{{ getFieldError('reasonForReferral') }}</span>
+          }
+        </div>
+
+        <div class="send-professional-referral__field">
+          <label for="priority" class="send-professional-referral__label">Priority</label>
+          <select
+            id="priority"
+            formControlName="priority"
+            class="send-professional-referral__select"
+          >
+            <option value="normal">Normal</option>
+            <option value="high">High</option>
+            <option value="urgent">Urgent</option>
+          </select>
+        </div>
+
+        <div class="send-professional-referral__field">
+          <label for="internalNotes" class="send-professional-referral__label">
+            Internal Notes (Optional)
+          </label>
+          <textarea
+            id="internalNotes"
+            formControlName="internalNotes"
+            class="send-professional-referral__textarea"
+            placeholder="Add any internal notes..."
+            rows="3"
+          ></textarea>
+        </div>
+      </div>
+
+      <!-- Discount Options -->
+      <div class="send-professional-referral__section">
+        <h2 class="send-professional-referral__section-title">Discount Options</h2>
+        
+        <div class="send-professional-referral__field">
+          <label class="send-professional-referral__checkbox-label">
+            <input
+              type="checkbox"
+              formControlName="enableDiscount"
+              class="send-professional-referral__checkbox"
+            />
+            <span>Offer discount to customer</span>
+          </label>
+        </div>
+
+        @if (referralForm.get('enableDiscount')?.value) {
+          <div class="send-professional-referral__discount-fields">
+            <div class="send-professional-referral__field-group">
+              <div class="send-professional-referral__field">
+                <label for="discountType" class="send-professional-referral__label">
+                  Discount Type <span class="send-professional-referral__required">*</span>
+                </label>
+                <select
+                  id="discountType"
+                  formControlName="discountType"
+                  class="send-professional-referral__select"
+                >
+                  <option value="percentage">Percentage</option>
+                  <option value="fixed">Fixed Amount</option>
+                </select>
+              </div>
+
+              <div class="send-professional-referral__field">
+                <label for="discountValue" class="send-professional-referral__label">
+                  Value <span class="send-professional-referral__required">*</span>
+                </label>
+                <input
+                  id="discountValue"
+                  type="number"
+                  formControlName="discountValue"
+                  class="send-professional-referral__input"
+                  [placeholder]="referralForm.get('discountType')?.value === 'percentage' ? '10' : '50'"
+                />
+              </div>
+            </div>
+
+            <div class="send-professional-referral__field">
+              <label for="discountExpiration" class="send-professional-referral__label">
+                Expiration Date <span class="send-professional-referral__required">*</span>
+              </label>
+              <input
+                id="discountExpiration"
+                type="date"
+                formControlName="discountExpiration"
+                class="send-professional-referral__input"
+              />
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Preview Section -->
+      @if (showPreview) {
+        <div class="send-professional-referral__preview">
+          <h2 class="send-professional-referral__section-title">Preview</h2>
+          <div class="send-professional-referral__preview-content">
+            <div class="send-professional-referral__preview-item">
+              <strong>To:</strong> {{ getSelectedProfessional()?.name || 'Not selected' }}
+            </div>
+            <div class="send-professional-referral__preview-item">
+              <strong>Customer:</strong> {{ getSelectedCustomer()?.name || 'Not selected' }}
+            </div>
+            <div class="send-professional-referral__preview-item">
+              <strong>Service:</strong> {{ referralForm.get('serviceNeeded')?.value || 'Not specified' }}
+            </div>
+            <div class="send-professional-referral__preview-item">
+              <strong>Priority:</strong> {{ referralForm.get('priority')?.value }}
+            </div>
+            @if (referralForm.get('enableDiscount')?.value) {
+              <div class="send-professional-referral__preview-item">
+                <strong>Discount:</strong> 
+                {{ referralForm.get('discountValue')?.value }}
+                {{ referralForm.get('discountType')?.value === 'percentage' ? '%' : '$' }}
+                off (expires {{ referralForm.get('discountExpiration')?.value }})
+              </div>
+            }
+          </div>
+        </div>
+      }
+
+      <!-- Actions -->
+      <div class="send-professional-referral__actions">
+        <button
+          type="button"
+          class="send-professional-referral__btn send-professional-referral__btn--secondary"
+          (click)="cancel()"
+          [disabled]="isSubmitting"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="send-professional-referral__btn send-professional-referral__btn--secondary"
+          (click)="togglePreview()"
+        >
+          {{ showPreview ? 'Hide' : 'Show' }} Preview
+        </button>
+        <button
+          type="submit"
+          class="send-professional-referral__btn send-professional-referral__btn--primary"
+          [disabled]="referralForm.invalid || isSubmitting"
+        >
+          @if (isSubmitting) {
+            <span>Sending...</span>
+          } @else {
+            <span>Send Referral</span>
+          }
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

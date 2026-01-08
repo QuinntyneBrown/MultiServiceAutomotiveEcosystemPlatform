@@ -56,9 +56,9 @@
       <button
         role="tab"
         class="tab-button"
-        [class.active]="activeTab() === 'social'"
-        [attr.aria-selected]="activeTab() === 'social'"
-        (click)="switchTab('social' as any)"
+        [class.active]="activeTab() === 'facebook' || activeTab() === 'twitter' || activeTab() === 'whatsapp' || activeTab() === 'linkedin'"
+        [attr.aria-selected]="activeTab() === 'facebook' || activeTab() === 'twitter' || activeTab() === 'whatsapp' || activeTab() === 'linkedin'"
+        (click)="switchTab('facebook')"
       >
         Social
       </button>
@@ -257,7 +257,7 @@
       }
 
       <!-- Social Tab -->
-      @if (activeTab() === 'social') {
+      @if (activeTab() === 'facebook' || activeTab() === 'twitter' || activeTab() === 'whatsapp' || activeTab() === 'linkedin') {
         <div role="tabpanel" class="tab-panel">
           <p class="tab-description">
             Share your referral link on social media.
