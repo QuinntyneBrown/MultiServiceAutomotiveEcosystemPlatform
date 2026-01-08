@@ -103,8 +103,18 @@ public class CustomersControllerTests : IClassFixture<TestWebApplicationFactory>
     }
 }
 
-public class TestWebApplicationFactory : WebApplicationFactory<Program>
+public class TestWebApplicationFactory : WebApplicationFactory<Program>, IDisposable
 {
+    private readonly string _connectionString;
+    private readonly string _databaseName;
+
+    public TestWebApplicationFactory()
+    {
+        // Use SQL Server LocalDB or test instance
+        _databaseName = $"MultiServiceAutomotiveEcosystemPlatformTest_{Guid.NewGuid():N}";
+        _connectionString = $"Server=(localdb)\\mssqllocaldb;Database={_databaseName};Trusted_Connection=True;MultipleActiveResultSets=true";
+    }
+
     protected override IHost CreateHost(IHostBuilder builder)
     {
         builder.ConfigureServices(services =>
@@ -117,18 +127,24 @@ public class TestWebApplicationFactory : WebApplicationFactory<Program>
                 services.Remove(descriptor);
             }
 
-            // Add in-memory database for testing
+            // Add SQL Server database for testing
             services.AddDbContext<MultiServiceAutomotiveEcosystemPlatformContext>(options =>
             {
-                options.UseInMemoryDatabase("TestDb_" + Guid.NewGuid().ToString());
+                options.UseSqlServer(_connectionString, 
+                    b => b.MigrationsAssembly("MultiServiceAutomotiveEcosystemPlatform.Infrastructure"));
             });
         });
 
         var host = base.CreateHost(builder);
 
-        // Seed test data
+        // Create database and seed test data
         using var scope = host.Services.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<MultiServiceAutomotiveEcosystemPlatformContext>();
+        
+        // Ensure database is created
+        context.Database.EnsureCreated();
+        
+        // Seed test data
         SeedTestData(context);
 
         return host;
@@ -144,5 +160,17 @@ public class TestWebApplicationFactory : WebApplicationFactory<Program>
 
         context.Tenants.Add(tenant);
         context.SaveChanges();
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            // Clean up test database
+            using var scope = Services.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<MultiServiceAutomotiveEcosystemPlatformContext>();
+            context.Database.EnsureDeleted();
+        }
+        base.Dispose(disposing);
     }
 }
