@@ -3,13 +3,14 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": ".",
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "paths": {
       "multi-service-automotive-ecosystem-components": [
-        "./dist/multi-service-automotive-ecosystem-components"
+        "./projects/multi-service-automotive-ecosystem-components/src/public-api.ts"
       ]
     },
     "noFallthroughCasesInSwitch": true,
