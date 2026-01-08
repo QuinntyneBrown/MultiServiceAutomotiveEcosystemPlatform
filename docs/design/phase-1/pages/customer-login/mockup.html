@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In - AutoPro Network</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../shared-styles.css">
+  <style>
+    .auth-page {
+      min-height: 100vh;
+      display: flex;
+    }
+
+    .auth-page__sidebar {
+      display: none;
+      width: 480px;
+      background: linear-gradient(135deg, var(--color-blue-800) 0%, var(--color-blue-900) 100%);
+      color: var(--color-text-inverse);
+      padding: var(--spacing-12);
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    @media (min-width: 992px) {
+      .auth-page__sidebar {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+    }
+
+    .auth-page__sidebar-logo {
+      position: absolute;
+      top: var(--spacing-8);
+      left: var(--spacing-8);
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+    }
+
+    .auth-page__sidebar-logo-icon {
+      width: 48px;
+      height: 48px;
+      background-color: var(--color-accent);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .auth-page__sidebar-logo-text {
+      font-family: var(--font-family-primary);
+      font-weight: var(--font-weight-bold);
+      font-size: var(--text-h4);
+      color: var(--color-text-inverse);
+    }
+
+    .auth-page__sidebar-content {
+      max-width: 360px;
+    }
+
+    .auth-page__sidebar-title {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-display-sm);
+      font-weight: var(--font-weight-bold);
+      line-height: 1.2;
+      margin-bottom: var(--spacing-6);
+    }
+
+    .auth-page__sidebar-text {
+      font-size: var(--text-body-lg);
+      opacity: 0.9;
+    }
+
+    .auth-page__main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background-color: var(--color-bg-secondary);
+    }
+
+    .auth-page__header {
+      padding: var(--spacing-4) var(--spacing-6);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: var(--color-bg-primary);
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .auth-page__mobile-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-2);
+    }
+
+    .auth-page__mobile-logo-icon {
+      width: 36px;
+      height: 36px;
+      background-color: var(--color-blue-700);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .auth-page__mobile-logo-text {
+      font-family: var(--font-family-primary);
+      font-weight: var(--font-weight-bold);
+      font-size: var(--text-body-lg);
+      color: var(--color-blue-700);
+    }
+
+    @media (min-width: 992px) {
+      .auth-page__header {
+        display: none;
+      }
+    }
+
+    .auth-page__content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--spacing-6);
+    }
+
+    .auth-card {
+      background-color: var(--color-bg-primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      padding: var(--spacing-8);
+      width: 100%;
+      max-width: 420px;
+    }
+
+    @media (max-width: 575px) {
+      .auth-card {
+        padding: var(--spacing-6);
+        box-shadow: none;
+        border-radius: 0;
+        background-color: transparent;
+      }
+    }
+
+    .auth-card__title {
+      font-family: var(--font-family-primary);
+      font-size: var(--text-h2);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-gray-900);
+      margin-bottom: var(--spacing-2);
+    }
+
+    .auth-card__subtitle {
+      font-size: var(--text-body-md);
+      color: var(--color-gray-600);
+      margin-bottom: var(--spacing-8);
+    }
+
+    .auth-card__form {
+      margin-bottom: var(--spacing-6);
+    }
+
+    .password-field {
+      position: relative;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: var(--spacing-4);
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--color-gray-500);
+      cursor: pointer;
+      padding: var(--spacing-1);
+    }
+
+    .password-toggle:hover {
+      color: var(--color-gray-700);
+    }
+
+    .form-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-6);
+    }
+
+    .checkbox-field {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-2);
+    }
+
+    .checkbox-field input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--color-blue-700);
+      cursor: pointer;
+    }
+
+    .checkbox-field__label {
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-700);
+      cursor: pointer;
+    }
+
+    .forgot-link {
+      font-size: var(--text-body-sm);
+      color: var(--color-blue-700);
+      text-decoration: none;
+      font-weight: var(--font-weight-medium);
+    }
+
+    .forgot-link:hover {
+      text-decoration: underline;
+    }
+
+    .auth-card__divider {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-4);
+      margin: var(--spacing-6) 0;
+      color: var(--color-gray-500);
+      font-size: var(--text-body-sm);
+    }
+
+    .auth-card__divider::before,
+    .auth-card__divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background-color: var(--color-gray-200);
+    }
+
+    .auth-card__social {
+      display: flex;
+      gap: var(--spacing-3);
+    }
+
+    .social-btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spacing-2);
+      padding: var(--spacing-3) var(--spacing-4);
+      background-color: var(--color-bg-primary);
+      border: 1px solid var(--color-gray-300);
+      border-radius: var(--radius-md);
+      font-size: var(--text-body-sm);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-gray-700);
+      cursor: pointer;
+      transition: all var(--transition-normal);
+    }
+
+    .social-btn:hover {
+      background-color: var(--color-gray-50);
+      border-color: var(--color-gray-400);
+    }
+
+    .social-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .auth-card__footer {
+      text-align: center;
+      font-size: var(--text-body-sm);
+      color: var(--color-gray-600);
+    }
+
+    .auth-card__footer a {
+      color: var(--color-blue-700);
+      font-weight: var(--font-weight-semibold);
+      text-decoration: none;
+    }
+
+    .auth-card__footer a:hover {
+      text-decoration: underline;
+    }
+
+    .alert {
+      margin-bottom: var(--spacing-6);
+    }
+
+    .alert__content {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--spacing-3);
+    }
+
+    .alert__icon {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+    }
+
+    .alert__text {
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-page">
+    <!-- Desktop Sidebar -->
+    <aside class="auth-page__sidebar">
+      <div class="auth-page__sidebar-logo">
+        <div class="auth-page__sidebar-logo-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+            <line x1="9" y1="9" x2="9.01" y2="9"/>
+            <line x1="15" y1="9" x2="15.01" y2="9"/>
+          </svg>
+        </div>
+        <span class="auth-page__sidebar-logo-text">AutoPro Network</span>
+      </div>
+
+      <div class="auth-page__sidebar-content">
+        <h2 class="auth-page__sidebar-title">Welcome back!</h2>
+        <p class="auth-page__sidebar-text">
+          Sign in to access your trusted network of automotive professionals, track your referrals, and manage your rewards.
+        </p>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="auth-page__main">
+      <!-- Mobile Header -->
+      <header class="auth-page__header">
+        <div class="auth-page__mobile-logo">
+          <div class="auth-page__mobile-logo-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+              <line x1="9" y1="9" x2="9.01" y2="9"/>
+              <line x1="15" y1="9" x2="15.01" y2="9"/>
+            </svg>
+          </div>
+          <span class="auth-page__mobile-logo-text">AutoPro Network</span>
+        </div>
+        <a href="#" class="btn btn--tertiary btn--sm">Sign Up</a>
+      </header>
+
+      <div class="auth-page__content">
+        <div class="auth-card">
+          <h1 class="auth-card__title">Sign in</h1>
+          <p class="auth-card__subtitle">Enter your credentials to access your account</p>
+
+          <!-- Error Alert (shown on failed login) -->
+          <!--
+          <div class="alert alert--error">
+            <div class="alert__content">
+              <svg class="alert__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="8" x2="12" y2="12"/>
+                <line x1="12" y1="16" x2="12.01" y2="16"/>
+              </svg>
+              <span class="alert__text">Invalid email or password. Please try again.</span>
+            </div>
+          </div>
+          -->
+
+          <!-- Account Locked Alert (shown after too many attempts) -->
+          <!--
+          <div class="alert alert--warning">
+            <div class="alert__content">
+              <svg class="alert__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              <span class="alert__text">Account temporarily locked. Please try again in 15 minutes or reset your password.</span>
+            </div>
+          </div>
+          -->
+
+          <form class="auth-card__form">
+            <div class="form-group">
+              <label class="form-label" for="email">Email Address</label>
+              <input type="email" id="email" class="form-input" placeholder="john@example.com" required autofocus>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="password">Password</label>
+              <div class="password-field">
+                <input type="password" id="password" class="form-input" placeholder="Enter your password" required>
+                <button type="button" class="password-toggle" aria-label="Toggle password visibility">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="checkbox-field">
+                <input type="checkbox" id="remember">
+                <label class="checkbox-field__label" for="remember">Remember me</label>
+              </div>
+              <a href="#" class="forgot-link">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="btn btn--primary btn--lg btn--full">Sign In</button>
+          </form>
+
+          <div class="auth-card__divider">or continue with</div>
+
+          <div class="auth-card__social">
+            <button class="social-btn">
+              <svg viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+              </svg>
+              Google
+            </button>
+            <button class="social-btn">
+              <svg viewBox="0 0 24 24" fill="#1877F2">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+              Facebook
+            </button>
+          </div>
+
+          <div class="auth-card__footer mt-6">
+            Don't have an account? <a href="#">Sign up</a>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
