@@ -1,0 +1,95 @@
+@startuml customer-registration-flow
+title Customer Registration Flow - Phase 1
+
+skinparam activityBackgroundColor #E3F2FD
+skinparam activityBorderColor #1976D2
+skinparam activityDiamondBackgroundColor #FFF3E0
+skinparam activityDiamondBorderColor #F57C00
+
+start
+
+:Customer navigates to Registration Page;
+
+:Customer fills Registration Form;
+note right
+  Required Fields:
+  * First Name
+  * Last Name
+  * Email
+  * Phone
+  * Password
+  * Confirm Password
+  * Terms Acceptance
+  ----
+  Optional:
+  * Marketing Consent
+end note
+
+:Customer submits form;
+
+:System validates form data;
+
+if (All fields valid?) then (yes)
+  :System checks email uniqueness;
+
+  if (Email already exists?) then (yes)
+    :Display "Email already registered" error;
+    :Show login link;
+    stop
+  else (no)
+    :System checks password strength;
+
+    if (Password meets requirements?) then (yes)
+      :System creates customer account;
+      :System generates email verification token;
+      :System sends verification email;
+
+      :Display "Verification Email Sent" screen;
+
+      :Customer checks email inbox;
+      :Customer clicks verification link;
+
+      :System validates verification token;
+
+      if (Token valid and not expired?) then (yes)
+        :System marks email as verified;
+        :System activates customer account;
+        :System auto-assigns to professional\n(if referral code present);
+
+        :Display "Registration Complete" success page;
+        :Redirect to Customer Dashboard;
+        stop
+      else (no)
+        :Display "Invalid or Expired Link" error;
+        :Show resend verification option;
+
+        if (Resend verification?) then (yes)
+          :System generates new verification token;
+          :System sends new verification email;
+          :Display "New verification email sent";
+          stop
+        else (no)
+          stop
+        endif
+      endif
+    else (no)
+      :Display password requirements error;
+      :Show password strength indicator;
+      stop
+    endif
+  endif
+else (no)
+  :Display validation errors;
+  note right
+    Possible errors:
+    * Required field missing
+    * Invalid email format
+    * Phone format invalid
+    * Passwords do not match
+    * Terms not accepted
+  end note
+  :Highlight invalid fields;
+  stop
+endif
+
+@enduml

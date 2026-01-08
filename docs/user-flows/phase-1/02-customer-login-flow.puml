@@ -1,0 +1,79 @@
+@startuml customer-login-flow
+title Customer Login Flow - Phase 1
+
+skinparam activityBackgroundColor #E3F2FD
+skinparam activityBorderColor #1976D2
+skinparam activityDiamondBackgroundColor #FFF3E0
+skinparam activityDiamondBorderColor #F57C00
+
+start
+
+:Customer navigates to Login Page;
+
+:Customer enters credentials;
+note right
+  Login Form:
+  * Email
+  * Password
+  * Remember Me (optional)
+end note
+
+:Customer clicks Login;
+
+:System validates credentials;
+
+if (Credentials valid?) then (yes)
+  :System checks account status;
+
+  if (Account locked?) then (yes)
+    :Display "Account Locked" message;
+    note right
+      Account locked after
+      5 failed attempts
+    end note
+    :Show contact support option;
+    stop
+  else (no)
+    if (Email verified?) then (yes)
+      :System creates session;
+      :System resets failed login counter;
+
+      if (Remember Me checked?) then (yes)
+        :System sets persistent cookie;
+      else (no)
+        :System sets session cookie;
+      endif
+
+      :Redirect to Customer Dashboard;
+      stop
+    else (no)
+      :Display "Email not verified" message;
+      :Show resend verification option;
+
+      if (Resend verification?) then (yes)
+        :System sends verification email;
+        :Display "Verification email sent";
+      else (no)
+      endif
+      stop
+    endif
+  endif
+else (no)
+  :System increments failed login counter;
+
+  if (Failed attempts >= 5?) then (yes)
+    :System locks account;
+    :Display "Account Locked" message;
+    :Send account locked notification email;
+    stop
+  else (no)
+    :Display "Invalid email or password" error;
+    note right
+      Generic error message
+      to prevent enumeration
+    end note
+    stop
+  endif
+endif
+
+@enduml

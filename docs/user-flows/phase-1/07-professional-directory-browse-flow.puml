@@ -1,0 +1,140 @@
+@startuml professional-directory-browse-flow
+title Professional Directory Browse Flow - Phase 1
+
+skinparam activityBackgroundColor #E3F2FD
+skinparam activityBorderColor #1976D2
+skinparam activityDiamondBackgroundColor #FFF3E0
+skinparam activityDiamondBorderColor #F57C00
+
+start
+
+:Visitor navigates to Professional Directory;
+
+:System loads directory page;
+note right
+  Display Options:
+  * Grid view (default)
+  * List view
+end note
+
+:Display professional cards;
+note right
+  Card shows:
+  * Profile photo
+  * Business name
+  * Professional name
+  * Business type badge
+  * Top 3 specialties
+  * Rating (stars)
+  * Verified badge
+  * "View Profile" button
+end note
+
+fork
+  :Apply Filters (optional);
+
+  :Filter by Business Type;
+  note right
+    Types:
+    * Mechanic
+    * Body Shop
+    * Dealer
+    * Finance Expert
+    * EV Electrician
+  end note
+
+  :Filter by Specialty;
+
+  :System updates results;
+fork again
+  :Search by Name (optional);
+  :Enter search term;
+  :System filters results in real-time;
+fork again
+  :Sort Results;
+  note right
+    Sort options:
+    * A-Z (name)
+    * Featured first
+    * Rating (high to low)
+  end note
+end fork
+
+:View filtered directory;
+
+if (Results found?) then (yes)
+  :Display matching professionals;
+
+  :Navigate pages or scroll;
+  note right
+    Pagination or
+    infinite scroll
+  end note
+
+  :Visitor selects a professional card;
+
+  :System loads Professional Profile Page;
+
+  :Display Profile Hero Section;
+  note right
+    * Cover photo
+    * Profile photo
+    * Business name
+    * Professional name
+    * Business type
+    * Verified badge
+    * Rating summary
+    * Contact buttons
+  end note
+
+  :Display About Section;
+  note right
+    * Bio/description
+    * Years in business
+    * Service area
+  end note
+
+  :Display Specialties Section;
+  note right
+    * List with icons
+    * Certifications
+    * Experience years
+  end note
+
+  :Display Contact Section;
+  note right
+    * Business hours
+    * Location
+    * Contact options
+  end note
+
+  :Visitor chooses action;
+
+  switch (Action?)
+  case (Call)
+    :Click Call button;
+    :Open phone dialer;
+  case (Email)
+    :Click Email button;
+    :Open email client;
+  case (Submit Inquiry)
+    :Click "Get Quote" button;
+    :Open inquiry form (Phase 2);
+  case (Share Profile)
+    :Click Share button;
+    :Display share options;
+    :Copy link or share socially;
+  case (Back to Directory)
+    :Click back button;
+    :Return to directory with filters preserved;
+  endswitch
+
+else (no)
+  :Display "No professionals found" message;
+  :Suggest clearing filters;
+  :Show all professionals link;
+endif
+
+stop
+
+@enduml

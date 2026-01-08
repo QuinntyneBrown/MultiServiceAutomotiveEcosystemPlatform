@@ -1,0 +1,140 @@
+@startuml professional-send-referral-flow
+title Professional Send Referral Flow - Phase 1
+
+skinparam activityBackgroundColor #E3F2FD
+skinparam activityBorderColor #1976D2
+skinparam activityDiamondBackgroundColor #FFF3E0
+skinparam activityDiamondBorderColor #F57C00
+
+start
+
+:Professional clicks "Send Referral";
+
+:System opens Send Referral Form;
+
+#LightBlue:Step 1: Select Target Professional;
+
+:Display professional search;
+note right
+  Search options:
+  * Search by name
+  * Filter by specialty
+  * Filter by type
+  * Recent collaborators
+end note
+
+:Professional searches for colleague;
+
+if (Found colleague?) then (yes)
+  :Select target professional;
+  :Display selected professional card;
+else (no)
+  :Display "No results" message;
+  :Professional refines search;
+endif
+
+#LightBlue:Step 2: Select Customer;
+
+:Display customer search;
+note right
+  Shows only "my customers"
+  that professional owns
+end note
+
+:Professional searches customers;
+
+if (Found customer?) then (yes)
+  :Select customer to refer;
+  :Display customer summary card;
+  note right
+    Shows:
+    * Name
+    * Contact info
+    * Vehicle info
+  end note
+else (no)
+  :Display "No customers found" message;
+  :Option to add new customer;
+endif
+
+#LightBlue:Step 3: Referral Details;
+
+:Display referral details form;
+
+:Enter Service Needed;
+note right
+  Required field
+end note
+
+:Enter Reason for Referral;
+note right
+  Required field
+end note
+
+:Select Priority Level;
+note right
+  * Normal
+  * High
+  * Urgent
+end note
+
+:Add Internal Notes (optional);
+
+#LightBlue:Step 4: Discount Options;
+
+if (Offer discount?) then (yes)
+  :Enable discount toggle;
+
+  :Select discount type;
+  note right
+    * Percentage off
+    * Fixed amount off
+  end note
+
+  :Enter discount value;
+
+  :Set expiration date (optional);
+else (no)
+endif
+
+#LightBlue:Step 5: Preview and Confirm;
+
+:Display Referral Preview;
+note right
+  Preview shows:
+  * Target professional
+  * Customer info
+  * Service needed
+  * Priority
+  * Discount (if any)
+end note
+
+:Show what customer will see;
+
+:Show what target will see;
+
+:Professional reviews all details;
+
+if (Confirm referral?) then (yes)
+  :System validates referral;
+
+  if (Validation passed?) then (yes)
+    :System creates referral record;
+    :System generates discount code (if applicable);
+    :System sends notification to target professional;
+    :System sends notification to customer;
+
+    :Display "Referral Sent" success;
+    :Show referral tracking link;
+    :Redirect to Sent Referrals list;
+  else (no)
+    :Display validation errors;
+    :Return to form;
+  endif
+else (no)
+  :Return to form for editing;
+endif
+
+stop
+
+@enduml

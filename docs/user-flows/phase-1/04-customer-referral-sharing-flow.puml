@@ -1,0 +1,123 @@
+@startuml customer-referral-sharing-flow
+title Customer Referral Sharing Flow - Phase 1
+
+skinparam activityBackgroundColor #E3F2FD
+skinparam activityBorderColor #1976D2
+skinparam activityDiamondBackgroundColor #FFF3E0
+skinparam activityDiamondBorderColor #F57C00
+
+start
+
+:Customer logs into portal;
+
+:Customer navigates to Referral Dashboard;
+
+:System displays Referral Dashboard;
+note right
+  Dashboard shows:
+  * Unique referral code
+  * QR code
+  * Total referrals sent
+  * Successful conversions
+  * Pending referrals
+  * Rewards earned
+end note
+
+:Customer chooses share method;
+
+switch (Share Method?)
+case (Copy Link)
+  :Customer clicks "Copy Link";
+  :System generates unique referral URL;
+  :System copies URL to clipboard;
+  :Display "Link Copied" toast;
+  :Customer pastes link externally;
+
+case (Email Share)
+  :Customer clicks "Share via Email";
+  :Display email share form;
+  :Customer enters friend email;
+  :Customer edits message (optional);
+  :Customer clicks Send;
+
+  :System validates email;
+
+  if (Email valid?) then (yes)
+    :System generates referral record;
+    :System sends referral email;
+    :Display "Invitation Sent" success;
+  else (no)
+    :Display "Invalid email" error;
+  endif
+
+case (SMS Share)
+  :Customer clicks "Share via SMS";
+  :Display SMS share form;
+  :Customer enters phone number;
+  :Customer reviews message;
+  :Customer clicks Send;
+
+  :System validates phone number;
+
+  if (Phone valid?) then (yes)
+    :System generates referral record;
+    :System sends SMS via provider;
+    :Display "SMS Sent" success;
+  else (no)
+    :Display "Invalid phone number" error;
+  endif
+
+case (Social Share)
+  :Customer clicks social platform icon;
+  note right
+    Platforms:
+    * Facebook
+    * Twitter/X
+    * WhatsApp
+    * LinkedIn
+  end note
+  :System opens social share dialog;
+  :Pre-populate with referral link;
+  :Customer shares on social platform;
+  :System logs share event;
+
+case (QR Code)
+  :Customer clicks "Show QR Code";
+  :System displays full-screen QR code;
+  :Customer shows QR to friend;
+  note right
+    QR code encodes
+    referral landing page URL
+  end note
+  :Friend scans QR code;
+  :Friend opens referral link;
+
+case (Direct Invitation)
+  :Customer clicks "Invite Friend";
+  :Display invitation form;
+  :Customer enters friend name;
+  :Customer enters friend email;
+  :Customer enters phone (optional);
+  :Customer selects professional (optional);
+  :Customer writes personal message;
+  :Customer clicks Send Invitation;
+
+  :System validates form;
+
+  if (Form valid?) then (yes)
+    :System creates referral record;
+    :System sends invitation email;
+    :System sends SMS if phone provided;
+    :Display "Invitation Sent" success;
+  else (no)
+    :Display validation errors;
+  endif
+
+endswitch
+
+:System updates referral statistics;
+:Customer views updated dashboard;
+
+stop
+
+@enduml
