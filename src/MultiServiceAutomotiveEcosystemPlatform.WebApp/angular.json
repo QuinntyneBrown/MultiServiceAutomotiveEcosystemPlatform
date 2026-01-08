@@ -29,6 +29,36 @@
           "options": {
             "tsConfig": "projects/multi-service-automotive-ecosystem-components/tsconfig.spec.json"
           }
+        },
+        "storybook": {
+          "builder": "@storybook/angular:start-storybook",
+          "options": {
+            "configDir": "projects/multi-service-automotive-ecosystem-components/.storybook",
+            "browserTarget": "multi-service-automotive-ecosystem-components:build",
+            "compodoc": true,
+            "compodocArgs": [
+              "-e",
+              "json",
+              "-d",
+              "projects/multi-service-automotive-ecosystem-components"
+            ],
+            "port": 6006
+          }
+        },
+        "build-storybook": {
+          "builder": "@storybook/angular:build-storybook",
+          "options": {
+            "configDir": "projects/multi-service-automotive-ecosystem-components/.storybook",
+            "browserTarget": "multi-service-automotive-ecosystem-components:build",
+            "compodoc": true,
+            "compodocArgs": [
+              "-e",
+              "json",
+              "-d",
+              "projects/multi-service-automotive-ecosystem-components"
+            ],
+            "outputDir": "dist/storybook/multi-service-automotive-ecosystem-components"
+          }
         }
       }
     },

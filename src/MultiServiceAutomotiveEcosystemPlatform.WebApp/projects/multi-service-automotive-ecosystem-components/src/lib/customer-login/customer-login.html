@@ -1,0 +1,149 @@
+<div class="customer-login">
+  <div class="customer-login__container">
+    <div class="customer-login__card">
+      <!-- Header -->
+      <div class="customer-login__header">
+        <h1 class="customer-login__title">Welcome Back</h1>
+        <p class="customer-login__subtitle">Sign in to access your account</p>
+      </div>
+
+      <!-- Success Message -->
+      @if (successMessage) {
+        <div class="customer-login__alert customer-login__alert--success" role="alert">
+          <svg class="customer-login__alert-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+          </svg>
+          <p class="customer-login__alert-message">{{ successMessage }}</p>
+        </div>
+      }
+
+      <!-- Error Message -->
+      @if (errorMessage()) {
+        <div class="customer-login__alert customer-login__alert--error" role="alert">
+          <svg class="customer-login__alert-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+          </svg>
+          <p class="customer-login__alert-message">{{ errorMessage() }}</p>
+        </div>
+      }
+
+      <!-- Login Form -->
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="customer-login__form">
+        <!-- Email Field -->
+        <div class="customer-login__field">
+          <label for="email" class="customer-login__label">
+            Email Address <span class="customer-login__required">*</span>
+          </label>
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            class="customer-login__input"
+            [class.customer-login__input--error]="emailError"
+            placeholder="you@example.com"
+            autocomplete="email"
+          />
+          @if (emailError) {
+            <p class="customer-login__error">{{ emailError }}</p>
+          }
+        </div>
+
+        <!-- Password Field -->
+        <div class="customer-login__field">
+          <label for="password" class="customer-login__label">
+            Password <span class="customer-login__required">*</span>
+          </label>
+          <div class="customer-login__password-wrapper">
+            <input
+              id="password"
+              [type]="showPassword() ? 'text' : 'password'"
+              formControlName="password"
+              class="customer-login__input customer-login__input--password"
+              [class.customer-login__input--error]="passwordError"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+            />
+            <button
+              type="button"
+              class="customer-login__password-toggle"
+              (click)="togglePasswordVisibility()"
+              [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
+            >
+              @if (showPassword()) {
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
+                  <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
+                </svg>
+              } @else {
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M3.707 2.293a1 1 0 00-1.414 1.414l14 14a1 1 0 001.414-1.414l-1.473-1.473A10.014 10.014 0 0019.542 10C18.268 5.943 14.478 3 10 3a9.958 9.958 0 00-4.512 1.074l-1.78-1.781zm4.261 4.26l1.514 1.515a2.003 2.003 0 012.45 2.45l1.514 1.514a4 4 0 00-5.478-5.478z" clip-rule="evenodd"/>
+                  <path d="M12.454 16.697L9.75 13.992a4 4 0 01-3.742-3.741L2.335 6.578A9.98 9.98 0 00.458 10c1.274 4.057 5.065 7 9.542 7 .847 0 1.669-.105 2.454-.303z"/>
+                </svg>
+              }
+            </button>
+          </div>
+          @if (passwordError) {
+            <p class="customer-login__error">{{ passwordError }}</p>
+          }
+        </div>
+
+        <!-- Remember Me & Forgot Password -->
+        <div class="customer-login__options">
+          @if (enableRememberMe) {
+            <label class="customer-login__checkbox">
+              <input type="checkbox" formControlName="rememberMe" class="customer-login__checkbox-input" />
+              <span class="customer-login__checkbox-label">Remember me</span>
+            </label>
+          }
+          <button type="button" class="customer-login__link" (click)="onForgotPassword()">
+            Forgot password?
+          </button>
+        </div>
+
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          class="customer-login__button"
+          [disabled]="isSubmitting()"
+          [class.customer-login__button--loading]="isSubmitting()"
+        >
+          @if (isSubmitting()) {
+            <span class="customer-login__spinner"></span>
+            <span>Signing in...</span>
+          } @else {
+            <span>Sign In</span>
+          }
+        </button>
+
+        <!-- Social Login -->
+        @if (enableSocialLogin && socialProviders.length > 0) {
+          <div class="customer-login__divider">
+            <span class="customer-login__divider-text">Or continue with</span>
+          </div>
+
+          <div class="customer-login__social">
+            @for (provider of socialProviders; track provider) {
+              <button
+                type="button"
+                class="customer-login__social-button"
+                (click)="onSocialLogin(provider)"
+                [attr.aria-label]="'Sign in with ' + provider"
+              >
+                <span class="customer-login__social-icon">{{ provider.charAt(0).toUpperCase() }}</span>
+                <span>{{ provider }}</span>
+              </button>
+            }
+          </div>
+        }
+      </form>
+
+      <!-- Footer -->
+      <div class="customer-login__footer">
+        <p class="customer-login__footer-text">
+          Don't have an account?
+          <a href="/register" class="customer-login__link">Sign up</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

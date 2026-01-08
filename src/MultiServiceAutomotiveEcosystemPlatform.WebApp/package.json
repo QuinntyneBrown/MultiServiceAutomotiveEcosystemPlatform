@@ -6,7 +6,11 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "test:coverage": "ng test --coverage",
+    "storybook": "npx ng run multi-service-automotive-ecosystem-components:storybook",
+    "build-storybook": "npx ng run multi-service-automotive-ecosystem-components:build-storybook",
+    "build:lib": "npx ng build multi-service-automotive-ecosystem-components"
   },
   "prettier": {
     "printWidth": 100,
@@ -44,6 +48,16 @@
     "jsdom": "^27.1.0",
     "ng-packagr": "^21.0.0",
     "typescript": "~5.9.2",
-    "vitest": "^4.0.8"
+    "vitest": "^4.0.8",
+    "storybook": "^10.1.11",
+    "@storybook/angular": "^10.1.11",
+    "@storybook/addon-a11y": "^10.1.11",
+    "@storybook/addon-docs": "^10.1.11",
+    "@storybook/addon-onboarding": "^10.1.11",
+    "@angular-devkit/build-angular": "^21.0.0",
+    "@angular-devkit/architect": "^0.2100.0",
+    "@angular-devkit/core": "^21.0.0",
+    "@angular/platform-browser-dynamic": "^21.0.0",
+    "@compodoc/compodoc": "^1.1.32"
   }
 }
