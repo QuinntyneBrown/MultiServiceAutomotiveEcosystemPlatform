@@ -14,18 +14,26 @@ test.describe('User Flow: Professional Profile Setup', () => {
     await expect(page.locator('h1')).toContainText('Manage Your Profile');
 
     // Form is prefilled by mock data; save shows an alert.
-    await acceptNextDialog(page);
+    acceptNextDialog(page);
     await page.click('button:has-text("Save Changes")');
+    
+    // Wait a bit for dialog to be handled
+    await page.waitForTimeout(500);
 
     await page.goto('/professional/specialties');
     await expect(page.locator('h1')).toContainText('Manage Specialties');
 
     await page.click('button:has-text("+ Add Specialty")');
-    await expect(page.locator('text=Add Specialty')).toBeVisible();
+    // Use more specific selector for the modal heading
+    await expect(page.locator('h2:has-text("Add Specialty")')).toBeVisible();
 
-    await acceptNextDialog(page);
+    acceptNextDialog(page);
     await page.click('button.specialty-management__modal-item');
+    
+    // Wait a bit for dialog to be handled
+    await page.waitForTimeout(500);
 
-    await expect(page.locator('text=Add Specialty')).toBeHidden();
+    // Verify modal is closed - check button again
+    await expect(page.locator('h2:has-text("Add Specialty")')).toBeHidden();
   });
 });

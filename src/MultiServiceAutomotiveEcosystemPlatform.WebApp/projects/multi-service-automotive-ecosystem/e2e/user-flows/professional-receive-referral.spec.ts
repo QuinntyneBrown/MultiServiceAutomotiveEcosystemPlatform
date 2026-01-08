@@ -14,8 +14,10 @@ test.describe('User Flow: Professional Receive Referral', () => {
 
     await expect(page.locator('h1')).toContainText('Referral Details');
 
-    await page.click('button:has-text("Accept Referral")');
-    await expect(page.locator('text=Accept Referral')).toBeVisible();
+    // Click the action button
+    await page.click('button.referral-action__btn:has-text("Accept Referral")');
+    // Wait for modal to appear - use heading selector
+    await expect(page.locator('h2:has-text("Accept Referral")')).toBeVisible();
 
     await page.click('button:has-text("Confirm Accept")');
 

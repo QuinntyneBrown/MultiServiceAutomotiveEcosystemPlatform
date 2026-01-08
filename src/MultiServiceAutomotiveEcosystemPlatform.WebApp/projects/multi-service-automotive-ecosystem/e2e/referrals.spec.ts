@@ -24,10 +24,10 @@ test.describe('Referral Dashboard', () => {
   test('should display statistics cards', async ({ page }) => {
     await page.goto('/referrals');
     
-    // Check for stats cards
+    // Check for stats cards - use more specific selectors
     await expect(page.locator('text=Total Referrals')).toBeVisible();
     await expect(page.locator('text=Successful')).toBeVisible();
-    await expect(page.locator('text=Pending')).toBeVisible();
+    await expect(page.locator('.referral-dashboard__stat-label:has-text("Pending")').first()).toBeVisible();
     await expect(page.locator('text=Total Rewards')).toBeVisible();
   });
 
@@ -42,9 +42,12 @@ test.describe('Referral Dashboard', () => {
     await expect(page.locator('.referral-dashboard__table')).toBeVisible();
   });
 
-  test('should copy referral code to clipboard when clicking copy button', async ({ page, context }) => {
-    // Grant clipboard permissions
-    await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+  test('should copy referral code to clipboard when clicking copy button', async ({ page, context, browserName }) => {
+    // Skip clipboard permissions for WebKit/Safari as it doesn't support clipboard-write
+    if (browserName !== 'webkit') {
+      // Grant clipboard permissions for Chromium and Firefox
+      await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+    }
     
     await page.goto('/referrals');
     

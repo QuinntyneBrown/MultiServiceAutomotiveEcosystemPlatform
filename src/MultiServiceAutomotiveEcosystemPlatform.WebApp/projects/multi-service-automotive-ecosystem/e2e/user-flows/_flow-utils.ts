@@ -17,9 +17,13 @@ export function uniqueEmail(prefix = 'e2e') {
 
 export async function grantClipboardPermissions(
   context: BrowserContext,
+  browserName: string,
   origin = 'http://localhost:4200'
 ) {
-  await context.grantPermissions(['clipboard-read', 'clipboard-write'], { origin });
+  // WebKit (Safari) doesn't support clipboard-write permission
+  if (browserName !== 'webkit') {
+    await context.grantPermissions(['clipboard-read', 'clipboard-write'], { origin });
+  }
 }
 
 export async function acceptNextDialog(page: Page) {
