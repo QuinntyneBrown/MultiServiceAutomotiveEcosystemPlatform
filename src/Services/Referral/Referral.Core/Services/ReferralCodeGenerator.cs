@@ -1,21 +1,16 @@
 namespace Referral.Core.Services;
 
-public interface IReferralCodeGenerator
-{
-    string Generate(int length = 8);
-}
-
-public class ReferralCodeGenerator : IReferralCodeGenerator
+public static class ReferralCodeGenerator
 {
     private const string Characters = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // Excludes ambiguous characters
-    private readonly Random _random = new();
+    private static readonly Random Random = new();
 
-    public string Generate(int length = 8)
+    public static string Generate(int length = 8)
     {
         var code = new char[length];
         for (int i = 0; i < length; i++)
         {
-            code[i] = Characters[_random.Next(Characters.Length)];
+            code[i] = Characters[Random.Next(Characters.Length)];
         }
         return new string(code);
     }

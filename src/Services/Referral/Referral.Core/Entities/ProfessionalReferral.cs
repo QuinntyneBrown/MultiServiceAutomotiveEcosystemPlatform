@@ -8,87 +8,86 @@ public class ProfessionalReferral : IAggregateRoot, ITenantEntity
     public Guid Id { get; private set; }
     public Guid TenantId { get; private set; }
     public Guid ReferringProfessionalId { get; private set; }
-    public Guid ReferredProfessionalId { get; private set; }
-    public Guid CustomerId { get; private set; }
+    public string ReferredBusinessName { get; private set; } = string.Empty;
+    public string ReferredEmail { get; private set; } = string.Empty;
+    public string? ReferredPhone { get; private set; }
+    public string? ContactPersonName { get; private set; }
+    public Guid? ConvertedProfessionalId { get; private set; }
     public ProfessionalReferralStatus Status { get; private set; }
-    public string? ServiceType { get; private set; }
+    public string? ReferralSource { get; private set; }
+    public string? ReferralCode { get; private set; }
     public string? Notes { get; private set; }
 
-    // Discount
-    public string? DiscountType { get; private set; }
-    public decimal? DiscountValue { get; private set; }
-    public string? DiscountCode { get; private set; }
-    public bool DiscountUsed { get; private set; }
+    // Rewards
+    public RewardStatus RewardStatus { get; private set; }
+    public decimal? RewardAmount { get; private set; }
+    public string? RewardType { get; private set; }
+    public DateTime? RewardPaidAt { get; private set; }
 
     // Timestamps
     public DateTime CreatedAt { get; private set; }
     public DateTime? UpdatedAt { get; private set; }
-    public DateTime? AcceptedAt { get; private set; }
-    public DateTime? CompletedAt { get; private set; }
-    public DateTime? DeclinedAt { get; private set; }
+    public DateTime? ContactedAt { get; private set; }
+    public DateTime? ConvertedAt { get; private set; }
 
     private ProfessionalReferral() { }
 
-    public ProfessionalReferral(
+    public static ProfessionalReferral Create(
         Guid tenantId,
         Guid referringProfessionalId,
-        Guid referredProfessionalId,
-        Guid customerId,
-        string? serviceType,
-        string? notes,
-        string? discountType,
-        decimal? discountValue)
+        string referredBusinessName,
+        string referredEmail,
+        string? referredPhone,
+        string? contactPersonName,
+        string? referralSource,
+        string? referralCode,
+        string? notes)
     {
         if (tenantId == Guid.Empty)
             throw new ArgumentException("Tenant ID is required", nameof(tenantId));
         if (referringProfessionalId == Guid.Empty)
             throw new ArgumentException("Referring professional ID is required", nameof(referringProfessionalId));
-        if (referredProfessionalId == Guid.Empty)
-            throw new ArgumentException("Referred professional ID is required", nameof(referredProfessionalId));
-        if (customerId == Guid.Empty)
-            throw new ArgumentException("Customer ID is required", nameof(customerId));
+        if (string.IsNullOrWhiteSpace(referredBusinessName))
+            throw new ArgumentException("Referred business name is required", nameof(referredBusinessName));
+        if (string.IsNullOrWhiteSpace(referredEmail))
+            throw new ArgumentException("Referred email is required", nameof(referredEmail));
 
-        Id = Guid.NewGuid();
-        TenantId = tenantId;
-        ReferringProfessionalId = referringProfessionalId;
-        ReferredProfessionalId = referredProfessionalId;
-        CustomerId = customerId;
-        ServiceType = serviceType?.Trim();
-        Notes = notes?.Trim();
-        DiscountType = discountType?.Trim();
-        DiscountValue = discountValue;
-        Status = ProfessionalReferralStatus.Pending;
-        CreatedAt = DateTime.UtcNow;
+        return new ProfessionalReferral
+        {
+            Id = Guid.NewGuid(),
+            TenantId = tenantId,
+            ReferringProfessionalId = referringProfessionalId,
+            ReferredBusinessName = referredBusinessName.Trim(),
+            ReferredEmail = referredEmail.Trim().ToLowerInvariant(),
+            ReferredPhone = referredPhone?.Trim(),
+            ContactPersonName = contactPersonName?.Trim(),
+            ReferralSource = referralSource?.Trim(),
+            ReferralCode = referralCode?.Trim(),
+            Notes = notes?.Trim(),
+            Status = ProfessionalReferralStatus.Pending,
+            RewardStatus = RewardStatus.Pending,
+            CreatedAt = DateTime.UtcNow
+        };
     }
 
-    public void Accept()
+    public void MarkContacted()
     {
         if (Status != ProfessionalReferralStatus.Pending)
             return;
 
-        Status = ProfessionalReferralStatus.Accepted;
-        AcceptedAt = DateTime.UtcNow;
+        Status = ProfessionalReferralStatus.Accepted; // Using Accepted to indicate contacted
+        ContactedAt = DateTime.UtcNow;
         UpdatedAt = DateTime.UtcNow;
     }
 
-    public void Decline(string? reason = null)
+    public void Convert(Guid professionalId)
     {
-        if (Status != ProfessionalReferralStatus.Pending)
-            return;
+        if (professionalId == Guid.Empty)
+            throw new ArgumentException("Professional ID is required", nameof(professionalId));
 
-        Status = ProfessionalReferralStatus.Declined;
-        Notes = string.IsNullOrEmpty(reason) ? Notes : $"{Notes}\nDeclined: {reason}".Trim();
-        DeclinedAt = DateTime.UtcNow;
-        UpdatedAt = DateTime.UtcNow;
-    }
-
-    public void Complete()
-    {
-        if (Status != ProfessionalReferralStatus.Accepted)
-            return;
-
+        ConvertedProfessionalId = professionalId;
         Status = ProfessionalReferralStatus.Completed;
-        CompletedAt = DateTime.UtcNow;
+        ConvertedAt = DateTime.UtcNow;
         UpdatedAt = DateTime.UtcNow;
     }
 
@@ -101,15 +100,21 @@ public class ProfessionalReferral : IAggregateRoot, ITenantEntity
         UpdatedAt = DateTime.UtcNow;
     }
 
-    public void SetDiscountCode(string code)
+    public void ApproveReward(decimal amount, string rewardType)
     {
-        DiscountCode = code;
+        RewardAmount = amount;
+        RewardType = rewardType;
+        RewardStatus = RewardStatus.Approved;
         UpdatedAt = DateTime.UtcNow;
     }
 
-    public void MarkDiscountUsed()
+    public void PayReward()
     {
-        DiscountUsed = true;
+        if (RewardStatus != RewardStatus.Approved)
+            return;
+
+        RewardStatus = RewardStatus.Paid;
+        RewardPaidAt = DateTime.UtcNow;
         UpdatedAt = DateTime.UtcNow;
     }
 }
