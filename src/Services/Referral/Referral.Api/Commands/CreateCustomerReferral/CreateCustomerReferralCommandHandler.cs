@@ -53,10 +53,10 @@ public class CreateCustomerReferralCommandHandler : IRequestHandler<CreateCustom
         await _repository.AddAsync(referral, cancellationToken);
 
         // Update or create stats
-        var stats = await _statsRepository.GetByOwnerAsync(_tenantContext.TenantId, request.ReferringCustomerId, cancellationToken);
+        var stats = await _statsRepository.GetByCustomerIdAsync(_tenantContext.TenantId, request.ReferringCustomerId, cancellationToken);
         if (stats is null)
         {
-            stats = new ReferralStats(_tenantContext.TenantId, request.ReferringCustomerId, "Customer");
+            stats = ReferralStats.CreateForCustomer(_tenantContext.TenantId, request.ReferringCustomerId);
             await _statsRepository.AddAsync(stats, cancellationToken);
         }
         stats.RecordNewReferral();

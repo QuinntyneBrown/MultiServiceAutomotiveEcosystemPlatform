@@ -31,38 +31,33 @@ public record ProfessionalReferralCreated(
     Guid ReferralId,
     Guid TenantId,
     Guid ReferringProfessionalId,
-    Guid ReferredProfessionalId,
-    string? Notes,
+    string ReferredBusinessName,
+    string ReferredEmail,
     DateTime CreatedAt
 ) : IntegrationEvent;
 
-public record ProfessionalReferralAccepted(
+public record ProfessionalReferralStatusChanged(
     Guid ReferralId,
     Guid TenantId,
-    Guid ReferredProfessionalId,
-    DateTime AcceptedAt
+    string PreviousStatus,
+    string NewStatus,
+    DateTime ChangedAt
 ) : IntegrationEvent;
 
-public record ProfessionalReferralDeclined(
+public record ProfessionalReferralConverted(
     Guid ReferralId,
     Guid TenantId,
-    Guid ReferredProfessionalId,
-    string? Reason,
-    DateTime DeclinedAt
-) : IntegrationEvent;
-
-public record ProfessionalReferralCompleted(
-    Guid ReferralId,
-    Guid TenantId,
-    DateTime CompletedAt
+    Guid ConvertedProfessionalId,
+    decimal? RewardAmount,
+    DateTime ConvertedAt
 ) : IntegrationEvent;
 
 public record ReferralCodeCreated(
     Guid ReferralCodeId,
     Guid TenantId,
     string Code,
-    Guid OwnerId,
-    string OwnerType,
+    Guid? CustomerId,
+    Guid? ProfessionalId,
     DateTime CreatedAt
 ) : IntegrationEvent;
 

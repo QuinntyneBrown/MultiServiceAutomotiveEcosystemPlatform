@@ -5,7 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add Aspire service defaults
 builder.AddServiceDefaults();
 
-// Add YARP Reverse Proxy
+// Add YARP Reverse Proxy with Service Discovery
 builder.Services.AddReverseProxy()
     .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"))
     .AddServiceDiscoveryDestinationResolver();
@@ -15,21 +15,25 @@ builder.Services.AddRateLimiter(options =>
 {
     options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
 
-    options.AddFixedWindowLimiter("fixed", opt =>
-    {
-        opt.Window = TimeSpan.FromSeconds(10);
-        opt.PermitLimit = 100;
-        opt.QueueLimit = 10;
-        opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
-    });
+    options.AddPolicy("fixed", context => RateLimitPartition.GetFixedWindowLimiter(
+        partitionKey: context.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+        factory: _ => new FixedWindowRateLimiterOptions
+        {
+            Window = TimeSpan.FromSeconds(10),
+            PermitLimit = 100,
+            QueueLimit = 10,
+            QueueProcessingOrder = QueueProcessingOrder.OldestFirst
+        }));
 
-    options.AddSlidingWindowLimiter("sliding", opt =>
-    {
-        opt.Window = TimeSpan.FromSeconds(30);
-        opt.PermitLimit = 100;
-        opt.SegmentsPerWindow = 3;
-        opt.QueueLimit = 10;
-    });
+    options.AddPolicy("sliding", context => RateLimitPartition.GetSlidingWindowLimiter(
+        partitionKey: context.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+        factory: _ => new SlidingWindowRateLimiterOptions
+        {
+            Window = TimeSpan.FromSeconds(30),
+            PermitLimit = 100,
+            SegmentsPerWindow = 3,
+            QueueLimit = 10
+        }));
 });
 
 // Add CORS
