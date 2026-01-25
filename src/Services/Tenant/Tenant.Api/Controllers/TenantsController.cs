@@ -2,8 +2,11 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Contracts.DTOs;
 using Shared.Contracts.DTOs.Common;
+using Shared.Contracts.Enums;
 using Tenant.Api.Commands.CreateTenant;
+using Tenant.Api.Commands.DeleteTenant;
 using Tenant.Api.Commands.UpdateTenant;
+using Tenant.Api.Commands.UpdateTenantStatus;
 using Tenant.Api.Queries.GetTenant;
 using Tenant.Api.Queries.GetTenants;
 
@@ -76,5 +79,25 @@ public class TenantsController : ControllerBase
 
         var result = await _mediator.Send(command, cancellationToken);
         return Ok(result);
+    }
+
+    [HttpPatch("{id:guid}/status")]
+    [ProducesResponseType(typeof(TenantDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateStatus(Guid id, [FromBody] UpdateTenantStatusRequest request, CancellationToken cancellationToken)
+    {
+        var command = new UpdateTenantStatusCommand(id, request.Status);
+        var result = await _mediator.Send(command, cancellationToken);
+        return Ok(result);
+    }
+
+    [HttpDelete("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
+    {
+        await _mediator.Send(new DeleteTenantCommand(id), cancellationToken);
+        return NoContent();
     }
 }

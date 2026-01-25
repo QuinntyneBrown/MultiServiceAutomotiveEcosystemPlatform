@@ -86,3 +86,8 @@ public record CustomerOwnershipHistoryDto
     public string Reason { get; init; } = string.Empty;
     public DateTime TransferredAt { get; init; }
 }
+
+public record UpdateCustomerStatusRequest
+{
+    public CustomerStatus Status { get; init; }
+}

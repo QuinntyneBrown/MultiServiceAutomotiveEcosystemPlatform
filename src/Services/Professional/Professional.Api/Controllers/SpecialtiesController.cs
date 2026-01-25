@@ -1,7 +1,9 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Professional.Api.Commands.CreateSpecialty;
 using Professional.Api.Queries.GetSpecialties;
 using Shared.Contracts.DTOs;
+using Shared.Contracts.DTOs.Common;
 
 namespace Professional.Api.Controllers;
 
@@ -22,5 +24,15 @@ public class SpecialtiesController : ControllerBase
     {
         var result = await _mediator.Send(new GetSpecialtiesQuery(), cancellationToken);
         return Ok(result);
+    }
+
+    [HttpPost]
+    [ProducesResponseType(typeof(SpecialtyCatalogDto), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Create([FromBody] CreateSpecialtyRequest request, CancellationToken cancellationToken)
+    {
+        var command = new CreateSpecialtyCommand(request.Name, request.Description, request.Category);
+        var result = await _mediator.Send(command, cancellationToken);
+        return CreatedAtAction(nameof(GetAll), result);
     }
 }

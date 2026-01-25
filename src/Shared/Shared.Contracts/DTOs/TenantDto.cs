@@ -30,3 +30,8 @@ public record UpdateTenantRequest
     public string? LogoUrl { get; init; }
     public string? PrimaryColor { get; init; }
 }
+
+public record UpdateTenantStatusRequest
+{
+    public TenantStatus Status { get; init; }
+}

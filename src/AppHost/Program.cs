@@ -52,11 +52,18 @@ var referralApi = builder.AddProject<Projects.Referral_Api>("referral-api")
     .WaitFor(professionalApi);
 
 // API Gateway
-builder.AddProject<Projects.ApiGateway>("api-gateway")
+var apiGateway = builder.AddProject<Projects.ApiGateway>("api-gateway")
     .WithExternalHttpEndpoints()
     .WithReference(tenantApi)
     .WithReference(customerApi)
     .WithReference(professionalApi)
     .WithReference(referralApi);
+
+// Angular Frontend
+builder.AddNpmApp("angular-ui", "../Ui")
+    .WithReference(apiGateway)
+    .WithHttpEndpoint(env: "PORT", port: 4200)
+    .WithExternalHttpEndpoints()
+    .PublishAsDockerFile();
 
 builder.Build().Run();

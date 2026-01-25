@@ -115,3 +115,8 @@ public record CreateSpecialtyRequest
     public string? Description { get; init; }
     public string? Category { get; init; }
 }
+
+public record UpdateProfessionalStatusRequest
+{
+    public ProfessionalStatus Status { get; init; }
+}

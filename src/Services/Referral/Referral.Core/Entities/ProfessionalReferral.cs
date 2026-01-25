@@ -28,6 +28,8 @@ public class ProfessionalReferral : IAggregateRoot, ITenantEntity
     public DateTime CreatedAt { get; private set; }
     public DateTime? UpdatedAt { get; private set; }
     public DateTime? ContactedAt { get; private set; }
+    public DateTime? AcceptedAt { get; private set; }
+    public DateTime? CompletedAt { get; private set; }
     public DateTime? ConvertedAt { get; private set; }
 
     private ProfessionalReferral() { }
@@ -70,12 +72,33 @@ public class ProfessionalReferral : IAggregateRoot, ITenantEntity
         };
     }
 
-    public void MarkContacted()
+    public void Accept()
     {
         if (Status != ProfessionalReferralStatus.Pending)
             return;
 
-        Status = ProfessionalReferralStatus.Accepted; // Using Accepted to indicate contacted
+        Status = ProfessionalReferralStatus.Accepted;
+        AcceptedAt = DateTime.UtcNow;
+        UpdatedAt = DateTime.UtcNow;
+    }
+
+    public void Decline(string? reason = null)
+    {
+        if (Status != ProfessionalReferralStatus.Pending)
+            return;
+
+        Status = ProfessionalReferralStatus.Declined;
+        if (!string.IsNullOrWhiteSpace(reason))
+        {
+            Notes = string.IsNullOrWhiteSpace(Notes)
+                ? $"Declined: {reason}"
+                : $"{Notes}\nDeclined: {reason}";
+        }
+        UpdatedAt = DateTime.UtcNow;
+    }
+
+    public void MarkContacted()
+    {
         ContactedAt = DateTime.UtcNow;
         UpdatedAt = DateTime.UtcNow;
     }

@@ -1,6 +1,9 @@
 using System.Text.Json.Serialization;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Referral.Api.Consumers;
+using Referral.Api.Sagas.ReferralConversion;
+using Referral.Api.Sagas.RewardPayment;
 using Referral.Core.Interfaces;
 using Referral.Infrastructure.Data;
 using Referral.Infrastructure.Repositories;
@@ -19,11 +22,19 @@ builder.AddSqlServerDbContext<ReferralDbContext>("referral-db");
 // Add Redis caching
 builder.AddRedisDistributedCache("redis");
 
-// Add messaging with consumers
+// Add messaging with consumers and sagas
 builder.AddMessaging(x =>
 {
     x.AddConsumer<CustomerCreatedConsumer>();
     x.AddConsumer<ProfessionalCreatedConsumer>();
+
+    // Add sagas with in-memory repository (for development)
+    // In production, use a persistent repository (e.g., Entity Framework, Redis)
+    x.AddSagaStateMachine<ReferralConversionSaga, ReferralConversionSagaState>()
+        .InMemoryRepository();
+
+    x.AddSagaStateMachine<RewardPaymentSaga, RewardPaymentSagaState>()
+        .InMemoryRepository();
 });
 
 // Add shared infrastructure (MediatR, Validation, etc.)

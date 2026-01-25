@@ -47,6 +47,8 @@ public record ProfessionalReferralDto
     public DateTime? RewardPaidAt { get; init; }
     public DateTime CreatedAt { get; init; }
     public DateTime? ContactedAt { get; init; }
+    public DateTime? AcceptedAt { get; init; }
+    public DateTime? CompletedAt { get; init; }
     public DateTime? ConvertedAt { get; init; }
 }
 
@@ -62,6 +64,7 @@ public record ReferralCodeDto
     public int CurrentUses { get; init; }
     public DateTime? ExpiresAt { get; init; }
     public bool IsActive { get; init; }
+    public bool IsValid { get; init; }
     public DateTime CreatedAt { get; init; }
 }
 
@@ -122,4 +125,32 @@ public record ValidateReferralCodeResponse
     public bool IsValid { get; init; }
     public string? Message { get; init; }
     public ReferralCodeDto? Code { get; init; }
+}
+
+public record UpdateCustomerReferralStatusRequest
+{
+    public CustomerReferralStatus Status { get; init; }
+    public string? Notes { get; init; }
+}
+
+public record DeclineProfessionalReferralRequest
+{
+    public string? Reason { get; init; }
+}
+
+public record ConvertCustomerReferralRequest
+{
+    public Guid NewCustomerId { get; init; }
+    public decimal? RewardAmount { get; init; }
+    public string? RewardType { get; init; }
+}
+
+public record ReferralStatsSummaryResponse
+{
+    public int TotalCustomerReferrals { get; init; }
+    public int TotalProfessionalReferrals { get; init; }
+    public int TotalConversions { get; init; }
+    public int ActiveReferralCodes { get; init; }
+    public decimal TotalRewardsApproved { get; init; }
+    public decimal TotalRewardsPaid { get; init; }
 }
